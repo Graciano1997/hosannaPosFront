@@ -1,10 +1,10 @@
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
 
-const Title=()=>{
+const Title=({title})=>{
     return(
         <div className="flex justify-between items-center w-[100%] h-[100px] bg-white rounded p-4">
-            <h1 className="font-bold text-3xl">Estado do Stock</h1>
-            <EllipsisHorizontalIcon className="w-10 y-10 text-[#323232] cursor-pointer hover:shadow-sm"/>
+            <h1 className="text-3xl">{title}</h1>
+            <EllipsisHorizontalIcon className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>
         </div>
     )
 };

@@ -2,5 +2,13 @@
     "welcome": "Welcome",
     "month_balance":"Month balance",
     "about":"Graciano Henrique a certified FUllStack web developer...",
-    "medicines_status":"Medicines status"
+    "medicines_status":"Medicines status",
+    "dashboard":"Dashboard",
+    "reports":"Reports",
+    "notifications":"Notifications",
+    "logout":"Logout",
+    "stock":"Stock",
+    "sales":"Sales",
+    "settings":"Settings",
+    "requests":"Requests"
 }

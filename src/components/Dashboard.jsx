@@ -6,7 +6,7 @@ const Dashboard=()=>{
     const {t}=useTranslation();
     return(
         <>
-        <Title/>
+        <Title title={'Dashboard'}/>
         <div className="flex flex-wrap justify-center gap-7 mt-4 p-1 ">
         <Card className="font-black" width={400} height={350}  info={{title:t('month_balance'),description:t('about')}}/>
         <Card width={400} height={350}  info={{title:t('month_balance'),description:t('about')}}/>

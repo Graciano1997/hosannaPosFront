@@ -3,5 +3,13 @@
     "month_balance":"Balanço mensal",
     "about":"$180,700",
     "status":"Estado",
-    "medicines_status":"Estado dos medicamentos"
+    "medicines_status":"Estado dos medicamentos",
+    "dashboard":"Dashboard",
+    "reports":"Relatórios",
+    "notifications":"Notificações",
+    "logout":"Sair",
+    "stock":"Stock",
+    "sales":"Venda",
+    "settings":"Definições",
+    "requests":"Pedidos"
 }
