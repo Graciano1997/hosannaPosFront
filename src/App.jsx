@@ -3,6 +3,7 @@ import './App.css'
 import Dashboard from './components/Dashboard'
 import Header from './components/Header'
 import Navegation from './components/Navegation'
+import Footer from './components/Footer'
 
 function App() {
 
@@ -14,7 +15,7 @@ function App() {
       <Header setVisibility={setIsVisible}/>
       <Navegation visible={isVisible} setVisibility={setIsVisible}/>
       <Dashboard/>
-      
+      <Footer/>
      </div>
     </>
   )
