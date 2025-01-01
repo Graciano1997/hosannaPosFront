@@ -1,8 +1,27 @@
-import { Link } from "react-router-dom"
+import { useEffect, useRef} from "react";
 
-const Navegation =()=>{
+const Navegation =({visible,setVisibility})=>{
+
+    const navegationRef = useRef(null);
+
+    useEffect(()=>{
+
+        const handlerClick=(event)=>{
+            if(!((event.target).contains(navegationRef.current))){
+                setVisibility(false);
+            }
+        }
+        
+        window.addEventListener("click",handlerClick)
+
+        return()=>{
+            window.removeEventListener("click",handlerClick)
+        }
+
+    },[]);
+
     return(
-        <nav className="fixed h-[100%] w-[18%] bg-white-200 top-[0] left-[-18%] navegation">
+        <nav ref={navegationRef} className={`rounded opacity-95 fixed h-[100%] w-[18%] bg-white top-[0] shadow-md left-[-18%] transition-all duration-700 navegation ${visible ? 'visible':''}`}>
         </nav>
     )
 };
