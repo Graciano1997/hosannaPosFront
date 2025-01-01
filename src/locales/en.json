@@ -10,5 +10,7 @@
     "stock":"Stock",
     "sales":"Sales",
     "settings":"Settings",
-    "requests":"Requests"
+    "requests":"Requests",
+    "english":"🇬🇧 English",
+    "portuguese":"🇵🇹 Portuguese"
 }
