@@ -7,13 +7,12 @@ const Dashboard=()=>{
     return(
         <>
         <Title/>
-        <div className="flex flex-wrap justify-center  gap-4 mt-4 p-5 ">
-        <Card width={500} height={400}  info={{title:t('month_balance'),description:t('about')}}/>
-        <Card width={500}  info={{title:t('month_balance'),description:t('about')}}/>
-        <Card width={500}  info={{title:t('month_balance'),description:t('about')}}/>
-        <Card info={{title:t('month_balance'),description:t('about')}}/>
-        <Card info={{title:t('month_balance'),description:t('about')}}/>
-        <Card info={{title:t('month_balance'),description:t('about')}}/>
+        <div className="flex flex-wrap justify-center gap-7 mt-4 p-1 ">
+        <Card className="font-black" width={400} height={350}  info={{title:t('month_balance'),description:t('about')}}/>
+        <Card width={400} height={350}  info={{title:t('month_balance'),description:t('about')}}/>
+        <Card width={400} height={350} info={{title:t('medicines_status'),description:t('about')}}/>
+        <Card width={600} height={350} info={{title:t('month_balance'),description:t('about')}}/>
+        <Card width={600} height={350} info={{title:t('month_balance'),description:t('about')}}/>
         </div>
         </>
     )
