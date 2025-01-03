@@ -23,7 +23,7 @@ const Search=({searchHandleClick})=>{
         <div>
         <div className="fixed w-[100%] h-[100%] top-[0] left-[0] blur-sm">
         </div>
-        <div className='fixed backdrop-blur-sm bg-black/10 w-[100%] h-[100%] top-[0] left-[0] flex justify-center'>
+        <div className='fixed backdrop-blur bg-black/10 w-[100%] h-[100%] top-[0] left-[0] flex justify-center'>
             <div ref={searchRef} className='p-3 mt-[10%] h-[20%] w-[50%] rounded'>
                 <div className='bg-white  flex justify-between items-center rounded p-2 shadow'>
                 <input type='text' className='p-2 rounded w-[95%] outline-none'/>
