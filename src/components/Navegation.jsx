@@ -32,7 +32,7 @@ const Navegation =({visible,setVisibility})=>{
         <ul className="flex flex-col gap-2">
             <li>
                 <Link to={"/dashboard"} 
-                className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/dashboard'?'bg-green-100':''}`} >
+                className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/dashboard'?'rounded bg-green-100':''}`} >
                 <HomeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('dashboard')}
                 </Link>
@@ -50,7 +50,7 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li>
             <li>
-                <Link to={"/stock"} className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/stock'?'bg-green-100':''}`} >
+                <Link to={"/stock"} className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/stock'?'rounded bg-green-100':''}`} >
                 <CircleStackIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('stock')}
                 </Link>
