@@ -14,7 +14,7 @@ const Header=({setVisibility})=>{
                 <QuestionMarkCircleIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <div className="flex gap-0">
                 <LanguageIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow" />
-                    <select className="bg-transparent rounded p-1" onChange={(el)=>{
+                    <select value={i18n.language} className="bg-transparent rounded p-1" onChange={(el)=>{
                         i18n.changeLanguage(el.target.value)
                     }}>
                         <option value="en">{t('english')}</option>
