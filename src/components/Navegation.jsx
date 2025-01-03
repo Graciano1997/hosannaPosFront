@@ -1,21 +1,21 @@
 import { useEffect, useRef} from "react";
 import image from "../Img/gra.jpeg";
 import CurrentUser from "./CurrentUser";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ArrowLeftStartOnRectangleIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, HomeIcon,ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 
 const Navegation =({visible,setVisibility})=>{
     const {t} = useTranslation();
+    const {pathname}=useLocation();
 
     const navegationRef = useRef(null);
 
     useEffect(()=>{
 
         const handlerClick=(event)=>{
-            if(!((event.target).contains(navegationRef.current))){
-                setVisibility(false);
-            }
+            if(!((navegationRef.current).contains(event.target)) || !((event.target.closest('.navegation')==navegationRef.current))){ 
+                setVisibility(false); }
         }
         
         window.addEventListener("click",handlerClick)
@@ -27,11 +27,12 @@ const Navegation =({visible,setVisibility})=>{
     },[]);
 
     return(
-        <nav ref={navegationRef} className={`flex flex-col p-5 items-center justify-between rounded opacity-95 fixed h-[100%] w-[50%] lg:w-[18%] bg-white top-[0] shadow-md left-[-50%] transition-all duration-700 navegation ${visible ? 'visible':''}`}>
+        <nav ref={navegationRef} className={`flex flex-col p-5 items-center justify-between rounded opacity-95 fixed h-[100%] w-[50%] lg:w-[18%] bg-white top-[0] shadow-md left-[-50%] transition-all duration-700 navegation ${visible ? 'visible':''} navegation`}>
         <div>
         <ul className="flex flex-col gap-2">
             <li>
-                <Link to={"/dashboard"} className="flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100" >
+                <Link to={"/dashboard"} 
+                className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/dashboard'?'bg-green-100':''}`} >
                 <HomeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('dashboard')}
                 </Link>
@@ -49,7 +50,7 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li>
             <li>
-                <Link to={"/dashboard"} className="flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100" >
+                <Link to={"/stock"} className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/stock'?'bg-green-100':''}`} >
                 <CircleStackIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('stock')}
                 </Link>
