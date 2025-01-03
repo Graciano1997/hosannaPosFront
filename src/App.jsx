@@ -17,14 +17,14 @@ function App() {
   return (
     <>
      <div className="h-screen w-screen p-3">
-      <Header setVisibility={setIsVisible}/>
+      <Header searchHandleClick={setIsSearching} setVisibility={setIsVisible}/>
       <Navegation visible={isVisible} setVisibility={setIsVisible}/>
       <Routes>
       <Route path='/' element={<Dashboard/>} />
       <Route path='/dashboard' element={<Dashboard/>} />
       <Route path='/stock' element={<Stock/>} />
       </Routes>
-      {isSearching && (<Search/>)} 
+      {isSearching && (<Search searchHandleClick={setIsSearching} />)} 
       <Footer/>
      </div>
     </>

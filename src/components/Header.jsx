@@ -1,7 +1,7 @@
 import { Bars3Icon,BellIcon,InboxIcon, LanguageIcon, MagnifyingGlassIcon, QuestionMarkCircleIcon, ServerStackIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 
-const Header=({setVisibility})=>{
+const Header=({setVisibility,searchHandleClick})=>{
     const {i18n,t} = useTranslation();
     return(
         <header className="flex justify-between p-4">
@@ -10,7 +10,7 @@ const Header=({setVisibility})=>{
                 <BellIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <InboxIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <UserPlusIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                <MagnifyingGlassIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                <MagnifyingGlassIcon onClick={(e)=>{e.stopPropagation(); searchHandleClick(true)}} className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <QuestionMarkCircleIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <div className="flex gap-0">
                 <LanguageIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow" />
