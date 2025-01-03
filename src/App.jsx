@@ -6,10 +6,13 @@ import Navegation from './components/Navegation'
 import Footer from './components/Footer'
 import { Route, Router, Routes } from 'react-router-dom'
 import Stock from './components/Stock'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import Search from './components/Search'
 
 function App() {
 
   const [isVisible,setIsVisible]=useState(false);
+  const [isSearching,setIsSearching]=useState(false);
 
   return (
     <>
@@ -21,6 +24,7 @@ function App() {
       <Route path='/dashboard' element={<Dashboard/>} />
       <Route path='/stock' element={<Stock/>} />
       </Routes>
+      {isSearching && (<Search/>)} 
       <Footer/>
      </div>
     </>
