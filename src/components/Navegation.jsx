@@ -38,13 +38,13 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li>
             <li>
-                <Link to={"/dashboard"} className="flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100" >
+                <Link to={"/sale"} className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sale'?'rounded bg-green-100':''}`} >
                 <ShoppingCartIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('sales')}
                 </Link>
             </li>
             <li>
-                <Link to={"/dashboard"} className="flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100" >
+                <Link to={"/requests"} className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
                 <ClipboardDocumentListIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('requests')}
                 </Link>
@@ -56,19 +56,19 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li>           
                    <li>
-                <Link to={"/dashboard"} className="flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100" >
+                <Link to={"/reports"} className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/reports'?'rounded bg-green-100':''}`} >
                 <ChartPieIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('reports')}
                 </Link>
             </li>      
                   <li>
-                <Link to={"/dashboard"} className="flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100" >
+                <Link to={"/notifications"} className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/notifications'?'rounded bg-green-100':''}`} >
                 <BellAlertIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('notifications')}
                 </Link>
             </li>
             <li>
-                <Link to={"/dashboard"} className="flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100" >
+                <Link to={"/setting"} className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/settings'?'rounded bg-green-100':''}`} >
                 <Cog8ToothIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('settings')}
                 </Link>

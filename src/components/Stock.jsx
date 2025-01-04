@@ -6,7 +6,7 @@ const Stock=()=>{
     const {t}=useTranslation();
     return(
         <>
-        <Title title={'Stock'}/>
+        <Title title={t('stock')}/>
         <div className="flex flex-wrap justify-center gap-7 mt-4 p-1 ">
         <Card className="font-black" width={400} height={350}  info={{title:t('month_balance'),description:t('about')}}/>
         <Card width={400} height={350}  info={{title:t('month_balance'),description:t('about')}}/>

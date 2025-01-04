@@ -8,6 +8,11 @@ import { Route, Router, Routes } from 'react-router-dom'
 import Stock from './components/Stock'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import Search from './components/Search'
+import Request from './components/Request'
+import Notification from './components/Notification'
+import Report from './components/Report'
+import Sale from './components/Sale'
+import Setting from './components/Setting'
 
 function App() {
 
@@ -22,7 +27,12 @@ function App() {
       <Routes>
       <Route path='/' element={<Dashboard/>} />
       <Route path='/dashboard' element={<Dashboard/>} />
+      <Route path='/requests' element={<Request/>} />
+      <Route path='/notifications' element={<Notification/>} />
+      <Route path='/reports' element={<Report/>} />
       <Route path='/stock' element={<Stock/>} />
+      <Route path='/sale' element={<Sale/>} />
+      <Route path='/setting' element={<Setting/>} />
       </Routes>
       {isSearching && (<Search searchHandleClick={setIsSearching} />)} 
       <Footer/>
