@@ -6,15 +6,24 @@ const Search=({searchHandleClick})=>{
 
     useEffect(()=>{
         const handleSearchClick=(event)=>{
-            event.stopPropagation(); 
+            event.stopPropagation();
              if(!(searchRef.current!=null && searchRef.current==event.target || searchRef.current.contains(event.target)) ){
                 searchHandleClick(false);
              }    
         }
+
+        const handleType=(event)=>{
+            event.stopPropagation();
+             if(event.key=="Escape"){
+                searchHandleClick(false);
+             }    
+        }
         window.addEventListener("click",handleSearchClick);
+        window.addEventListener("keydown",handleType);
 
         return()=>{
             window.removeEventListener("click",handleSearchClick);
+            window.removeEventListener("keydown",handleType);
         }
     },[]);
 

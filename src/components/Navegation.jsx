@@ -14,7 +14,7 @@ const Navegation =({visible,setVisibility})=>{
     useEffect(()=>{
 
         const handlerClick=(event)=>{
-            if(!((navegationRef.current).contains(event.target)) || !((event.target.closest('.navegation')==navegationRef.current))){ 
+            if(!((navegationRef.current).contains(event.target))){ 
                 setVisibility(false); }
         }
         
@@ -27,12 +27,12 @@ const Navegation =({visible,setVisibility})=>{
     },[]);
 
     return(
-        <nav ref={navegationRef} className={`flex flex-col p-5 items-center justify-between rounded opacity-95 fixed h-[100%] w-[50%] lg:w-[18%] bg-white top-[0] shadow-md left-[-50%] transition-all duration-700 navegation ${visible ? 'visible':''} navegation`}>
+        <nav ref={navegationRef} className={`flex flex-col p-5 items-center justify-between rounded opacity-95 fixed h-[100%] w-[40%] lg:w-[18%] bg-white top-[0] shadow-md left-[-50%] transition-all duration-700 navegation ${visible ? 'visible':''} navegation`}>
         <div>
         <ul className="flex flex-col gap-2">
             <li>
                 <Link to={"/dashboard"} 
-                className={`flex gap-3 w-[230px] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/dashboard'?'rounded bg-green-100':''}`} >
+                className={`flex gap-3 w-[230px] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/dashboard'?'rounded bg-green-100':''}`} >
                 <HomeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('dashboard')}
                 </Link>
