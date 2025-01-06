@@ -9,7 +9,6 @@ const Header=({setVisibility,searchHandleClick})=>{
             <div className="flex gap-5">
                 <BellIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <InboxIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                <UserPlusIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <MagnifyingGlassIcon onClick={(e)=>{e.stopPropagation(); searchHandleClick(true)}} className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <QuestionMarkCircleIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <div className="flex gap-0">
