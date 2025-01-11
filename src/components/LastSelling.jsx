@@ -5,7 +5,7 @@ const LastSelling =({width=200,height=300,info})=>{
 
     const {t}=useTranslation();
     
-    const lastSellings= [{name:"Amoxi",qty:5,total:1000},{name:"Amoxi",qty:5,total:1000},{name:"Amoxi",qty:5,total:1000}];
+    const lastSellings= [{name:"Amoxi",qty:5,total:1000},{name:"Neurobion",qty:5,total:1000},{name:"Vitamina C",qty:5,total:1000}];
 
     return(
          <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
@@ -15,9 +15,9 @@ const LastSelling =({width=200,height=300,info})=>{
                 <li className="h-[40px] bg-white  grid grid-cols-3 items-center justify-center">
                     <p>{'Nome'}</p>
                     <p>{'Qty'}</p>
-                    <p>{'Preco'}</p>
+                    <p>{'Total'}</p>
                     </li>
-                    {lastSellings.map((el)=><li className="h-[40px] bg-white cursor-pointer justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
+                    {lastSellings.map((el)=><li className="h-[40px] bg-green-100 cursor-pointer justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
                     <p>{el.name}</p>
                     <p>{el.qty}</p>
                     <p>{el.total} {'kz'}</p>
