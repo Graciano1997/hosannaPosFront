@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,6 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import CardTitle from './CardTitle';
 
 ChartJS.register(
   CategoryScale,
@@ -26,30 +27,45 @@ export const options = {
       position: 'top',
     },
     title: {
-      display: true,
-      text: 'Chart.js Bar Chart',
+      display: false,
+      text: '',
     },
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
 
 export const data = {
   labels,
   datasets: [
     {
-      label: 'Dataset 1',
+      label: 'Saida',
       data: labels.map(() => Math.random()*100),
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },
     {
-      label: 'Dataset 2',
+      label: 'Entrada',
       data: labels.map(() => Math.random()*100),
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
     },
   ],
 };
 
-export function BarChart() {
-  return <Bar options={options} data={data} />;
+export function BarChart({width=200,height=300,info}) {
+  const graphContainerRef=useRef(null);
+
+  return(
+    <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
+    <CardTitle title={info} />
+    <div ref={graphContainerRef} style={{padding:2}} className='h-[100%]'>
+      <Bar 
+      style={{
+        height:graphContainerRef.innerHeight,
+        width:graphContainerRef.innerWidth
+      }}
+      options={options} data={data} />
+      
+    </div>
+  </div>
+  )
 }
