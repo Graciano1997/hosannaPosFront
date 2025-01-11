@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 const Header=({setVisibility,searchHandleClick})=>{
     const {i18n,t} = useTranslation();
     return(
-        <header className="flex justify-between p-4">
+        <header className="flex justify-between">
             <Bars3Icon className="w-5 y-5 cursor-pointer" onClick={(el)=>{ el.stopPropagation(); setVisibility(true)}} />
             <div className="flex gap-5">
                 <BellIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
