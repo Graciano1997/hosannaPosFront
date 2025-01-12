@@ -6,7 +6,9 @@ const LastExpired =({width=200,height=300,info})=>{
     const {t}=useTranslation();
     
     const expireds= [{name:"Amoxi",qty:5,total:1000,data:{expire:'12-12-2024',issue:'11-11-2020'}},{name:"Neurobion",qty:5,total:1000,data:{expire:'12-12-2024',issue:'11-11-2020'}},
-        {name:"Vitamina C",qty:5,total:1000,data:{expire:'12-12-2024',issue:'11-11-2020'}}];
+        {name:"Vitamina C",qty:5,total:1000,data:{expire:'12-12-2024',issue:'11-11-2020'}}
+        ,{name:"Neurobion",qty:5,total:1000,data:{expire:'12-12-2024',issue:'11-11-2020'}}
+    ];
 
     return(
          <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
@@ -19,11 +21,11 @@ const LastExpired =({width=200,height=300,info})=>{
                     <p>{'Total'}</p>
                     <p>{'Exp.Date'}</p>
                     </li>
-                    {expireds.map((el)=><li className="h-[40px] bg-red-100 cursor-pointer justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
+                    {expireds.map((el)=><li className="h-[40px] bg-red-100 cursor-pointer justify-center p-1 rounded sm:shadow grid grid-cols-4 items-center">
                     <p>{el.name}</p>
                     <p>{el.qty}</p>
                     <p>{el.total} {'kz'}</p>
-                    <p>{el.data.expire} {'kz'}</p>
+                    <p>{el.data.expire}</p>
                     </li>)}
                 </ul>
              </div>
