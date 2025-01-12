@@ -14,5 +14,6 @@
     "requests":"Pedidos",
     "english":"🇬🇧 En",
     "portuguese":"🇵🇹 Pt",
-    "last_selling":"Últimos vendidos"
+    "last_selling":"Últimos vendidos",
+    "expireds":"Últimos expirados"
 }
