@@ -28,6 +28,7 @@ const LastExpired =({width=200,height=300,info})=>{
                     <p>{el.data.expire}</p>
                     </li>)}
                 </ul>
+                <button className="p-1 bg-white w-[100%] text-black">Ver mais</button>
              </div>
         </div>
     );
