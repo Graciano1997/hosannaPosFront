@@ -4,6 +4,7 @@ import { BarChart } from "./BarChart";
 import LastSelling from "./LastSelling";
 import Title from "./Title";
 import LastExpired from "./LastExpired";
+import { PieChart } from "./PieChart";
 
 const Dashboard=()=>{
     const {t}=useTranslation();
@@ -15,6 +16,7 @@ const Dashboard=()=>{
         <BarChart width={450} height={350} info={'Gráfico Semestral'} />
         <LastSelling width={400} height={350} info={{title:t('last_selling'), description:t('about')}}/>
         <LastExpired width={650} height={360} info={{title:t('expireds'),description:t('about')}}/>
+        {/* <PieChart width={450} height={350} info={'Gráfico Semestral'}/> */}
         <Card width={600} height={350} info={{title:t('month_balance'),description:t('about')}}/>
         </div>
         </>
