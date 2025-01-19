@@ -10,3 +10,9 @@ html,body{
 .visible{
   left: 0;
 }
+
+.searching{
+  height: 130px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
