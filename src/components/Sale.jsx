@@ -3,10 +3,17 @@ import Card from "./Card";
 import Title from "./Title";
 import SaleHeader from "./SaleHeader";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
 const Sale=()=>{
+
     const {t}=useTranslation();
-    return(
+    
+    const [historic,setHistoric]=useState('');
+    
+    let typingTimer;
+
+        return(
         <>
         <SaleHeader title={t('sales')} />
         <div className="xs:grid xs:grid-cols-[25fr_75fr] xs:gap-4 xs:mt-4 p-1 sm:gap-4">
@@ -50,16 +57,27 @@ const Sale=()=>{
         <h1 className="font-bold mt-5 text-end">* Sales Details</h1>
        
         <div className="flex flex-col saleDetails justify-between h-[600px]">
-            <div className="flex flex-col searching bg-green-100">
+            <div className="flex flex-col bg-green-100">
                 <div className='bg-green-100  flex justify-between items-center rounded p-1 shadow'>
-                <input type='text' className='p-2 rounded outline-none  bg-green-100 w-[100%]' placeholder="Busque o que desejas"/>
+                <input type='text' className='p-2 rounded outline-none  bg-green-100 w-[100%]' onInput={(el)=>{
+                    
+                    clearInterval(typingTimer);
+                    typingTimer = setTimeout(()=>{
+                        setHistoric(el.target.value);
+                        if(historic!=''){
+                            console.log(historic);
+                        }
+                    },1500);
+
+                }
+                }  placeholder="Busque o que desejas"/>
                 <MagnifyingGlassIcon className="w-5 y-5 text-[#323232] cursor-pointer"/>
                 </div>
             </div>
 
             
 
-            <div className="h-[30px]  w-100 flex gap-3 justify-end ">
+            <div className="h-[30px]  w-100 flex gap-3 justify-end">
             <button type="button" className="bg-red-300 rounded p-1 hover:shadow">Cancelar</button>
                 <button type="button" className="bg-green-200 rounded p-1 hover:shadow">Confirmar</button>
             </div>
