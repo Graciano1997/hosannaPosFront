@@ -64,9 +64,7 @@ const Sale=()=>{
                     clearInterval(typingTimer);
                     typingTimer = setTimeout(()=>{
                         setHistoric(el.target.value);
-                        if(historic!=''){
-                            console.log(historic);
-                        }
+                        
                     },1500);
 
                 }
