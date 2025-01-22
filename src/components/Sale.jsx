@@ -56,7 +56,7 @@ const Sale=()=>{
         <form className={`h-[500px] bg-white rounded shadow-md p-3 flex flex-col gap-3`}>
         <h1 className="font-bold mt-5 text-end">* Sales Details</h1>
        
-        <div className="flex flex-col saleDetails justify-between h-[600px]">
+        <div className="flex flex-col saleDetails relative h-[600px]">
             <div className="flex flex-col bg-green-100">
                 <div className='bg-green-100  flex justify-between items-center rounded p-1 shadow'>
                 <input type='text' className='p-2 rounded outline-none  bg-green-100 w-[100%]' onInput={(el)=>{
@@ -73,9 +73,35 @@ const Sale=()=>{
                 </div>
             </div>
 
+            <div className="mt-[40px] p-3 bg-white shadow-md rounded">
+                
+                <div className="grid grid-cols-[25fr_25fr_25fr_25fr]">
+                <p className="text-red-500">Produto</p>
+                <p className="text-red-500">Preco</p>
+                <p className="text-red-500">qty</p>
+                <p className="text-red-500">total</p>
+                </div>
+
+                <div className="flex flex-col gap-2 h-[230px] mt-2" style={{overflow:'auto'}}>
+                <div className="grid grid-cols-[25fr_25fr_25fr_25fr] bg-green-50">
+                <p>Banana</p>
+                <p>100kz</p>
+                <p>2</p>
+                <p>5000kz</p>
+                </div>
+                <div className="grid grid-cols-[25fr_25fr_25fr_25fr]">
+                <p>Banana</p>
+                <p>100kz</p>
+                <p>2</p>
+                <p>5000kz</p>
+                </div>
+                
+                </div>
+               
+            </div>
             
 
-            <div className="h-[30px]  w-100 flex gap-3 justify-end">
+            <div className="h-[30px] absolute bottom-0  w-[100%] flex gap-3 justify-end">
             <button type="button" className="bg-red-300 rounded p-1 hover:shadow">Cancelar</button>
                 <button type="button" className="bg-green-200 rounded p-1 hover:shadow">Confirmar</button>
             </div>

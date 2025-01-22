@@ -5,7 +5,17 @@ import { EllipsisHorizontalIcon, QrCodeIcon, ShoppingCartIcon } from "@heroicons
 const SaleHeader=({title})=>{
     return(
         <div className="mt-[2rem] flex justify-between items-center w-[100%] h-[100px] bg-white rounded p-4">
-            <h1 className="text-3xl">{title}</h1>
+            
+            <div className="flex gap-3">
+            <label>
+            <h1 className="text-3xl">Fatura</h1>
+            </label>
+            <select className="h-[35px] text-black p-3 rounded transition-all duration-200 bg-white shadow">
+                <option value="">Venda</option>
+                <option value="">Credido</option>
+                <option value="">Porforma</option>
+            </select>
+            </div>
             
             <div className="flex gap-3 items-center">   
             <button className="flex h-[45px] text-black p-3 rounded transition-all duration-200 hover:shadow">
