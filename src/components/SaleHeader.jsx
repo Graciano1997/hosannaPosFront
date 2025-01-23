@@ -19,7 +19,7 @@ const SaleHeader=({title})=>{
             
             <div className="flex gap-3 items-center">   
             <button className="flex h-[45px] text-black p-3 rounded transition-all duration-200 hover:shadow">
-            <QrCodeIcon className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/> Ler
+            <QrCodeIcon className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/> Ler Qr
             </button>           
             <button className="flex h-[45px] text-black p-3 rounded transition-all duration-200 hover:shadow">
             <div className="flex barcode">

@@ -68,14 +68,14 @@ const Sale=()=>{
                     },1500);
 
                 }
-                }  placeholder="Busque o que desejas"/>
+                }  placeholder="Procurar produto"/>
                 <MagnifyingGlassIcon className="w-5 y-5 text-[#323232] cursor-pointer"/>
                 </div>
             </div>
 
-            <div className="mt-[40px] p-3 bg-white shadow-md rounded">
+            <div className="mt-[40px] p-3 bg-white transition-all duration-200 shadow-sm hover:shadow-md rounded">
                 
-                <div className="grid grid-cols-[25fr_25fr_25fr_25fr]">
+                <div className="grid grid-cols-[25fr_25fr_25fr_25fr] shadow-sm">
                 <p className="text-red-500">Produto</p>
                 <p className="text-red-500">Preco</p>
                 <p className="text-red-500">qty</p>
