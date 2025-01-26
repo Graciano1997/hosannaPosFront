@@ -33,20 +33,25 @@ export const options = {
   },
 };
 
-const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Ago','Set','Oct','Nov','Dec'];
 
 export const data = {
   labels,
   datasets: [
+    {
+      label: 'Entrada',
+      data: labels.map(() => Math.random()*100),
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    },
     {
       label: 'Saida',
       data: labels.map(() => Math.random()*100),
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },
     {
-      label: 'Entrada',
+      label: 'Ganho',
       data: labels.map(() => Math.random()*100),
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      backgroundColor: 'rgba(27, 235, 165, 0.5)',
     },
   ],
 };

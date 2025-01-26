@@ -1,71 +1,70 @@
 import React, { useRef } from 'react';
 import {
   Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
+  ArcElement,
   Tooltip,
   Legend,
-  PieController
+  plugins,
 } from 'chart.js';
-import { Bar,Pie } from 'react-chartjs-2';
-import CardTitle from './CardTitle';
+
+import { Pie } from 'react-chartjs-2';
+import CardTitle from '../general/CardTitle';
 
 ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  PieController,
-  Title,
+  ArcElement,
   Tooltip,
   Legend
 );
 
+
+const labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+
 export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
-    },
-    title: {
-      display: false,
-      text: '',
-    },
-  },
-};
-
-const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
-
+  responsive:true,
+  plugins:{legend:false},
+  title: {
+    display: false,
+    text: '',
+  }
+}
 export const data = {
   labels,
   datasets: [
     {
-      label: 'Saida',
-      data:20,
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Entrada',
-      data: 50,
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+      ],
+      borderWidth: 1,
     },
   ],
 };
 
-export function PieChart({width=200,height=300,info}) {
+export function PieChart({width=400,height=420,info}) {
   const graphContainerRef=useRef(null);
 
   return(
-    <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
+    <div style={{width:`${width}px`,height:`${height}px`}}  className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
     <CardTitle title={info} />
-    <div ref={graphContainerRef} style={{padding:2}} className='h-[100%]'>
+    <div ref={graphContainerRef} style={{padding:2,height:`${400}px`,width:`${400}px`}} className='flex items-center justify-center'>
       <Pie 
-      style={{
-        height:graphContainerRef.innerHeight,
-        width:graphContainerRef.innerWidth
-      }}
-      options={options} data={data} />      
+      options={options}
+
+       data={data} />      
     </div>
   </div>
   )
