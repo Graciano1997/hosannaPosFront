@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import CardTitle from "../general/CardTitle";
+import { BellAlertIcon } from "@heroicons/react/24/solid";
 
 const LastExpired =({width=200,height=300,info})=>{    
 
@@ -12,7 +13,8 @@ const LastExpired =({width=200,height=300,info})=>{
 
     return(
          <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
-             <CardTitle title={info.title} />
+             <CardTitle title={info.title}/>
+             
              <div className="p-2">
                 <ul className="h-[100%] flex flex-col justify-around">
                 <li className="h-[40px] bg-white  grid grid-cols-4 items-center justify-center">
