@@ -1,7 +1,7 @@
 {
     "welcome": "Welcome",
     "month_balance":"Month balance",
-    "about":"Graciano Henrique a certified FUllStack web developer...",
+    "about":"$180,700",
     "medicines_status":"Medicines status",
     "dashboard":"Dashboard",
     "reports":"Reports",
@@ -15,5 +15,6 @@
     "portuguese":"🇵🇹 Pt",
     "last_selling":"Last sellings",
     "expireds":"Last expireds",
-    "footer_description":"With ♥ by Graciano Henrique"
+    "footer_description":"With ♥ by Graciano Henrique",
+    "today_balance":"Today Balance"
 }
