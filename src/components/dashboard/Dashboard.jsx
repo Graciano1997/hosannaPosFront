@@ -1,10 +1,9 @@
 import { useTranslation } from "react-i18next";
-import Card from "./Card";
+import Card from "../general/Card";
 import { BarChart } from "./BarChart";
 import LastSelling from "./LastSelling";
-import Title from "./Title";
+import Title from "../general/Title";
 import LastExpired from "./LastExpired";
-import { PieChart } from "./PieChart";
 
 const Dashboard=()=>{
     const {t}=useTranslation();

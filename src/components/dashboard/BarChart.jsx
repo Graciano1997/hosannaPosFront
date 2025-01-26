@@ -9,7 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import CardTitle from './CardTitle';
+import CardTitle from '../general/CardTitle';
 
 ChartJS.register(
   CategoryScale,

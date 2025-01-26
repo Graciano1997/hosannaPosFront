@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import CardTitle from "./CardTitle";
+import CardTitle from "../general/CardTitle";
 
 const LastExpired =({width=200,height=300,info})=>{    
 
