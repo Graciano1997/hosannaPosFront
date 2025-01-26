@@ -1,5 +1,7 @@
 import ButtonGroup from "./Button";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import SaleDetailsHeader from "./SaleDetailsHeader";
+import SaleItem from "./SaleItem";
 
 
 const SaleDetails = ()=>{
@@ -26,27 +28,13 @@ const SaleDetails = ()=>{
 
             <div className="mt-[40px] p-3 bg-white transition-all duration-200 shadow-sm hover:shadow-md rounded">
                 
-                <div className="grid grid-cols-[25fr_25fr_25fr_25fr] shadow-sm">
-                <p className="text-red-500">Produto</p>
-                <p className="text-red-500">Preco</p>
-                <p className="text-red-500">qty</p>
-                <p className="text-red-500">total</p>
-                </div>
+                <SaleDetailsHeader/>
 
                 <div className="flex flex-col gap-2 h-[230px] mt-2" style={{overflow:'auto'}}>
-                <div className="grid grid-cols-[25fr_25fr_25fr_25fr] bg-green-50">
-                <p>Banana</p>
-                <p>100kz</p>
-                <p>2</p>
-                <p>5000kz</p>
-                </div>
-                <div className="grid grid-cols-[25fr_25fr_25fr_25fr]">
-                <p>Banana</p>
-                <p>100kz</p>
-                <p>2</p>
-                <p>5000kz</p>
-                </div>
-                
+                <SaleItem/>
+                <SaleItem/>
+                <SaleItem/>
+                <SaleItem/>
                 </div>
                
             </div>

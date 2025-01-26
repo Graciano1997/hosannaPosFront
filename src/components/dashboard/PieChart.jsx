@@ -17,7 +17,7 @@ ChartJS.register(
 );
 
 
-const labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+const labels = ['Analgesicos', 'outros', 'Antibiotio', 'Antipiretico', 'Purple', 'Orange'];
 
 export const options = {
   responsive:true,
@@ -31,7 +31,7 @@ export const data = {
   labels,
   datasets: [
     {
-      label: '# of Votes',
+      label: 'total',
       data: [12, 19, 3, 5, 2, 3],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
