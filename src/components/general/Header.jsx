@@ -5,7 +5,7 @@ const Header=({setVisibility,searchHandleClick})=>{
     const {i18n,t} = useTranslation();
     return(
         <header className="flex justify-between">
-            <Bars3Icon className="w-5 y-5 cursor-pointer" onClick={(el)=>{ el.stopPropagation(); setVisibility(true)}} />
+            <Bars3Icon className="w-7 y-7 cursor-pointer" onClick={(el)=>{ el.stopPropagation(); setVisibility(true)}} />
             <div className="flex gap-5">
                 <BellIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <InboxIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
