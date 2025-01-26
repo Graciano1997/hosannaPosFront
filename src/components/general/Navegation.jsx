@@ -1,5 +1,5 @@
 import { useEffect, useRef} from "react";
-import image from "../Img/gra.jpeg";
+import image from "../../assets/Img/gra.jpeg";
 import CurrentUser from "./CurrentUser";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowLeftStartOnRectangleIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, HomeIcon,ShoppingCartIcon } from "@heroicons/react/24/solid";

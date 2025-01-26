@@ -1,6 +1,4 @@
 import { useTranslation } from "react-i18next";
-import Card from "./Card";
-import Title from "./Title";
 import SaleHeader from "./SaleHeader";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
