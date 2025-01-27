@@ -22,13 +22,16 @@ function QRcode() {
         <QRCodeCanvas value="https://exemplo.com" size={256} />
       </div>
 
-      {/* Ler QR Code */}
+
       <div>
         <h2>Ler QR Code</h2>
         <QrReader
           onResult={handleResult}
           constraints={{ facingMode: "environment" }}
+          containerStyle={{heigt:`${300}px`,width:`${300}px`,borderRadius:`${20}px`}}
           style={{ width: "100%" }}
+          videoStyle={{borderRadius:`${20}px`}}
+          className="rounded"
         />
       </div>
     </div>
