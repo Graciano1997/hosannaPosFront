@@ -4,7 +4,7 @@ import SaleDetailsHeader from "./SaleDetailsHeader";
 import SaleItem from "./SaleItem";
 
 
-const SaleDetails = ()=>{
+const SaleDetails = ({readValue})=>{
     return(
         <div className={`h-[500px] bg-white rounded shadow-md p-3 flex flex-col gap-3`}>
         <h1 className="font-bold mt-5 text-end">* Sales Details</h1>
@@ -12,7 +12,9 @@ const SaleDetails = ()=>{
         <div className="flex flex-col saleDetails relative h-[600px]">
             <div className="flex flex-col bg-green-100">
                 <div className='bg-green-100  flex justify-between items-center rounded p-1 shadow'>
-                <input type='text' className='p-2 rounded outline-none  bg-green-100 w-[100%]' onInput={(el)=>{
+                <input type='text' className='p-2 rounded outline-none  bg-green-100 w-[100%]'
+                value={readValue??''}
+                onInput={(el)=>{
                     
                     clearInterval(typingTimer);
                     typingTimer = setTimeout(()=>{

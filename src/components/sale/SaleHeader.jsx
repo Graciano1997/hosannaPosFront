@@ -2,7 +2,7 @@ import { BackspaceIcon, ShoppingBagIcon } from "@heroicons/react/16/solid";
 import { Bars4Icon } from "@heroicons/react/24/solid";
 import { EllipsisHorizontalIcon, QrCodeIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 
-const SaleHeader=({title})=>{
+const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
     return(
         <div className="mt-[2rem] flex justify-between items-center w-[100%] h-[100px] bg-white rounded p-4">
             
@@ -18,7 +18,10 @@ const SaleHeader=({title})=>{
             </div>
             
             <div className="flex gap-3 items-center">   
-            <button className="flex h-[45px] text-black p-3 rounded transition-all duration-200 hover:shadow">
+            <button onClick={()=>{
+                setReadValue(null);
+                setIsReadingQr(true);}} 
+            className="flex h-[45px] text-black p-3 rounded transition-all duration-200 hover:shadow">
             <QrCodeIcon className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/> Ler Qr
             </button>           
             <button className="flex h-[45px] text-black p-3 rounded transition-all duration-200 hover:shadow">
