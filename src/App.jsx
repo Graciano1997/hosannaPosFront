@@ -12,6 +12,7 @@ import Notification from './components/notification/Notification'
 import Report from './components/reports/Report'
 import Sale from './components/sale/Sale'
 import Setting from './components/settings/Setting'
+import QRcode from './components/general/QRcode'
 
 function App() {
 
@@ -33,7 +34,8 @@ function App() {
       <Route path='/sale' element={<Sale/>} />
       <Route path='/setting' element={<Setting/>} />
       </Routes>
-      {isSearching && (<Search searchHandleClick={setIsSearching} />)} 
+      {isSearching && (<Search searchHandleClick={setIsSearching} />)}
+      <QRcode/> 
       <Footer/>
      </div>
     </>
