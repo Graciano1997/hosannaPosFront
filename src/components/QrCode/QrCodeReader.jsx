@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { QrReader } from "react-qr-reader";
 
-const QrCodeReader =({setIsReadingQr,setReadValue,readValue})=>{
+const QrCodeReader =({setIsReadingQr,setReadValue,readValue,setToastObject})=>{
 const qrRef =  useRef(null);
 
     return(
@@ -32,6 +32,7 @@ const qrRef =  useRef(null);
             if(result.text!='' || result.text!=null){
                 setReadValue(result.text);
                 // setIsReadingQr(false);
+                setToastObject({error:false,success:true,message:"Lido com sucesso!"})
             }
 
             if(qrRef.current){qrRef.current.stopCamera();}

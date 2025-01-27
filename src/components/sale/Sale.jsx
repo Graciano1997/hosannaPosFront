@@ -6,7 +6,7 @@ import ClientDetails from "./ClientDetails";
 import SaleDetails from "./SaleDetails";
 import QrCodeReader from "../QrCode/QrCodeReader";
 
-const Sale=()=>{
+const Sale=({setToastObject})=>{
 
     const {t}=useTranslation();
     const [isReadingQr,setIsReadingQr]=useState(false);
@@ -20,6 +20,7 @@ const Sale=()=>{
         <SaleDetails readValue={readValue}/> 
         </div>
         {isReadingQr && (<QrCodeReader 
+        setToastObject={setToastObject}
         readValue={readValue}
          setReadValue={setReadValue}
           setIsReadingQr={setIsReadingQr}

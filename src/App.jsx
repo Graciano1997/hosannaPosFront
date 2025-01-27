@@ -12,11 +12,14 @@ import Notification from './components/notification/Notification'
 import Report from './components/reports/Report'
 import Sale from './components/sale/Sale'
 import Setting from './components/settings/Setting'
+import ShowToast from './components/general/ShowToast'
 
 function App() {
 
   const [isVisible,setIsVisible]=useState(false);
   const [isSearching,setIsSearching]=useState(false);
+  const [showToast,setShowToast]=useState(false);
+  const [toastObject,setToastObject] = useState({});
 
   return (
     <>
@@ -30,13 +33,17 @@ function App() {
       <Route path='/notifications' element={<Notification/>} />
       <Route path='/reports' element={<Report/>} />
       <Route path='/stock' element={<Stock/>} />
-      <Route path='/sale' element={<Sale/>} />
+      <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />
       <Route path='/setting' element={<Setting/>} />
       </Routes>
       {isSearching && (<Search searchHandleClick={setIsSearching} />)}
-      <div className='bg-white w-[20px] h-20 p-4'>
 
-      </div>
+    {
+      showToast && (
+      <ShowToast object={toastObject} />
+      )
+    }
+      
       <Footer/>
      </div>
     </>
