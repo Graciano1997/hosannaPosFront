@@ -2,7 +2,7 @@ import { useEffect, useRef} from "react";
 import image from "../../assets/Img/gra.jpeg";
 import CurrentUser from "./CurrentUser";
 import { Link, useLocation } from "react-router-dom";
-import { ArrowLeftStartOnRectangleIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, HomeIcon,ShoppingCartIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftStartOnRectangleIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CubeIcon, HomeIcon,ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 
 const Navegation =({visible,setVisibility})=>{
@@ -41,7 +41,7 @@ const Navegation =({visible,setVisibility})=>{
             <li>
                 <Link to={"/sale"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sale'?'rounded bg-green-100':''}`} >
                 <ShoppingCartIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('sales')}
+                {t('sale')}
                 </Link>
             </li>
             <li>
@@ -51,15 +51,15 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li>
             <li>
-                <Link to={"/stock"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/stock'?'rounded bg-green-100':''}`} >
-                <CircleStackIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('stock')}
+                <Link to={"/products"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/stock'?'rounded bg-green-100':''}`} >
+                <CubeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                {t('products')}
                 </Link>
             </li>           
                    <li>
-                <Link to={"/reports"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/reports'?'rounded bg-green-100':''}`} >
-                <ChartPieIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('reports')}
+                <Link to={"/sales"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/reports'?'rounded bg-green-100':''}`} >
+                <CircleStackIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                {t('sales')}
                 </Link>
             </li>      
                   <li>

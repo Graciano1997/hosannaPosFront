@@ -8,7 +8,7 @@
     "notifications":"Notifications",
     "logout":"Logout",
     "stock":"Stock",
-    "sales":"Sales",
+    "sale":"Sale",
     "settings":"Settings",
     "requests":"Requests",
     "english":"🇬🇧 En",
@@ -16,5 +16,8 @@
     "last_selling":"Last sellings",
     "expireds":"Last expireds",
     "footer_description":"With ♥ by Graciano Henrique",
-    "today_balance":"Today Balance"
+    "today_balance":"Today Incomes",
+    "output":"Today's Spendings",
+    "products":"Products",
+    "sales":"Sales"
 }

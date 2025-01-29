@@ -5,11 +5,11 @@ import Header from './components/general/Header'
 import Navegation from './components/general/Navegation'
 import Footer from './components/general/Footer'
 import { Route, Routes } from 'react-router-dom'
-import Stock from './components/stock/Stock'
+import Product from './components/product/Product'
 import Search from './components/general/Search'
 import Request from './components/requests/Request'
 import Notification from './components/notification/Notification'
-import Report from './components/reports/Report'
+import Sales from './components/sale/Sales'
 import Sale from './components/sale/Sale'
 import Setting from './components/settings/Setting'
 import ShowToast from './components/general/ShowToast'
@@ -32,8 +32,8 @@ function App() {
       <Route path='/dashboard' element={<Dashboard/>} />
       <Route path='/requests' element={<Request/>} />
       <Route path='/notifications' element={<Notification/>} />
-      <Route path='/reports' element={<Report/>} />
-      <Route path='/stock' element={<Stock/>} />
+      <Route path='/sales' element={<Sales/>} />
+      <Route path='/products' element={<Product/>} />
       <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />
       <Route path='/setting' element={<Setting/>} />
       </Routes>
