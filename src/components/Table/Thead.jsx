@@ -1,7 +1,5 @@
 const Thead=({object})=>{
-
-    console.log(object);
-
+    
     const keys=Object.keys(object);
 console.log(keys);
   return(
