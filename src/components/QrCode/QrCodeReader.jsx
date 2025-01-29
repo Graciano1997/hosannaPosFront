@@ -18,8 +18,7 @@ const qrRef =  useRef(null);
     </div>
     <div className="fixed w-[350px] h-[400px]  top-[50%] left-[50%] bg-white rounded shadow-md flex flex-col justify-center items-center transform -translate-x-1/2 -translate-y-1/2"
     >
-        <p className="p-2 mt-[12px]">Leiror QRcode</p>  
-        {readValue && (<p>Valor lido: {readValue}</p>)}
+        <p className="p-2 text-center mt-[12px]">Leiror QRcode</p>  
     <QrReader 
     ref={qrRef}
      videoContainerStyle={{
@@ -31,7 +30,7 @@ const qrRef =  useRef(null);
 
             if(result.text!='' || result.text!=null){
                 setReadValue(result.text);
-                // setIsReadingQr(false);
+                setIsReadingQr(false);
                 setToastObject({error:false,success:true,message:"Lido com sucesso!"})
             }
 
