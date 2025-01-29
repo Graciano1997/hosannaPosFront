@@ -9,7 +9,7 @@
     "notifications":"Notificações",
     "logout":"Sair",
     "stock":"Stock",
-    "sales":"Venda",
+    "sale":"Venda",
     "settings":"Definições",
     "requests":"Pedidos",
     "english":"🇬🇧 En",
@@ -17,5 +17,8 @@
     "last_selling":"Últimos vendidos",
     "expireds":"Últimos expirados",
     "footer_description":"Feito com ♥ por Graciano Henrique",
-    "today_balance":"Balanço de Hoje"
+    "today_balance":"Entradas de Hoje",
+    "output":"Saídas de Hoje",
+    "products":"Produtos",
+    "sales":"Vendas"
 }

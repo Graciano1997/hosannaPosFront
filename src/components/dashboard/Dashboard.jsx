@@ -14,10 +14,11 @@ const Dashboard=()=>{
         <Title title={t('dashboard')}/>
         <div className="flex flex-wrap justify-center gap-7 mt-4 p-1 ">
         <Card className="font-black" width={400} height={350} info={{title:t('today_balance'),description:currency(1000,{separator:'.', decimal:',',precision:2}).add(200).format()}} />
-        <BarChart width={450} height={350} info={'Gráfico Semestral'} />
+        <Card className="font-black" width={400} height={350}   info={{output:true,title:t('output'),description:currency(-1000,{separator:'.', decimal:',',precision:2}).format()}} />
         <LastSelling width={400} height={350} info={{title:t('last_selling'), description:t('about')}}/>
-         <PieChart width={450} height={350} info={'Categoria dos Produtos vendidos'}/>
-        <LastExpired width={450} height={350} info={{title:t('expireds'),description:t('about')}}/>
+        <BarChart width={450} height={350} info={'Gráfico Semestral'} />
+         <PieChart width={400} height={350} info={'Categoria dos Produtos vendidos'}/>
+        <LastExpired width={400} height={350} info={{title:t('expireds'),description:t('about')}}/>
         </div>
         </>
     )
