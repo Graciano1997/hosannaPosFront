@@ -12,6 +12,7 @@
   "dependencies": {
     "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^2.2.0",
+    "@reduxjs/toolkit": "^2.5.1",
     "chart.js": "^4.4.7",
     "currency.js": "^2.0.4",
     "faker": "^6.6.6",

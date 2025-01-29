@@ -13,6 +13,7 @@ import Report from './components/reports/Report'
 import Sale from './components/sale/Sale'
 import Setting from './components/settings/Setting'
 import ShowToast from './components/general/ShowToast'
+import Login from './components/Login/Login'
 
 function App() {
 
@@ -27,7 +28,7 @@ function App() {
       <Header searchHandleClick={setIsSearching} setVisibility={setIsVisible}/>
       <Navegation visible={isVisible} setVisibility={setIsVisible}/>
       <Routes>
-      <Route path='/' element={<Dashboard/>} />
+      <Route path='/' element={<Login/>} />
       <Route path='/dashboard' element={<Dashboard/>} />
       <Route path='/requests' element={<Request/>} />
       <Route path='/notifications' element={<Notification/>} />

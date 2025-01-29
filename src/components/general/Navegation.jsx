@@ -10,6 +10,7 @@ const Navegation =({visible,setVisibility})=>{
     const {pathname}=useLocation();
 
     const navegationRef = useRef(null);
+    const adm=true;
 
     useEffect(()=>{
 
