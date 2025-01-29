@@ -5,60 +5,58 @@ import Table from "../Table/Table";
 
 const Sales=()=>{
     const {t}=useTranslation();
-    const [products,setProducts]=useState([{
-        name:'Banana',
+    const [sales,setSale]=useState([
+        {
+        product:'Banana',
         price:200,
         quantity:20,
-        availableToSale:true,
-        creationDate:'2023-12-12',
-        expireDate:'2023-12-12'     
+        data:'2023-12-12',
+        operador:'Hozana',     
+        total:5000,
     },
     {
-        name:'Banana',
+        product:'Banana',
         price:200,
         quantity:20,
-        availableToSale:true,
-        creationDate:'2023-12-12',
-        expireDate:'2023-12-12'     
+        data:'2023-12-12',
+        operador:'Hozana',     
+        total:5000,
     },
     {
-        name:'Banana',
+        product:'Banana',
         price:200,
         quantity:20,
-        availableToSale:true,
-        creationDate:'2023-12-12',
-        expireDate:'2023-12-12'     
+        data:'2023-12-12',
+        operador:'Hozana',     
+        total:5000,
+    },{
+        product:'Banana',
+        price:200,
+        quantity:20,
+        data:'2023-12-12',
+        operador:'Hozana',     
+        total:5000,
+    },{
+        product:'Banana',
+        price:200,
+        quantity:20,
+        data:'2023-12-12',
+        operador:'Hozana',     
+        total:5000,
+    },{
+        product:'Banana',
+        price:200,
+        quantity:20,
+        data:'2023-12-12',
+        operador:'Hozana',     
+        total:5000,
     },
-    {
-        name:'Banana',
-        price:200,
-        quantity:20,
-        availableToSale:true,
-        creationDate:'2023-12-12',
-        expireDate:'2023-12-12'     
-    },
-    {
-        name:'Banana',
-        price:200,
-        quantity:20,
-        availableToSale:true,
-        creationDate:'2023-12-12',
-        expireDate:'2023-12-12'     
-    },
-    {
-        name:'Banana',
-        price:200,
-        quantity:20,
-        availableToSale:true,
-        creationDate:'2023-12-12',
-        expireDate:'2023-12-12'     
-    }
 ]);
 
     return(
         <>
         <Title title={t('sales')}/>
-        <Table collection={products}/>
+        <Table collection={sales}/>
         </>
     )
 };
