@@ -11,7 +11,6 @@ const Sales=()=>{
         price:200,
         quantity:20,
         data:'2023-12-12',
-        operador:'Hozana',     
         total:5000,
     },
     {
@@ -19,7 +18,6 @@ const Sales=()=>{
         price:200,
         quantity:20,
         data:'2023-12-12',
-        operador:'Hozana',     
         total:5000,
     },
     {
@@ -27,28 +25,24 @@ const Sales=()=>{
         price:200,
         quantity:20,
         data:'2023-12-12',
-        operador:'Hozana',     
         total:5000,
     },{
         product:'Banana',
         price:200,
         quantity:20,
         data:'2023-12-12',
-        operador:'Hozana',     
         total:5000,
     },{
         product:'Banana',
         price:200,
         quantity:20,
         data:'2023-12-12',
-        operador:'Hozana',     
         total:5000,
     },{
         product:'Banana',
         price:200,
         quantity:20,
         data:'2023-12-12',
-        operador:'Hozana',     
         total:5000,
     },
 ]);
