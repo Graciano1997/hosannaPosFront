@@ -2,7 +2,7 @@ import Tr from "./Tr";
 
 const Tbody =({items})=>{
     return(
-        <tbody className="h-[300px]">
+        <tbody className="">
             {items.map((item,index)=><Tr item={item} index={index}/>)}
         </tbody>
     )
