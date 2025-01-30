@@ -20,3 +20,7 @@ html,body{
 .rotate {
   transform: rotate(90deg);
 }
+
+form input{
+  background-color: whitesmoke;
+}
