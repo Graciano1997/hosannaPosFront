@@ -4,6 +4,7 @@ const initialState = {
     isOpen:false,
     isSearching:false,
     showToast:false,
+    activeTab:'tab1'
 }
 
 const appSlice=createSlice({
@@ -21,9 +22,12 @@ const appSlice=createSlice({
         },
         StopSearching:(state)=>{
             state.isSearching = false;
+        },
+        activeTab:(state,action)=>{
+            state.activeTab=action.payload;
         }
     }
 });
 
 export default appSlice.reducer;
-export const {openModal,closeModal,Searching,StopSearching} = appSlice.actions;
+export const {openModal,closeModal,Searching,StopSearching,activeTab} = appSlice.actions;

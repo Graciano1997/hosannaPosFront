@@ -25,3 +25,7 @@ form input,
 form textarea{
   background-color: whitesmoke;
 }
+
+.activeTab {
+  border-bottom: 4px solid #0ed1a0;
+}
