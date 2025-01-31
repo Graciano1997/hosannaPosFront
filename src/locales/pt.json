@@ -20,5 +20,7 @@
     "today_balance":"Entradas de Hoje",
     "output":"Saídas de Hoje",
     "products":"Produtos",
-    "sales":"Vendas"
+    "sales":"Vendas",
+    "spends":"Saidas",
+    "main_table": "Tabela Geral"
 }

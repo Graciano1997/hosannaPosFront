@@ -21,6 +21,7 @@ html,body{
   transform: rotate(90deg);
 }
 
-form input{
+form input,
+form textarea{
   background-color: whitesmoke;
 }

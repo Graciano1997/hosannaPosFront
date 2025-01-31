@@ -1,7 +1,7 @@
 import { ArrowUpTrayIcon, DocumentArrowUpIcon, EllipsisHorizontalIcon, PlusCircleIcon, PlusIcon } from "@heroicons/react/24/solid";
 import {  useRef, useState } from "react";
 
-const Title=({title,setIscreating=()=>{}})=>{
+const Title=({title,setIsShowing=()=>{}})=>{
     const [showElipse,setShowElipse]=useState(true);
     const ref = useRef(null);
     
@@ -22,7 +22,7 @@ const Title=({title,setIscreating=()=>{}})=>{
                 <ul 
 
                  className="flex flex-col gap-1 w-[150px] h-[100%] bg-white shadow rounded" id="elipseMenu">
-                <li onClick={()=>{setIscreating(true);}} className="m-0.5 flex gap-3 items-center justify-center hover:sm:shadow transition-200 hover:cursor-pointer"><span className="">Criar</span><PlusIcon className="w-4 h-4"/></li>
+                <li onClick={()=>{setIsShowing(true);}} className="m-0.5 flex gap-3 items-center justify-center hover:sm:shadow transition-200 hover:cursor-pointer"><span className="">Criar</span><PlusIcon className="w-4 h-4"/></li>
                 <li className="m-0.5 flex gap-3 items-center justify-center hover:sm:shadow hover:cursor-pointer"><span className="">Exportar</span><ArrowUpTrayIcon className="w-4 h-4"/></li>
                 </ul>)
             }

@@ -14,8 +14,14 @@ import Sale from './components/sale/Sale'
 import Setting from './components/settings/Setting'
 import ShowToast from './components/general/ShowToast'
 import Login from './components/Login/Login'
+import Spend from './components/Spend/Spend'
+import store from './App/Store'
+import { useSelector } from 'react-redux'
 
 function App() {
+
+  const appState=useSelector((state)=>state.appState);
+  console.log(appState);
 
   const [isVisible,setIsVisible]=useState(false);
   const [isSearching,setIsSearching]=useState(false);
@@ -34,10 +40,11 @@ function App() {
       <Route path='/notifications' element={<Notification/>} />
       <Route path='/sales' element={<Sales/>} />
       <Route path='/products' element={<Product/>} />
+      <Route path='/spends' element={<Spend/>} />  
       <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />
       <Route path='/setting' element={<Setting/>} />
       </Routes>
-      {isSearching && (<Search searchHandleClick={setIsSearching} />)}
+      {appState.isSearching && (<Search/>)}
 
     {
       showToast && (

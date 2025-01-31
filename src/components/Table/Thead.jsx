@@ -1,8 +1,8 @@
 const Thead=({object})=>{
 
-    const keys=Object.keys(object);
-console.log(keys);
-  return(
+    const keys=Object.keys(object)
+
+    return(
       <thead>
       <tr className="p-2 shadow h-[45px]">
       {keys.map((label)=><th className="p-1">{label}</th>)}
