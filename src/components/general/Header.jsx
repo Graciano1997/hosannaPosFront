@@ -10,7 +10,7 @@ const Header=({setVisibility})=>{
     return(
         <header className="flex justify-between">
             <Bars3Icon className="w-7 y-7 cursor-pointer" onClick={(el)=>{ el.stopPropagation(); setVisibility(true)}} />
-            <div className="flex gap-5">
+            <div className="flex gap-4">
                 <BellIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <InboxIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <MagnifyingGlassIcon onClick={(e)=>{e.stopPropagation(); dispatch(Searching())}} className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
