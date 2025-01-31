@@ -21,5 +21,6 @@
     "products":"Products",
     "sales":"Sales",
     "spends":"Spendings",
-    "main_table": "Main Table"
+    "main_table": "Main Table",
+    "clients":"Clients"
 }

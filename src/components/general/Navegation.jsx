@@ -2,7 +2,7 @@ import { useEffect, useRef} from "react";
 import image from "../../assets/Img/gra.jpeg";
 import CurrentUser from "./CurrentUser";
 import { Link, useLocation } from "react-router-dom";
-import { ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CubeIcon, HomeIcon,ShoppingCartIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CubeIcon, HomeIcon,ShoppingCartIcon, TruckIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 
 const Navegation =({visible,setVisibility})=>{
@@ -28,7 +28,7 @@ const Navegation =({visible,setVisibility})=>{
     },[]);
 
     return(
-        <nav ref={navegationRef} className={`flex flex-col p-5 items-center justify-between rounded opacity-95 fixed h-[100%]  md:w-[30%] lg:w-[18%] bg-white top-[0] shadow-md left-[-50%] transition-all duration-700 navegation ${visible ? 'visible':''} navegation`}>
+        <nav ref={navegationRef} className={`flex flex-col p-3 items-center justify-between rounded opacity-95 fixed h-[100%]  md:w-[30%] lg:w-[18%] bg-white top-[0] shadow-md left-[-50%] transition-all duration-700 navegation ${visible ? 'visible':''} navegation`}>
         <div className="w-[100%]">
         <ul className="flex flex-col gap-2 w-[100%]">
             <li>
@@ -44,12 +44,12 @@ const Navegation =({visible,setVisibility})=>{
                 {t('sale')}
                 </Link>
             </li>
-            <li>
+            {/* <li>
                 <Link to={"/requests"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
                 <ClipboardDocumentListIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('requests')}
                 </Link>
-            </li>
+            </li> */}
             <li>
                 <Link to={"/products"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/stock'?'rounded bg-green-100':''}`} >
                 <CubeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
@@ -72,6 +72,18 @@ const Navegation =({visible,setVisibility})=>{
                 <Link to={"/notifications"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/notifications'?'rounded bg-green-100':''}`} >
                 <BellAlertIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('notifications')}
+                </Link>
+            </li>
+            <li>
+                <Link to={"/requests"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
+                <UsersIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                {t('clients')}
+                </Link>
+            </li>
+            <li>
+                <Link to={"/requests"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
+                <TruckIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                {t('clients')}
                 </Link>
             </li>
             <li>
