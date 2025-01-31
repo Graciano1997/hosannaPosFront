@@ -1,21 +1,24 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { StopSearching } from "../../slices/appSlice";
 
-const Search=({searchHandleClick})=>{
+const Search=()=>{
     const searchRef=useRef(null);
+    const dispatch= useDispatch();
 
     useEffect(()=>{
         const handleSearchClick=(event)=>{
             event.stopPropagation();
              if(!(searchRef.current!=null && searchRef.current==event.target || searchRef.current.contains(event.target)) ){
-                searchHandleClick(false);
+                dispatch(StopSearching());
              }    
         }
 
         const handleType=(event)=>{
             event.stopPropagation();
              if(event.key=="Escape"){
-                searchHandleClick(false);
+                dispatch(StopSearching());
              }    
         }
         window.addEventListener("click",handleSearchClick);

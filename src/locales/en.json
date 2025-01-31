@@ -19,5 +19,7 @@
     "today_balance":"Today Incomes",
     "output":"Today's Spendings",
     "products":"Products",
-    "sales":"Sales"
+    "sales":"Sales",
+    "spends":"Spendings",
+    "main_table": "Main Table"
 }

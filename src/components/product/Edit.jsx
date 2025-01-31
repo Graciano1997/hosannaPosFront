@@ -1,8 +1,15 @@
 import { useState } from "react";
 import Modal from "../general/Modal";
 
-const Create=({setIsShowing})=>{
-   const [product,setProduct]=useState({});
+const Edit=({setIsShowing})=>{
+   const [product,setProduct]=useState({
+    name:'Banana',
+    price:200,
+    qty:20,
+    state:'unvailable',
+    expireDate:'2023-12-12',
+    barCode:"dddfffffddddsss"
+   });
 
     return(
         <>
@@ -84,4 +91,4 @@ const Create=({setIsShowing})=>{
     );
 };
 
-export default Create;
+export default Edit;
