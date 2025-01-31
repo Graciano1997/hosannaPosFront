@@ -1,10 +1,14 @@
 import { useTranslation } from "react-i18next";
-import Title from "./Title";
 import { useState } from "react";
 import Table from "../Table/Table";
 import Create from "./Create";
+import Title from "../general/Title";
+import ProductDashboard from "./ProductDashboard";
+import { useSelector } from "react-redux";
 
 const Product=()=>{
+    
+    const appState=useSelector((state)=>state.appState);
     const {t}=useTranslation();
     const [isShowing,setIsShowing]=useState(false);
     const [products,setProducts]=useState([{
@@ -23,7 +27,8 @@ const Product=()=>{
         <Title title={t('products')}/>
         <div className="h-[350px] rounded p-2" style={{marginBottom:'2rem',paddingBottom:'2rem', overflowY:'scroll'}}>
         
-        <Table collection={products}/>
+        {appState.activeTab=="tab1" && (<Table collection={products}/>)}
+        {appState.activeTab=="tab2"  && (<ProductDashboard/>)} 
         </div>
         </div>
         {isShowing && (<Create setIsShowing={setIsShowing}/>)}

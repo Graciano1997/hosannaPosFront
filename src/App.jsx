@@ -15,13 +15,11 @@ import Setting from './components/settings/Setting'
 import ShowToast from './components/general/ShowToast'
 import Login from './components/Login/Login'
 import Spend from './components/Spend/Spend'
-import store from './App/Store'
 import { useSelector } from 'react-redux'
 
 function App() {
 
   const appState=useSelector((state)=>state.appState);
-  console.log(appState);
 
   const [isVisible,setIsVisible]=useState(false);
   const [isSearching,setIsSearching]=useState(false);
