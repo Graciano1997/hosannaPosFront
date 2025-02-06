@@ -5,6 +5,7 @@ import { useState } from "react";
 import ClientDetails from "./ClientDetails";
 import SaleDetails from "./SaleDetails";
 import QrCodeReader from "../QrCode/QrCodeReader";
+import ProductDetails from "./ProductDetails";
 
 const Sale=({setToastObject})=>{
 
@@ -15,9 +16,10 @@ const Sale=({setToastObject})=>{
         return(
         <>
         <SaleHeader title={t('sales')} setIsReadingQr={setIsReadingQr} setReadValue={setReadValue} />
-        <div className="xs:grid xs:grid-cols-[25fr_75fr] xs:gap-4 xs:mt-4 p-1 sm:gap-4">
+        <div className="xs:grid xs:grid-cols-[25fr_50fr_25fr] xs:gap-4 xs:mt-4 p-1 sm:gap-4 ">
         <ClientDetails/>
-        <SaleDetails readValue={readValue}/> 
+        <SaleDetails readValue={readValue}/>
+        <ProductDetails/>
         </div>
         {isReadingQr && (<QrCodeReader 
         setToastObject={setToastObject}

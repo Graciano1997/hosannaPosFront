@@ -4,7 +4,7 @@ import { EllipsisHorizontalIcon, QrCodeIcon, ShoppingCartIcon } from "@heroicons
 
 const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
     return(
-        <div className="mt-[2rem] flex justify-between items-center w-[100%] h-[100px] bg-white rounded p-4">  
+        <div className="mt-[3rem] flex justify-between items-center w-[100%] h-[100px] bg-white rounded p-4">  
             <div className="flex gap-3">
             <label>
             <h1 className="text-3xl">Fatura</h1>

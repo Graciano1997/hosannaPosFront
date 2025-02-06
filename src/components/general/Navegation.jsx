@@ -81,12 +81,6 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li>
             <li>
-                <Link to={"/requests"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
-                <TruckIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('clients')}
-                </Link>
-            </li>
-            <li>
                 <Link to={"/setting"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/settings'?'rounded bg-green-100':''}`} >
                 <Cog8ToothIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('settings')}

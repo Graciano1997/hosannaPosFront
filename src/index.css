@@ -29,3 +29,7 @@ form textarea{
 .activeTab {
   border-bottom: 4px solid #0ed1a0;
 }
+
+.no-scrool{
+  overflow-y: hidden;
+}
