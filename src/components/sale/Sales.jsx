@@ -15,100 +15,20 @@ const Sales=()=>{
             nº:1,
             qty:20,
             total:2000,
-            responsavel:'Adilson Henrique',
             Date:'2023-12-12'
         },
         {
             nº:2,
             qty:30,
             total:5000,
-            responsavel:'Graciano Henrique',
             Date:'2023-12-12'
         },
         {
             nº:3,
             qty:20,
             total:2000,
-            responsavel:'Adilson Henrique',
             Date:'2023-12-12'
-        },
-        {
-            nº:4,
-            qty:30,
-            total:5000,
-            responsavel:'Graciano Henrique',
-            Date:'2023-12-12'
-        },
-        {
-            nº:5,
-            qty:20,
-            total:2000,
-            responsavel:'Adilson Henrique',
-            Date:'2023-12-12'
-        },
-        {
-            nº:6,
-            qty:30,
-            total:5000,
-            responsavel:'Graciano Henrique',
-            Date:'2023-12-12'
-        },
-        {
-            nº:6,
-            qty:30,
-            total:5000,
-            responsavel:'Graciano Henrique',
-            Date:'2023-12-12'
-        },
-        {
-            nº:6,
-            qty:30,
-            total:5000,
-            responsavel:'Graciano Henrique',
-            Date:'2023-12-12'
-        },
-        {
-            nº:6,
-            qty:30,
-            total:5000,
-            responsavel:'Graciano Henrique',
-            Date:'2023-12-12'
-        },
-        {
-            nº:6,
-            qty:30,
-            total:5000,
-            responsavel:'Graciano Henrique',
-            Date:'2023-12-12'
-        },
-        {
-            nº:6,
-            qty:30,
-            total:5000,
-            responsavel:'Graciano Henrique',
-            Date:'2023-12-12'
-        },
-        {
-            nº:6,
-            qty:30,
-            total:5000,
-            responsavel:'Graciano Henrique',
-            Date:'2023-12-12'
-        },
-        {
-            nº:6,
-            qty:30,
-            total:5000,
-            responsavel:'Graciano Henrique',
-            Date:'2023-12-12'
-        },
-        {
-            nº:6,
-            qty:30,
-            total:5000,
-            responsavel:'Graciano Henrique',
-            Date:'2023-12-12'
-        }       
+        },   
 ]);
 
     return(

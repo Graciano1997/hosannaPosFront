@@ -27,8 +27,11 @@ function App() {
   const [toastObject,setToastObject] = useState({});
 
   return (
-    <>
-     <div className="h-screen w-screen p-3">
+    <>    
+     <div className={`h-screen w-screen p-3 ${!appState.isLogged?'flex items-center justify-center':''}`}>   
+      
+      {appState.isLogged && (
+      <>
       <Header searchHandleClick={setIsSearching} setVisibility={setIsVisible}/>
       <Navegation visible={isVisible} setVisibility={setIsVisible}/>
       <Routes>
@@ -43,12 +46,12 @@ function App() {
       <Route path='/setting' element={<Setting/>} />
       </Routes>
       {appState.isSearching && (<Search/>)}
+      </>
+      )}
+      
+      {!appState.isLogged && (<Login/>)}
 
-    {
-      showToast && (
-      <ShowToast object={toastObject} />
-      )
-    }
+      { showToast && (<ShowToast object={toastObject} />)}
       
       {/* <Footer/> */}
      </div>

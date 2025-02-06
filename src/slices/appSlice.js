@@ -4,7 +4,8 @@ const initialState = {
     isOpen:false,
     isSearching:false,
     showToast:false,
-    activeTab:'tab1'
+    activeTab:'tab1',
+    isLogged:true
 }
 
 const appSlice=createSlice({
@@ -25,9 +26,10 @@ const appSlice=createSlice({
         },
         activeTab:(state,action)=>{
             state.activeTab=action.payload;
-        }
+        },
+        setLogged:(state)=>{state.isLogged=true;}
     }
 });
 
 export default appSlice.reducer;
-export const {openModal,closeModal,Searching,StopSearching,activeTab} = appSlice.actions;
+export const {openModal,closeModal,Searching,StopSearching,activeTab,setLogged} = appSlice.actions;
