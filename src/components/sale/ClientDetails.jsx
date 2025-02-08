@@ -17,8 +17,7 @@ const ClientDetails = ()=>{
                 <select id="clienteType" className="bg-green-100 rounded p-2">
                     <option value="1">Dinheiro</option>
                     <option value="2">Tpa</option>
-                    <option value="2">Transferencia</option>
-                    <option value="2">Misto</option>
+                    <option value="3">Transferencia</option>
                 </select>
             </div>
 
