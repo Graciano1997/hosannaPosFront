@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Dashboard from './components/dashboard/Dashboard'
 import Header from './components/general/Header'
 import Navegation from './components/general/Navegation'
 import Footer from './components/general/Footer'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useFetcher } from 'react-router-dom'
 import Product from './components/product/Product'
 import Search from './components/general/Search'
 import Request from './components/requests/Request'
@@ -15,7 +15,8 @@ import Setting from './components/settings/Setting'
 import ShowToast from './components/general/ShowToast'
 import Login from './components/Login/Login'
 import Spend from './components/Spend/Spend'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProducts } from './slices/productSlice'
 
 function App() {
 
@@ -25,6 +26,11 @@ function App() {
   const [isSearching,setIsSearching]=useState(false);
   const [showToast,setShowToast]=useState(false);
   const [toastObject,setToastObject] = useState({});
+  const dispatch = useDispatch();
+  
+  useEffect(()=>{
+    dispatch(fetchProducts());
+  },[]);
 
   return (
     <>    

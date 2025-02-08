@@ -1,0 +1,80 @@
+[
+    {
+      "id": 1,
+      "name": "Banana",
+      "price":200,
+      "available": 500,
+      "expire":"12-12-2025"
+    },
+    {
+      "id": 2,
+      "name": "Pera",
+      "available": 500,
+      "price":200,
+      "expire":null
+    },
+    {
+      "id": 3,
+      "name": "Apples",
+      "available": 500,
+      "price":200,
+      "expire":null
+    },
+    {
+      "id": 4,
+      "name": "Watter",
+      "available": 500,
+      "price":200,
+      "expire":null
+    },
+    {
+      "id": 5,
+      "name": "Whysk",
+      "available": 500,
+      "price":200,
+      "expire":null
+    },
+    {
+      "id": 6,
+      "name": "Tomate",
+      "available": 500,
+      "price":200,
+      "expire":null
+    },
+    {
+      "id": 7,
+      "name": "Fig",
+      "available": 500,
+      "price":200,
+      "expire":null
+    },
+    {
+      "id": 8,
+      "name": "Sugar",
+      "available": 500,
+      "price":200,
+      "expire":null
+    },
+    {
+      "id": 9,
+      "name": "Frango",
+      "available": 500,
+      "price":200,
+      "expire":null
+    },
+    {
+      "id": 10,
+      "name": "Peixe",
+      "available": 500,
+      "price":200,
+      "expire":null
+    },
+    {
+      "id": 11,
+      "name": "Hamburguer",
+      "available": 500,
+      "price":200,
+      "expire":null
+    }
+]
+  

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { searchProduct } from "./productSlice";
 
 const initialState = {
     isOpen:false,
@@ -28,6 +29,11 @@ const appSlice=createSlice({
             state.activeTab=action.payload;
         },
         setLogged:(state)=>{state.isLogged=true;}
+    },
+    extraReducers: (builder)=>{
+        builder.addCase(searchProduct,(state)=>{
+            state.isOpen=true;            
+        })
     }
 });
 

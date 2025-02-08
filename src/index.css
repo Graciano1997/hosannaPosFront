@@ -33,3 +33,22 @@ form textarea{
 .no-scrool{
   overflow-y: hidden;
 }
+
+@keyframes rightToLeft {
+  from {
+    transform: translateX(200%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.productDetails {
+  animation: rightToLeft 2s ease-in-out;
+}
+
+.saleDetails {
+  transition: all ease-in-out;
+  transition-duration: 1s;
+}
