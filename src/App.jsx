@@ -24,7 +24,7 @@ function App() {
 
   const [isVisible,setIsVisible]=useState(false);
   const [isSearching,setIsSearching]=useState(false);
-  const [showToast,setShowToast]=useState(false);
+  const [showToast,setShowToast]=useState(true);
   const [toastObject,setToastObject] = useState({});
   const dispatch = useDispatch();
   
@@ -57,7 +57,7 @@ function App() {
       
       {!appState.isLogged && (<Login/>)}
 
-      { showToast && (<ShowToast object={toastObject} />)}
+      { appState.showToast && (<ShowToast object={appState.toastObject} />)}
       
       {/* <Footer/> */}
      </div>

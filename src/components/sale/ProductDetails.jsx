@@ -27,7 +27,7 @@ const ProductDetails = ()=>{
                 <label for="productQty">Qty</label>
                 <input type="number"
                 onKeyDown={(evt)=>{
-                    if(evt.key == 'Enter'){
+                    if(evt.key == 'Enter'){            
                         if(qtyToUpdate>0){
                             dispatch(updateItem({
                                 ...selectedProduct,
