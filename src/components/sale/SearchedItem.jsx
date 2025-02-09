@@ -45,7 +45,7 @@ const SearchedItem = ({product,index})=>{
                             }
 
                             
-                        }}  className={`${added?'bg-red-400':'bg-green-500'} text-white font-bold rounded`}>Add</button>
+                        }}  className={`bg-green-400 text-white font-bold rounded`}>Add</button>
                     } 
                     </div>
 );

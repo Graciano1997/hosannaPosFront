@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { ClientType, DefaultClientePhone, PaymentType } from "../../lib/Enums";
+import { useSelector } from "react-redux";
 
 const ClientDetails = ()=>{
     const [clientType,setClientType]=useState(ClientType.SINGULAR);
+    const sale= useSelector((state)=>state.saleState);
 
     return(
         <div className={`h-[500px] bg-white rounded shadow-md p-3 flex flex-col  gap-2`}>
@@ -15,15 +17,6 @@ const ClientDetails = ()=>{
             <div className="flex flex-col gap-3">
                 <label for="clienteContact">Tel.Numero</label>
                 <input type="number" id="clienteContact" defaultValue={DefaultClientePhone} className="bg-green-100 rounded p-2"></input>
-            </div>
-
-            <div className="flex flex-col gap-3">
-                <label for="clienteType">Metodo de pagamento</label>
-                <select id="clienteType" className="bg-green-100 rounded p-2">
-                    <option value={PaymentType.CASH}>Dinheiro</option>
-                    <option value={PaymentType.TPA}>Tpa</option>
-                    <option value={PaymentType.TRANSFER}>Transferencia</option>
-                </select>
             </div>
 
             <div className="flex flex-col gap-3">
@@ -40,6 +33,14 @@ const ClientDetails = ()=>{
             <div className="flex flex-col gap-3">
                 <label for="clienteContact">NIF</label>
                 <input type="number" id="clienteContact" className="bg-green-100 rounded p-2"></input>
+            </div>
+            
+            }
+            
+            {sale.paymentType==PaymentType.CASH &&
+            <div className="flex flex-col gap-3">
+                <label for="cashReceived">Dinheiro Recebido</label>
+                <input type="number" id="cashReceived" className="bg-green-100 rounded p-2"></input>
             </div>
             
             }

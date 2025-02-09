@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { sum } from "../lib/sumSale";
+import { PaymentType } from "../lib/Enums";
 
 const initialState = {
     loading:false,
@@ -7,6 +8,7 @@ const initialState = {
     items:[],
     totalItems:0,
     selectedItem:undefined,
+    paymentType:PaymentType.CASH,
     total:0,
 }
 
@@ -61,10 +63,13 @@ const saleSlice = createSlice({
         },
         selectItem: (state,action)=>{
             state.selectedItem = action.payload;            
+        },
+        setPaymentType:(state,action)=>{
+            state.paymentType = action.payload
         }
     },
 });
 
 
 export default saleSlice.reducer;
-export const {addItem,updateItem,removeItem,selectItem,addProduct} = saleSlice.actions;
+export const {addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType} = saleSlice.actions;
