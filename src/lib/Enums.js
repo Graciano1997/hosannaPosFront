@@ -10,3 +10,9 @@ export const PaymentType = {
 }
 
 export const DefaultClientePhone = 911111111;
+
+export const SaleType = {
+    SALE:1,
+    CREDIT:2,
+    PORFORM:3
+}

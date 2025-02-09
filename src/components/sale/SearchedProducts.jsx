@@ -31,7 +31,7 @@ const SearchedProducts = ()=>{
                             dispatch(searchProduct(evt.target.value));
                         }
                 }}
-                placeholder="Busque pelo nome do produto"
+                placeholder="Nome do produto ou Codigo de barra"
                 className='p-1 rounded outline-none  bg-green-100 w-[100%]'/>
                 <MagnifyingGlassIcon
                 onClick={()=>{
