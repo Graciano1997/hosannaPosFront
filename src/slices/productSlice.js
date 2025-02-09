@@ -19,7 +19,9 @@ const productSlice = createSlice({
   reducers:{
     searchProduct:(state,action)=>{
         state.productsSearched = state.products.filter((product)=>(removeDiacritics(product.name)).includes(removeDiacritics(action.payload)));
-        
+    },
+    clearSearchedProduct:(state)=>{
+        state.productsSearched = [];
     }
   },
   extraReducers:(builder)=>{
@@ -42,4 +44,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const {searchProduct} = productSlice.actions;
+export const {searchProduct,clearSearchedProduct} = productSlice.actions;

@@ -5,14 +5,20 @@ import SaleItem from "./SaleItem";
 import { useDispatch, useSelector } from "react-redux";
 import { selectItem } from "../../slices/saleSlice";
 import { useState } from "react";
-import { searchProduct } from "../../slices/productSlice";
+import { clearSearchedProduct, searchProduct } from "../../slices/productSlice";
 import { openModal } from "../../slices/appSlice";
 
 
 const SaleDetails = ()=>{
     const dispatch = useDispatch();
     const products = useSelector((state)=>state.productState.products);
-   
+    const selectedProducts = useSelector ((state)=>state.saleState.items)
+    
+    const dispatchSearchHandler = ()=>{
+        dispatch(openModal());
+        dispatch(clearSearchedProduct());
+    }
+    
     return(
         <div className={`h-[500px] bg-white rounded shadow-md p-3 flex flex-col gap-3 saleDetails`}>
         <h1 className="font-bold mt-1 text-end">* Sales Details</h1>
@@ -23,32 +29,32 @@ const SaleDetails = ()=>{
                 <label htmlFor="searchProduct">Search Product</label>
                 <div className="flex flex-col bg-green-100 rounded">
                 <div className='bg-green-100  flex justify-between items-center rounded p-1 shadow'>
-                <input type='text' id="searchProduct" onKeyDown={
-                    (evt)=>{
-                        if(evt.key=="Enter" && evt.target.value!='' ){
-                            dispatch(searchProduct(evt.target.value));
-                        }
-                }}
+                <input type='text' readOnly id="searchProduct" onClick={dispatchSearchHandler}
 
                 className='p-1 rounded outline-none  bg-green-100 w-[100%]'/>
                 <MagnifyingGlassIcon
-                onClick={()=>{
-                    dispatch({...selectItem(products[0])});
-                }}
+                onClick={dispatchSearchHandler}
                  className="w-7 y-7 text-[#323232] cursor-pointer"/>
                 </div>
             </div>
             </div>
                
-   
-
             <div className="mt-[20px] p-3 bg-white transition-all duration-200 shadow-sm hover:shadow-md rounded">
                 
+                {selectedProducts.length > 0 &&
+                <>
                 <SaleDetailsHeader/>
+                 <div className="flex flex-col gap-2 h-[230px] mt-1" style={{overflow:'auto'}}>
+                 {selectedProducts.map((product,index)=><SaleItem index={index} product={product} key={product.id}/>)}   
+                 </div>
+                </>
+                }
 
-                <div className="flex flex-col gap-2 h-[230px] mt-1" style={{overflow:'auto'}}>
-                <SaleItem/>
-                </div>
+                {!(selectedProducts.length > 0) && 
+                    <h2 className="text-center font-light text-xl">Nenhum produto adicionado a esta compra</h2>
+                }
+                
+               
                
             </div>
             
