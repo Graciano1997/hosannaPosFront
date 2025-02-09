@@ -45,7 +45,7 @@ form textarea{
 }
 
 .productDetails {
-  animation: rightToLeft 2s ease-in-out;
+  animation: rightToLeft 1s ease-in-out;
 }
 
 .saleDetails {
