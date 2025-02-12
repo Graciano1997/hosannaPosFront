@@ -25,13 +25,14 @@ const Sale=({setToastObject})=>{
         return(
         <>
         <SaleHeader title={t('sales')} setIsReadingQr={setIsReadingQr} setReadValue={setReadValue} />
-        <div className={`xs:grid ${isSelectedProduct?'xs:grid-cols-[20fr_60fr_20fr]':'xs:grid-cols-[20fr_80fr]'}  xs:gap-4 xs:mt-4 p-1 sm:gap-4 `}>
+        <div className={` xs:grid ${isSelectedProduct?'xs:grid-cols-[20fr_60fr_20fr]':'xs:grid-cols-[20fr_80fr]'}  xs:gap-4 xs:mt-4 p-1 sm:gap-4 `}>
         <ClientDetails/>
         <SaleDetails/>
 
         {isSelectedProduct && <ProductDetails/>}
 
         {globalState.isOpen && <Modal><SearchedProducts/></Modal>}
+  
         </div>
         {isReadingQr && (<QrCodeReader 
         setToastObject={setToastObject}

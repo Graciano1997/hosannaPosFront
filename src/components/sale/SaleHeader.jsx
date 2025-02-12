@@ -4,6 +4,7 @@ import { EllipsisHorizontalIcon, QrCodeIcon, ShoppingCartIcon } from "@heroicons
 import { useDispatch, useSelector } from "react-redux";
 import { PaymentType, SaleType } from "../../lib/Enums";
 import { setPaymentType } from "../../slices/saleSlice";
+import Money from "../general/Money";
 
 const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
     const sale = useSelector((state)=>state.saleState);
@@ -54,7 +55,7 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
             </div>
 
             <div className="flex gap-5 items-center">
-            <p className="font-bold">Total: {sale.total}</p>
+            <p className="font-bold">Total: <Money amount={sale.total} /></p>
             <div className="flex flex-col" style={{position:'relative'}}>
              <p className="bg-green-200 p-1 text-black opacity-90" style={{position:'absolute',borderRadius:'50%', fontSize:'12px',top:'-22px',right:'-10px'}}>{sale.totalItems}</p>   
             <ShoppingCartIcon className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>

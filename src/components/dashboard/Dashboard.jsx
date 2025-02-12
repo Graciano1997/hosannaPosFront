@@ -11,6 +11,7 @@ const Dashboard=()=>{
     const {t}=useTranslation();
     return(
         <>
+        <div className="mt-[3rem]">
         <Title title={t('dashboard')}/>
         <div className="flex flex-wrap justify-center gap-7 mt-4 p-1 ">
         <Card className="font-black" width={400} height={350} info={{title:t('today_balance'),description:currency(1000,{separator:'.', decimal:',',precision:2}).add(200).format()}} />
@@ -19,6 +20,7 @@ const Dashboard=()=>{
         <BarChart width={450} height={350} info={'Gráfico Semestral'} />
          <PieChart width={400} height={350} info={'Categoria dos Produtos vendidos'}/>
         <LastExpired width={400} height={350} info={{title:t('expireds'),description:t('about')}}/>
+        </div>
         </div>
         </>
     )

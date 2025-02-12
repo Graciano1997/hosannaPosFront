@@ -16,3 +16,9 @@ export const SaleType = {
     CREDIT:2,
     PORFORM:3
 }
+
+export const ProductState = {
+    AVAILABLE:1,
+    EXPIRED:2,
+    FINISHED:3
+}

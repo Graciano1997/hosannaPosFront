@@ -5,6 +5,8 @@ import Table from "../Table/Table";
 import Create from "./Create";
 import SpendDashboard from "./SpendDashboard";
 import { useSelector } from "react-redux";
+import CardWrapper from "../general/CardWrapper";
+import TabWrapper from "../general/TabWrapper";
 
 const Spend=()=>{
     const {t}=useTranslation();
@@ -14,30 +16,26 @@ const Spend=()=>{
     const [spendings,setSpendings]=useState([{
         destinatario:'Graciano Henrique',
         motivo:'Gastos para comprar agua dos pedreiros',
-        valor:200,
+        amount:200,
         date:'2023-12-12'     
     },
     {
         destinatario:'Graciano Henrique',
         motivo:'Gastos para comprar agua dos pedreiros',
-        valor:200,
+        amount:200,
         date:'2023-12-12'     
     }
 ]);
 
     return(
-        <>
-        <div className="bg-white rounded p-2 h-[500px] mt-[2rem]">
+        <CardWrapper>
         <Title setIsShowing={setIsShowing} title={t('spends')}/>
-        <div className="h-[350px] rounded p-2" style={{marginBottom:'2rem',paddingBottom:'2rem', overflowY:'scroll'}}>
-        
+        <TabWrapper>
         {appState.activeTab=="tab1" && (<Table collection={spendings}/>)}
         {appState.activeTab=="tab2"  && (<SpendDashboard/>)} 
-
-        </div>
+        </TabWrapper> 
         {isShowing && (<Create/>)}
-        </div>
-        </>
+        </CardWrapper>
     )
 };
 

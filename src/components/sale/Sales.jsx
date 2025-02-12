@@ -4,6 +4,8 @@ import Table from "../Table/Table";
 import SaleDashboard from "./SaleDashboard";
 import Title from "../general/Title";
 import { useSelector } from "react-redux";
+import CardWrapper from "../general/CardWrapper";
+import TabWrapper from "../general/TabWrapper";
 
 const Sales=()=>{
     const {t}=useTranslation();
@@ -32,13 +34,13 @@ const Sales=()=>{
 ]);
 
     return(
-        <div className="bg-white rounded p-2 h-[500px] mt-[2rem]">
+        <CardWrapper>
         <Title title={t('sales')}/>
-        <div className="h-[350px] rounded p-2" style={{marginBottom:'2rem',paddingBottom:'2rem', overflowY:'scroll'}}>
+        <TabWrapper>    
         {appState.activeTab=="tab1" && (<Table collection={sales}/>)}
         {appState.activeTab=="tab2"  && (<SaleDashboard/>)} 
-        </div>
-        </div>
+        </TabWrapper>
+        </CardWrapper>
     )
 };
 

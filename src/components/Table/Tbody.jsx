@@ -1,9 +1,9 @@
 import Tr from "./Tr";
 
-const Tbody =({items})=>{
+const Tbody =({items,deleteItem})=>{
     return(
         <tbody>
-            {items.map((item,index)=><Tr item={item} index={index}/>)}
+            {items.map((item,index)=><Tr deleteItem={deleteItem} item={item} index={index}/>)}
         </tbody>
     )
 };

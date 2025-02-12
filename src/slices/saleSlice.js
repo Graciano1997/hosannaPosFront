@@ -7,6 +7,7 @@ const initialState = {
     error:'',
     items:[],
     totalItems:0,
+    
     selectedItem:undefined,
     paymentType:PaymentType.CASH,
     total:0,

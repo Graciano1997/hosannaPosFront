@@ -10,7 +10,7 @@ const ProductDetails = ()=>{
     const dispatch = useDispatch();
 
     return(
-        <div className={`h-[500px] bg-white rounded shadow-md p-3 flex flex-col  gap-2 productDetails`}>
+        <div className={`h-[560px] bg-white rounded shadow-md p-3 flex flex-col  gap-2 productDetails`}>
        <h1 className="font-bold text-end">* Product Details</h1>
             <div className="flex flex-col gap-1 mt-4">
             <label for="productName">Product</label>
