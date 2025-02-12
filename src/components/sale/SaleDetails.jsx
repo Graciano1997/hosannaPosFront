@@ -20,7 +20,7 @@ const SaleDetails = ()=>{
     }
     
     return(
-        <div className={`h-[500px] bg-white rounded shadow-md p-3 flex flex-col gap-3 saleDetails`}>
+        <div className={`h-[560px] bg-white rounded shadow-md p-3 flex flex-col gap-3 saleDetails`}>
         <h1 className="font-bold mt-1 text-end">* Sales Details</h1>
        
         <div className="flex flex-col saleDetails relative h-[500px]">
@@ -53,9 +53,6 @@ const SaleDetails = ()=>{
                 {!(selectedProducts.length > 0) && 
                     <h2 className="text-center font-light text-xl">Nenhum produto adicionado a esta compra</h2>
                 }
-                
-               
-               
             </div>
             
         <ButtonGroup/>

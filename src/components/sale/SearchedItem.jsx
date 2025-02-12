@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../slices/saleSlice";
 import { showToast } from "../../slices/appSlice";
+import Money from "../general/Money";
 
 const SearchedItem = ({product,index})=>{
     const [qtyTobuy,setQtyTobuy]=useState(1);
@@ -13,10 +14,10 @@ const SearchedItem = ({product,index})=>{
                         {product.name}
                         </p>
                         <p>
-                         {product.price}
+                        <Money amount={product.price}/>
                         </p>
                         <p>
-                         {product.stock}
+                         {product.qty}
                         </p>
                         <div className="">
                             <input className="w-[70%] text-center p-1 rounded" onChange={

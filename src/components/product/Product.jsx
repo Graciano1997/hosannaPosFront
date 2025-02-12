@@ -5,7 +5,9 @@ import Create from "./Create";
 import Title from "../general/Title";
 import ProductDashboard from "./ProductDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../slices/productSlice";
+import { deleteProduct, fetchProducts } from "../../slices/productSlice";
+import CardWrapper from "../general/CardWrapper";
+import TabWrapper from "../general/TabWrapper";
 
 const Product=()=>{
     
@@ -13,26 +15,37 @@ const Product=()=>{
     const {t}=useTranslation();
     const [isShowing,setIsShowing]=useState(false);
     const dispatch = useDispatch();
+    
+    const productState = useSelector((state)=>state.productState);
 
     useEffect(()=>{
         dispatch(fetchProducts());
     },[])
 
-    const products = useSelector((state)=>state.productState.products);
-
-
+    
+    const products = productState.products;
     return(
-        <>
-        <div className="bg-white rounded p-2 h-[500px] mt-[2rem]">
+        <CardWrapper>
+
         <Title title={t('products')}/>
-        <div className="h-[350px] rounded p-2" style={{marginBottom:'2rem',paddingBottom:'2rem', overflowY:'scroll'}}>
-        
-        {appState.activeTab=="tab1" && products.length > 0 && (<Table collection={products}/>)}
+        <TabWrapper>
+        {appState.activeTab=="tab1" && productState.loading && 
+        <div className=" mt-[5rem] flex justify-center">
+            <h4 className="text-3xl">Loading the Products...</h4>
+        </div>
+        }
+
+        {appState.activeTab=="tab1" && !productState.loading && 
+        productState.error &&
+        <div className="mt-[5rem] flex justify-center">
+            <h4 className="text-3xl text-red-700">{productState.error}</h4>
+        </div>
+        }
+        {appState.activeTab=="tab1" && !productState.error && !productState.loading && <Table deleteItem={deleteProduct} collection={products}/>}
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)} 
-        </div>
-        </div>
+        </TabWrapper>
         {isShowing && (<Create setIsShowing={setIsShowing}/>)}
-        </>
+        </CardWrapper>
     )
 };
 
