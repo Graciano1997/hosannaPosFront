@@ -4,6 +4,7 @@ import { removeDiacritics } from "../lib/removeDiacritic";
 const initialState = {
     products:[],
     loading:false,
+    isCreating:false,
     error:'',
     productsSearched:[]
 };
@@ -18,6 +19,11 @@ export const deleteProduct = createAsyncThunk("productState/deleteProduct", asyn
     return response.json();
 });
 
+export const registerProduct = createAsyncThunk("productState/registerProduct", async (product)=>{
+    const response = await fetch(`http://localhost:3000/api/products/`,{ method:'POST', body:JSON.stringify(product), headers:{'Content-Type':'application/json' }});
+    return response.json();
+});
+
 const productSlice = createSlice({
   name:'productState',
   initialState,
@@ -27,6 +33,9 @@ const productSlice = createSlice({
     },
     clearSearchedProduct:(state)=>{
         state.productsSearched = [];
+    },
+    creatingProduct: (state)=>{
+        state.isCreating = true;
     }
   },
 
@@ -66,11 +75,22 @@ const productSlice = createSlice({
 
     builder.addCase(deleteProduct.rejected,(state,action)=>{
         state.loading =false;
-        // state.error=action.error.message;
-        console.log(action.error.message);
+    })
+
+    builder.addCase(registerProduct.pending,(state)=>{ state.loading=true;});
+
+    builder.addCase(registerProduct.fulfilled,(state,action)=>{
+        state.loading=false;
+        state.isCreating=false;
+        state.products.push({...action.payload.product});
+        state.error='';
+    });
+
+    builder.addCase(registerProduct.rejected,(state,action)=>{
+        state.loading =false;
     })
 }
 });
 
 export default productSlice.reducer;
-export const {searchProduct,clearSearchedProduct} = productSlice.actions;
+export const {searchProduct,clearSearchedProduct, creatingProduct} = productSlice.actions;

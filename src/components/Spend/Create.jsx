@@ -13,7 +13,7 @@ const Create=({setIsShowing})=>{
                 <label>
                 Destinatario
                 <br />
-                <input list="userlist" className='p-1 rounded w-[100%] outline-none'/>
+                <input list="userlist" className='bg-green-100 p-1 rounded w-[100%] outline-none'/>
                 <datalist id="userlist">
                     <option value="Graciano">Graciano</option>
                     <option value="Graciano">Graciano</option>
@@ -25,7 +25,7 @@ const Create=({setIsShowing})=>{
                 <label>
                 Valor
                 <br />
-                <input type="number" className='p-1 rounded w-[100%] outline-none'/>
+                <input type="number" className='bg-green-100 p-1 rounded w-[100%] outline-none'/>
                 </label>
                 </div>
                 </div>
@@ -35,7 +35,7 @@ const Create=({setIsShowing})=>{
                 <label>
                 Motivo
                 <br />
-                <textarea rows={5} style={{resize:"none"}} maxLength={250} className="w-[100%] h-[100%] rounded p-2">
+                <textarea rows={5} style={{resize:"none"}} maxLength={250} className="bg-green-100 w-[100%] h-[100%] rounded p-2">
 
                 </textarea>
                 </label>

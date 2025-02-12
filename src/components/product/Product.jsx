@@ -5,7 +5,7 @@ import Create from "./Create";
 import Title from "../general/Title";
 import ProductDashboard from "./ProductDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct, fetchProducts } from "../../slices/productSlice";
+import { creatingProduct, deleteProduct, fetchProducts } from "../../slices/productSlice";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 
@@ -26,8 +26,7 @@ const Product=()=>{
     const products = productState.products;
     return(
         <CardWrapper>
-
-        <Title title={t('products')}/>
+        <Title create={creatingProduct} title={t('products')}/>
         <TabWrapper>
         {appState.activeTab=="tab1" && productState.loading && 
         <div className=" mt-[5rem] flex justify-center">
@@ -44,7 +43,7 @@ const Product=()=>{
         {appState.activeTab=="tab1" && !productState.error && !productState.loading && <Table deleteItem={deleteProduct} collection={products}/>}
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)} 
         </TabWrapper>
-        {isShowing && (<Create setIsShowing={setIsShowing}/>)}
+        {productState.isCreating && (<Create setIsShowing={setIsShowing}/>)}
         </CardWrapper>
     )
 };

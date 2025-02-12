@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { searchProduct } from "./productSlice";
+import { deleteProduct, registerProduct, searchProduct } from "./productSlice";
 import { addItem, removeItem, updateItem } from "./saleSlice";
 
 const initialState = {
@@ -57,6 +57,16 @@ const appSlice=createSlice({
         builder.addCase(updateItem,(state,action)=>{
             state.showToast=true;
             state.toastObject = {success:true,message:`Foi atualizada a quantidade do Produto ${action.payload.name} para ${action.payload.qty} `}
+        })
+
+        builder.addCase(deleteProduct.fulfilled,(state)=>{
+            state.showToast=true;
+            state.toastObject = {success:true,message:`Produto eliminado com sucesso`}
+        })
+
+        builder.addCase(registerProduct.fulfilled,(state,action)=>{
+            state.showToast=true;
+            state.toastObject = {success:true,message:`Produto ${action.payload.product.name} criado com sucesso`}
         })
     }
 });
