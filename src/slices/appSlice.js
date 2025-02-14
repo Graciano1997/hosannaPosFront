@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { deleteProduct, registerProduct, searchProduct } from "./productSlice";
 import { addItem, removeItem, updateItem } from "./saleSlice";
+import { createCategory, deleteCategory } from "./categorySlice";
 
 const initialState = {
     isOpen:false,
@@ -8,7 +9,9 @@ const initialState = {
     showToast:false,
     toastObject:undefined,
     activeTab:'tab1',
-    isLogged:true
+    isLogged:true,
+    loading:false,
+    error:''
 }
 
 const appSlice=createSlice({
@@ -64,9 +67,33 @@ const appSlice=createSlice({
             state.toastObject = {success:true,message:`Produto eliminado com sucesso`}
         })
 
-        builder.addCase(registerProduct.fulfilled,(state,action)=>{
+         builder.addCase(registerProduct.fulfilled,(state,action)=>{
+             state.showToast=true;
+
+            if(action.payload.error){
+                 state.toastObject = { error:true, message:action.payload.message[0] }
+            }else{
+                state.toastObject = { success:true, message:`Produto ${action.payload.product.name} criado com sucesso`}       
+            }
+         })
+
+         builder.addCase(createCategory.fulfilled,(state,action)=>{
             state.showToast=true;
-            state.toastObject = {success:true,message:`Produto ${action.payload.product.name} criado com sucesso`}
+
+           if(action.payload.error){
+                state.toastObject = { error:true, message:action.payload.message[0] }
+           }else{
+               state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} criada com sucesso`}       
+           }
+        })
+
+         builder.addCase(deleteCategory.fulfilled,(state,action)=>{
+             state.showToast=true;
+            if(action.payload.id){
+                state.toastObject = { success:true, message:`Categoria eliminada com sucesso`}       
+            }else{
+                state.toastObject = { error:true, message:`Nao pode eliminar categoria ja associada a um produto`}
+            }
         })
     }
 });

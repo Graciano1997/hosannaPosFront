@@ -1,13 +1,15 @@
-import {  EllipsisHorizontalIcon, HomeIcon, PlusCircleIcon,ArrowUpTrayIcon, PlusIcon } from "@heroicons/react/24/solid";
+import {  EllipsisHorizontalIcon, HomeIcon, PlusCircleIcon,ArrowUpTrayIcon, PlusIcon, PresentationChartLineIcon, Cog6ToothIcon, BuildingStorefrontIcon, ClipboardDocumentCheckIcon } from "@heroicons/react/24/solid";
 import {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Title=({title,setIsShowing=()=>{}})=>{
     const [showElipse,setShowElipse]=useState(true);
     const ref = useRef(null);
     const {t} = useTranslation();
-    
+    const appState= useSelector((state)=>state.appState);
+
     return(
         <>
         <div
@@ -43,7 +45,16 @@ const Title=({title,setIsShowing=()=>{}})=>{
             <li>
                 <Link to={"/dashboard"} 
                 className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded`} >
+               <PresentationChartLineIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>  
                 {t('dashboard')}
+                </Link>
+            </li>
+            <li>
+                <Link to={""}
+                onClick={()=>dispatch(activeTab('tab2'))} 
+                className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''} `} >
+                <ClipboardDocumentCheckIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
+                Categorias de Produtos
                 </Link>
             </li>
         </ul>   

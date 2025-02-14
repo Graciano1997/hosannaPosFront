@@ -1,7 +1,7 @@
-const Thead=({object})=>{
+const Thead=({object,filterRows})=>{
 
-    const keys=Object.keys(object)
-
+    const keys=Object.keys(object).filter((item)=>!filterRows.includes(item));
+    
     return(
       <thead>
       <tr className="p-2 shadow h-[45px]">

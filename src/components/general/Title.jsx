@@ -1,4 +1,4 @@
-import {  EllipsisHorizontalIcon, HomeIcon, PlusCircleIcon,ArrowUpTrayIcon, PlusIcon } from "@heroicons/react/24/solid";
+import {  EllipsisHorizontalIcon, HomeIcon, PlusCircleIcon,ArrowUpTrayIcon, PlusIcon, ChartBarIcon, ChartBarSquareIcon, PresentationChartLineIcon, Cog6ToothIcon } from "@heroicons/react/24/solid";
 import {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -29,7 +29,7 @@ const Title=({title,create})=>{
                 {!showElipse && (        
                 <ul   className="flex flex-col gap-3 w-[150px] h-[75px] right-[20px] bg-white shadow rounded absolute z-2000" id="elipseMenu">
                 <li onClick={()=>{ dispatch(create())}} className="m-0.5 flex gap-3 items-center justify-center hover:sm:shadow transition-200 hover:cursor-pointer">
-                <span className="">Criar</span><PlusIcon className="w-4 h-4"/></li>
+                <span className="">New</span><PlusIcon className="w-4 h-4"/></li>
                 <li className="m-0.5 flex gap-3 items-center justify-center hover:sm:shadow hover:cursor-pointer"><span className="">Exportar</span><ArrowUpTrayIcon className="w-4 h-4"/></li>
                 </ul>)
             }
@@ -48,7 +48,17 @@ const Title=({title,create})=>{
                 <Link to={""}
                 onClick={()=>dispatch(activeTab('tab2'))} 
                 className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab2"?'activeTab':''} `} >
+                <PresentationChartLineIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('dashboard')}
+                </Link>
+            </li>
+
+            <li>
+                <Link to={""}
+                onClick={()=>dispatch(activeTab('tab3'))} 
+                className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''} `} >
+                <Cog6ToothIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
+                {t('product_categories')}
                 </Link>
             </li>
         </ul>   

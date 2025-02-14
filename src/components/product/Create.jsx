@@ -1,11 +1,14 @@
 import { useState } from "react";
 import Modal from "../general/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerProduct } from "../../slices/productSlice";
 
 const Create=({setIsShowing})=>{
    const [product,setProduct]=useState({});
    const dispatch = useDispatch();
+
+   const categories = useSelector((state)=>state.categoryState.categories);
+
 
    const formHandler = (el)=>{
     setProduct({
@@ -75,6 +78,19 @@ const Create=({setIsShowing})=>{
                 <input type='date' name="expiration" onChange={formHandler} value={product.expireDate} className='p-1 rounded w-[100%] outline-none'/>
                 </label>
                 </div>
+                </div>
+
+                <div className="flex gap-5">
+                <div className="w-[50%]">
+                <label>
+                Category
+                <br />
+                <select name="category_id" onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
+                <option value="" disabled selected>Selecione uma categoria</option>
+                {categories.map((category)=><option value={category.id}>{category.name}</option>)}
+                </select>
+                </label>
+                </div>  
                 </div>
                 </div>
                 <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">Create</button></div>
