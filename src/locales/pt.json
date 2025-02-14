@@ -23,5 +23,6 @@
     "sales":"Vendas",
     "spends":"Saidas",
     "main_table": "Tabela Geral",
-    "clients":"Clientes"
+    "clients":"Clientes",
+    "product_categories":"Categorias"
 }

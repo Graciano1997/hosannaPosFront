@@ -44,12 +44,6 @@ const Navegation =({visible,setVisibility})=>{
                 {t('sale')}
                 </Link>
             </li>
-            {/* <li>
-                <Link to={"/requests"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
-                <ClipboardDocumentListIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('requests')}
-                </Link>
-            </li> */}
             <li>
                 <Link to={"/products"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/products'?'rounded bg-green-100':''}`} >
                 <CubeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>

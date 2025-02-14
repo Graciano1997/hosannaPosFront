@@ -1,2 +1,2 @@
-const TabWrapper = ({children})=>  <div className="h-[350px] rounded p-2" style={{marginBottom:'2rem',paddingBottom:'2rem', overflowY:'scroll'}}>{children}</div>
+const TabWrapper = ({children})=>  <div className="rounded p-2">{children}</div>
 export default TabWrapper;      

@@ -6,7 +6,7 @@ const initialState = {
     loading:false,
     isCreating:false,
     error:'',
-    productsSearched:[]
+    productsSearched:[],
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async ()=>{
@@ -37,6 +37,7 @@ const productSlice = createSlice({
     creatingProduct: (state)=>{
         state.isCreating = true;
     }
+
   },
 
   extraReducers:(builder)=>{
@@ -82,8 +83,9 @@ const productSlice = createSlice({
     builder.addCase(registerProduct.fulfilled,(state,action)=>{
         state.loading=false;
         state.isCreating=false;
-        state.products.push({...action.payload.product});
-        state.error='';
+        if(!action.payload.error){
+            state.products.push({...action.payload.product});
+        }
     });
 
     builder.addCase(registerProduct.rejected,(state,action)=>{
