@@ -3,6 +3,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const initialState = {
     categories: [],
     isCreating:false,
+    isUpdating:false,
+    categoryToUpdate:{}
 };
 
 export const fetchCategories = createAsyncThunk("categoryState/fetchCategories",async ()=>{
@@ -36,7 +38,12 @@ export const categorySlice = createSlice({
     reducers:{
         creatingCategory: (state)=>{
             state.isCreating = true;
+        },
+        updatingCategory: (state,action)=>{
+            state.isUpdating = true;
+            state.categoryToUpdate=action.payload;
         }
+
     },
     extraReducers:(builder)=>{
         builder.addCase(fetchCategories.fulfilled,(state,action)=>{
@@ -50,6 +57,19 @@ export const categorySlice = createSlice({
             }
         })
 
+        builder.addCase(updateCategory.fulfilled,(state,action)=>{
+            state.isUpdating = false;
+            state.categoryToUpdate = {};
+            if (action.payload.success && action.payload.category) {
+                const atIndex = state.categories.findIndex(item => item.id === action.payload.category.id);
+                if (atIndex !== -1) {
+                  const updatedCategories = [...state.categories]; // Create a new array
+                  updatedCategories[atIndex] = action.payload.category; // Update the specific item
+                  state.categories = updatedCategories; // Assign the new array to state
+                }
+              }            
+        })
+
         builder.addCase(deleteCategory.fulfilled,(state,action)=>{
             state.categories = state.categories.filter((category)=>category.id!==action.payload.id);  
         })
@@ -57,4 +77,4 @@ export const categorySlice = createSlice({
 })
 
 export default categorySlice.reducer;
-export const { creatingCategory } = categorySlice.actions;
+export const { creatingCategory, updatingCategory } = categorySlice.actions;

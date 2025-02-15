@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteProduct, registerProduct, searchProduct } from "./productSlice";
+import { deleteProduct, registerProduct, searchProduct, updateProduct } from "./productSlice";
 import { addItem, removeItem, updateItem } from "./saleSlice";
-import { createCategory, deleteCategory } from "./categorySlice";
+import { createCategory, deleteCategory, updateCategory } from "./categorySlice";
 
 const initialState = {
     isOpen:false,
@@ -77,6 +77,11 @@ const appSlice=createSlice({
             }
          })
 
+         builder.addCase(updateProduct.fulfilled,(state,action)=>{
+            state.showToast=true;
+               state.toastObject = { success:true, message:`Produto ${action.payload.product.name} atualizado com sucesso`}       
+        })
+
          builder.addCase(createCategory.fulfilled,(state,action)=>{
             state.showToast=true;
 
@@ -85,6 +90,11 @@ const appSlice=createSlice({
            }else{
                state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} criada com sucesso`}       
            }
+        })
+
+        builder.addCase(updateCategory.fulfilled,(state,action)=>{
+            state.showToast=true;
+               state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} atualizada com sucesso`}       
         })
 
          builder.addCase(deleteCategory.fulfilled,(state,action)=>{

@@ -5,6 +5,8 @@ const initialState = {
     products:[],
     loading:false,
     isCreating:false,
+    isUpdating:false,
+    productToUpdate:{},
     error:'',
     productsSearched:[],
 };
@@ -24,6 +26,14 @@ export const registerProduct = createAsyncThunk("productState/registerProduct", 
     return response.json();
 });
 
+export const updateProduct = createAsyncThunk("productState/updateProduct",async (product)=>{
+    const response = await fetch(`http://localhost:3000/api/products/${product.id}`,
+    {method:'PUT',
+        body:JSON.stringify(product),
+     headers:{'Content-Type':'application/json'}});
+    return response.json();
+});
+
 const productSlice = createSlice({
   name:'productState',
   initialState,
@@ -36,6 +46,10 @@ const productSlice = createSlice({
     },
     creatingProduct: (state)=>{
         state.isCreating = true;
+    },
+    updatingProduct: (state,action)=>{
+        state.isUpdating = true;
+        state.productToUpdate=action.payload;
     }
 
   },
@@ -91,8 +105,21 @@ const productSlice = createSlice({
     builder.addCase(registerProduct.rejected,(state,action)=>{
         state.loading =false;
     })
+
+     builder.addCase(updateProduct.fulfilled,(state,action)=>{
+                state.isUpdating = false;
+                state.productToUpdate = {};
+                if (action.payload.success && action.payload.product) {
+                    const atIndex = state.products.findIndex(item => item.id === action.payload.product.id);
+                    if (atIndex !== -1) {
+                      const updatedProducts = [...state.products]; // Create a new array
+                      updatedProducts[atIndex] = action.payload.product; // Update the specific item
+                      state.products = updatedProducts; // Assign the new array to state
+                    }
+                  }            
+            })
 }
 });
 
 export default productSlice.reducer;
-export const {searchProduct,clearSearchedProduct, creatingProduct} = productSlice.actions;
+export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct} = productSlice.actions;
