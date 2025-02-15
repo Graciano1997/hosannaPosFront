@@ -3,7 +3,7 @@ import Tbody from "./Tbody";
 import Thead from "./Thead";
 import { useDispatch } from "react-redux";
 
-const Table = ({collection, deleteItem,filterRows=[],create=()=>{}})=>{
+const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filterRows=[]})=>{
     const dispatch = useDispatch();
 
     return(
@@ -24,7 +24,7 @@ const Table = ({collection, deleteItem,filterRows=[],create=()=>{}})=>{
         {collection.length>0 &&
         <table className="rounded shadow-md  w-[100%] mt-[3rem]">
         <Thead filterRows={filterRows} object={collection[0]} />
-        <Tbody filterRows={filterRows} deleteItem={deleteItem} items={collection} />
+        <Tbody filterRows={filterRows} updateItem={update} deleteItem={deleteItem} items={collection} />
         </table>
         }
         </div>

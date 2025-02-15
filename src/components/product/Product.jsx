@@ -5,11 +5,12 @@ import Create from "./Create";
 import Title from "../general/Title";
 import ProductDashboard from "./ProductDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { creatingProduct, deleteProduct, fetchProducts } from "../../slices/productSlice";
+import { creatingProduct, deleteProduct, fetchProducts, updatingProduct } from "../../slices/productSlice";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
-import { creatingCategory, deleteCategory, fetchCategories } from "../../slices/categorySlice";
+import { creatingCategory, deleteCategory, fetchCategories, updateCategory, updatingCategory } from "../../slices/categorySlice";
 import CreateCategory from "./CreateCategory";
+import ProductConfiguration from "./ProductConfiguration";
 
 const Product=()=>{
     
@@ -45,14 +46,15 @@ const Product=()=>{
         </div>
         }
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
-        <Table filterRows={['created_at','updated_at']} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
+        <Table filterRows={['created_at','updated_at']} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}
-        {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table create={creatingCategory} filterRows={['created_at','updated_at']} deleteItem={deleteCategory} collection={categoryState.categories}/>}
+        {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['created_at','updated_at']}  collection={categoryState.categories}/>}
+        {appState.activeTab=="tab4" && !productState.error && !productState.loading && <ProductConfiguration />}
         </TabWrapper>
-        {productState.isCreating && (<Create setIsShowing={setIsShowing}/>)}
-        {categoryState.isCreating && (<CreateCategory setIsShowing={setIsShowing}/>)}
+        {(categoryState.isCreating || categoryState.isUpdating) && (<CreateCategory setIsShowing={setIsShowing}/>)}
+        {(productState.isCreating  || productState.isUpdating ) && (<Create setIsShowing={setIsShowing}/>)}
         </CardWrapper>
     )
 };

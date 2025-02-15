@@ -3,7 +3,7 @@ import Money from "../general/Money";
 import { useDispatch } from "react-redux";
 import { stateDisplay, textDisplay } from "../../lib/activeDisplay";
 
-const Tr =({item,index,deleteItem,filterRows})=>{
+const Tr =({item,index,deleteItem,updateItem,filterRows})=>{
     
     const moneyFields = ['price','total','amount'];
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const Tr =({item,index,deleteItem,filterRows})=>{
             <td className="text-end">
             <div className="flex gap-3">
             <button onClick={()=>{ dispatch(deleteItem(item.id))}}><TrashIcon className="w-6 y-6 p-1 text-red-300 hover:shadow hover:rounded"/></button>
-            <button><PencilIcon className="w-6 y-6 p-1 text-green-800 hover:shadow hover:rounded"/></button>
+            <button onClick={()=>{dispatch(updateItem(item))}}><PencilIcon className="w-6 y-6 p-1 text-green-800 hover:shadow hover:rounded"/></button>
             </div>
             </td>
         </tr>

@@ -1,13 +1,15 @@
 import { useState } from "react";
 import Modal from "../general/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { createCategory } from "../../slices/categorySlice";
+import { createCategory, updateCategory } from "../../slices/categorySlice";
 
 const CreateCategory=({setIsShowing})=>{
-   const [category,setCategory]=useState({});
-   const dispatch = useDispatch();
 
-   const categories = useSelector((state)=>state.categoryState.categories);
+   const categoriesState = useSelector((state)=>state.categoryState);
+
+   const [category,setCategory]=useState(categoriesState.categoryToUpdate);
+   const dispatch = useDispatch();
+   const categories = categoriesState.categories;
 
 
    const formHandler = (el)=>{
@@ -19,7 +21,22 @@ const CreateCategory=({setIsShowing})=>{
 
    const handleFormSubmition = (el)=>{
     el.preventDefault();
-    dispatch(createCategory(category));
+    
+    setCategory({
+        ...category,
+        parent_category_id:category.parent_category_id*1
+    })
+
+    let treatedCategoryObject = {
+        ...category,
+        parent_category_id:category.parent_category_id==0? null: parseInt(category.parent_category_id)
+    }
+
+    if(treatedCategoryObject.id){
+        dispatch(updateCategory(treatedCategoryObject));
+    }else{
+        dispatch(createCategory(treatedCategoryObject));
+    }
    }
 
     return(
@@ -32,7 +49,7 @@ const CreateCategory=({setIsShowing})=>{
                 <label>
                 Nome
                 <br />
-                <input type='text' onChange={formHandler} name="name" className='p-1 rounded w-[100%] outline-none'/>
+                <input type='text' onChange={formHandler} name="name" value={category.name} className='p-1 rounded w-[100%] outline-none'/>
                 </label>
                 </div>
                
@@ -40,10 +57,10 @@ const CreateCategory=({setIsShowing})=>{
                 <label>
                 Parent Category
                 <br />
-                <select name="parent_category" onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                <option value="" disabled selected>Selecione uma categoria Parente</option>
-                <option value="">Nenhuma</option>
-                {categories.map((category)=><option value={category.id}>{category.name}</option>)}
+                <select name="parent_category_id" value={category.parent_category_id?category.parent_category_id:""} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
+                <option value="" disabled>Selecione uma categoria Parente</option>
+                <option value={0}>Nenhuma</option>
+                {categories.map((category)=><option value={category.id*1}>{category.name}</option>)}
                 </select>
                 </label>
                 </div> 
@@ -53,7 +70,7 @@ const CreateCategory=({setIsShowing})=>{
                 <label>
                 Status
                 <br />
-                <select name="status" className='p-2 rounded w-[100%] outline-none' onChange={formHandler}>
+                <select name="status" value={category.status} className='p-2 rounded w-[100%] outline-none' onChange={formHandler}>
                 <option value="" disabled selected>Selecione o estado</option>
                     <option value={true}>Ativo</option>
                     <option value={false}>Desativo</option>
@@ -67,12 +84,12 @@ const CreateCategory=({setIsShowing})=>{
                 <label>
                     Description
                 <br />
-                <textarea name="description" onChange={formHandler} className='p-2 rounded w-[100%] outline-none'></textarea>
+                <textarea name="description" value={category.description} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'></textarea>
                 </label>
                 </div>
                 </div>
                 </div>
-                <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">Create</button></div>
+                <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded"> {category.id?'Update':'Create'}</button></div>
                 </form>
         </Modal>
     </>

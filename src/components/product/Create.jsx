@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Modal from "../general/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { registerProduct } from "../../slices/productSlice";
+import { registerProduct, updateProduct } from "../../slices/productSlice";
+import LargeModal from "../general/LargeModal";
 
 const Create=({setIsShowing})=>{
-   const [product,setProduct]=useState({});
+    const productState = useSelector((state)=>state.productState);
+   const [product,setProduct]=useState(productState.productToUpdate);
    const dispatch = useDispatch();
 
    const categories = useSelector((state)=>state.categoryState.categories);
@@ -19,12 +21,25 @@ const Create=({setIsShowing})=>{
 
    const handleFormSubmition = (el)=>{
     el.preventDefault();
-    dispatch(registerProduct(product));
+
+    let treatedProductObject = {
+        ...product,
+        category_id:parseInt(product.category_id)
+    }
+
+    if(treatedProductObject.id){
+            dispatch(updateProduct(treatedProductObject));
+    }else{
+        dispatch(registerProduct(treatedProductObject));
+    }
+
    }
 
     return(
         <>
-        <Modal setIsShowing={setIsShowing}>
+        {/* <Modal setIsShowing={setIsShowing}> */}
+        <LargeModal setIsShowing={setIsShowing}>
+
         <form onSubmit={handleFormSubmition} action="POST" className='flex flex-col h-[100%]  mt-[1rem] rounded p-3'>
                 <div className="flex flex-col gap-4">
                 <div className="flex gap-5">
@@ -57,7 +72,7 @@ const Create=({setIsShowing})=>{
                 <label>
                 Bar Code
                 <br />
-                <input type='text' name="code" onChange={formHandler} value={product.barCode} className='p-1 rounded w-[100%] outline-none'/>
+                <input type='text' name="code" onChange={formHandler} value={product.code} className='p-1 rounded w-[100%] outline-none'/>
                 </label>
                 </div>
                 </div>
@@ -65,9 +80,9 @@ const Create=({setIsShowing})=>{
                 <div className="flex gap-5">
                 <div className="w-[50%]">
                 <label>
-                Issued Date
+                Manufacture Date
                 <br />
-                <input type='date' name="creation" onChange={formHandler} value={product.issueDate} className='p-1 rounded w-[100%] outline-none'/>
+                <input type='date' name="manufacture_date" onChange={formHandler} value={product.manufacture_date} className='p-1 rounded w-[100%] outline-none'/>
                 </label>
                 </div>
                
@@ -75,7 +90,7 @@ const Create=({setIsShowing})=>{
                 <label>
                 Expire Date
                 <br />
-                <input type='date' name="expiration" onChange={formHandler} value={product.expireDate} className='p-1 rounded w-[100%] outline-none'/>
+                <input type='date' name="expire_date" onChange={formHandler} value={product.expire_date} className='p-1 rounded w-[100%] outline-none'/>
                 </label>
                 </div>
                 </div>
@@ -85,7 +100,7 @@ const Create=({setIsShowing})=>{
                 <label>
                 Category
                 <br />
-                <select name="category_id" onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
+                <select name="category_id" value={product.category_id} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
                 <option value="" disabled selected>Selecione uma categoria</option>
                 {categories.map((category)=><option value={category.id}>{category.name}</option>)}
                 </select>
@@ -93,9 +108,10 @@ const Create=({setIsShowing})=>{
                 </div>  
                 </div>
                 </div>
-                <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">Create</button></div>
+                <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{product.id?'Update':'Create'}</button></div>
                 </form>
-        </Modal>
+        </LargeModal>
+        {/* </Modal> */}
     </>
     );
 };

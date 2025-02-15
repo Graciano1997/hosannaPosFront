@@ -1,4 +1,4 @@
-import {  EllipsisHorizontalIcon, HomeIcon, PlusCircleIcon,ArrowUpTrayIcon, PlusIcon, ChartBarIcon, ChartBarSquareIcon, PresentationChartLineIcon, Cog6ToothIcon } from "@heroicons/react/24/solid";
+import {  EllipsisHorizontalIcon,ArrowUpTrayIcon, PlusIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon } from "@heroicons/react/24/solid";
 import {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -40,7 +40,7 @@ const Title=({title,create})=>{
             <li>
                 <Link to={"#"} onClick={()=>dispatch(activeTab('tab1'))} 
                 className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab1"?'activeTab':''}`} >
-                <HomeIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
+                <TableCellsIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('main_table')}
                 </Link>
             </li>
@@ -57,8 +57,18 @@ const Title=({title,create})=>{
                 <Link to={""}
                 onClick={()=>dispatch(activeTab('tab3'))} 
                 className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''} `} >
-                <Cog6ToothIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
+                <RectangleGroupIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
+                
                 {t('product_categories')}
+                </Link>
+            </li>
+
+            <li>
+                <Link to={""}
+                onClick={()=>dispatch(activeTab('tab4'))} 
+                className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''} `} >
+                <WrenchIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
+                {t('Configurations')}
                 </Link>
             </li>
         </ul>   
