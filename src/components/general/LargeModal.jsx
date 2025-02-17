@@ -12,7 +12,7 @@ const LargeModal = ({children})=>{
          <button
          onClick={()=>{ dispatch(closeModal())}}
           className="absolute text-black text-lg bg-white p-2 rounded shadow  right-[15px] top-[20px]">X</button>
-            <div className='p-3 mt-[5rem]  w-[97%]  h-[85%]  rounded bg-white shadow' style={{zIndex:2000}}>
+            <div className='p-3 mt-[5rem]  w-[97%] h-[80%]  rounded bg-white shadow overflow-auto' style={{zIndex:2000}}>
               {children} 
             </div>
         </div>
