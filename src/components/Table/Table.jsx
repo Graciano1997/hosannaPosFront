@@ -8,7 +8,7 @@ const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filter
 
     return(
         <>
-        <div>
+        <div className="w-[100%]">
          <div className="flex justify-end">
         <button onClick={()=>{dispatch(create())}} className="p-2"><PlusIcon className="rounded-[30%] w-10 h-10 text-green-700 shadow hover:shadow-md"/></button>
         </div>
@@ -22,10 +22,12 @@ const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filter
         }
 
         {collection.length>0 &&
-        <table className="rounded shadow-md  w-[100%] mt-[3rem]">
-        <Thead filterRows={filterRows} object={collection[0]} />
+        <div className="w-[100%] overflow-auto p-1">
+        <table className="rounded shadow-md mt-[3rem] w-[100%] gap-5">
+        <Thead filterRows={filterRows} object={collection[0]}/>
         <Tbody filterRows={filterRows} updateItem={update} deleteItem={deleteItem} items={collection} />
         </table>
+        </div>
         }
         </div>
         </>
