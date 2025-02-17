@@ -23,7 +23,7 @@ const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filter
 
         {collection.length>0 &&
         <div className="w-[100%] overflow-auto p-1">
-        <table className="rounded shadow-md mt-[3rem] w-[100%] gap-5">
+        <table className="rounded shadow-md mt-[3rem] w-[100%]">
         <Thead filterRows={filterRows} object={collection[0]}/>
         <Tbody filterRows={filterRows} updateItem={update} deleteItem={deleteItem} items={collection} />
         </table>
