@@ -5,7 +5,7 @@ import Create from "./Create";
 import Title from "../general/Title";
 import ProductDashboard from "./ProductDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { creatingProduct, deleteProduct, fetchProducts, updatingProduct } from "../../slices/productSlice";
+import { creatingProduct, deleteProduct, fetchProductConfiguration, fetchProducts, updatingProduct } from "../../slices/productSlice";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { creatingCategory, deleteCategory, fetchCategories, updateCategory, updatingCategory } from "../../slices/categorySlice";
@@ -18,15 +18,14 @@ const Product=()=>{
     const {t}=useTranslation();
     const [isShowing,setIsShowing]=useState(false);
     const dispatch = useDispatch();
-    
     const productState = useSelector((state)=>state.productState);
     const categoryState = useSelector((state)=>state.categoryState);
-
+    
     useEffect(()=>{
+        dispatch(fetchProductConfiguration());
         dispatch(fetchProducts());
         dispatch(fetchCategories());
     },[])
-
     
     const products = productState.products;
     return(
@@ -46,7 +45,7 @@ const Product=()=>{
         </div>
         }
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
-        <Table filterRows={[]} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
+        <Table filterRows={productState.productFilterRows} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}

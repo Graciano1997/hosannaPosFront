@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteProduct, registerProduct, searchProduct, updateProduct } from "./productSlice";
+import { deleteProduct, productConfiguration, registerProduct, searchProduct, updateProduct } from "./productSlice";
 import { addItem, removeItem, updateItem } from "./saleSlice";
 import { createCategory, deleteCategory, updateCategory } from "./categorySlice";
 
@@ -95,6 +95,16 @@ const appSlice=createSlice({
         builder.addCase(updateCategory.fulfilled,(state,action)=>{
             state.showToast=true;
                state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} atualizada com sucesso`}       
+        })
+
+        builder.addCase(productConfiguration.fulfilled,(state,action)=>{
+            state.showToast=true;
+               state.toastObject = { success:true, message:`Configuracao salva com sucesso`}
+        })
+
+        builder.addCase(productConfiguration.rejected,(state,action)=>{
+            state.showToast=true;
+               state.toastObject = { error:true, message:`Algum erro a configuracao nao foi salva`}
         })
 
          builder.addCase(deleteCategory.fulfilled,(state,action)=>{

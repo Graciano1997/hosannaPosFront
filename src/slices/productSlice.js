@@ -9,12 +9,22 @@ const initialState = {
     productToUpdate:{},
     error:'',
     productsSearched:[],
+    productConfigurationFields:[],
+    productAllFields:[],
+    productFilterRows:[],
+    filterRowsOp:[]
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async ()=>{
     const response = await fetch('http://localhost:3000/api/products/',{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
+
+export const fetchProductsFields = createAsyncThunk("productState/fetchProductsFields", async ()=>{
+    const response = await fetch('http://localhost:3000/api/products/product_fields',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    return response.json();
+});
+
 
 export const deleteProduct = createAsyncThunk("productState/deleteProduct", async (id)=>{
     const response = await fetch(`http://localhost:3000/api/products/${id}`,{ method:'DELETE', headers:{'Content-Type':'application/json' }});
@@ -34,6 +44,17 @@ export const updateProduct = createAsyncThunk("productState/updateProduct",async
     return response.json();
 });
 
+export const fetchProductConfiguration = createAsyncThunk("productState/fetchProductConfiguration", async ()=>{
+    const response = await fetch('http://localhost:3000/api/product_configurations/',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    return response.json();
+});
+
+export const productConfiguration = createAsyncThunk("productState/productConfiguration", async (products)=>{
+    const response = await fetch(`http://localhost:3000/api/product_configurations/`,{ method:'POST', body:JSON.stringify(products), headers:{'Content-Type':'application/json' }});
+    return response.json();
+});
+
+
 const productSlice = createSlice({
   name:'productState',
   initialState,
@@ -50,6 +71,17 @@ const productSlice = createSlice({
     updatingProduct: (state,action)=>{
         state.isUpdating = true;
         state.productToUpdate=action.payload;
+    },
+
+    addProductField:(state,action)=>{
+            const atIndex = state.filterRowsOp.findIndex(item => item.field == action.payload.field);
+            if (atIndex !== -1) {
+              const updatedProducts = [...state.filterRowsOp];
+              updatedProducts[atIndex] = action.payload; 
+              state.filterRowsOp = updatedProducts; 
+            }else{
+                state.filterRowsOp.push(action.payload)
+            }
     }
 
   },
@@ -102,8 +134,30 @@ const productSlice = createSlice({
         }
     });
 
+    builder.addCase(productConfiguration.fulfilled,(state,action)=>{
+      
+    });
+
+    builder.addCase(fetchProductConfiguration.fulfilled,(state,action)=>{
+        state.productConfigurationFields = (action.payload.data);
+        let filterRows = [];
+
+        action.payload.data.map((item)=>{
+            if(!item.active){
+                filterRows.push(item.field);
+            }
+        });
+
+        state.productFilterRows = filterRows;
+    
+      });
+
     builder.addCase(registerProduct.rejected,(state,action)=>{
         state.loading =false;
+    });
+
+    builder.addCase(fetchProductsFields.fulfilled,(state,action)=>{
+        state.productAllFields = action.payload.data;
     })
 
      builder.addCase(updateProduct.fulfilled,(state,action)=>{
@@ -122,4 +176,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct} = productSlice.actions;
+export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField} = productSlice.actions;
