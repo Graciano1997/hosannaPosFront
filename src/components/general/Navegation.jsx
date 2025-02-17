@@ -62,18 +62,18 @@ const Navegation =({visible,setVisibility})=>{
                 {t('sales')}
                 </Link>
             </li>      
-                  <li>
+                  {/* <li>
                 <Link to={"/notifications"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/notifications'?'rounded bg-green-100':''}`} >
                 <BellAlertIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('notifications')}
                 </Link>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
                 <Link to={"/requests"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
                 <UsersIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('clients')}
                 </Link>
-            </li>
+            </li> */}
             <li>
                 <Link to={"/setting"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/setting'?'rounded bg-green-100':''}`} >
                 <Cog8ToothIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>

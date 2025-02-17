@@ -46,7 +46,7 @@ const Product=()=>{
         </div>
         }
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
-        <Table filterRows={['created_at','updated_at']} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
+        <Table filterRows={[]} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}
