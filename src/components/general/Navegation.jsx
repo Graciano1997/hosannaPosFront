@@ -2,7 +2,7 @@ import { useEffect, useRef} from "react";
 import image from "../../assets/Img/gra.jpeg";
 import CurrentUser from "./CurrentUser";
 import { Link, useLocation } from "react-router-dom";
-import { ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CubeIcon, HomeIcon,ShoppingCartIcon, TruckIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CubeIcon, HomeIcon,ShoppingCartIcon, TruckIcon, UserGroupIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 
 const Navegation =({visible,setVisibility})=>{
@@ -51,7 +51,7 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li>           
             <li>
-                <Link to={"/spends"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/spends'?'rounded bg-green-100':''}`} >
+                <Link to={"/spents"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/spends'?'rounded bg-green-100':''}`} >
                 <ArrowTrendingUpIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {'Spends'}
                 </Link>
@@ -68,12 +68,12 @@ const Navegation =({visible,setVisibility})=>{
                 {t('notifications')}
                 </Link>
             </li> */}
-            {/* <li>
+            <li>
                 <Link to={"/requests"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
-                <UsersIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('clients')}
+                <UserGroupIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                {t('users')}
                 </Link>
-            </li> */}
+            </li>
             <li>
                 <Link to={"/setting"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/setting'?'rounded bg-green-100':''}`} >
                 <Cog8ToothIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>

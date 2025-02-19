@@ -1,7 +1,7 @@
 import {  EllipsisHorizontalIcon,ArrowUpTrayIcon, PlusIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon } from "@heroicons/react/24/solid";
 import {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { activeTab } from "../../slices/appSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,7 +11,8 @@ const Title=({title,create})=>{
     const {t} = useTranslation();
     const appState= useSelector((state)=>state.appState);
     const dispatch = useDispatch();
-    
+    const {pathname}=useLocation();
+
     return(
         <>
         <div
@@ -52,8 +53,11 @@ const Title=({title,create})=>{
                 {t('dashboard')}
                 </Link>
             </li>
-
-            <li>
+            {
+                pathname == '/products'
+                 &&
+                <>
+                <li>
                 <Link to={""}
                 onClick={()=>dispatch(activeTab('tab3'))} 
                 className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''} `} >
@@ -68,9 +72,13 @@ const Title=({title,create})=>{
                 onClick={()=>dispatch(activeTab('tab4'))} 
                 className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''} `} >
                 <WrenchIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('Configurations')}
+                {t('configuration')}
                 </Link>
             </li>
+                </>
+
+            }
+            
         </ul>   
     </nav>
         </div>

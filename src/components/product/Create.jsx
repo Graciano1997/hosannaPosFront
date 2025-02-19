@@ -3,15 +3,17 @@ import Modal from "../general/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { registerProduct, updateProduct } from "../../slices/productSlice";
 import LargeModal from "../general/LargeModal";
+import { useTranslation } from "react-i18next";
 
 const Create = ({ setIsShowing }) => {
     const productState = useSelector((state) => state.productState);
     const [product, setProduct] = useState(productState.productToUpdate);
-    const [dimensionVector,setDimensionVector]=useState({});
+    const [dimensionVector, setDimensionVector] = useState({});
     const dispatch = useDispatch();
+    const {t}=useTranslation();
 
     const categories = useSelector((state) => state.categoryState.categories);
-    const productFilterRows = useSelector((state)=>state.productState.productFilterRows)
+    const productFilterRows = useSelector((state) => state.productState.productFilterRows)
 
     const formHandler = (el) => {
         setProduct({
@@ -26,7 +28,7 @@ const Create = ({ setIsShowing }) => {
         let treatedProductObject = {
             ...product,
             category_id: parseInt(product.category_id),
-            dimension:JSON.stringify(dimensionVector) 
+            dimension: JSON.stringify(dimensionVector)
         }
 
          if (treatedProductObject.id) {
@@ -40,282 +42,229 @@ const Create = ({ setIsShowing }) => {
         <>
             <LargeModal setIsShowing={setIsShowing}>
                 <form onSubmit={handleFormSubmition} action="POST" className='flex flex-col h-[100%]  mt-[1rem] rounded p-3'>
-                    <div className="flex flex-col gap-4">
-                        <div className="flex gap-5">
-                            <div className="w-[50%]">
-                                <label>
-                                    Nome
-                                    <br />
-                                    <input type='text' onChange={formHandler} name="name" value={product.name} className='p-1 rounded w-[100%] outline-none' />
-                                </label>
-                            </div>
+                    <div className="grid grid-cols-3 gap-4">
+                        <label>
+                        {t('name')[0].toUpperCase().concat(t('name').slice(1))}
+                            <br />
+                            <input type='text' onChange={formHandler} name="name" value={product.name} className='p-1 rounded w-[100%] outline-none' />
+                        </label>
 
-                            <div className="w-[50%]">
-                                <label>
-                                    Preco de venda
-                                    <br />
-                                    <input type='number' onChange={formHandler} name="price" value={product.price} className='p-1 rounded w-[100%] outline-none' min={0} />
-                                </label>
-                            </div>
+                        <label>
+                        {t('price')[0].toUpperCase().concat(t('price').slice(1))}
+                            <br />
+                            <input type='number' onChange={formHandler} name="price" value={product.price} className='p-1 rounded w-[100%] outline-none' min={0} />
+                        </label>
 
-                            <div className="w-[50%]">
-                                <label>
-                                    Quantidade
-                                    <br />
-                                    <input type='number' onChange={formHandler} name="qty" value={product.qty} className='p-1 rounded w-[100%] outline-none' min={0} />
-                                </label>
-                            </div>
-                        </div>
-
-                        <div className="flex gap-5">
+                        <label>
+                        {t('qty')[0].toUpperCase().concat(t('qty').slice(1))}
+                            <br />
+                            <input type='number' onChange={formHandler} name="qty" value={product.qty} className='p-1 rounded w-[100%] outline-none' min={0} />
+                        </label>
 
 
-                            <div className="w-[50%]">
-                                <label>
-                                    Bar Code
-                                    <br />
-                                    <input type='text' name="code" onChange={formHandler} value={product.code} className='p-1 rounded w-[100%] outline-none' />
-                                </label>
-                            </div>
+                        <label>
+                        {t('code')[0].toUpperCase().concat(t('code').slice(1))}
+                            <br />
+                            <input type='text' name="code" onChange={formHandler} value={product.code} className='p-1 rounded w-[100%] outline-none' />
+                        </label>
 
-                            <div className="w-[50%]">
-                                <label>
-                                    Category
-                                    <br />
-                                    <select name="category_id" value={product.category_id} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                                        <option value="" disabled selected>Selecione uma categoria</option>
-                                        {categories.map((category) => <option value={category.id}>{category.name}</option>)}
-                                    </select>
-                                </label>
-                            </div>
+                        <label>
+                        {t('category')[0].toUpperCase().concat(t('category').slice(1))}
+                            <br />
+                            <select name="category_id" value={product.category_id} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
+                                <option value="" disabled selected>Selecione uma categoria</option>
+                                {categories.map((category) => <option value={category.id}>{category.name}</option>)}
+                            </select>
+                        </label>
+
                         {!productFilterRows.includes('product_type') &&
-                            <div className="w-[50%]">
-                                <label>
-                                    Tipo de Produto
-                                    <br />
-                                    <select name="product_type" value={product.product_type} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                                        <option value="" disabled selected>Selecione o tipo de produto </option>
-                                        <option value="good">Good</option>
-                                        <option value="service">Service</option>
-                                    </select>
-                                </label>
-                            </div>
+                            <label>
+                            {t('product_type')[0].toUpperCase().concat(t('product_type').slice(1))}
+                                <br />
+                                <select name="product_type" value={product.product_type} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
+                                    <option value="" disabled selected>Selecione o tipo de produto </option>
+                                    <option value={t('good')}>{t('good')}</option>
+                                    <option value={t('service')}>{t('service')}</option>
+                                </select>
+                            </label>
                         }
-                        </div>
 
-                        <div className="flex gap-5">
                         {!productFilterRows.includes('taxes') &&
-                     
-                            <div className="w-[50%]">
-                                <label>
-                                    Imposto do produto
-                                    <br />
-                                    <input type='number' onChange={formHandler} name="taxes" value={product.taxes} className='p-1 rounded w-[100%] outline-none' />
-                                </label>
-                            </div>
+
+                            <label>
+                            {t('taxes')[0].toUpperCase().concat(t('taxes').slice(1))}
+                                <br />
+                                <input type='number' onChange={formHandler} name="taxes" value={product.taxes} className='p-1 rounded w-[100%] outline-none' />
+                            </label>
                         }
 
-{!productFilterRows.includes('status') &&
+                        {!productFilterRows.includes('status') &&
 
-                            <div className="w-[50%]">
-                                <label>
-                                    Status
-                                    <br />
-                                    <select name="status" value={product.status} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                                        <option value="" disabled selected>Estado do produto</option>
-                                        <option value={true}>Activo</option>
-                                        <option value={true}>Desativo</option>
-                                    </select>
-                                </label>
-                            </div>
-}
+                            <label>
+                        {t('status')[0].toUpperCase().concat(t('status').slice(1))}
+                                <br />
+                                <select name="status" value={product.status?product.status:""} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
+                                    <option value="" disabled>Estado do produto</option>
+                                    <option value={true}>{t('active')}</option>
+                                    <option value={true}>{t('disative')}</option>
+                                </select>
+                            </label>
+                        }
 
-{!productFilterRows.includes('brand') &&
+                        {!productFilterRows.includes('brand') &&
 
-                            <div className="w-[50%]">
-                                <label>
-                                    Marca
-                                    <br />
-                                    <input type='text' onChange={formHandler} name="brand" value={product.brand} className='p-1 rounded w-[100%] outline-none' />
-                                </label>
-                            </div>
-                            }
+                            <label>
+                        {t('brand')[0].toUpperCase().concat(t('brand').slice(1))}
+                                <br />
+                                <input type='text' onChange={formHandler} name="brand" value={product.brand} className='p-1 rounded w-[100%] outline-none' />
+                            </label>
+                        }
 
-                        </div>
-
-                        <div className="flex gap-5">
                         {!productFilterRows.includes('cost_price') &&
 
-                            <div className="w-[50%]">
-                                <label>
-                                    Preco de Custo
-                                    <br />
-                                    <input type='number' onChange={formHandler} name="cost_price" value={product.cost_price} className='p-1 rounded w-[100%] outline-none' />
-                                </label>
-                            </div>
+                            <label>
+                            {t('cost_price')[0].toUpperCase().concat(t('cost_price').slice(1))}
+                                <br />
+                                <input type='number' onChange={formHandler} name="cost_price" value={product.cost_price} className='p-1 rounded w-[100%] outline-none' />
+                            </label>
                         }
-                    {!productFilterRows.includes('promotion') &&
-                            <div className="w-[50%]">
-                                <label>
-                                    Promocao
-                                    <br />
-                                    <select name="promotion" value={product.promotion} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                                        <option value="" disabled selected>Produto em promocao </option>
-                                        <option value={true}>Sim</option>
-                                        <option value={true}>Nao</option>
+                        {!productFilterRows.includes('promotion') &&
+                            <label>
+                            {t('promotion')[0].toUpperCase().concat(t('promotion').slice(1))}
+                                <br />
+                                <select name="promotion" value={product.promotion} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
+                                    <option value="" disabled selected>Produto em promocao </option>
+                                    <option value={true}>Sim</option>
+                                    <option value={false}>Nao</option>
 
-                                    </select>
-                                </label>
-                            </div>
-}
+                                </select>
+                            </label>
+                        }
 
-{!productFilterRows.includes('discount') &&
-                            <div className="w-[50%]">
-                                <label>
-                                    Discount
-                                    <br />
-                                    <input type='number' onChange={formHandler} name="discount" value={product.discount} className='p-1 rounded w-[100%] outline-none' min={0} />
-                                </label>
-                            </div>
-}
-                        </div>
+                        {!productFilterRows.includes('discount') &&
+                            <label>
+                   {t('discount')[0].toUpperCase().concat(t('discount').slice(1))}
+                   <br />
+                                <input type='number' onChange={formHandler} name="discount" value={product.discount} className='p-1 rounded w-[100%] outline-none' min={0} />
+                            </label>
+                        }
 
-                        <div className="flex gap-5">
+
                         {!productFilterRows.includes('weight') &&
-                            <div className="w-[50%]">
-                                <label>
-                                    Peso
-                                    <br />
-                                    <input type='number' onChange={formHandler} name="weight" value={product.weight} className='p-1 rounded w-[100%] outline-none' />
-                                </label>
-                            </div>
-}
-{!productFilterRows.includes('mesure_unit') &&
-                            <div className="w-[50%]">
-                                <label>
-                                    Unidade de medida
-                                    <br />
-                                    <select name="mesure_unit" value={product.mesure_unit} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                                        <option value="" disabled selected>Selecione a unidade </option>
-                                        <option value="kg">kilograma (kg)</option>
-                                        <option value="un">unidade (un)</option>
-                                        <option value="l">litros (l)</option>
-                                    </select>
-                                </label>
-                            </div>
-}
+                            <label>
+                        {t('weight')[0].toUpperCase().concat(t('weight').slice(1))}
+                                <br />
+                                <input type='number' onChange={formHandler} name="weight" value={product.weight} className='p-1 rounded w-[100%] outline-none' />
+                            </label>
+                        }
+                        {!productFilterRows.includes('mesure_unit') &&
+                            <label>
+                                {t('mesure_unit')[0].toUpperCase().concat(t('mesure_unit').slice(1))}
+                                <br />
+                                <select name="mesure_unit" value={product.mesure_unit} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
+                                    <option value="" disabled selected>Selecione a unidade </option>
+                                    <option value="kg">kilograma (kg)</option>
+                                    <option value="un">unidade (un)</option>
+                                    <option value="l">litros (l)</option>
+                                </select>
+                            </label>
+                        }
 
 
-{!productFilterRows.includes('dimension') &&
+                        {!productFilterRows.includes('dimension') &&
 
-                            <div className="w-[50%]">
-                                <label>
-                                    Dimensoes
-                                    <br />
-                                    <div className="flex gap-1 w-[100%]">
-                                        <input type='number' onChange={(el)=>{
-                                            
-                                            setDimensionVector({...dimensionVector,
-                                                w:el.target.value*1
-                                            });
+                            <label>
+                                {t('dimension')[0].toUpperCase().concat(t('dimension').slice(1))}
+                                <br />
+                                <div className="flex gap-1 w-[100%]">
+                                    <input type='number' onChange={(el) => {
 
-                                            setProduct({
-                                                ...product,
-                                                dimension: dimensionVector
-                                            })
+                                        setDimensionVector({
+                                            ...dimensionVector,
+                                            w: el.target.value * 1
+                                        });
 
-                                        }} placeholder="Largura" value={dimensionVector.w} className='p-1 rounded w-[33%] outline-none' min={0} />
-                                        <input type='number' 
-                                        onChange={(el)=>{
-                                            
-                                            setDimensionVector({...dimensionVector,
-                                                h:el.target.value*1
+                                        setProduct({
+                                            ...product,
+                                            dimension: dimensionVector
+                                        })
+
+                                    }} placeholder="Largura" value={dimensionVector.w} className='p-1 rounded w-[33%] outline-none' min={0} />
+                                    <input type='number'
+                                        onChange={(el) => {
+
+                                            setDimensionVector({
+                                                ...dimensionVector,
+                                                h: el.target.value * 1
                                             });
 
                                         }}
                                         placeholder="Altura" name="discount" value={dimensionVector.h} className='p-1 rounded w-[33%] outline-none' min={0} />
-                                        <input type='number' onChange={(el)=>{
-                                            
-                                            setDimensionVector({...dimensionVector,
-                                                d:el.target.value*1
-                                            });
-                                        }} placeholder="Profundidade"value={dimensionVector.d} className='p-1 rounded w-[33%] outline-none' min={0} />
-                                        <input type='hidden' name='dimension' value={dimensionVector}/>                                
-                                    </div>
-                                </label>
-                            </div>
-}
-                        </div>
+                                    <input type='number' onChange={(el) => {
 
+                                        setDimensionVector({
+                                            ...dimensionVector,
+                                            d: el.target.value * 1
+                                        });
+                                    }} placeholder="Profundidade" value={dimensionVector.d} className='p-1 rounded w-[33%] outline-none' min={0} />
+                                    <input type='hidden' name='dimension' value={dimensionVector} />
+                                </div>
+                            </label>
 
-                        <div className="flex gap-5">
-{!productFilterRows.includes('manufacture_date') &&
-                            <div className="w-[50%]">
-                                <label>
-                                    Manufacture Date
-                                    <br />
-                                    <input type='date' name="manufacture_date" onChange={formHandler} value={product.manufacture_date} className='p-1 rounded w-[100%] outline-none' />
-                                </label>
-                            </div>
-}
+                        }
 
-{!productFilterRows.includes('expire_date') &&
-                            <div className="w-[50%]">
-                                <label>
-                                    Expire Date
-                                    <br />
-                                    <input type='date' name="expire_date" onChange={formHandler} value={product.expire_date} className='p-1 rounded w-[100%] outline-none' />
-                                </label>
-                            </div>
-}
+                        {!productFilterRows.includes('manufacture_date') &&
+                            <label>
+                        {t('manufacture_date')[0].toUpperCase().concat(t('manufacture_date').slice(1))}       
+                                <br />
+                                <input type='date' name="manufacture_date" onChange={formHandler} value={product.manufacture_date} className='p-1 rounded w-[100%] outline-none' />
+                            </label>
+                        }
 
-{!productFilterRows.includes('location_in_stock') &&
+                        {!productFilterRows.includes('expire_date') &&
+                            <label>
+                                {t('expire_date')[0].toUpperCase().concat(t('expire_date').slice(1))} 
+                                <br />
+                                <input type='date' name="expire_date" onChange={formHandler} value={product.expire_date} className='p-1 rounded w-[100%] outline-none' />
+                            </label>
+                        }
 
-                            <div className="w-[50%]">
-                                <label>
-                                    Localizacao no Stock
-                                    <br />
-                                    <input type='text' name="location_in_stock" onChange={formHandler} value={product.location_in_stock} className='p-1 rounded w-[100%] outline-none' />
-                                </label>
-                            </div>
-}
-                        </div>
+                        {!productFilterRows.includes('location_in_stock') &&
 
-                        <div className="flex gap-5">
+                            <label>
+                                {t('location_in_stock')[0].toUpperCase().concat(t('location_in_stock').slice(1))} 
+                                <br />
+                                <input type='text' name="location_in_stock" onChange={formHandler} value={product.location_in_stock} className='p-1 rounded w-[100%] outline-none' />
+                            </label>
+                        }
+
                         {!productFilterRows.includes('description') &&
-                        
-                            <div className="w-[50%]">
-                                <label>
-                                    Descricao
-                                    <br />
-                                    <textarea name="description" value={product.description} onChange={formHandler} className='p-2 rounded w-[100%] outline-none h-[70px]'>
-                                    </textarea>
-                                </label>
-                            </div>
-}
 
-{!productFilterRows.includes('observation') &&
+                            <label>
+                                {t('description')[0].toUpperCase().concat(t('description').slice(1))} 
+                                <br />
+                                <textarea name="description" value={product.description} onChange={formHandler} className='p-2 rounded w-[100%] outline-none h-[70px]'>
+                                </textarea>
+                            </label>
+                        }
 
-                            <div className="w-[50%]">
-                                <label>
-                                    Observation
-                                    <br />
-                                    <textarea name="observation" onChange={formHandler} value={product.observation} className='p-2 h-[70px] rounded w-[100%] outline-none'>
-                                    </textarea>
-                                </label>
-                            </div>
-}
-{!productFilterRows.includes('keyword') &&
+                        {!productFilterRows.includes('observation') &&
 
-                            <div className="w-[50%]">
-                                <label>
-                                    Palavra chave do produto
-                                    <br />
-                                    <input type='text' onChange={formHandler} name="keyword" value={product.keyword} className='p-1 rounded w-[100%] outline-none' />
-                                </label>
-                            </div>
-}
-                        </div>
+                            <label>
+                                {t('observation')[0].toUpperCase().concat(t('observation').slice(1))} 
+                                <br />
+                                <textarea name="observation" onChange={formHandler} value={product.observation} className='p-2 h-[70px] rounded w-[100%] outline-none'>
+                                </textarea>
+                            </label>
+                        }
+                        {!productFilterRows.includes('keyword') &&
+
+                            <label>
+                                {t('keyword')[0].toUpperCase().concat(t('keyword').slice(1))} 
+                                <br />
+                                <input type='text' onChange={formHandler} name="keyword" value={product.keyword} className='p-1 rounded w-[100%] outline-none' />
+                            </label>
+                        }
                     </div>
                     <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{product.id ? 'Update' : 'Create'}</button></div>
                 </form>

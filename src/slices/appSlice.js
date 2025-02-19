@@ -97,11 +97,6 @@ const appSlice=createSlice({
                state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} atualizada com sucesso`}       
         })
 
-        builder.addCase(productConfiguration.fulfilled,(state,action)=>{
-            state.showToast=true;
-               state.toastObject = { success:true, message:`Configuracao salva com sucesso`}
-        })
-
         builder.addCase(productConfiguration.rejected,(state,action)=>{
             state.showToast=true;
                state.toastObject = { error:true, message:`Algum erro a configuracao nao foi salva`}

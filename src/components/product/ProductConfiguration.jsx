@@ -1,16 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductConfiguration, fetchProductsFields, productConfiguration } from "../../slices/productSlice";
+import { fetchProductConfiguration, fetchProducts, fetchProductsFields, productConfiguration } from "../../slices/productSlice";
 import ProductConfigurationFormItem from "./ProductConfigurationFormItem";
+import { useTranslation } from "react-i18next";
+import { activeTab, showToast } from "../../slices/appSlice";
 
 const ProductConfiguration = ()=>{
 
+    const { t } = useTranslation();
+
     const dispatch = useDispatch();
 
-
     useEffect(()=>{
-        dispatch(fetchProductConfiguration());
         dispatch(fetchProductsFields());
+        dispatch(fetchProductConfiguration());
     },[]);
 
 
@@ -27,7 +30,14 @@ const ProductConfiguration = ()=>{
 
     const handleFormSubmition = (el)=>{
         el.preventDefault();
-        dispatch(productConfiguration(productConfigurationFilterElements))    
+        dispatch(productConfiguration(productConfigurationFilterElements))
+        .then(()=>{
+            dispatch(showToast({ success:true, message:t('saved_sucessfuly')}))
+            dispatch(fetchProducts());
+            dispatch(fetchProductsFields());
+            dispatch(fetchProductConfiguration());
+            dispatch(activeTab('tab1'));
+        })    
     }
 
 
@@ -36,9 +46,9 @@ const ProductConfiguration = ()=>{
             <h1 className="pl-2 font-light text-3xl text-start">Product Configurations Fields</h1>
             <form onSubmit={handleFormSubmition} className="w-[100%] mt-[2rem] shadow p-2">
                 <div className="grid grid-cols-3">
-                <p className="">Name</p>
-                <p className="text-center">Status</p>
-                <p className="text-center">Mandatory</p>
+                <p className="">{t('name')[0].toUpperCase().concat(t('name').slice(1))}</p>
+                <p className="text-center">{t('status')[0].toUpperCase().concat(t('status').slice(1))}</p>
+                <p className="text-center">{t('mandatory')[0].toUpperCase().concat(t('mandatory').slice(1))}</p>
                 </div>
                 <div className="mt-[1rem] h-[230px] w-[100%]  overflow-scroll">
                 
