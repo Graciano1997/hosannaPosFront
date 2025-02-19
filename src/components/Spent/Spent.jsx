@@ -18,7 +18,7 @@ const Spent = () => {
 
     useEffect(()=>{
         dispatch(fetchSpents());
-    },[])
+    },[]);
 
     const spentState = useSelector((state) => state.spentState);
     const spents = spentState.spents;
@@ -30,7 +30,7 @@ const Spent = () => {
                 {appState.activeTab == "tab1" && (<Table filterRows={['user_id']} collection={spents} update={updatingSpent} deleteItem={deleteSpent}  create={creatingSpent} />)}
                 {appState.activeTab == "tab2" && (<SpendDashboard />)}
             </TabWrapper>
-            {(spentState.isCreating || spentState.isUpdating) && (<Create />)}
+            {(spentState.isCreating || spentState.isUpdating) && appState.isOpen &&  (<Create />)}
         </CardWrapper>
     )
 };

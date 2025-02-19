@@ -52,8 +52,8 @@ const Product=()=>{
         {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['created_at','updated_at']}  collection={categoryState.categories}/>}
         {appState.activeTab=="tab4" && !productState.error && !productState.loading && <ProductConfiguration />}
         </TabWrapper>
-        {(categoryState.isCreating || categoryState.isUpdating) && (<CreateCategory setIsShowing={setIsShowing}/>)}
-        {(productState.isCreating  || productState.isUpdating ) && (<Create setIsShowing={setIsShowing}/>)}
+        {(categoryState.isCreating || categoryState.isUpdating) && appState.isOpen && (<CreateCategory setIsShowing={setIsShowing}/>)}
+        {(productState.isCreating  || productState.isUpdating ) && appState.isOpen && (<Create setIsShowing={setIsShowing}/>)}
         </CardWrapper>
     )
 };
