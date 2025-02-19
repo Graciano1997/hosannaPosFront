@@ -2,6 +2,7 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import Tbody from "./Tbody";
 import Thead from "./Thead";
 import { useDispatch } from "react-redux";
+import { openModal } from "../../slices/appSlice";
 
 const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filterRows=[]})=>{
     const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filter
         <>
         <div className="w-[100%]">
          <div className="flex justify-end">
-        <button onClick={()=>{dispatch(create())}} className="p-2"><PlusIcon className="rounded-[30%] w-10 h-10 text-green-700 shadow hover:shadow-md"/></button>
+        <button onClick={()=>{ dispatch(create()); dispatch(openModal()); }} className="p-2"><PlusIcon className="rounded-[30%] w-10 h-10 text-green-700 shadow hover:shadow-md"/></button>
         </div>
         {!collection.length &&
         <div className="rounded text-center w-[100%] mt-[5rem]">
