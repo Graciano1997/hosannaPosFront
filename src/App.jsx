@@ -14,9 +14,9 @@ import Sale from './components/sale/Sale'
 import Setting from './components/settings/Setting'
 import ShowToast from './components/general/ShowToast'
 import Login from './components/Login/Login'
-import Spend from './components/Spend/Spend'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts } from './slices/productSlice'
+import Spent from './components/Spent/Spent'
 
 function App() {
 
@@ -47,7 +47,7 @@ function App() {
       <Route path='/notifications' element={<Notification/>} />
       <Route path='/sales' element={<Sales/>} />
       <Route path='/products' element={<Product/>} />
-      <Route path='/spends' element={<Spend/>} />  
+      <Route path='/spents' element={<Spent/>} />  
       <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />
       <Route path='/setting' element={<Setting/>} />
       </Routes>

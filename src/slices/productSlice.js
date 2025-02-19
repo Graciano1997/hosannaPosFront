@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { removeDiacritics } from "../lib/removeDiacritic";
+import { fetchCategories } from "./categorySlice";
 
 const initialState = {
     products:[],
@@ -132,10 +133,6 @@ const productSlice = createSlice({
         if(!action.payload.error){
             state.products.push({...action.payload.product});
         }
-    });
-
-    builder.addCase(productConfiguration.fulfilled,(state,action)=>{
-      
     });
 
     builder.addCase(fetchProductConfiguration.fulfilled,(state,action)=>{

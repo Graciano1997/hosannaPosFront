@@ -25,7 +25,7 @@ const Product=()=>{
         dispatch(fetchProductConfiguration());
         dispatch(fetchProducts());
         dispatch(fetchCategories());
-    },[])
+    },[dispatch])
     
     const products = productState.products;
     return(
@@ -45,7 +45,7 @@ const Product=()=>{
         </div>
         }
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
-        <Table filterRows={productState.productFilterRows} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
+        <Table filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}

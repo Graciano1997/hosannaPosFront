@@ -4,7 +4,7 @@ import { BarChart } from "../dashboard/BarChart";
 import LastSelling from "../dashboard/LastSelling";
 import currency from "currency.js";
 
-const SpendDashboard=()=>{
+const SpentDashboard=()=>{
     const {t}=useTranslation();
     return(
         <>
@@ -17,4 +17,4 @@ const SpendDashboard=()=>{
     )
 };
 
-export default SpendDashboard;
+export default SpentDashboard;

@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { PaymentType, SaleType } from "../../lib/Enums";
 import { setPaymentType } from "../../slices/saleSlice";
 import Money from "../general/Money";
+import { useTranslation } from "react-i18next";
 
 const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
     const sale = useSelector((state)=>state.saleState);
     const dispatch = useDispatch();
+    const {t}= useTranslation();
+
     return(
         <div className="mt-[3rem] flex justify-between items-center w-[100%] h-[100px] bg-white rounded p-4">  
             <div className="flex gap-3 items-center">
@@ -25,17 +28,17 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
            <div className="flex gap-4">
 
             <div className="flex gap-3 items-center">
-                <label for="clienteType" className="text-xl">Pagamento</label>
+                <label for="clienteType" className="text-xl">{t('payment_way')}</label>
                 <select id="clienteType" onChange={(el)=>{
                     dispatch(setPaymentType(el.target.value));
                 }}
                  className="cursor-pointer h-[35px] text-black p-3 rounded transition-all duration-200 bg-white shadow">
-                    <option value={PaymentType.CASH}>Dinheiro</option>
-                    <option value={PaymentType.TPA}>Tpa</option>
-                    <option value={PaymentType.TRANSFER}>Transferencia</option>
+                    <option value={PaymentType.CASH}>{t('money')}</option>
+                    <option value={PaymentType.TPA}>{t('tpa')}</option>
+                    <option value={PaymentType.TRANSFER}>{t('transfer')}</option>
                 </select>
             </div>
-           
+            
             <div className="flex gap-3 items-center">   
             {/* {false &&
             <button onClick={()=>{

@@ -14,7 +14,7 @@ const Tr =({item,index,deleteItem,updateItem,filterRows})=>{
     return(
         <tr className={`${index%2==0?'bg-green-100':''}  cursor-pointer hover:sm:shadow font-light`}>
             {keys.map((key)=>
-            <td className="p-1 text-center border-2">{ 
+            <td className="p-1 text-center" >{ 
                 moneyFields.includes(key)? <Money amount={item[key]}/> : typeof(item[key])=="boolean"? stateDisplay(item[key]) : textDisplay(item[key])}
             </td>)}
             <td className="text-end">
