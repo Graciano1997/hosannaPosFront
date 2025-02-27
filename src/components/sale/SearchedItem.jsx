@@ -17,25 +17,28 @@ const SearchedItem = ({product,index})=>{
                         <Money amount={product.price}/>
                         </p>
                         <p>
-                         {product.qty}
+                         {(product.qty - product.output)}
                         </p>
                         <div className="">
                             <input className="w-[70%] text-center p-1 rounded" onChange={
                                 (el)=>{
                                     setQtyTobuy(el.target.value)
                                 }
-                            } type="number" min={1} defaultValue={qtyTobuy} />
+                            } type="number" min={1} max={(product.qty - product.output)} defaultValue={qtyTobuy} />
                         </div>
-                        {qtyTobuy >0 &&
-                        <button disabled={false} onClick={()=>{
+                        { (product.qty - product.output)>= qtyTobuy && qtyTobuy > 0 &&
+                        <button  onClick={()=>{
                             if(qtyTobuy > product.stock){
                                 dispatch(showToast({error:true,message:`Existem apenas ${product.stock} quantidades de ${product.name} disponiveis pra venda`}))
                             }else{
                                 if(qtyTobuy){
                                     dispatch(addItem({
                                         id:product.id,
+                                        code:product.code,
                                         name:product.name,
                                         price:product.price,
+                                        stock:product.qty,
+                                        output:product.output,
                                         qty:qtyTobuy,
                                         total:qtyTobuy * product.price
                                     }));

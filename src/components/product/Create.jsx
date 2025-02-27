@@ -5,7 +5,7 @@ import { registerProduct, updateProduct } from "../../slices/productSlice";
 import LargeModal from "../general/LargeModal";
 import { useTranslation } from "react-i18next";
 
-const Create = ({ setIsShowing }) => {
+const Create = ({ stopCreating }) => {
     const productState = useSelector((state) => state.productState);
     const [product, setProduct] = useState(productState.productToUpdate);
     const [dimensionVector, setDimensionVector] = useState({});
@@ -40,7 +40,7 @@ const Create = ({ setIsShowing }) => {
 
     return (
         <>
-            <LargeModal setIsShowing={setIsShowing}>
+            <LargeModal stopCreating={stopCreating}>
                 <form onSubmit={handleFormSubmition} action="POST" className='flex flex-col h-[100%]  mt-[1rem] rounded p-3'>
                     <div className="grid grid-cols-3 gap-4">
                         <label>
@@ -83,8 +83,8 @@ const Create = ({ setIsShowing }) => {
                                 <br />
                                 <select name="product_type" value={product.product_type} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
                                     <option value="" disabled selected>Selecione o tipo de produto </option>
-                                    <option value={t('good')}>{t('good')}</option>
-                                    <option value={t('service')}>{t('service')}</option>
+                                    <option value="good">{t('good')}</option>
+                                    <option value="service">{t('service')}</option>
                                 </select>
                             </label>
                         }

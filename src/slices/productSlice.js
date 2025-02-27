@@ -69,6 +69,9 @@ const productSlice = createSlice({
     creatingProduct: (state)=>{
         state.isCreating = true;
     },
+    stopCreatingProduct : (state)=>{
+        state.isCreating = false;
+    },
     updatingProduct: (state,action)=>{
         state.isUpdating = true;
         state.productToUpdate=action.payload;
@@ -94,17 +97,10 @@ const productSlice = createSlice({
 
     builder.addCase(fetchProducts.fulfilled,(state,action)=>{
         state.loading=false;
-        state.products = action.payload.data;
-        // for(let i =0; i<state.products.length;i++){
-        //     for(let j=0;j<state.products.length-1;j++){
-        //         if(state.products[j+1].name < state.products[j].name){
-        //             const auxiliar = state.products[j+1];
-        //             state.products[j+1] = state.products[j];
-        //             state.products[j]=auxiliar; 
-        //         }
-        //     }
-        // }
-        state.error='';
+        if(action.payload!=undefined){
+            state.products = action.payload.data;
+            state.error='';
+        }
     });
 
     builder.addCase(fetchProducts.rejected,(state,action)=>{
@@ -136,17 +132,18 @@ const productSlice = createSlice({
     });
 
     builder.addCase(fetchProductConfiguration.fulfilled,(state,action)=>{
-        state.productConfigurationFields = (action.payload.data);
-        let filterRows = [];
-
-        action.payload.data.map((item)=>{
-            if(!item.active){
-                filterRows.push(item.field);
-            }
-        });
-
-        state.productFilterRows = filterRows;
-    
+       if(action.payload.data != undefined){
+           state.productConfigurationFields = (action.payload.data);
+           let filterRows = [];           
+           action.payload.data.map((item)=>{
+               if(!item.active){
+                   filterRows.push(item.field);
+                }
+            });
+            
+            state.productFilterRows = filterRows;
+        }
+            
       });
 
     builder.addCase(registerProduct.rejected,(state,action)=>{
@@ -154,7 +151,9 @@ const productSlice = createSlice({
     });
 
     builder.addCase(fetchProductsFields.fulfilled,(state,action)=>{
-        state.productAllFields = action.payload.data;
+        if(action.payload !=undefined){
+            state.productAllFields = action.payload.data;
+        }
     })
 
      builder.addCase(updateProduct.fulfilled,(state,action)=>{
@@ -173,4 +172,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField} = productSlice.actions;
+export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct} = productSlice.actions;

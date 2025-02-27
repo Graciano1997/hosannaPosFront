@@ -11,6 +11,7 @@ const initialState = {
     activeTab:'tab1',
     isLogged:true,
     loading:false,
+    itemDetails:{},
     error:''
 }
 
@@ -18,6 +19,13 @@ const appSlice=createSlice({
     name:'appState',
     initialState,
     reducers:{
+        itemDetails: (state,action)=>{
+            state.itemDetails = action.payload
+        },
+        cleanItemDetails: (state)=>{
+            state.itemDetails = {}
+        },
+
         showToast:(state,action)=>{
             state.showToast=true;
             state.toastObject=action.payload
@@ -25,8 +33,7 @@ const appSlice=createSlice({
         closeToast:(state)=>{
             state.showToast=false;
             state.toastObject=undefined;
-        }
-        ,
+        },
         openModal:(state)=>{
             state.isOpen = true;
         },
@@ -83,13 +90,14 @@ const appSlice=createSlice({
         })
 
          builder.addCase(createCategory.fulfilled,(state,action)=>{
+            console.log(action.payload);
             state.showToast=true;
-
-           if(action.payload.error){
-                state.toastObject = { error:true, message:action.payload.message[0] }
-           }else{
-               state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} criada com sucesso`}       
-           }
+            
+            state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} criada com sucesso`}       
+        //    if(action.payload.error){
+        //         state.toastObject = { error:true, message:action.payload.message[0] }
+        //    }else{
+        //    }
         })
 
         builder.addCase(updateCategory.fulfilled,(state,action)=>{
@@ -114,4 +122,4 @@ const appSlice=createSlice({
 });
 
 export default appSlice.reducer;
-export const {showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged} = appSlice.actions;
+export const {itemDetails, cleanItemDetails, showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged} = appSlice.actions;

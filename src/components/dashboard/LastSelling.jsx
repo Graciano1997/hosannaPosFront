@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import CardTitle from "../general/CardTitle";
+import Money from "../general/Money";
 
 const LastSelling =({width=200,height=300,info})=>{    
 
@@ -21,7 +22,7 @@ const LastSelling =({width=200,height=300,info})=>{
                     {lastSellings.map((el)=><li className="h-[40px] bg-green-100 cursor-pointer justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
                     <p>{el.name}</p>
                     <p>{el.qty}</p>
-                    <p>{el.total} {'kz'}</p>
+                    <Money amount={el.total}/>
                     </li>)}
                 </ul>
              </div>

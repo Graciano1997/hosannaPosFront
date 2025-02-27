@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import CardTitle from "../general/CardTitle";
 import { BellAlertIcon } from "@heroicons/react/24/solid";
+import Money from "../general/Money";
 
 const LastExpired =({width=200,height=300,info})=>{    
 
@@ -26,7 +27,7 @@ const LastExpired =({width=200,height=300,info})=>{
                     {expireds.map((el)=><li className="h-[40px] bg-red-100 cursor-pointer justify-center p-1 rounded sm:shadow grid grid-cols-4 items-center">
                     <p>{el.name}</p>
                     <p>{el.qty}</p>
-                    <p>{el.total} {'kz'}</p>
+                    <Money amount={el.total} />
                     <p>{el.data.expire}</p>
                     </li>)}
                 </ul>

@@ -54,13 +54,13 @@ export const data = {
   ],
 };
 
-export function PieChart({width=400,height=420,info}) {
+export function PieChart({width=350,height=350,info}) {
   const graphContainerRef=useRef(null);
 
   return(
     <div style={{width:`${width}px`,height:`${height}px`}}  className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
     <CardTitle title={info} />
-    <div ref={graphContainerRef} style={{padding:2,height:`${400}px`,width:`${400}px`}} className='flex items-center justify-center'>
+    <div ref={graphContainerRef} style={{padding:2,height:`${350}px`,width:`${350}px`}} className='flex items-center justify-center'>
       <Pie 
       options={options}
 

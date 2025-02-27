@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    users: [],
+    isCreating : false,
+    isUpdate:false,
+    users: []
 };
 
 export const fetchUsers = createAsyncThunk("userState/fetchUsers", async () => {
@@ -9,15 +11,15 @@ export const fetchUsers = createAsyncThunk("userState/fetchUsers", async () => {
     return response.json();
 })
 
-// export const deleteSpent = createAsyncThunk("spentState/deleteSpent", async (id) => {
-//     const response = await fetch(`http://localhost:3000/api/spents/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
-//     return response.json();
-// });
+ export const deleteUser = createAsyncThunk("userState/deleteUser", async (id) => {
+     const response = await fetch(`http://localhost:3000/api/users/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
+     return response.json();
+ });
 
-// export const registerSpent = createAsyncThunk("spentState/registerSpent", async (spent) => {
-//     const response = await fetch(`http://localhost:3000/api/spents/`, { method: 'POST', body: JSON.stringify(spent), headers: { 'Content-Type': 'application/json' } });
-//     return response.json();
-// });
+ export const registerUser = createAsyncThunk("userState/registerUser", async (formData) => {
+     const response = await fetch(`http://localhost:3000/api/users/`, { method: 'POST', body: formData });
+     return response.json();
+ });
 
 // export const updateSpent = createAsyncThunk("spentState/updateSpent", async (spent) => {
 //     const response = await fetch(`http://localhost:3000/api/products/${spent.id}`,
@@ -33,24 +35,28 @@ const userSlice = createSlice({
     name: 'userState',
     initialState: initialState,
     reducers: {
-        
+        creatingUser: (state)=>{
+            state.isCreating = true;
+        },
+        stopCreatingUser : (state)=>{
+            state.isCreating = false;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
             state.users = action.payload.data;
         });
 
-        // builder.addCase(registerSpent.fulfilled, (state, action) => {
-        //     state.isCreating = false;
-        //     if (!action.payload.error) {
-        //         state.spents.push({ ...action.payload.spent });
-        //     }
-        // });
+        builder.addCase(registerUser.fulfilled, (state, action) => {
+             state.isCreating = false;
+             if (!action.payload.error) {
+                 state.users.push({ ...action.payload.user });
+             }
+         });
 
-        // builder.addCase(deleteSpent.fulfilled, (state, action) => {
-        //     state.spents = state.spents.filter((spent) => spent.id !== action.payload.id);
-        //     state.error = '';
-        // });
+        builder.addCase(deleteUser.fulfilled, (state, action) => {
+             state.users = state.users.filter((user) => user.id !== action.payload.id);
+         });
 
         // builder.addCase(updateSpent.fulfilled, (state, action) => {
         //     state.isUpdating = false;
@@ -68,4 +74,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const {  } = userSlice.actions;
+export const { creatingUser, stopCreatingUser } = userSlice.actions;

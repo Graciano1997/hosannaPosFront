@@ -5,10 +5,10 @@ import Create from "./Create";
 import Title from "../general/Title";
 import ProductDashboard from "./ProductDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { creatingProduct, deleteProduct, fetchProductConfiguration, fetchProducts, updatingProduct } from "../../slices/productSlice";
+import { creatingProduct, deleteProduct, fetchProductConfiguration, fetchProducts, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
-import { creatingCategory, deleteCategory, fetchCategories, updateCategory, updatingCategory } from "../../slices/categorySlice";
+import { creatingCategory, deleteCategory, fetchCategories, stopCreatingCategory, updateCategory, updatingCategory } from "../../slices/categorySlice";
 import CreateCategory from "./CreateCategory";
 import ProductConfiguration from "./ProductConfiguration";
 
@@ -20,14 +20,16 @@ const Product=()=>{
     const dispatch = useDispatch();
     const productState = useSelector((state)=>state.productState);
     const categoryState = useSelector((state)=>state.categoryState);
-    
+    const filterProductDetails =['id','category_id'];
+    const filterCategoryDetails =['id','parent_category_id'];
+
     useEffect(()=>{
         dispatch(fetchProductConfiguration());
         dispatch(fetchProducts());
         dispatch(fetchCategories());
     },[dispatch])
     
-    const products = productState.products;
+    const products = productState.products || [];
     return(
         <CardWrapper>
         <Title create={creatingProduct} title={t('products')}/>
@@ -45,15 +47,15 @@ const Product=()=>{
         </div>
         }
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
-        <Table filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
+        <Table filterDetails={filterProductDetails} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}
-        {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['created_at','updated_at']}  collection={categoryState.categories}/>}
+        {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']}  collection={categoryState.categories || []}/>}
         {appState.activeTab=="tab4" && !productState.error && !productState.loading && <ProductConfiguration />}
         </TabWrapper>
-        {(categoryState.isCreating || categoryState.isUpdating) && appState.isOpen && (<CreateCategory setIsShowing={setIsShowing}/>)}
-        {(productState.isCreating  || productState.isUpdating ) && appState.isOpen && (<Create setIsShowing={setIsShowing}/>)}
+        {(categoryState.isCreating || categoryState.isUpdating) && appState.isOpen && (<CreateCategory  stopCreating={stopCreatingCategory} setIsShowing={setIsShowing}/>)}
+        {(productState.isCreating  || productState.isUpdating ) && appState.isOpen && (<Create stopCreating={stopCreatingProduct} setIsShowing={setIsShowing}/>)}
         </CardWrapper>
     )
 };
