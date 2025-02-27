@@ -7,7 +7,6 @@ const initialState = {
     error:'',
     items:[],
     totalItems:0,
-    
     selectedItem:undefined,
     paymentType:PaymentType.CASH,
     total:0,
@@ -47,21 +46,58 @@ const saleSlice = createSlice({
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
         },
-
         updateItem: (state,action)=>{
             const atIndex = state.items.findIndex(item=>item.id===action.payload.id);
-
+            
             if(atIndex!=-1){
+                if((state.items[atIndex].stock - state.items[atIndex].output) >= (parseInt(action.payload.qty))){
                 state.items[atIndex] = {
                     ...state.items[atIndex],
                     qty:action.payload.qty,
                     total:action.payload.total,
                 }
             }
+            }
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
             state.selectedItem = undefined;
         },
+
+        increaseOne: (state,action)=>{
+            const atIndex = state.items.findIndex(item=>item.id===action.payload.id);
+
+            if(atIndex!=-1){
+
+            if((state.items[atIndex].stock - state.items[atIndex].output) >= (parseInt(action.payload.qty) + 1)){
+                state.items[atIndex] = {
+                    ...state.items[atIndex],
+                    qty: (parseInt(action.payload.qty) + 1 ),
+                    total:(parseInt(state.items[atIndex].qty) + 1)*state.items[atIndex].price,
+                }
+            }
+            }
+            state.total = sum(state.items).total;
+            state.totalItems = sum(state.items).totalItems;
+        },
+
+        decreaseOne: (state,action)=>{
+            const atIndex = state.items.findIndex(item=>item.id===action.payload.id);
+
+            if(atIndex!=-1){
+
+                if(state.items[atIndex].qty > 1){
+
+                    state.items[atIndex] = {
+                        ...state.items[atIndex],
+                        qty:action.payload.qty-1,
+                        total:(state.items[atIndex].qty - 1 )*state.items[atIndex].price,
+                    }
+                }
+            }
+            state.total = sum(state.items).total;
+            state.totalItems = sum(state.items).totalItems;
+        },
+
         selectItem: (state,action)=>{
             state.selectedItem = action.payload;            
         },
@@ -73,4 +109,4 @@ const saleSlice = createSlice({
 
 
 export default saleSlice.reducer;
-export const {addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType} = saleSlice.actions;
+export const {increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType} = saleSlice.actions;

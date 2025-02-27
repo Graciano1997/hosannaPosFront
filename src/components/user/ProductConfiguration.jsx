@@ -20,8 +20,9 @@ const ProductConfiguration = ()=>{
     const filterRows = ['id','name','qty','price','category_id','code'];
     const [productFields,setProductFields]=useState([]);
 
-    const product=useSelector((state)=>state.productState.productAllFields) || [];
+    const product=useSelector((state)=>state.productState.productAllFields);
     const keys=product.filter((item)=>!filterRows.includes(item));
+     
     const productConfigurationElements = useSelector((state)=>state.productState.productConfigurationFields);
          
     const productConfigurationFilterElements = useSelector((state)=>state.productState.filterRowsOp);

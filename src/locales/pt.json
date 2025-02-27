@@ -18,7 +18,7 @@
     "expireds":"Últimos expirados",
     "footer_description":"Feito com ♥ por Graciano Henrique",
     "today_balance":"Entradas de Hoje",
-    "output":"Saídas de Hoje",
+    "output":"saida",
     "products":"Produtos",
     "sales":"Vendas",
     "spends":"Saidas",
@@ -47,7 +47,7 @@
     "promotion":"promoção",
     "discount":"desconto",
     "product_type":"tipo",
-    "parent_category_id":"categoria_parente",
+    "parent_category":"categoria_parente",
     "mandatory":"obrigatório",
     "configuration":"Configurações",
     "visible":"vísivel",
@@ -68,5 +68,7 @@
     "motive":"motivo",
     "amount":"quantia",
     "responsable":"responsável",
-    "user":"utilizador"
+    "user":"utilizador",
+    "details":"Detalhes",
+    "export":"Exportar"
 }

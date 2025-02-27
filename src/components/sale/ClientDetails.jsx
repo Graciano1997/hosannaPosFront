@@ -16,6 +16,11 @@ const ClientDetails = ()=>{
                 <input type="text" id="clienteNome" className="bg-green-100 rounded p-2"></input>
             </div>
 
+            <div className="flex flex-col gap-3 mt-1">
+                <label for="clienteNome">Email</label>
+                <input type="email" id="clienteEmail" className="bg-green-100 rounded p-2"></input>
+            </div>
+
             <div className="flex flex-col gap-3">
                 <label for="clienteContact">Tel.Numero</label>
                 <input type="number" id="clienteContact" defaultValue={DefaultClientePhone} className="bg-green-100 rounded p-2"></input>

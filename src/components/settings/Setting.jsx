@@ -7,12 +7,8 @@ const Setting=()=>{
     return(
         <>
         <Title title={t('settings')}/>
-        <div className="flex flex-wrap justify-center gap-7 mt-4 p-1 ">
-        <Card className="font-black" width={400} height={350}  info={{title:t('month_balance'),description:t('about')}}/>
-        <Card width={400} height={350}  info={{title:t('month_balance'),description:t('about')}}/>
-        <Card width={400} height={350} info={{title:t('medicines_status'),description:t('about')}}/>
-        <Card width={600} height={350} info={{title:t('month_balance'),description:t('about')}}/>
-        <Card width={600} height={350} info={{title:t('month_balance'),description:t('about')}}/>
+        <div className="flex flex-wrap justify-center gap-7 mt-20 p-1">
+        <h1 className="text-black font-bold">Loading...</h1>
         </div>
         </>
     )

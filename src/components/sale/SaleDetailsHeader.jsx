@@ -1,11 +1,15 @@
+import { useTranslation } from "react-i18next";
+
 const SaleDetailsHeader =()=>{
+    const {t}=useTranslation();
+
     return(
     <div className="grid grid-cols-[5fr_25fr_15fr_20fr_25fr_10fr] place-items-center shadow-sm text-red-500 font-bold">
-    <p>id</p>
-    <p>Produto</p>
-    <p>Preco</p>
-    <p>qty</p>
-    <p>total</p>
+    <p>{t('code')}</p>
+    <p>{t('product')}</p>
+    <p>{t('price')}</p>
+    <p>{t('qty')}</p>
+    <p>{t('total')}</p>
     <p></p>
     </div>
 );

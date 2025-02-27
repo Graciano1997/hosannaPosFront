@@ -69,7 +69,7 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li> */}
             <li>
-                <Link to={"/requests"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
+                <Link to={"/users"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
                 <UserGroupIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('users')}
                 </Link>
@@ -81,7 +81,7 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li>
             <li>
-                <Link to={"/dashboard"} className="flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-red-300" >
+                <Link to={"/logout"} className="flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-red-300" >
                 <ArrowLeftStartOnRectangleIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {t('logout')}
                 </Link>

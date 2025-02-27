@@ -4,7 +4,7 @@ import Thead from "./Thead";
 import { useDispatch } from "react-redux";
 import { openModal } from "../../slices/appSlice";
 
-const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filterRows=[]})=>{
+const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filterRows=[], filterDetails=[]})=>{
     const dispatch = useDispatch();
 
     return(
@@ -26,7 +26,7 @@ const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filter
         <div className="w-[100%] overflow-auto p-1">
         <table className="rounded shadow-md mt-[3rem] w-[100%]">
         <Thead filterRows={filterRows} object={collection[0]}/>
-        <Tbody filterRows={filterRows} updateItem={update} deleteItem={deleteItem} items={collection} />
+        <Tbody filterDetails={filterDetails} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} items={collection} />
         </table>
         </div>
         }

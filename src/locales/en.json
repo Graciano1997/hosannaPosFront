@@ -17,7 +17,7 @@
     "expireds":"Last expireds",
     "footer_description":"With ♥ by Graciano Henrique",
     "today_balance":"Today Incomes",
-    "output":"Today's Spendings",
+    "output":"output",
     "products":"Products",
     "sales":"Sales",
     "spends":"Spents",
@@ -46,7 +46,7 @@
     "promotion":"promotion",
     "discount":"discount",
     "product_type":"product_type",
-    "parent_category_id":"parent category",
+    "parent_category":"parent category",
     "mandatory":"mandatory",
     "configuration":"Configurations",
     "visible":"visible",
@@ -54,7 +54,7 @@
     "yes":"yes",
     "not":"no",
     "category":"category",
-    "good":"bem",
+    "good":"good",
     "service":"service",
     "active":"active",
     "disative":"desative",
@@ -67,5 +67,7 @@
     "motive":"motive",
     "amount":"amount",
     "responsable":"responsable",
-    "user":"user"
+    "user":"user",
+    "details":"Details",
+    "export":"Export"
 }

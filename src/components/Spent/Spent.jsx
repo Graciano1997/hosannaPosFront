@@ -14,7 +14,7 @@ const Spent = () => {
     const appState = useSelector((state) => state.appState);
     const [isShowing, setIsShowing] = useState(false);
     const dispatch = useDispatch();
-
+    const filterSpentDetails =['id','user_id','image','updated_at'];
 
     useEffect(()=>{
         dispatch(fetchSpents());
@@ -27,7 +27,7 @@ const Spent = () => {
         <CardWrapper>
             <Title setIsShowing={setIsShowing} title={t('spends')} />
             <TabWrapper>
-                {appState.activeTab == "tab1" && (<Table filterRows={['user_id']} collection={spents} update={updatingSpent} deleteItem={deleteSpent}  create={creatingSpent} />)}
+                {appState.activeTab == "tab1" && (<Table filterDetails={filterSpentDetails} filterRows={['user_id','image']} collection={spents} update={updatingSpent} deleteItem={deleteSpent}  create={creatingSpent} />)}
                 {appState.activeTab == "tab2" && (<SpendDashboard />)}
             </TabWrapper>
             {(spentState.isCreating || spentState.isUpdating) && appState.isOpen &&  (<Create />)}
