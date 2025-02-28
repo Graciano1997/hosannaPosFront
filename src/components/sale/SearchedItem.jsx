@@ -54,7 +54,7 @@ const SearchedItem = ({product,index})=>{
                         }}  className={`bg-green-400 text-white font-bold rounded`}>{t('add')}</button>
                     } 
                     {(product.qty - product.output)==0 &&
-                    <div className="bg-red-300 text-black font-light text-center p-1 rounded">{t('outofStock')}</div>
+                    <div className="bg-red-300 text-white font-bold text-center p-1 rounded">{t('outofStock')}</div>
                     }
                      
                     </div>

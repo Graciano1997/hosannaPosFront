@@ -13,7 +13,8 @@ const initialState = {
     invoiceType:SaleType.SALE,
     receivedCash:0,
     total:0,
-    sales:[]
+    sales:[],
+    difference:0
 }
 
 export const order=createAsyncThunk('saleState/order',async (sale)=>{
@@ -88,7 +89,6 @@ const saleSlice = createSlice({
             const atIndex = state.items.findIndex(item=>item.id===action.payload.id);
 
             if(atIndex!=-1){
-
             if((state.items[atIndex].stock - state.items[atIndex].output) >= (parseInt(action.payload.qty) + 1)){
                 state.items[atIndex] = {
                     ...state.items[atIndex],
@@ -99,6 +99,12 @@ const saleSlice = createSlice({
             }
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
+
+            if((state.paymentType == PaymentType.CASH) && (state.receivedCash - state.total) >=0 ){
+                state.difference =  state.receivedCash - state.total;
+            }else{
+                state.difference = 0;
+            }
         },
 
         decreaseOne: (state,action)=>{
@@ -115,8 +121,15 @@ const saleSlice = createSlice({
                     }
                 }
             }
+
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
+
+            if((state.paymentType == PaymentType.CASH) && (state.receivedCash - state.total) >=0 ){
+                state.difference =  state.receivedCash - state.total;
+            }else{
+                state.difference = 0;
+            }
         },
 
         selectItem: (state,action)=>{
@@ -148,6 +161,12 @@ const saleSlice = createSlice({
         },
         setReceivedCash:(state,action)=>{
             state.receivedCash = action.payload;
+            if(state.paymentType == PaymentType.CASH && (action.payload - state.total) > 0 ){
+                state.difference =  state.receivedCash - state.total;
+            }else{
+                state.difference = 0;
+            }
+            
         }
     },
     extraReducers:(builder)=>{
