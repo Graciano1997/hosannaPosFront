@@ -1,43 +1,31 @@
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "../Table/Table";
 import SaleDashboard from "./SaleDashboard";
 import Title from "../general/Title";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
+import { fetchSales } from "../../slices/saleSlice";
 
 const Sales=()=>{
     const {t}=useTranslation();
     const [showDashboard,setShowDashboard]=useState(false);
     const appState=useSelector((state)=>state.appState);
+    const filterRows = ['client_id','user_id'];
 
-    const [sales,setSale]=useState([
-        {
-            nº:1,
-            qty:20,
-            total:2000,
-            Date:'2023-12-12'
-        },
-        {
-            nº:2,
-            qty:30,
-            total:5000,
-            Date:'2023-12-12'
-        },
-        {
-            nº:3,
-            qty:20,
-            total:2000,
-            Date:'2023-12-12'
-        },   
-]);
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        dispatch(fetchSales());
+    },[])
+
+    const sales= useSelector((state)=>state.saleState.sales) || [];
 
     return(
         <CardWrapper>
         <Title title={t('sales')}/>
         <TabWrapper>    
-        {appState.activeTab=="tab1" && (<Table collection={sales}/>)}
+        {appState.activeTab=="tab1" && (<Table filterRows={filterRows} filterDetails={filterRows} collection={sales}/>)}
         {appState.activeTab=="tab2"  && (<SaleDashboard/>)} 
         </TabWrapper>
         </CardWrapper>

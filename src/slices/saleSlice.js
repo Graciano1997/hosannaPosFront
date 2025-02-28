@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { sum } from "../lib/sumSale";
-import { PaymentType } from "../lib/Enums";
+import { ClientType, DefaultClientePhone, PaymentType, SaleType } from "../lib/Enums";
 
 const initialState = {
     loading:false,
@@ -9,8 +9,29 @@ const initialState = {
     totalItems:0,
     selectedItem:undefined,
     paymentType:PaymentType.CASH,
+    clientDetails : {client_type:ClientType.SINGULAR, phone:DefaultClientePhone},
+    invoiceType:SaleType.SALE,
+    receivedCash:0,
     total:0,
+    sales:[]
 }
+
+export const order=createAsyncThunk('saleState/order',async (sale)=>{
+    const response = await fetch('http://localhost:3000/api/sales/',{
+        method:'POST',
+        body:JSON.stringify(sale),
+        headers:{ 'Content-Type':'application/json'}
+    });
+    return response.json();
+});
+
+export const fetchSales=createAsyncThunk('saleState/fetchSales',async ()=>{
+    const response = await fetch('http://localhost:3000/api/sales/',{
+        method:'GET',
+        headers:{ 'Content-Type':'application/json'}
+    });
+    return response.json();
+});
 
 const saleSlice = createSlice({
     name:'saleState',
@@ -103,10 +124,39 @@ const saleSlice = createSlice({
         },
         setPaymentType:(state,action)=>{
             state.paymentType = action.payload
+        },
+        setInvoiceType:(state,action)=>{
+            state.invoiceType = action.payload
+        },
+        setClientDetails: (state,action)=>{
+            
+            const clientDetailsDraft = {
+                ...state.clientDetails,
+                ...action.payload
+            }
+
+            state.clientDetails = clientDetailsDraft;
+        },
+        setSaleDetails: (state,action)=>{
+            
+            const saleDetailsDraft = {
+                ...state.saleDetails,
+                ...action.payload
+            }
+
+            state.saleDetails = saleDetailsDraft;
+        },
+        setReceivedCash:(state,action)=>{
+            state.receivedCash = action.payload;
         }
     },
+    extraReducers:(builder)=>{
+        builder.addCase(fetchSales.fulfilled,(state,action)=>{
+            state.sales = action.payload.data
+        })
+    }
 });
 
 
 export default saleSlice.reducer;
-export const {increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType} = saleSlice.actions;
+export const {setReceivedCash,increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType,setInvoiceType, setClientDetails} = saleSlice.actions;

@@ -3,7 +3,7 @@ import { Bars4Icon } from "@heroicons/react/24/solid";
 import { EllipsisHorizontalIcon, QrCodeIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { PaymentType, SaleType } from "../../lib/Enums";
-import { setPaymentType } from "../../slices/saleSlice";
+import { setInvoiceType, setPaymentType } from "../../slices/saleSlice";
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
 
@@ -16,12 +16,15 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
         <div className="mt-[3rem] flex justify-between items-center w-[100%] h-[100px] bg-white rounded p-4">  
             <div className="flex gap-3 items-center">
             <label className="text-xl">
-            Fatura
+            {t('invoice')}
             </label>
-            <select className="cursor-pointer h-[35px] text-black p-3 rounded transition-all duration-200 bg-white shadow">
-                <option value={SaleType.SALE}>Venda</option>
-                <option value={SaleType.CREDIT}>Credido</option>
-                <option value={SaleType.PORFORM}>Porforma</option>
+            <select onChange={(el)=>{
+                dispatch(setInvoiceType(el.target.value));
+            }} 
+            className="cursor-pointer h-[35px] text-black p-3 rounded transition-all duration-200 bg-white shadow">
+                <option value={SaleType.SALE}>{t('sale')}</option>
+                <option value={SaleType.CREDIT}>{t('credit')}</option>
+                <option value={SaleType.PORFORM}>{t('proforma')}</option>
             </select>
             </div>
            

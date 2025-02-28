@@ -3,11 +3,13 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../../slices/saleSlice";
 import { showToast } from "../../slices/appSlice";
 import Money from "../general/Money";
+import { useTranslation } from "react-i18next";
 
 const SearchedItem = ({product,index})=>{
     const [qtyTobuy,setQtyTobuy]=useState(1);
     const [added,setAdded]=useState(false);
     const dispatch = useDispatch();
+    const {t}=useTranslation();
     return(
         <div className={`grid grid-cols-5  p-1 ${index%2==0?'bg-green-50':'bg-green-100'}`}>
                         <p>
@@ -49,8 +51,12 @@ const SearchedItem = ({product,index})=>{
                             }
 
                             
-                        }}  className={`bg-green-400 text-white font-bold rounded`}>Add</button>
+                        }}  className={`bg-green-400 text-white font-bold rounded`}>{t('add')}</button>
                     } 
+                    {(product.qty - product.output)==0 &&
+                    <div className="bg-red-300 text-black font-light text-center p-1 rounded">{t('outofStock')}</div>
+                    }
+                     
                     </div>
 );
 };

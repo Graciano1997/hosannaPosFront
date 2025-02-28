@@ -1,20 +1,20 @@
 export const ClientType = {
-    SINGULAR:1,
-    COMPANY:2
+    SINGULAR:'SINGULAR',
+    COMPANY:'COMPANY'
 };
 
 export const PaymentType = {
-    CASH:1,
-    TPA:2,
-    TRANSFER:3
+    CASH:'CASH',
+    TPA:'TPA',
+    TRANSFER:'TRANSFER'
 }
 
 export const DefaultClientePhone = 911111111;
 
 export const SaleType = {
-    SALE:1,
-    CREDIT:2,
-    PORFORM:3
+    SALE:'SALE',
+    CREDIT:'CREDIT',
+    PORFORM:'PROFORMA'
 }
 
 export const ProductState = {

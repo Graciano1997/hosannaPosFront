@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { deleteProduct, productConfiguration, registerProduct, searchProduct, updateProduct } from "./productSlice";
-import { addItem, removeItem, updateItem } from "./saleSlice";
+import { addItem, order, removeItem, updateItem } from "./saleSlice";
 import { createCategory, deleteCategory, updateCategory } from "./categorySlice";
 
 const initialState = {
