@@ -7,7 +7,7 @@ import Details from "./Details";
 
 const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails }) => {
     
-    const moneyFields = ['price', 'total', 'amount', 'cost_price'];
+    const moneyFields = ['price', 'total', 'amount', 'cost_price','difference','received_cash'];
     const dispatch = useDispatch();
 
     let keys = Object.keys(item);

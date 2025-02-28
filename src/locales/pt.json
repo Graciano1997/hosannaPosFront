@@ -70,5 +70,18 @@
     "responsable":"responsável",
     "user":"utilizador",
     "details":"Detalhes",
-    "export":"Exportar"
+    "export":"Exportar",
+    "product":"produto",
+    "invoice":"Fatura",
+    "credit":"Crédito",
+    "proforma":"Proforma",
+    "order":"Comprar agora",
+    "order_sucessfuly":"Compra realizada com sucesso",
+    "descount":"desconto",
+    "difference":"troco",
+    "no_registry":"Sem registros a apresentar",
+    "received_cash":"dinheiro recebido",
+    "operator":"operador",
+    "add":"Adicionar",
+    "outofStock":"Sem stock"
 }

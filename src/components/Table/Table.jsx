@@ -3,9 +3,11 @@ import Tbody from "./Tbody";
 import Thead from "./Thead";
 import { useDispatch } from "react-redux";
 import { openModal } from "../../slices/appSlice";
+import { useTranslation } from "react-i18next";
 
 const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filterRows=[], filterDetails=[]})=>{
     const dispatch = useDispatch();
+    const {t}=useTranslation();
 
     return(
         <>
@@ -16,7 +18,7 @@ const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filter
         {!collection.length &&
         <div className="rounded text-center w-[100%] mt-[5rem]">
             <div className=" mt-[5rem] flex justify-center">
-            <p className="text-2xl font-light p-1">Sem Registros a apresentar</p>
+            <p className="text-2xl font-light p-1"> {t('no_registry')}</p>
         </div>
    
         </div>
@@ -24,7 +26,7 @@ const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filter
 
         {collection.length>0 &&
         <div className="w-[100%] overflow-auto p-1">
-        <table className="rounded shadow-md mt-[3rem] w-[100%]">
+        <table className="rounded shadow-md mt-[2rem] w-[100%]">
         <Thead filterRows={filterRows} object={collection[0]}/>
         <Tbody filterDetails={filterDetails} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} items={collection} />
         </table>

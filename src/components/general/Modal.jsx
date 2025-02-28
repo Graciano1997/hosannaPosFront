@@ -18,9 +18,9 @@ const Modal = ({children, helper = undefined })=>{
          <button
          onClick={()=>{ 
           dispatch(closeModal());
-          // if( helper !=undefined ){
+           if( helper !=undefined ){
             dispatch(helper());
-          // }
+           }
         }}
           className="absolute text-black text-lg bg-white p-2 rounded shadow  right-[15px] top-[20px] transition-all duration-200 hover:bg-green-100">X</button>
             <div className='p-3 mt-[5rem]  w-[80%]  h-[450px]  rounded bg-white shadow' style={{zIndex:2000}}>
