@@ -73,11 +73,11 @@ const ClientDetails = ()=>{
             </div>
             }
 
-        {sale.paymentType==PaymentType.CASH && remain>0 &&
+        {sale.paymentType==PaymentType.CASH && sale.difference > 0 &&
             <div className="flex flex-col gap-3">
                 <label for="cashRemain">Troco</label>
                 <div className="bg-green-100 rounded p-2">
-                <Money amount={remain} />
+                <Money amount={sale.difference} />
                 </div>
             </div>
             }

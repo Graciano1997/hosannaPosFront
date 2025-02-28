@@ -25,8 +25,8 @@ const Table = ({collection, deleteItem=()=>{},update=()=>{},create=()=>{},filter
         }
 
         {collection.length>0 &&
-        <div className="w-[100%] overflow-auto p-1">
-        <table className="rounded shadow-md mt-[2rem] w-[100%]">
+        <div className="w-[100%] overflow-auto p-1 h-[400px]">
+        <table className="rounded shadow-md  w-[100%] mt-[2rem]">
         <Thead filterRows={filterRows} object={collection[0]}/>
         <Tbody filterDetails={filterDetails} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} items={collection} />
         </table>

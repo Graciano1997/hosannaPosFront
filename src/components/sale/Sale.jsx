@@ -14,12 +14,9 @@ const Sale=({setToastObject})=>{
 
     const {t}=useTranslation();
     const [isReadingQr,setIsReadingQr]=useState(false);
-    const [readValue,setReadValue]= useState(null);
-    
+    const [readValue,setReadValue]= useState(null);    
     const globalState = useSelector((state)=>state.appState);
-    
     const isSelectedProduct = useSelector((state)=>state.saleState.selectedItem);
-    
     const dispatch=useDispatch();
 
         return(
