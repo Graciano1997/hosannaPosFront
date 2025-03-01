@@ -9,7 +9,7 @@ const Thead = ({ object, filterRows }) => {
   return (
     <thead className="">
       <tr className="p-2 shadow h-[45px]">
-        {keys.map((label) => <th className="p-2">{firstCapitalize(t(label))}</th>)}
+        {keys.map((label) => <th className="p-2 font-bold">{firstCapitalize(t(label))}</th>)}
         <th className="p-2">{' '}</th>
       </tr>
     </thead>

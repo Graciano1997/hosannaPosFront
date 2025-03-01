@@ -45,7 +45,7 @@ const ButtonGroup = ()=>{
     <div className="absolute bottom-[-7px]  w-[100%] flex justify-end">
         <button type="button"
         onClick={orderHandler}
-         className="font-bold bg-green-200 rounded p-2 hover:shadow">{firstCapitalize(t('order'))}</button>
+         className="bg-green-200 rounded p-2 hover:shadow">{firstCapitalize(t('order'))}</button>
     </div>
     )
 };

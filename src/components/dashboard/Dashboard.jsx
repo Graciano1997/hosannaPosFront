@@ -14,12 +14,12 @@ const Dashboard=()=>{
         <>
         <div className="mt-[3rem]">
         <div className="flex flex-wrap justify-center gap-7 mt-4 p-1 ">
-        <Card className="font-black" width={400} height={350} info={{title:t('today_balance'),description:<Money amount={3000}/>}} />
-        <Card className="font-black" width={400} height={350}   info={{output:true,title:t('output'),description:<Money amount={4000}/>}} />
-        <LastSelling width={400} height={350} info={{title:t('last_selling'), description:t('about')}}/>
-        <BarChart width={450} height={350} info={'Gráfico Semestral'} />
+        <Card className="font-black" width={300} height={300} info={{title:t('today_balance'),description:<Money amount={3000}/>}} />
+        <Card className="font-black" width={300} height={300} info={{output:true,title:t('output'),description:<Money amount={4000}/>}} />
+        <LastSelling width={300} height={300} info={{title:t('last_selling'), description:t('about')}}/>
+        <BarChart width={450} height={300} info={'Gráfico Semestral'} />
          {/* <PieChart width={350} height={350} info={'Categoria dos Produtos vendidos'}/> */}
-        <LastExpired width={400} height={350} info={{title:t('expireds'),description:t('about')}}/>
+        <LastExpired width={300} height={300} info={{title:t('expireds'),description:t('about')}}/>
         </div>
         </div>
         </>
