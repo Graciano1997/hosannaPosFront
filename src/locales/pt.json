@@ -90,5 +90,6 @@
     "client_details":"detalhes do cliente",
     "sale_details":"detalhes da venda",
     "no_founded_item":"não encontrado",
-    "no_product_add_to_sale":"nenhum produto ainda adicionado a esta compra"
+    "no_product_add_to_sale":"nenhum produto ainda adicionado a esta compra",
+    "anual_graph":"Gráfico anual"
 }

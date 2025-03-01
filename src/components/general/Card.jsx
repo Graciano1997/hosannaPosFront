@@ -9,7 +9,7 @@ const Card =({width=200,height=300,info})=>{
          <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
              <CardTitle title={info.title} />
              <div className="flex justify-center items-center">
-                <p className={`font-bold text-${info.output?'red':'green'}-500 text-3xl`}>{info.description}</p> 
+                <p className={`font-bold text-${info.output?'red':'green'}-400 text-3xl`}>{info.description}</p> 
              </div>
         </div>
     );

@@ -10,6 +10,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import CardTitle from '../general/CardTitle';
+import { useTranslation } from 'react-i18next';
 
 ChartJS.register(
   CategoryScale,
@@ -33,32 +34,10 @@ export const options = {
   },
 };
 
-const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Ago','Set','Oct','Nov','Dec'];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Entrada',
-      data: labels.map(() => Math.random()*100),
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-    {
-      label: 'Saida',
-      data: labels.map(() => Math.random()*100),
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Ganho',
-      data: labels.map(() => Math.random()*100),
-      backgroundColor: 'rgba(27, 235, 165, 0.5)',
-    },
-  ],
-};
-
-export function BarChart({width=200,height=300,info}) {
+export function BarChart({data,width=200,height=300,info}) {
+  const {t}=useTranslation();
   const graphContainerRef=useRef(null);
-
+  
   return(
     <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
     <CardTitle title={info} />

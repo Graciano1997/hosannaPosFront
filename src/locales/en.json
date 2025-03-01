@@ -89,5 +89,6 @@
     "client_details":"client details",
     "sale_details":"sale details",
     "no_founded_item":"not found",
-    "no_product_add_to_sale":"no product added to this sale"
+    "no_product_add_to_sale":"no product added to this sale",
+     "anual_graph":"anual graph"
 }

@@ -7,12 +7,9 @@ import { fetchLastSpents } from "../../slices/spentSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const LastOuts =({width=200,height=300,info})=>{    
-
     const dispatch = useDispatch();
-
     useEffect(()=>{
         dispatch(fetchLastSpents());
-
     },[]);
 
     const {t}=useTranslation();
@@ -28,7 +25,7 @@ const LastOuts =({width=200,height=300,info})=>{
                     <p>{ firstCapitalize(t('destinatary'))}</p>
                     <p>{firstCapitalize(t('amount'))}</p>
                     </li>
-                    {lastSpents.map((el)=><li className="h-[40px] bg-green-100 cursor-pointer flex justify-between p-1 rounded sm:shadow items-center">
+                    {lastSpents.map((el)=><li className="h-[40px] cursor-pointer bg-green-200 flex justify-between p-1 rounded sm:shadow items-center">
                     <p>{el.user}</p>
                     <Money amount={el.amount}/>
                     </li>)}
