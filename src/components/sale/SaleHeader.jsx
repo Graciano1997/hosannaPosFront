@@ -6,6 +6,7 @@ import { PaymentType, SaleType } from "../../lib/Enums";
 import { setInvoiceType, setPaymentType } from "../../slices/saleSlice";
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
     const sale = useSelector((state)=>state.saleState);
@@ -31,7 +32,7 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
            <div className="flex gap-4">
 
             <div className="flex gap-3 items-center">
-                <label for="clienteType" className="text-xl">{t('payment_way')}</label>
+                <label for="clienteType" className="text-xl">{firstCapitalize(t('payment_way'))}</label>
                 <select id="clienteType" onChange={(el)=>{
                     dispatch(setPaymentType(el.target.value));
                 }}

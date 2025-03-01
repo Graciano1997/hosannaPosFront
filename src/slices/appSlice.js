@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteProduct, productConfiguration, registerProduct, searchProduct, updateProduct } from "./productSlice";
-import { addItem, order, removeItem, updateItem } from "./saleSlice";
-import { createCategory, deleteCategory, updateCategory } from "./categorySlice";
+import { deleteProduct, fetchProducts, productConfiguration, registerProduct, searchProduct, updateProduct } from "./productSlice";
+import { addItem, fetchSales, order, removeItem, updateItem } from "./saleSlice";
+import { createCategory, deleteCategory, fetchCategories, updateCategory } from "./categorySlice";
 
 const initialState = {
     isOpen:false,
@@ -69,28 +69,93 @@ const appSlice=createSlice({
             state.toastObject = {success:true,message:`Foi atualizada a quantidade do Produto ${action.payload.name} para ${action.payload.qty} `}
         })
 
+        /* Fetch Products cases */
+        builder.addCase(fetchProducts.pending,(state)=>{
+            state.loading=true;
+            state.error = '';
+        });
+
+        builder.addCase(fetchProducts.rejected,(state)=>{
+            state.loading=false;
+            state.error = '';
+        });
+
+        builder.addCase(fetchProducts.fulfilled,(state)=>{
+            state.loading=false;
+            state.error = '';
+        });
+
+        /* Fetch Categories cases */
+                builder.addCase(fetchCategories.pending,(state)=>{
+                    state.loading=true;
+                    state.error = '';
+                });
+        
+                builder.addCase(fetchCategories.rejected,(state)=>{
+                    state.loading=false;
+                    state.error = '';
+                });
+        
+                builder.addCase(fetchCategories.fulfilled,(state)=>{
+                    state.loading=false;
+                    state.error = '';
+                });
+
+        /* Fetch Categories cases */
+     
+        
+        /* Fetch sales cases */
+                builder.addCase(fetchSales.pending,(state)=>{
+                    state.loading=true;
+                    state.error = '';
+                });
+        
+                builder.addCase(fetchSales.rejected,(state)=>{
+                    state.loading=false;
+                    state.error = '';
+                });
+        
+                builder.addCase(fetchSales.fulfilled,(state)=>{
+                    state.loading=false;
+                    state.error = '';
+                });
+
+        /* Fetch Sales cases */
+      
+
+        builder.addCase(registerProduct.pending,(state)=>{
+            state.loading=true;
+            state.error = '';
+        });
+
+        builder.addCase(registerProduct.fulfilled,(state,action)=>{
+            state.showToast=true;
+            state.loading=false;
+            state.error = '';
+           if(action.payload.error){
+                state.toastObject = { error:true, message:action.payload.message[0] }
+           }else{
+               state.toastObject = { success:true, message:`Produto ${action.payload.product.name} criado com sucesso`}       
+           }
+        });
+
+
+
         builder.addCase(deleteProduct.fulfilled,(state)=>{
             state.showToast=true;
             state.toastObject = {success:true,message:`Produto eliminado com sucesso`}
         })
 
-         builder.addCase(registerProduct.fulfilled,(state,action)=>{
-             state.showToast=true;
-
-            if(action.payload.error){
-                 state.toastObject = { error:true, message:action.payload.message[0] }
-            }else{
-                state.toastObject = { success:true, message:`Produto ${action.payload.product.name} criado com sucesso`}       
-            }
-         })
-
          builder.addCase(updateProduct.fulfilled,(state,action)=>{
             state.showToast=true;
+            state.loading=false;
+            state.error = '';
                state.toastObject = { success:true, message:`Produto ${action.payload.product.name} atualizado com sucesso`}       
         })
 
          builder.addCase(createCategory.fulfilled,(state,action)=>{
-            console.log(action.payload);
+            state.loading=false;
+            state.error = '';
             state.showToast=true;
             
             state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} criada com sucesso`}       
@@ -101,13 +166,16 @@ const appSlice=createSlice({
         })
 
         builder.addCase(updateCategory.fulfilled,(state,action)=>{
+            state.loading=false;
+            state.error = '';
             state.showToast=true;
-               state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} atualizada com sucesso`}       
+            state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} atualizada com sucesso`}       
         })
 
         builder.addCase(productConfiguration.rejected,(state,action)=>{
             state.showToast=true;
-               state.toastObject = { error:true, message:`Algum erro a configuracao nao foi salva`}
+            state.toastObject = { error:true, message:`Algum erro a configuracao nao foi salva`};
+
         })
 
          builder.addCase(deleteCategory.fulfilled,(state,action)=>{

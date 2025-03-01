@@ -34,18 +34,7 @@ const Product=()=>{
         <CardWrapper>
         <Title create={creatingProduct} title={t('products')}/>
         <TabWrapper>
-        {appState.activeTab=="tab1" && productState.loading && 
-        <div className=" mt-[5rem] flex justify-center">
-            <h4 className="text-3xl">Loading the Products...</h4>
-        </div>
-        }
-
-        {appState.activeTab=="tab1" && !productState.loading && 
-        productState.error &&
-        <div className="mt-[5rem] flex justify-center">
-            <h4 className="text-3xl text-red-700">{productState.error}</h4>
-        </div>
-        }
+        
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
         <Table filterDetails={filterProductDetails} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
         }

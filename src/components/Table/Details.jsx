@@ -43,7 +43,7 @@ const Details = ({cleanItemDetails,filterDetails=[]}) =>{
                 {
                     detailsItem.payment_way	&&
                     <>
-                    <h2 className="text-end text-xl p-1">{t('products')}</h2>
+                    <h2 className="text-end text-xl p-1">{firstCapitalize(t('products'))}</h2>
                  <div className="shadow p-2" >
                     <div className="grid grid-cols-4 gap-2 p-4">
                     { Object.keys(detailsItem.sale_products[0]).map((item)=><p className="font-bold">{firstCapitalize(t(item))}</p>)}

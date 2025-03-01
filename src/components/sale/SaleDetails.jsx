@@ -7,12 +7,15 @@ import { selectItem } from "../../slices/saleSlice";
 import { useState } from "react";
 import { clearSearchedProduct, searchProduct } from "../../slices/productSlice";
 import { openModal } from "../../slices/appSlice";
+import { useTranslation } from "react-i18next";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 
 const SaleDetails = ()=>{
     const dispatch = useDispatch();
     const products = useSelector((state)=>state.productState.products);
-    const selectedProducts = useSelector ((state)=>state.saleState.items)
+    const selectedProducts = useSelector ((state)=>state.saleState.items);
+    const {t}=useTranslation();
     
     const dispatchSearchHandler = ()=>{
         dispatch(openModal());
@@ -21,7 +24,7 @@ const SaleDetails = ()=>{
     
     return(
         <div className={`h-[560px] bg-white rounded shadow-md p-3 flex flex-col gap-3 saleDetails`}>
-        <h1 className="font-bold mt-1 text-end">* Sales Details</h1>
+        <h1 className="font-bold mt-1 text-end">* { firstCapitalize(t('sale_details'))}</h1>
        
         <div className="flex flex-col saleDetails relative h-[500px]">
         
@@ -51,7 +54,7 @@ const SaleDetails = ()=>{
                 }
 
                 {!(selectedProducts.length > 0) && 
-                    <h2 className="text-center font-light text-xl">Nenhum produto adicionado a esta compra</h2>
+                    <h2 className="text-center font-light text-xl">{firstCapitalize(t('no_product_add_to_sale'))}</h2>
                 }
             </div>
             

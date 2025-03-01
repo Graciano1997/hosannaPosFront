@@ -21,7 +21,7 @@ const Sales=()=>{
         dispatch(activeTab("tab1"));
     },[])
 
-    const sales= useSelector((state)=>state.saleState.sales) || [];
+    const sales= useSelector((state)=>state.saleState.sales);
 
     return(
         <CardWrapper>
