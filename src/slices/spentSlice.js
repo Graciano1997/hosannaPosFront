@@ -43,6 +43,11 @@ const spentSlice = createSlice({
         updatingSpent: (state,action)=>{
             state.isUpdating = true;
             state.spentToUpdate=action.payload;
+        },
+        stopCreatingOrUpdateingSpent : (state)=>{
+            state.isCreating = false;
+            state.isUpdating = false;
+            state.spentToUpdate = {};
         }
     },
     extraReducers: (builder) => {
@@ -78,4 +83,4 @@ const spentSlice = createSlice({
 });
 
 export default spentSlice.reducer;
-export const { creatingSpent, updatingSpent } = spentSlice.actions;
+export const { creatingSpent, updatingSpent, stopCreatingOrUpdateingSpent  } = spentSlice.actions;

@@ -2,8 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isCreating : false,
-    isUpdate:false,
-    users: []
+    isUpdating:false,
+    userToUpdate:{},
+    users: [],
 };
 
 export const fetchUsers = createAsyncThunk("userState/fetchUsers", async () => {
@@ -21,15 +22,16 @@ export const fetchUsers = createAsyncThunk("userState/fetchUsers", async () => {
      return response.json();
  });
 
-// export const updateSpent = createAsyncThunk("spentState/updateSpent", async (spent) => {
-//     const response = await fetch(`http://localhost:3000/api/products/${spent.id}`,
-//         {
-//             method: 'PUT',
-//             body: JSON.stringify(spent),
-//             headers: { 'Content-Type': 'application/json' }
-//         });
-//     return response.json();
-// });
+export const updateUser = createAsyncThunk("userState/updateUser", async (userId,formData) => {
+    console.log(formData);
+     const response = await fetch(`http://localhost:3000/api/users/${userId}`,
+         {
+             method: 'PUT',
+             body: formData,
+         });
+         console.log(response.json());
+     return response.json();
+ });
 
 const userSlice = createSlice({
     name: 'userState',
@@ -38,9 +40,16 @@ const userSlice = createSlice({
         creatingUser: (state)=>{
             state.isCreating = true;
         },
-        stopCreatingUser : (state)=>{
+        stopCreatingOrUpdateingUser : (state)=>{
             state.isCreating = false;
+            state.isUpdating = false;
+            state.userToUpdate = {};
         },
+        
+        updatingUser: (state,action)=>{
+            state.isUpdating = true;
+            state.userToUpdate=action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
@@ -74,4 +83,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { creatingUser, stopCreatingUser } = userSlice.actions;
+export const { creatingUser, stopCreatingOrUpdateingUser, updatingUser } = userSlice.actions;

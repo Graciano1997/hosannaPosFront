@@ -80,6 +80,7 @@ const saleSlice = createSlice({
                 }
             }
             }
+
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
             state.selectedItem = undefined;
@@ -97,6 +98,7 @@ const saleSlice = createSlice({
                 }
             }
             }
+
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
 
@@ -167,6 +169,14 @@ const saleSlice = createSlice({
                 state.difference = 0;
             }
             
+        },
+        saleClean:(state)=>{
+            state.items = [];
+            state.receivedCash = 0;
+            state.difference = 0;
+            state.totalItems = 0,
+            state.total = 0;
+            state.clientDetails = { client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
         }
     },
     extraReducers:(builder)=>{
@@ -178,4 +188,4 @@ const saleSlice = createSlice({
 
 
 export default saleSlice.reducer;
-export const {setReceivedCash,increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType,setInvoiceType, setClientDetails} = saleSlice.actions;
+export const {saleClean, setReceivedCash,increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType,setInvoiceType, setClientDetails} = saleSlice.actions;

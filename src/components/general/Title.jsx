@@ -1,4 +1,4 @@
-import {  EllipsisHorizontalIcon,ArrowUpTrayIcon, PlusIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon } from "@heroicons/react/24/solid";
+import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon } from "@heroicons/react/24/solid";
 import {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
@@ -28,10 +28,8 @@ const Title=({title,create})=>{
 
                 {showElipse && (<EllipsisHorizontalIcon onClick={()=>{setShowElipse(!showElipse)}} className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>)}
                 {!showElipse && (        
-                <ul   className="flex flex-col gap-3 w-[150px] h-[75px] right-[20px] bg-white shadow rounded absolute z-2000" id="elipseMenu">
-                <li onClick={()=>{ dispatch(create())}} className="m-0.5 flex gap-3 items-center justify-center hover:sm:shadow transition-200 hover:cursor-pointer">
-                <span className="">New</span><PlusIcon className="w-4 h-4"/></li>
-                <li className="m-0.5 flex gap-3 items-center justify-center hover:sm:shadow hover:cursor-pointer"><span className="">Exportar</span><ArrowUpTrayIcon className="w-4 h-4"/></li>
+                <ul   className="flex flex-col gap-3 w-[150px] h-[35px] right-[20px] justify-center bg-white shadow rounded absolute z-2000" id="elipseMenu">
+                <li className="m-0.5 flex gap-3 items-center justify-center hover:cursor-pointer"><span className="">Exportar</span><ArrowUpTrayIcon className="w-4 h-4"/></li>
                 </ul>)
             }
              </div>

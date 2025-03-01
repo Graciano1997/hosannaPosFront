@@ -14,13 +14,13 @@ const Modal = ({children, helper = undefined })=>{
         <div className="flex items-center">
         <div className="fixed w-[100%] h-[100%] top-[0] left-[0] blur-sm">
         </div>
-        <div className='fixed  bg-black/10 w-[100%] h-[100%] top-[0] left-[0] flex justify-center'>
+        <div className='fixed  bg-black/5 w-[100%] h-[100%] top-[0] left-[0] flex justify-center'>
          <button
          onClick={()=>{ 
           dispatch(closeModal());
-           if( helper !=undefined ){
+          if(helper !=undefined){
             dispatch(helper());
-           }
+          }
         }}
           className="absolute text-black text-lg bg-white p-2 rounded shadow  right-[15px] top-[20px] transition-all duration-200 hover:bg-green-100">X</button>
             <div className='p-3 mt-[5rem]  w-[80%]  h-[450px]  rounded bg-white shadow' style={{zIndex:2000}}>

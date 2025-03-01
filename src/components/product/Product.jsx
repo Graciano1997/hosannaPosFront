@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { creatingProduct, deleteProduct, fetchProductConfiguration, fetchProducts, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
-import { creatingCategory, deleteCategory, fetchCategories, stopCreatingCategory, updateCategory, updatingCategory } from "../../slices/categorySlice";
+import { creatingCategory, deleteCategory, fetchCategories, updateCategory, updatingCategory } from "../../slices/categorySlice";
 import CreateCategory from "./CreateCategory";
 import ProductConfiguration from "./ProductConfiguration";
 
@@ -54,7 +54,7 @@ const Product=()=>{
         {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']}  collection={categoryState.categories || []}/>}
         {appState.activeTab=="tab4" && !productState.error && !productState.loading && <ProductConfiguration />}
         </TabWrapper>
-        {(categoryState.isCreating || categoryState.isUpdating) && appState.isOpen && (<CreateCategory  stopCreating={stopCreatingCategory} setIsShowing={setIsShowing}/>)}
+        {(categoryState.isCreating || categoryState.isUpdating) && appState.isOpen && (<CreateCategory/>)}
         {(productState.isCreating  || productState.isUpdating ) && appState.isOpen && (<Create stopCreating={stopCreatingProduct} setIsShowing={setIsShowing}/>)}
         </CardWrapper>
     )

@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { order } from "../../slices/saleSlice";
+import { order, saleClean } from "../../slices/saleSlice";
 import { showToast } from "../../slices/appSlice";
 import { PaymentType } from "../../lib/Enums";
 
@@ -34,6 +34,9 @@ const ButtonGroup = ()=>{
         dispatch(order(treatedSaleObject))
         .then(()=>{
         dispatch(showToast({ success:true, message:t('order_sucessfuly')}))
+        })
+        .then(()=>{
+            dispatch(saleClean());
         })        
     };
 

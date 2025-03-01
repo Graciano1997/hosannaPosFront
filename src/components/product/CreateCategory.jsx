@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "../general/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { createCategory, updateCategory } from "../../slices/categorySlice";
+import { createCategory, stopCreatingOrUpdateingCategory, updateCategory } from "../../slices/categorySlice";
 
 const CreateCategory=({stopCreating})=>{
 
@@ -41,7 +41,7 @@ const CreateCategory=({stopCreating})=>{
 
     return(
         <>
-        <Modal stopCreating={stopCreating}>
+        <Modal helper={stopCreatingOrUpdateingCategory}>
         <form onSubmit={handleFormSubmition} action="POST" className='flex flex-col h-[100%]  mt-[1rem] rounded p-3'>
                 <div className="flex flex-col gap-4">
                 <div className="flex gap-5">
