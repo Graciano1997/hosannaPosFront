@@ -82,5 +82,6 @@
     "received_cash":"received cash",
     "operator":"operator",
     "add":"Add",
-    "outofStock":"Out of stock"
+    "outofStock":"Out of stock",
+    "profile":"profile"
 }

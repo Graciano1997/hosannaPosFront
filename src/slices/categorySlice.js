@@ -44,8 +44,10 @@ export const categorySlice = createSlice({
             state.categoryToUpdate=action.payload;
         },
 
-        stopCreatingCategory : (state)=>{
+        stopCreatingOrUpdateingCategory : (state)=>{
             state.isCreating = false;
+            state.isUpdating = false;
+            state.categoryToUpdate = {};
         },
 
     },
@@ -56,9 +58,6 @@ export const categorySlice = createSlice({
 
         builder.addCase(createCategory.fulfilled,(state,action)=>{
             state.isCreating =false;
-            
-            console.log(action.payload);
-
             if(action.payload.success){
                 state.categories.push(action.payload.category)
             }
@@ -84,4 +83,4 @@ export const categorySlice = createSlice({
 })
 
 export default categorySlice.reducer;
-export const { creatingCategory, updatingCategory, stopCreatingCategory } = categorySlice.actions;
+export const { creatingCategory, updatingCategory, stopCreatingOrUpdateingCategory } = categorySlice.actions;

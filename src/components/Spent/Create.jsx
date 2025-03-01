@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import Modal from "../general/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { registerSpent, updateSpent } from "../../slices/spentSlice";
+import { registerSpent, stopCreatingOrUpdateingSpent, updateSpent } from "../../slices/spentSlice";
 import { fetchUsers } from "../../slices/userSlice";
 
-const Create=({setIsShowing})=>{
+const Create=()=>{
     
     const spentState = useSelector((state)=> state.spentState );
     const userState = useSelector((state)=> state.userState);
@@ -42,7 +42,7 @@ const Create=({setIsShowing})=>{
 
     return(
         <>
-        <Modal setIsShowing={setIsShowing}>
+        <Modal helper={stopCreatingOrUpdateingSpent}>
         <form onSubmit={handleFormSubmition} className='flex flex-col mt-[2%] h-[100%] rounded p-3'>
                 <div className="flex flex-col gap-4">
                 
@@ -51,7 +51,7 @@ const Create=({setIsShowing})=>{
                 <label>
                 {t('responsable')}
                 <br />
-                <select name="user_id" onChange={formHandler} value={spent.user_id} className='bg-green-100 p-1 rounded w-[100%] outline-none'>
+                <select name="user_id" onChange={formHandler} value={spent.user_id} className='p-1 rounded w-[100%] outline-none'>
                 <option value="" disabled selected>Selecione uma Responsavel</option>
                     {userState.users.map((user)=>
                     <option value={user.id}>{user.name}</option>
@@ -64,7 +64,7 @@ const Create=({setIsShowing})=>{
                 <label>
                 {t('amount')}
                 <br />
-                <input type="number" name="amount" onChange={formHandler} value={spent.amount} className='bg-green-100 p-1 rounded w-[100%] outline-none'/>
+                <input type="number" name="amount" onChange={formHandler} value={spent.amount} className='p-1 rounded w-[100%] outline-none'/>
                 </label>
                 </div>
                 </div>
@@ -74,14 +74,13 @@ const Create=({setIsShowing})=>{
                 <label>
                 {t('motive')}
                 <br />
-                <textarea name="motive" rows={5} style={{resize:"none"}} onChange={formHandler} value={spent.motive} maxLength={250} className="bg-green-100 w-[100%] h-[100%] rounded p-2">
+                <textarea name="motive" rows={5} style={{resize:"none"}} onChange={formHandler} value={spent.motive} maxLength={250} className="w-[100%] h-[100%] rounded p-2">
                 </textarea>
                 </label>
 
                 </div>
                 </div>
                 </div>
-
                 <div className="flex justify-end mt-auto p-2"><button className="p-2 bg-green-100 rounded">{spent.id ? 'Update' : 'Create'}</button></div>
              </form>
         </Modal>

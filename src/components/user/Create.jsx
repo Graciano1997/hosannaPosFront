@@ -3,9 +3,9 @@ import Modal from "../general/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfiles } from "../../slices/profileSlice";
 import { useTranslation } from "react-i18next";
-import { registerUser } from "../../slices/userSlice";
+import { registerUser, stopCreatingOrUpdateingUser, updateUser } from "../../slices/userSlice";
 
-const Create=({stopCreating})=>{
+const Create=()=>{
 
     const image = useRef();
     const dispatch = useDispatch();
@@ -16,9 +16,10 @@ const Create=({stopCreating})=>{
     },[]);
 
 
+   const userState = useSelector((state)=>state.userState);
    const profileState = useSelector((state)=>state.profileState);
    const profiles = profileState.profiles;
-   const [user,setUser]=useState();
+   const [user,setUser]=useState(userState.userToUpdate);
 
 
    const formHandler = (el)=>{
@@ -41,16 +42,16 @@ const Create=({stopCreating})=>{
    
     let treatedUserObject = { ...user }
 
-      if(treatedUserObject.id){
-          dispatch(updateUser(formData));
-      }else{
-          dispatch(registerUser(formData));
-      }
+       if(treatedUserObject.id){
+         dispatch(updateUser(treatedUserObject.id,formData));
+       }else{
+           dispatch(registerUser(formData));
+       }
    }
 
     return(
         <>
-        <Modal stopCreating={stopCreating}>
+        <Modal helper={stopCreatingOrUpdateingUser}>
         <form onSubmit={handleFormSubmition} className='flex flex-col h-[100%]  mt-[1rem] rounded p-3'>
                 <div className="flex flex-col gap-4">
                 <div className="flex gap-5">
@@ -58,7 +59,7 @@ const Create=({stopCreating})=>{
                 <label>
                 {t('name')}
                 <br />
-                <input type='text' onChange={formHandler} name="name"  className='p-1 rounded w-[100%] outline-none'/>
+                <input type='text' onChange={formHandler} name="name" value={user.name}  className='p-1 rounded w-[100%] outline-none'/>
                 </label>
                 </div>
                
@@ -66,7 +67,7 @@ const Create=({stopCreating})=>{
                 <label>
                 {t('email')}
                 <br />
-                <input type='email' onChange={formHandler} name="email"  className='p-1 rounded w-[100%] outline-none'/>
+                <input type='email' onChange={formHandler} name="email" value={user.email}  className='p-1 rounded w-[100%] outline-none'/>
                 </label>
                 </div> 
                 </div>
@@ -75,7 +76,7 @@ const Create=({stopCreating})=>{
                 <label>
                 {t('status')}
                 <br />
-                <select name="active"  className='p-2 rounded w-[100%] outline-none' onChange={formHandler}>
+                <select name="active" value={user.active}  className='p-2 rounded w-[100%] outline-none' onChange={formHandler}>
                 <option value="" disabled selected>Selecione o estado</option>
                     <option value={true}>{t('active')}</option>
                     <option value={false}>{t('disative')}</option>
@@ -87,7 +88,7 @@ const Create=({stopCreating})=>{
                 <label>
                 {t('profile')}
                 <br />
-                <select name="profile_id"  className='p-2 rounded w-[100%] outline-none' onChange={formHandler}>
+                <select name="profile_id" value={user.profile_id}  className='p-2 rounded w-[100%] outline-none' onChange={formHandler}>
                 <option value="" disabled selected>Selecione o perfil</option>
                 {profiles.map((profile,index)=><option key={index} value={profile.id}>{profile.name}</option>)}
                 </select>
@@ -97,7 +98,7 @@ const Create=({stopCreating})=>{
                 </div>
 
                 </div>
-                <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded"> {'Create'}</button></div>
+                <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{ user.id? 'Update':'Create'}</button></div>
                 </form>
         </Modal>
     </>

@@ -83,5 +83,6 @@
     "received_cash":"dinheiro recebido",
     "operator":"operador",
     "add":"Adicionar",
-    "outofStock":"Sem stock"
+    "outofStock":"Sem stock",
+    "profile":"perfil"
 }
