@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import Modal from "../general/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { registerSpent, stopCreatingOrUpdateingSpent, updateSpent } from "../../slices/spentSlice";
+import { fetchSpents, registerSpent, stopCreatingOrUpdateingSpent, updateSpent } from "../../slices/spentSlice";
 import { fetchUsers } from "../../slices/userSlice";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const Create=()=>{
     
@@ -34,9 +35,16 @@ const Create=()=>{
             }
        
               if (treatedSpentObject.id) {
-                  dispatch(updateSpent(treatedSpentObject));
+                  dispatch(updateSpent(treatedSpentObject))
+                  .then(()=>{
+                    dispatch(fetchSpents())
+                  })
+   
               } else {
-                  dispatch(registerSpent(treatedSpentObject));
+                  dispatch(registerSpent(treatedSpentObject))
+                  .then(()=>{
+                    dispatch(fetchSpents())
+                  })
               }
         }
 
@@ -49,7 +57,7 @@ const Create=()=>{
                 <div className="flex gap-3">
                 <div className="w-[50%]">
                 <label>
-                {t('responsable')}
+                {firstCapitalize(t('responsable'))}
                 <br />
                 <select name="user_id" onChange={formHandler} value={spent.user_id} className='p-1 rounded w-[100%] outline-none'>
                 <option value="" disabled selected>Selecione uma Responsavel</option>
@@ -62,7 +70,7 @@ const Create=()=>{
                
                 <div className="w-[50%]">
                 <label>
-                {t('amount')}
+                { firstCapitalize(t('amount'))}
                 <br />
                 <input type="number" name="amount" onChange={formHandler} value={spent.amount} className='p-1 rounded w-[100%] outline-none'/>
                 </label>
@@ -72,7 +80,7 @@ const Create=()=>{
                 <div className="flex gap-3">
                 <div className="w-[100%]">
                 <label>
-                {t('motive')}
+                {firstCapitalize(t('motive'))}
                 <br />
                 <textarea name="motive" rows={5} style={{resize:"none"}} onChange={formHandler} value={spent.motive} maxLength={250} className="w-[100%] h-[100%] rounded p-2">
                 </textarea>
@@ -81,7 +89,7 @@ const Create=()=>{
                 </div>
                 </div>
                 </div>
-                <div className="flex justify-end mt-auto p-2"><button className="p-2 bg-green-100 rounded">{spent.id ? 'Update' : 'Create'}</button></div>
+                <div className="flex justify-end mt-auto p-2"><button className="p-2 bg-green-100 rounded">{spent.id ? firstCapitalize(t('update')) : firstCapitalize(t('create'))}</button></div>
              </form>
         </Modal>
         </>

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
 import { setClientDetails, setReceivedCash } from "../../slices/saleSlice";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const ClientDetails = ()=>{
     const [clientType,setClientType]=useState(ClientType.SINGULAR);
@@ -23,7 +24,7 @@ const ClientDetails = ()=>{
 
     return(
         <div className={`h-[100%] bg-white rounded shadow-md p-3 flex flex-col  gap-2`}>
-            <h1 className="font-bold mt-1 text-end">* Client Details</h1>
+            <h1 className="font-bold mt-1 text-end"> * {firstCapitalize(t('client_details'))}</h1>
             <div className="flex flex-col gap-3 mt-1">
                 <label for="clienteNome">{t('name')}</label>
                 <input type="text" name="name" onChange={formHandler} value={clientDetails.name || ''} className="bg-green-100 rounded p-2"></input>

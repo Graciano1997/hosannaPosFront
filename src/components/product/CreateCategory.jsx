@@ -2,15 +2,17 @@ import { useState } from "react";
 import Modal from "../general/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { createCategory, stopCreatingOrUpdateingCategory, updateCategory } from "../../slices/categorySlice";
+import { useTranslation } from "react-i18next";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
-const CreateCategory=({stopCreating})=>{
+const CreateCategory=()=>{
 
    const categoriesState = useSelector((state)=>state.categoryState);
 
    const [category,setCategory]=useState(categoriesState.categoryToUpdate);
    const dispatch = useDispatch();
    const categories = categoriesState.categories;
-
+   const {t} = useTranslation();
 
    const formHandler = (el)=>{
     setCategory({
@@ -89,7 +91,7 @@ const CreateCategory=({stopCreating})=>{
                 </div>
                 </div>
                 </div>
-                <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded"> {category.id?'Update':'Create'}</button></div>
+                <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded"> {category.id ? firstCapitalize(t('update')) : firstCapitalize(t('create'))}</button></div>
                 </form>
         </Modal>
     </>

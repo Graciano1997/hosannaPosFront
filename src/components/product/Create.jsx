@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerProduct, updateProduct } from "../../slices/productSlice";
 import LargeModal from "../general/LargeModal";
 import { useTranslation } from "react-i18next";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const Create = ({ stopCreating }) => {
     const productState = useSelector((state) => state.productState);
@@ -266,7 +267,7 @@ const Create = ({ stopCreating }) => {
                             </label>
                         }
                     </div>
-                    <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{product.id ? 'Update' : 'Create'}</button></div>
+                    <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{product.id ? firstCapitalize(t('update')) : firstCapitalize(t('create'))}</button></div>
                 </form>
             </LargeModal>
         </>

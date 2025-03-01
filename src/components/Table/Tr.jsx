@@ -22,7 +22,6 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails }) 
                         {moneyFields.includes(key) &&  <Money amount={item[key]} />}
                         {typeof (item[key]) == "boolean" && stateDisplay(item[key]) }
                         {key=="image" && item[key]!="none" && <div className="flex justify-center"><img src={item[key]} className="w-[40px] h-[40px] rounded-[20px] duration-200 transition-all hover:shadow" /></div>}
-                        {/* {key=="image" && item[key]==="none" && <div className="flex justify-center"><UserIcon className="w-[30px] h-[30px] rounded-[20px] duration-200 transition-all hover:shadow" /></div>} */}
                         {key!=="image" && !moneyFields.includes(key) && typeof(item[key]) != "boolean" &&  textDisplay(item[key])}
                     </td>
                     )

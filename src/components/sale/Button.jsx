@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { order, saleClean } from "../../slices/saleSlice";
 import { showToast } from "../../slices/appSlice";
 import { PaymentType } from "../../lib/Enums";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const ButtonGroup = ()=>{
     const {t}=useTranslation();
@@ -44,7 +45,7 @@ const ButtonGroup = ()=>{
     <div className="absolute bottom-[-7px]  w-[100%] flex justify-end">
         <button type="button"
         onClick={orderHandler}
-         className="font-bold bg-green-200 rounded p-2 hover:shadow">{t('order')}</button>
+         className="font-bold bg-green-200 rounded p-2 hover:shadow">{firstCapitalize(t('order'))}</button>
     </div>
     )
 };
