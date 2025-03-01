@@ -25,10 +25,10 @@ const SpentDashboard=()=>{
 
     return(
         <>
-        <div className="flex flex-wrap justify-center gap-3 mt-4 p-1">
-        <Card className="font-black" width={400} height={350} info={{output:true,title: firstCapitalize(t('output')),description:<Money amount={spentState.total}/>}} />
-        <LastOuts width={400} height={350} info={{title: firstCapitalize(t('last_outputs')), description:t('about')}} />
-        <BarChart data={data} width={450} height={350} info={firstCapitalize(t('anual_graph'))} />
+        <div className="flex flex-wrap justify-center items-center gap-[20px] mt-4 p-1">
+        <LastOuts width={350} height={300} info={{title: firstCapitalize(t('last_outputs')), description:t('about')}} />
+        <BarChart data={data} width={450} height={400} info={firstCapitalize(t('anual_graph'))} />
+        <Card className="font-black" width={350} height={300} info={{output:true,title: firstCapitalize(t('outputs')),description:<Money amount={spentState.total}/>}} />
         </div>
         </>
     )
