@@ -4,6 +4,7 @@ import CurrentUser from "./CurrentUser";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CubeIcon, HomeIcon,ShoppingCartIcon, TruckIcon, UserGroupIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const Navegation =({visible,setVisibility})=>{
     const {t} = useTranslation();
@@ -35,31 +36,31 @@ const Navegation =({visible,setVisibility})=>{
                 <Link to={"/dashboard"} 
                 className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/dashboard'?'rounded bg-green-100':''}`} >
                 <HomeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('dashboard')}
+                {firstCapitalize(t('dashboard'))}
                 </Link>
             </li>
             <li>
                 <Link to={"/sale"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sale'?'rounded bg-green-100':''}`} >
                 <ShoppingCartIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('sale')}
+                {firstCapitalize(t('sale'))}
                 </Link>
             </li>
             <li>
                 <Link to={"/products"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/products'?'rounded bg-green-100':''}`} >
                 <CubeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('products')}
+                {firstCapitalize(t('products'))}
                 </Link>
             </li>           
             <li>
                 <Link to={"/spents"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/spends'?'rounded bg-green-100':''}`} >
                 <ArrowTrendingUpIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {'Spends'}
+                {firstCapitalize(t('spents'))}
                 </Link>
             </li>           
                    <li>
                 <Link to={"/sales"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sales'?'rounded bg-green-100':''}`} >
                 <CircleStackIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('sales')}
+                { firstCapitalize(t('sales'))}
                 </Link>
             </li>      
                   {/* <li>
@@ -71,19 +72,19 @@ const Navegation =({visible,setVisibility})=>{
             <li>
                 <Link to={"/users"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
                 <UserGroupIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('users')}
+                { firstCapitalize(t('users'))}
                 </Link>
             </li>
             <li>
                 <Link to={"/setting"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/setting'?'rounded bg-green-100':''}`} >
                 <Cog8ToothIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('settings')}
+                { firstCapitalize(t('settings'))}
                 </Link>
             </li>
             <li>
                 <Link to={"/logout"} className="flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-red-300" >
                 <ArrowLeftStartOnRectangleIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('logout')}
+                { firstCapitalize(t('logout'))}
                 </Link>
             </li>
         </ul>  

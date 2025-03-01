@@ -14,7 +14,7 @@ const ProductConfigurationFormItem = ({ field, index, active,mandatory }) => {
     const activeRef=useRef();
     const mandatoryRef=useRef();
 
-    return ( <div key={index} className={`${index%2==0?'bg-green-100':''} grid grid-cols-3 gap-2 p-1`}>
+    return ( <div key={index} className={`${index%2==0?'bg-green-100':''} grid grid-cols-2 gap-2 p-1`}>
                         <p>{t(field)[0].toUpperCase().concat(t(field).slice(1))}</p>                        
                         
                         <select 
@@ -25,7 +25,7 @@ const ProductConfigurationFormItem = ({ field, index, active,mandatory }) => {
                             productFieldsControl({
                                 field:field,
                                 active:el.target.value,
-                                mandatory:mandatoryRef.current.value
+                                mandatory:false
                             });
                         }} 
                          name={'active'}               
@@ -34,6 +34,7 @@ const ProductConfigurationFormItem = ({ field, index, active,mandatory }) => {
                             <option value={false}>{t('hide')}</option>
                         </select>
                     
+                     { false && 
                         <select 
                         ref={mandatoryRef}
                         className="bg-green-200 p-1 rounded cursor-pointer"
@@ -50,6 +51,7 @@ const ProductConfigurationFormItem = ({ field, index, active,mandatory }) => {
                             <option value={true}>{t('yes')}</option>
                             <option value={false}>{t('not')}</option>
                         </select>
+                        }
                     </div>
     )
 };

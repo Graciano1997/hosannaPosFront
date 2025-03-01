@@ -4,11 +4,18 @@ const initialState = {
     spents: [],
     isCreating: false,
     isUpdating: false,
-    spentToUpdate: {}
+    spentToUpdate: {},
+    lastSpents:[],
+    total:0
 };
 
 export const fetchSpents = createAsyncThunk("spentState/fetchSpents", async () => {
     const response = await fetch('http://localhost:3000/api/spents/');
+    return response.json();
+})
+
+export const fetchLastSpents = createAsyncThunk("spentState/lastSpents", async (number=3) => {
+    const response = await fetch(`http://localhost:3000/api/spents/last_spents/${number}/`);
     return response.json();
 })
 
@@ -48,11 +55,24 @@ const spentSlice = createSlice({
             state.isCreating = false;
             state.isUpdating = false;
             state.spentToUpdate = {};
-        }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchSpents.fulfilled, (state, action) => {
             state.spents = action.payload.data;
+            
+            let total=0;
+             if(action.payload.data.length > 0 ){
+                
+            action.payload.data.map((spent)=>{
+                    total += spent.amount*1
+                 })
+                 state.total = total;
+             }                     
+        });
+
+        builder.addCase(fetchLastSpents.fulfilled, (state, action) => {
+            state.lastSpents = action.payload.data;                     
         });
 
         builder.addCase(registerSpent.fulfilled, (state, action) => {
@@ -83,4 +103,4 @@ const spentSlice = createSlice({
 });
 
 export default spentSlice.reducer;
-export const { creatingSpent, updatingSpent, stopCreatingOrUpdateingSpent  } = spentSlice.actions;
+export const { calcTotalSpents,creatingSpent, updatingSpent, stopCreatingOrUpdateingSpent  } = spentSlice.actions;

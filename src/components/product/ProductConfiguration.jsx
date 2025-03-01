@@ -4,6 +4,7 @@ import { fetchProductConfiguration, fetchProducts, fetchProductsFields, productC
 import ProductConfigurationFormItem from "./ProductConfigurationFormItem";
 import { useTranslation } from "react-i18next";
 import { activeTab, showToast } from "../../slices/appSlice";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const ProductConfiguration = ()=>{
 
@@ -44,10 +45,10 @@ const ProductConfiguration = ()=>{
         <div className="mt-[2rem] h-[100%]">
             <h1 className="pl-2 font-light text-3xl text-start">Product Configurations Fields</h1>
             <form onSubmit={handleFormSubmition} className="w-[100%] mt-[2rem] shadow p-2">
-                <div className="grid grid-cols-3">
-                <p className="">{t('name')[0].toUpperCase().concat(t('name').slice(1))}</p>
-                <p className="text-center">{t('status')[0].toUpperCase().concat(t('status').slice(1))}</p>
-                <p className="text-center">{t('mandatory')[0].toUpperCase().concat(t('mandatory').slice(1))}</p>
+                <div className="grid grid-cols-2">
+                <p className="">{firstCapitalize(t('name'))}</p>
+                <p className="">{ firstCapitalize(t('status'))}</p>
+                {/* <p className="text-center">{t('mandatory')[0].toUpperCase().concat(t('mandatory').slice(1))}</p> */}
                 </div>
                 <div className="mt-[1rem] h-[230px] w-[100%]  overflow-scroll">
                 

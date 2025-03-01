@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { fetchSales } from "../../slices/saleSlice";
+import { activeTab } from "../../slices/appSlice";
 
 const Sales=()=>{
     const {t}=useTranslation();
@@ -17,6 +18,7 @@ const Sales=()=>{
     const dispatch = useDispatch();
     useEffect(()=>{
         dispatch(fetchSales());
+        dispatch(activeTab("tab1"));
     },[])
 
     const sales= useSelector((state)=>state.saleState.sales) || [];

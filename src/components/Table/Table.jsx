@@ -13,7 +13,7 @@ const Table = ({ collection, deleteItem = () => { }, update = () => { }, create 
 
     return (
         <>
-            <div className="w-[100%]">
+            <div className="">
               {pathname !=='/sales' &&
                <div className="flex justify-end">
                <button onClick={() => { dispatch(create()); dispatch(openModal()); }} className="p-2"><PlusIcon className="rounded-[30%] w-10 h-10 text-green-700 shadow hover:shadow-md" /></button>
@@ -30,8 +30,8 @@ const Table = ({ collection, deleteItem = () => { }, update = () => { }, create 
                 }
 
                 {collection.length > 0 &&
-                    <div className="w-[100%] overflow-auto p-1 h-[400px] mt-[0.5rem]">
-                        <table className="rounded shadow-md  w-[100%] mt-[1.5rem]">
+                    <div className="w-100 overflow-scroll p-1 h-[400px]">
+                        <table className="rounded shadow-md  w-[100%]" style={{borderLeft:'4px solid green'}}>
                             <Thead filterRows={filterRows} object={collection[0]} />
                             <Tbody filterDetails={filterDetails} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} items={collection} />
                         </table>

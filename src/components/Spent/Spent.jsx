@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { creatingSpent, deleteSpent, fetchSpents, updatingSpent } from "../../slices/spentSlice";
+import { activeTab } from "../../slices/appSlice";
 
 const Spent = () => {
     const { t } = useTranslation();
@@ -18,6 +19,7 @@ const Spent = () => {
 
     useEffect(()=>{
         dispatch(fetchSpents());
+        dispatch(activeTab('tab1'));
     },[]);
 
     const spentState = useSelector((state) => state.spentState);
@@ -25,7 +27,7 @@ const Spent = () => {
 
     return (
         <CardWrapper>
-            <Title setIsShowing={setIsShowing} title={t('spends')} />
+            <Title setIsShowing={setIsShowing} title={t('spents')} />
             <TabWrapper>
                 {appState.activeTab == "tab1" && (<Table filterDetails={filterSpentDetails} filterRows={['user_id','image']} collection={spents} update={updatingSpent} deleteItem={deleteSpent}  create={creatingSpent} />)}
                 {appState.activeTab == "tab2" && (<SpendDashboard />)}
