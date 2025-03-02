@@ -5,15 +5,14 @@ import Money from "../general/Money";
 import { useDispatch, useSelector } from "react-redux";
 import LastOuts from "../dashboard/LastOuts";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import { annualMonths } from "../../lib/Months";
 
 const SpentDashboard=()=>{
     const {t}=useTranslation();
     const spentState = useSelector(state=>state.spentState);
 
-    const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Ago','Set','Oct','Nov'];
-
     const data = {
-        labels,
+        labels:annualMonths.map((month)=>firstCapitalize(t(month))),
     datasets: [
         {
         label:t('output'),
