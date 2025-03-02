@@ -30,8 +30,9 @@ const Title=({title,create})=>{
                 {showElipse && (<EllipsisHorizontalIcon onClick={()=>{setShowElipse(!showElipse)}} className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>)}
                 {!showElipse && (        
                 <ul   className="flex flex-col gap-3 w-[150px] h-[35px] right-[20px] justify-center bg-white shadow rounded absolute z-2000" id="elipseMenu">
-                <li className="m-0.5 flex gap-3 items-center justify-center hover:cursor-pointer"><span className="">{t('export')}</span><ArrowUpTrayIcon className="w-4 h-4"/></li>
-                </ul>)
+                <li className="m-0.5 flex gap-3 items-center justify-center hover:cursor-pointer"><span className="">{firstCapitalize(t('export'))}</span><ArrowUpTrayIcon className="w-4 h-4"/></li>
+                </ul>
+                )
             }
              </div>
     

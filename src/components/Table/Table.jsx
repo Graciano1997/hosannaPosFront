@@ -34,7 +34,7 @@ const Table = ({ collection, deleteItem = () => { }, update = () => { }, create 
                 {(appState.loading) &&
                     <div className="rounded text-center w-[100%] mt-[5rem]">
                         <div className="mt-[5rem] flex justify-center">
-                            <p className="text-2xl font-light text-green-900 p-1"> {firstCapitalize(t('loading...'))}</p>
+                            <p className="text-2xl font-light text-green-900 p-1"> {firstCapitalize(t('loading'))}</p>
                         </div>
                     </div>
                 }
