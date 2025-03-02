@@ -92,5 +92,17 @@
     "sale_details":"detalhes da venda",
     "no_founded_item":"não encontrado",
     "no_product_add_to_sale":"nenhum produto ainda adicionado a esta compra",
-    "annual_spends":"Saidas anual"
+    "annual_spends":"Saidas anual",
+    "jan":"jan",
+    "feb":"fev",
+    "mar":"mar",
+    "apr":"abr",
+    "may":"mai",
+    "jun":"jun",
+    "jul":"jul",
+    "ago":"ago",
+    "set":"set",
+    "oct":"oct",
+    "nov":"nov",
+    "dec":"dez"
 }

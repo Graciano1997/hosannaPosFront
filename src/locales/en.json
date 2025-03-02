@@ -91,5 +91,17 @@
     "sale_details":"sale details",
     "no_founded_item":"not found",
     "no_product_add_to_sale":"no product added to this sale",
-     "annual_spends":"annual spends"
+    "annual_spends":"annual spends",
+    "jan":"jan",
+    "feb":"feb",
+    "mar":"mar",
+    "apr":"apr",
+    "may":"may",
+    "jun":"jun",
+    "jul":"jul",
+    "ago":"ago",
+    "set":"set",
+    "oct":"oct",
+    "nov":"nov",
+    "dec":"dec"
 }
