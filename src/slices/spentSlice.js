@@ -6,6 +6,7 @@ const initialState = {
     isUpdating: false,
     spentToUpdate: {},
     lastSpents:[],
+    anualSpends:[],
     total:0
 };
 
@@ -16,6 +17,11 @@ export const fetchSpents = createAsyncThunk("spentState/fetchSpents", async () =
 
 export const fetchLastSpents = createAsyncThunk("spentState/lastSpents", async (number=3) => {
     const response = await fetch(`http://localhost:3000/api/spents/last_spents/${number}/`);
+    return response.json();
+})
+
+export const fetchAnualSpents = createAsyncThunk("spentState/fetchAnualSpents", async () => {
+    const response = await fetch(`http://localhost:3000/api/spents/anual_spents/`);
     return response.json();
 })
 
@@ -85,6 +91,10 @@ const spentSlice = createSlice({
         builder.addCase(deleteSpent.fulfilled, (state, action) => {
             state.spents = state.spents.filter((spent) => spent.id !== action.payload.id);
             state.error = '';
+        });
+
+        builder.addCase(fetchAnualSpents.fulfilled,(state,action)=>{
+            state.anualSpends = action.payload.data;
         });
 
         builder.addCase(updateSpent.fulfilled, (state, action) => {

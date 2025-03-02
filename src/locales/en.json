@@ -19,7 +19,7 @@
     "outputs":"outputs",
     "products":"products",
     "sales":"sales",
-    "spents":"spents",
+    "spents":"spends",
     "main_table": "main table",
     "clients":"clients",
     "product_categories":"categories",
@@ -83,7 +83,7 @@
     "add":"add",
     "outofStock":"out of stock",
     "profile":"profile",
-    "last_outputs":"last spents",
+    "last_outputs":"last spends",
     "destinatary":"destinatary",
     "create":"create",
     "update":"update",
@@ -91,5 +91,5 @@
     "sale_details":"sale details",
     "no_founded_item":"not found",
     "no_product_add_to_sale":"no product added to this sale",
-     "anual_graph":"anual graph"
+     "annual_spends":"annual spends"
 }

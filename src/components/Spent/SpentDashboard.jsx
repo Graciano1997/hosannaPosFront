@@ -17,7 +17,7 @@ const SpentDashboard=()=>{
     datasets: [
         {
         label:t('output'),
-        data: labels.map(() => Math.random()*100),
+        data: spentState.anualSpends,
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
         }
     ],
@@ -27,7 +27,7 @@ const SpentDashboard=()=>{
         <>
         <div className="flex flex-wrap justify-center items-center gap-[20px] mt-4 p-1">
         <LastOuts width={350} height={300} info={{title: firstCapitalize(t('last_outputs')), description:t('about')}} />
-        <BarChart data={data} width={450} height={400} info={firstCapitalize(t('anual_graph'))} />
+        <BarChart data={data} width={450} height={400} info={firstCapitalize(t('annual_spends'))} />
         <Card className="font-black" width={350} height={300} info={{output:true,title: firstCapitalize(t('outputs')),description:<Money amount={spentState.total}/>}} />
         </div>
         </>

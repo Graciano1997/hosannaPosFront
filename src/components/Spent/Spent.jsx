@@ -7,7 +7,7 @@ import SpendDashboard from "./SpentDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
-import { creatingSpent, deleteSpent, fetchSpents, updatingSpent } from "../../slices/spentSlice";
+import { creatingSpent, deleteSpent, fetchAnualSpents, fetchSpents, updatingSpent } from "../../slices/spentSlice";
 import { activeTab } from "../../slices/appSlice";
 
 const Spent = () => {
@@ -19,6 +19,7 @@ const Spent = () => {
 
     useEffect(()=>{
         dispatch(fetchSpents());
+        dispatch(fetchAnualSpents());
         dispatch(activeTab('tab1'));
     },[]);
 
