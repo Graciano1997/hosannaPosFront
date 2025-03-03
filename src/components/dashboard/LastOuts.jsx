@@ -18,7 +18,9 @@ const LastOuts =({width=200,height=300,info})=>{
 
     return(
          <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
-             <CardTitle title={info.title} />
+             <CardTitle>
+            <h2 className="text-center">{firstCapitalize(info.title)}</h2>
+            </CardTitle>
              <div className="p-2">
                 <ul className="h-[100%] flex flex-col justify-around p-1">
                 <li className="h-[40px] bg-white  flex justify-between">
