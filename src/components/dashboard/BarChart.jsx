@@ -45,6 +45,7 @@ export function BarChart({data,width=200,height=300,info}) {
   const years = [];
 
   useEffect(()=>{
+    dispatch(fetchAnualSpents()); 
     dispatch(fetchMinYearSpents());
   },[]);
 

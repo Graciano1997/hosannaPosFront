@@ -103,5 +103,6 @@
     "set":"set",
     "oct":"oct",
     "nov":"nov",
-    "dec":"dec"
+    "dec":"dec",
+    "no-spents":"No Spends"
 }

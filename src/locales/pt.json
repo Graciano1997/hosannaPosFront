@@ -104,5 +104,6 @@
     "set":"set",
     "oct":"oct",
     "nov":"nov",
-    "dec":"dez"
+    "dec":"dez",
+    "no-spents":"Sem Saidas"
 }
