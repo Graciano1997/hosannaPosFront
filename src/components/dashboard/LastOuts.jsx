@@ -22,15 +22,23 @@ const LastOuts =({width=200,height=300,info})=>{
             <h2 className="text-center">{firstCapitalize(info.title)}</h2>
             </CardTitle>
              <div className="p-2">
-                <ul className="h-[100%] flex flex-col justify-around p-1">
-                <li className="h-[40px] bg-white  flex justify-between">
-                    <p>{ firstCapitalize(t('destinatary'))}</p>
-                    <p>{firstCapitalize(t('amount'))}</p>
-                    </li>
-                    {lastSpents.map((el)=><li className="h-[40px] cursor-pointer bg-green-200 flex justify-between p-1 rounded sm:shadow items-center">
+                <ul className={`h-[100%] flex flex-col gap-5 p-1 ${lastSpents.length==0?'items-center justify-center':''}`}>
+                <li>
+                    {lastSpents.length==0 && <p className="text-center text-red-500 text-2xl p-2"> {t('no-spents')}</p>}
+                </li>
+                    {lastSpents.length > 0 &&
+                    <>
+                     <li className="h-[40px] bg-white  flex justify-between">
+                        <p>{ firstCapitalize(t('destinatary'))}</p>
+                        <p>{firstCapitalize(t('amount'))}</p>
+                     </li>
+                    </>
+                    && lastSpents.map((el)=>
+                    <li className="h-[40px] cursor-pointer bg-green-200 flex justify-between p-1 rounded sm:shadow items-center">
                     <p>{el.user}</p>
                     <Money amount={el.amount}/>
-                    </li>)}
+                    </li>)
+                    }
                 </ul>
              </div>
         </div>

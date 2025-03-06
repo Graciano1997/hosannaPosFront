@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { sum } from "../lib/sumCollection";
 
 const initialState = {
     spents: [],
@@ -72,15 +73,7 @@ const spentSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchSpents.fulfilled, (state, action) => {
             state.spents = action.payload.data;
-            
-            let total=0;
-             if(action.payload.data.length > 0 ){
-                
-            action.payload.data.map((spent)=>{
-                    total += spent.amount*1
-                 })
-                 state.total = total;
-             }                     
+            state.total = sum(state.spents,'amount').total;
         });
 
         builder.addCase(fetchLastSpents.fulfilled, (state, action) => {
@@ -91,11 +84,13 @@ const spentSlice = createSlice({
             state.isCreating = false;
             if (!action.payload.error) {
                 state.spents.push({ ...action.payload.spent });
+                state.total = sum(state.spents,'amount').total;
             }
         });
 
         builder.addCase(deleteSpent.fulfilled, (state, action) => {
             state.spents = state.spents.filter((spent) => spent.id !== action.payload.id);
+            state.total = sum(state.spents,'amount').total;
             state.error = '';
         });
 
@@ -116,6 +111,7 @@ const spentSlice = createSlice({
                     const updatedSpents = [...state.spents]; // Create a new array
                     updatedSpents[atIndex] = action.payload.spent; // Update the specific item
                     state.spents = updatedSpents; // Assign the new array to state
+                    state.total = sum(updateSpent,'amount').total;
                 }
             }
         })

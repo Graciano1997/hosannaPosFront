@@ -12,7 +12,7 @@ const Card =({width=200,height=300,info})=>{
                 <h2 className="text-center">{firstCapitalize(info.title)}</h2>
             </CardTitle>
              <div className="flex justify-center items-center">
-                <p className={`font-bold text-${info.output?'red':'green'}-400 text-3xl`}>{info.description}</p> 
+                <p className={`text-${info.output?'red':'green'}-400 text-3xl`}>{info.description}</p> 
              </div>
         </div>
     );
