@@ -1,7 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { deleteProduct, fetchProducts, productConfiguration, registerProduct, searchProduct, updateProduct } from "./productSlice";
 import { addItem, fetchSales, order, removeItem, updateItem } from "./saleSlice";
 import { createCategory, deleteCategory, fetchCategories, updateCategory } from "./categorySlice";
+import currency from "currency.js";
 
 const initialState = {
     isOpen:false,
@@ -12,8 +13,14 @@ const initialState = {
     isLogged:true,
     loading:false,
     itemDetails:{},
-    error:''
+    error:'',
+    currency:{}
 }
+
+export const fetchCurrency= createAsyncThunk("appState/fetchCurrency",async ()=>{
+    const response = await fetch('http://localhost:3000/api/currencies/active');
+    return response.json();
+});
 
 const appSlice=createSlice({
     name:'appState',
@@ -55,6 +62,11 @@ const appSlice=createSlice({
         builder.addCase(searchProduct,(state)=>{
             state.isOpen=true;            
         });
+
+        builder.addCase(fetchCurrency.fulfilled,(state,action)=>{
+            state.currency = action.payload.currency;            
+        });
+
         builder.addCase(addItem,(state,action)=>{
             state.showToast=true;
             state.toastObject = {success:true,message:`Produto ${action.payload.name} Adicionado a compra`}

@@ -13,11 +13,17 @@ const initialState = {
     productConfigurationFields:[],
     productAllFields:[],
     productFilterRows:[],
-    filterRowsOp:[]
+    filterRowsOp:[],
+    expireds:[]
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async ()=>{
     const response = await fetch('http://localhost:3000/api/products/',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    return response.json();
+});
+
+export const fetchExpiredProducts = createAsyncThunk("productState/fetchExpiredProducts", async ()=>{
+    const response = await fetch('http://localhost:3000/api/products/expireds',{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
@@ -93,6 +99,14 @@ const productSlice = createSlice({
   extraReducers:(builder)=>{
     builder.addCase(fetchProducts.pending,(state)=>{
         state.loading=true;
+    });
+
+    builder.addCase(fetchExpiredProducts.fulfilled,(state,action)=>{
+        state.loading=false;
+        if(action.payload!=undefined){
+            state.expireds = action.payload.data;
+            state.error='';
+        }
     });
 
     builder.addCase(fetchProducts.fulfilled,(state,action)=>{

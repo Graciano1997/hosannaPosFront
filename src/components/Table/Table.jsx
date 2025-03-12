@@ -27,7 +27,6 @@ const Table = ({ collection, deleteItem = () => { }, update = () => { }, create 
                         <div className="mt-[5rem] flex justify-center">
                             <p className="text-2xl font-light text-red-500 p-1"> {firstCapitalize(appState.error)}</p>
                         </div>
-
                     </div>
                 }
 
@@ -48,7 +47,7 @@ const Table = ({ collection, deleteItem = () => { }, update = () => { }, create 
                 }
 
                 {appState.error=='' && !appState.loading && collection.length > 0 &&
-                    <div className="w-100 overflow-scroll p-1 h-[400px]">
+                    <div className="w-100 overflow-scroll p-1 h-[300px]">
                         <table className="rounded shadow-md  w-[100%]" style={{borderLeft:'4px solid green'}}>
                             <Thead filterRows={filterRows} object={collection[0]} />
                             <Tbody filterDetails={filterDetails} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} items={collection} />
