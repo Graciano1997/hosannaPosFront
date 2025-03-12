@@ -18,7 +18,7 @@ const Dashboard=()=>{
         <Card className="font-black" width={400} height={350}   info={{output:true,title:t('outputs'),description:<Money amount={4000}/>}} />
         <LastSelling width={400} height={350} info={{title:t('last_selling'), description:t('about')}}/>
         {/* <BarChart width={450} height={350} info={'Gráfico Semestral'} /> */}
-         {/* <PieChart width={350} height={350} info={'Categoria dos Produtos vendidos'}/> */}
+         <PieChart width={350} height={350} info={'Categoria dos Produtos vendidos'}/>
         <LastExpired width={400} height={350} info={{title:t('expireds'),description:t('about')}}/>
         </div>
         </div>

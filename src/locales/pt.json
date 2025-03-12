@@ -105,5 +105,11 @@
     "oct":"oct",
     "nov":"nov",
     "dec":"dez",
-    "no-spents":"Sem Saidas"
+    "no-spents":"sem saidas",
+    "available":"dispónivel",
+    "products_availability":"disponibilidade de produtos",
+    "total":"total",
+    "exp_date":"exp.data",
+    "no-expireds":"sem produtos expirados",
+    "expired_product":"expirados"
 }

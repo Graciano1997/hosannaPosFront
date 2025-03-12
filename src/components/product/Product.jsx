@@ -41,7 +41,9 @@ const Product=()=>{
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}
         {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']}  collection={categoryState.categories || []}/>}
-        {appState.activeTab=="tab4" && !productState.error && !productState.loading && <ProductConfiguration />}
+        {appState.activeTab=="tab4" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} collection={productState.expireds || []}/>}
+        {appState.activeTab=="tab5" && !productState.error && !productState.loading && <ProductConfiguration />}
+
         </TabWrapper>
         {(categoryState.isCreating || categoryState.isUpdating) && appState.isOpen && (<CreateCategory/>)}
         {(productState.isCreating  || productState.isUpdating ) && appState.isOpen && (<Create stopCreating={stopCreatingProduct} setIsShowing={setIsShowing}/>)}

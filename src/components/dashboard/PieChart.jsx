@@ -9,15 +9,13 @@ import {
 
 import { Pie } from 'react-chartjs-2';
 import CardTitle from '../general/CardTitle';
+import { firstCapitalize } from '../../lib/firstCapitalize';
 
 ChartJS.register(
   ArcElement,
   Tooltip,
   Legend
 );
-
-
-const labels = ['Analgesicos', 'outros', 'Antibiotio', 'Antipiretico', 'Purple', 'Orange'];
 
 export const options = {
   responsive:true,
@@ -27,44 +25,17 @@ export const options = {
     text: '',
   }
 }
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'total',
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
 
-export function PieChart({width=350,height=350,info}) {
+export function PieChart({width=350,height=350,info,data}) {
   const graphContainerRef=useRef(null);
 
   return(
-    <div style={{width:`${width}px`,height:`${height}px`}}  className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
-    <CardTitle title={info} />
-    <div ref={graphContainerRef} style={{padding:2,height:`${350}px`,width:`${350}px`}} className='flex items-center justify-center'>
-      <Pie 
-      options={options}
-
-       data={data} />      
+    <div className={` w-[${width}px] h-[${height}px] grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
+    <CardTitle>
+      <p className='text-center'>{firstCapitalize(info)}</p>
+    </CardTitle>
+    <div ref={graphContainerRef} className='cursor-pointer flex items-center p-2 justify-center w-[350px] h-[350px]'>
+      <Pie options={options} data={data} />      
     </div>
   </div>
   )

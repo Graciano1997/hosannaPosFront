@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts } from './slices/productSlice'
 import Spent from './components/Spent/Spent'
 import User from './components/user/User'
+import { fetchCurrency } from './slices/appSlice'
 
 function App() {
 
@@ -31,7 +32,8 @@ function App() {
   const {pathname}= useLocation();
   
   useEffect(()=>{
-    dispatch(fetchProducts());
+    // dispatch(fetchProducts());
+    dispatch(fetchCurrency());
   },[]);
   
   const excludePathName =['/','/logout'];
