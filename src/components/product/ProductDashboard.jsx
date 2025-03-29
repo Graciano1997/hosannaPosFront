@@ -4,17 +4,41 @@ import { BarChart } from "../dashboard/BarChart";
 import LastSelling from "../dashboard/LastSelling";
 import currency from "currency.js";
 import { PieChart } from "../dashboard/PieChart";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { extractFieldToArray } from "../../lib/extractFieldToArray";
 import { RandomColor } from "../../lib/randomColor";
 import LastExpired from "../dashboard/LastExpired";
 import { expiredProducts } from "../../lib/expiredProducts";
 import { sortCollection } from "../../lib/sortCollection";
+import { sum } from "../../lib/sumCollection";
+import { useEffect } from "react";
+import { fetchAnualExpiredProducts } from "../../slices/productSlice";
+import { annualMonths } from "../../lib/Months";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const ProductDashboard=()=>{
+  const dispatch = useDispatch()
+    useEffect(()=>{
+      dispatch(fetchAnualExpiredProducts());
+    },[]);
+
     const {t}=useTranslation();
-    const products = useSelector((state)=>state.productState.products);   
+    const productState = useSelector((state)=>state.productState);   
+    const products = productState.products;   
     const lastExpireds=sortCollection(expiredProducts(products),'expire',true,true);
+
+
+    const barChartData = {
+      labels:annualMonths.map((month)=>firstCapitalize(t(month))),
+  datasets: [
+      {
+      label:t('expired'),
+      data: productState.anualExpireds,
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      }
+  ],
+  };
+
 
     const labels = extractFieldToArray(products,'name');
      const data = {
@@ -34,9 +58,9 @@ const ProductDashboard=()=>{
     return(
         <>
         <div className="flex flex-wrap justify-center items-center gap-[20px] mt-[3rem] p-1">
-        <Card className="font-black" width={400} height={350} info={{title:t('today_balance'),description:currency(1000,{separator:'.', decimal:',',precision:2}).add(200).format()}} />
+        <BarChart data={barChartData} width={450} height={350} info={firstCapitalize(t('annual_expireds'))} />
         <PieChart data={data} width={390} height={390} info={t('products_availability')}/>
-        <LastExpired width={450} data={lastExpireds} height={350} info={t('expireds')} />
+        <Card className="font-black" width={400} height={350} info={{title:t('total_expireds',),output:true,description:currency(sum(productState.expireds,'total').total,{separator:'.', decimal:',',precision:2}).format()}} />
         </div>
         </>
     )

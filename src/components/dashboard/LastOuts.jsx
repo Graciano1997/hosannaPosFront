@@ -24,7 +24,7 @@ const LastOuts =({width=200,height=300,info})=>{
              <div className="p-2">
                 <ul className={`h-[100%] flex flex-col gap-5 p-1 ${lastSpents.length==0?'items-center justify-center':''}`}>
                 {lastSpents.length==0 && <li>
-                     <p className="text-center text-red-500 text-2xl p-2"> {t('no-spents')}</p>
+                     <p className="text-center text-red-500 text-2xl p-2"> {firstCapitalize(t('no-spents'))}</p>
                 </li>
                 }
                     {lastSpents.length > 0 &&

@@ -27,7 +27,7 @@ const Sales=()=>{
         <CardWrapper>
         <Title title={t('sales')}/>
         <TabWrapper>    
-        {appState.activeTab=="tab1" && (<Table filterRows={filterRows} filterDetails={filterRows} collection={sales}/>)}
+        {appState.activeTab=="tab1" && (<Table filterRows={filterRows} filterDetails={filterRows} create={null} collection={sales}/>)}
         {appState.activeTab=="tab2"  && (<SaleDashboard/>)} 
         </TabWrapper>
         </CardWrapper>

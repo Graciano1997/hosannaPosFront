@@ -21,7 +21,7 @@
     "products":"produtos",
     "sales":"vendas",
     "spents":"saidas",
-    "main_table": "tabela geral",
+    "main_table": "geral",
     "clients":"clientes",
     "product_categories":"categorias",
     "name":"nome",
@@ -111,5 +111,10 @@
     "total":"total",
     "exp_date":"exp.data",
     "no-expireds":"sem produtos expirados",
-    "expired_product":"expirados"
+    "expired_product":"expirados",
+    "expire_on":"expirado_em",
+    "total_expireds":"total dos expirados",
+    "product_fields_configuration":"Configuração de campos do produto",
+    "annual_expireds":"total expirados anualmente",
+    "expired":"expirado"
 }
