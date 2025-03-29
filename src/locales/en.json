@@ -20,7 +20,7 @@
     "products":"products",
     "sales":"sales",
     "spents":"spends",
-    "main_table": "main table",
+    "main_table": "main",
     "clients":"clients",
     "product_categories":"categories",
     "name":"name",
@@ -110,5 +110,10 @@
     "total":"total",
     "exp_date":"exp.date",
     "no-expireds":"no expired products",
-    "expired_product":"expireds"
+    "expired_product":"expireds",
+    "expire_on":"expired_on",
+    "total_expireds":"total of expireds",
+    "product_fields_configuration":"product fields configuration",
+    "annual_expireds":"annual expireds",
+    "expired":"expired"
 }

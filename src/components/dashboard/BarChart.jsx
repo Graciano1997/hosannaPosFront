@@ -57,6 +57,7 @@ export function BarChart({data,width=200,height=300,info}) {
     <CardTitle>
       <div className='flex justify-between items-center w-[100%] h-[100%]'>
          <h2 className="">{firstCapitalize(info)}</h2>
+         {years.length >0 && 
          <select onChange={(el)=>{
           dispatch(fetchAnualSpents(el.target.value));
          }} name="" id="" className='cursor-pointer p-1 rounded bg-white w-[20%] shadow outline-none'>
@@ -66,6 +67,7 @@ export function BarChart({data,width=200,height=300,info}) {
             )
           }
          </select>
+         }
       </div>
     </CardTitle>
     <div ref={graphContainerRef} style={{padding:2}} className='h-[100%]'>

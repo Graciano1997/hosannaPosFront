@@ -113,7 +113,6 @@ const Create = ({ stopCreating }) => {
                         }
 
                         {!productFilterRows.includes('brand') &&
-
                             <label>
                         {t('brand')[0].toUpperCase().concat(t('brand').slice(1))}
                                 <br />

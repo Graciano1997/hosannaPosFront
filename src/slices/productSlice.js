@@ -14,7 +14,8 @@ const initialState = {
     productAllFields:[],
     productFilterRows:[],
     filterRowsOp:[],
-    expireds:[]
+    expireds:[],
+    anualExpireds:[],
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async ()=>{
@@ -24,6 +25,11 @@ export const fetchProducts = createAsyncThunk("productState/fetchProducts", asyn
 
 export const fetchExpiredProducts = createAsyncThunk("productState/fetchExpiredProducts", async ()=>{
     const response = await fetch('http://localhost:3000/api/products/expireds',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    return response.json();
+});
+
+export const fetchAnualExpiredProducts = createAsyncThunk("productState/fetchAnualExpiredProducts", async (year=new Date().getFullYear())=>{
+    const response = await fetch(`http://localhost:3000/api/products/anual_expireds/${year}`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
@@ -103,10 +109,10 @@ const productSlice = createSlice({
 
     builder.addCase(fetchExpiredProducts.fulfilled,(state,action)=>{
         state.loading=false;
-        if(action.payload!=undefined){
-            state.expireds = action.payload.data;
-            state.error='';
-        }
+         if(action.payload!=undefined){
+             state.expireds = action.payload.data;
+             state.error='';
+         }
     });
 
     builder.addCase(fetchProducts.fulfilled,(state,action)=>{
@@ -143,6 +149,10 @@ const productSlice = createSlice({
         if(!action.payload.error){
             state.products.push({...action.payload.product});
         }
+    });
+
+    builder.addCase(fetchAnualExpiredProducts.fulfilled,(state,action)=>{
+        state.anualExpireds = action.payload.data;
     });
 
     builder.addCase(fetchProductConfiguration.fulfilled,(state,action)=>{

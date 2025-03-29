@@ -8,10 +8,6 @@ export const totalDayIncome = (collection, date) => {
             if(saleDate.getDate()==date.getDate() && saleDate.getMonth()==date.getMonth() && saleDate.getFullYear()==date.getFullYear()){
                 total+=element.total*1
             }
-            //  total += element[keyElement] * 1;
-            //  if (itemKey != undefined) {
-                //      totalItems += element[itemKey] * 1;
-                //  }
             });
      }
     return  total ;

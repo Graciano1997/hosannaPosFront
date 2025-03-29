@@ -7,22 +7,21 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
-const Table = ({ collection, deleteItem = () => { }, update = () => { }, create = () => { }, filterRows = [], filterDetails = [] }) => {
+const Table = ({ collection, addItem=null, deleteItem = () => { }, update = () => { }, create = () => { }, filterRows = [], filterDetails = [] }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const { pathname } = useLocation();
     const appState= useSelector((state)=>state.appState);
     
     return (
         <>
             <div className="">
-              {pathname !=='/sales' &&
+              {create &&
                <div className="flex justify-end">
                <button onClick={() => { dispatch(create()); dispatch(openModal()); }} className="p-2"><PlusIcon className="rounded-[30%] w-10 h-10 text-green-700 shadow hover:shadow-md" /></button>
                 </div>
               } 
               
-                {(appState.error!='' && !appState.loading) &&
+            {(appState.error!='' && !appState.loading) &&
                     <div className="rounded text-center w-[100%] mt-[5rem]">
                         <div className="mt-[5rem] flex justify-center">
                             <p className="text-2xl font-light text-red-500 p-1"> {firstCapitalize(appState.error)}</p>
@@ -47,10 +46,10 @@ const Table = ({ collection, deleteItem = () => { }, update = () => { }, create 
                 }
 
                 {appState.error=='' && !appState.loading && collection.length > 0 &&
-                    <div className="w-100 overflow-scroll p-1 h-[300px]">
+                    <div className={`w-100 overflow-scroll p-1 h-[300px] ${create?'':'mt-[2rem]'}`}>
                         <table className="rounded shadow-md  w-[100%]" style={{borderLeft:'4px solid green'}}>
                             <Thead filterRows={filterRows} object={collection[0]} />
-                            <Tbody filterDetails={filterDetails} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} items={collection} />
+                            <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows}  updateItem={update} deleteItem={deleteItem} items={collection} />
                         </table>
                     </div>
                 }

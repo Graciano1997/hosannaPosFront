@@ -43,7 +43,7 @@ const ProductConfiguration = ()=>{
 
     return(
         <div className="mt-[2rem] h-[100%]">
-            <h1 className="pl-2 font-light text-3xl text-start">Product Configurations Fields</h1>
+            <h1 className="pl-2 font-light text-3xl text-start">{firstCapitalize(t('product_fields_configuration'))}</h1>
             <form onSubmit={handleFormSubmition} className="w-[100%] mt-[2rem] shadow p-2">
                 <div className="grid grid-cols-2">
                 <p className="">{firstCapitalize(t('name'))}</p>
