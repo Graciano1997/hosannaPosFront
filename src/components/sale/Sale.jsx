@@ -9,15 +9,20 @@ import ProductDetails from "./ProductDetails";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../general/Modal";
 import SearchedProducts from "./SearchedProducts";
+import { fetchProducts } from "../../slices/productSlice";
 
 const Sale=({setToastObject})=>{
+    const dispatch=useDispatch();
+
+     useEffect(()=>{
+         dispatch(fetchProducts());
+     },[]);
 
     const {t}=useTranslation();
     const [isReadingQr,setIsReadingQr]=useState(false);
     const [readValue,setReadValue]= useState(null);    
     const globalState = useSelector((state)=>state.appState);
     const isSelectedProduct = useSelector((state)=>state.saleState.selectedItem);
-    const dispatch=useDispatch();
 
         return(
         <>

@@ -21,8 +21,10 @@ const ButtonGroup = ()=>{
             sale:{
                 qty:saleState.totalItems,
                 payment_way:saleState.paymentType,
-                received_cash:saleState.paymentType!== PaymentType.CASH ? saleState.total : saleState.receivedCash,
+                received_cash:saleState.paymentType== PaymentType.CASH ? saleState.receivedCash:null,
+                received_tpa:saleState.paymentType== PaymentType.TPA ? saleState.total : 0,
                 descount:0,
+                difference:saleState.paymentType == PaymentType.TPA ? 0 : (saleState.receivedCash*1 - saleState.total*1),
                 total: saleState.total,
                 client_id:1,
                 user_id:1                

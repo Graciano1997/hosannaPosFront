@@ -73,7 +73,7 @@ const productSlice = createSlice({
   initialState,
   reducers:{
     searchProduct:(state,action)=>{
-        state.productsSearched = state.products.filter((product)=>(removeDiacritics(product.name)).includes(removeDiacritics(action.payload)));
+        state.productsSearched = state.products.filter((product)=>(removeDiacritics(product.name)).includes(removeDiacritics(action.payload)) || product.code==action.payload);
     },
     clearSearchedProduct:(state)=>{
         state.productsSearched = [];

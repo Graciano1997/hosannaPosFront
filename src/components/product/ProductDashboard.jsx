@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { fetchAnualExpiredProducts } from "../../slices/productSlice";
 import { annualMonths } from "../../lib/Months";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import Money from "../general/Money";
 
 const ProductDashboard=()=>{
   const dispatch = useDispatch()
@@ -60,7 +61,7 @@ const ProductDashboard=()=>{
         <div className="flex flex-wrap justify-center items-center gap-[20px] mt-[3rem] p-1">
         <BarChart data={barChartData} width={450} height={350} info={firstCapitalize(t('annual_expireds'))} />
         <PieChart data={data} width={390} height={390} info={t('products_availability')}/>
-        <Card className="font-black" width={400} height={350} info={{title:t('total_expireds',),output:true,description:currency(sum(productState.expireds,'total').total,{separator:'.', decimal:',',precision:2}).format()}} />
+        <Card className="font-black" width={400} height={350} info={{title:t('total_expireds',),output:true,description:<Money amount={sum(productState.expireds,'total').total} />}} />
         </div>
         </>
     )

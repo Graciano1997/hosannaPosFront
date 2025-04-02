@@ -61,7 +61,7 @@
     "money":"dinheiro",
     "tpa":"tpa",
     "transfer":"transferência",
-    "payment_way": "forma de pagamento",
+    "payment_way": "Tipo pagamento",
     "users":"Utilizadores",
     "saved_sucessfuly":"salvo com sucessso",
     "motive":"motivo",
@@ -79,7 +79,7 @@
     "descount":"desconto",
     "difference":"troco",
     "no_registry":"sem registros a apresentar",
-    "received_cash":"dinheiro recebido",
+    "received_cash":"Dinh. recebido",
     "operator":"operador",
     "add":"adicionar",
     "outofStock":"sem stock",
@@ -116,5 +116,8 @@
     "total_expireds":"total dos expirados",
     "product_fields_configuration":"Configuração de campos do produto",
     "annual_expireds":"total expirados anualmente",
-    "expired":"expirado"
+    "expired":"expirado",
+    "quantity":"quantidade",
+    "received_tpa":"recebido em Tpa",
+    "product_name_or_code":"Nome do produto ou Codigo"
 }

@@ -42,7 +42,7 @@ const Create = ({ stopCreating }) => {
     return (
         <>
             <LargeModal stopCreating={stopCreating}>
-                <form onSubmit={handleFormSubmition} action="POST" className='flex flex-col h-[100%]  mt-[1rem] rounded p-3'>
+                <form  className='flex flex-col h-[100%]  mt-[1rem] rounded p-3'>
                     <div className="grid grid-cols-3 gap-4">
                         <label>
                         {t('name')[0].toUpperCase().concat(t('name').slice(1))}
@@ -266,7 +266,10 @@ const Create = ({ stopCreating }) => {
                             </label>
                         }
                     </div>
-                    <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{product.id ? firstCapitalize(t('update')) : firstCapitalize(t('create'))}</button></div>
+                    <div className="flex justify-end p-2 mt-auto"><button 
+                    type="button" 
+                    onClick={handleFormSubmition}
+                    className="p-2 bg-green-100 rounded">{product.id ? firstCapitalize(t('update')) : firstCapitalize(t('create'))}</button></div>
                 </form>
             </LargeModal>
         </>

@@ -2,7 +2,7 @@ import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, Rect
 import {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
-import { activeTab } from "../../slices/appSlice";
+import { activeTab, Exporting } from "../../slices/appSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
@@ -27,13 +27,24 @@ const Title=({title,create})=>{
              <div className="flex justify-between mt-4">
                 <h1 className="text-3xl">{firstCapitalize(title)}</h1>
 
+                {
+                (['/products'].includes(pathname) && ['tab1','tab3','tab4'].includes(appState.activeTab) || 
+                ['/sales','/users','/spents'].includes(pathname) && ['tab1'].includes(appState.activeTab))
+                &&
+                <>
                 {showElipse && (<EllipsisHorizontalIcon onClick={()=>{setShowElipse(!showElipse)}} className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>)}
-                {!showElipse && (        
+                {!showElipse && 
+                (        
                 <ul   className="flex flex-col gap-3 w-[150px] h-[35px] right-[20px] justify-center bg-white shadow rounded absolute z-2000" id="elipseMenu">
-                <li className="m-0.5 flex gap-3 items-center justify-center hover:cursor-pointer"><span className="">{firstCapitalize(t('export'))}</span><ArrowUpTrayIcon className="w-4 h-4"/></li>
+                <li onClick={()=>{
+                    dispatch(Exporting()); 
+                }} className="m-0.5 flex gap-3 items-center justify-center hover:cursor-pointer"><span className="">{firstCapitalize(t('export'))}</span><ArrowUpTrayIcon className="w-4 h-4"/>
+                </li>
                 </ul>
                 )
-            }
+                }
+                </>
+                }
              </div>
     
             <nav className="mt-[20px]">

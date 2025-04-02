@@ -16,7 +16,7 @@ const SaleDashboard=()=>{
         <>
         <div className="flex flex-wrap justify-center gap-3 mt-4 p-1 ">
         <Card className="font-black" width={400} height={350} info={{title:t('today_balance'),description:<Money amount={today_balance} />}} />
-        <LastSelling width={400} height={350} info={{title:t('last_selling'), description:t('about')}}/>
+        {/* <LastSelling width={400} height={350} info={{title:t('last_selling'), description:t('about')}}/> */}
         {/* <BarChart />  dd*/}
         </div>
         </>

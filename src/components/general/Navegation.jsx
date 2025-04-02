@@ -29,7 +29,7 @@ const Navegation =({visible,setVisibility})=>{
     },[]);
 
     return(
-        <nav ref={navegationRef} className={`flex flex-col p-3 items-center justify-between rounded  fixed h-[100%]  md:w-[30%] lg:w-[18%] bg-white top-[0] shadow-md left-[-50%] transition-all duration-700 navegation ${visible ? 'visible':''} navegation`}>
+        <nav ref={navegationRef} className={`flex flex-col p-3 items-center justify-between rounded  fixed h-[100%]  md:w-[30%] lg:w-[18%] bg-white top-[0] shadow-md left-[-50%] transition-all duration-700 navegation ${visible ? 'visible':''} navegation z-10`}>
         <div className="w-[100%]">
         <ul className="flex flex-col gap-2 w-[100%]">
             <li>

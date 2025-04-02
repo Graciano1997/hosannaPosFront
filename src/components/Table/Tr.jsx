@@ -5,12 +5,14 @@ import { stateDisplay, textDisplay } from "../../lib/activeDisplay";
 import { cleanItemDetails, itemDetails, openModal } from "../../slices/appSlice";
 import Details from "./Details";
 import { useState } from "react";
+import { updateProduct } from "../../slices/productSlice";
 
 const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem }) => {
     
     const moneyFields = ['price', 'total', 'amount', 'cost_price','difference','received_cash'];
     const dispatch = useDispatch();
     const [checkNumber,setCheckNumber]=useState(false);
+    const [qty,setQty]=useState(0);
 
     let keys = Object.keys(item);
     keys = keys.filter((item) => !filterRows.includes(item))
@@ -28,22 +30,39 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                     </td>
                     )
                 }
-                <td className="text-end">
+                <td className="flex justify-end gap-[5px] pr-3">
                     <div className="flex gap-3">
     
                         {addItem && 
                         <div className="flex gap-2 items-center rounded-[16px]  bg-green-100 p-1">                                      
-                            <button onClick={()=>{}} className={`${checkNumber?'bg-red-300':'bg-red-100'}  w-[20px] rounded-[50%] hover:shadow`}>-</button> 
+                            <button onClick={()=>{
+                                
+                                if(qty*1 >0 && item.qty - qty>=0){
+                                    const updatedItem={...item,
+                                        qty:item.qty-qty*1
+                                    }
+                                    dispatch(updateProduct(updatedItem));
+                                }
+                            }} className={`${checkNumber?'bg-red-300':'bg-red-100'}  w-[20px] rounded-[50%] hover:shadow`}>-</button> 
                                 <input type="text" 
                                 onChange={(el)=>{
                                     if(isNaN(parseFloat(el.target.value)) || parseFloat(el.target.value)==0){
                                         setCheckNumber(false);
+                                        setQty(0);
                                     }else{
+                                            setQty(el.target.value);
                                             setCheckNumber(true);
                                         }
                                     }}
                             className="p-[2px] w-[100px] text-center rounded-[16px]" placeholder="qty" />
-                            <button onClick={()=>{}} className={`${checkNumber ? 'bg-green-300':'bg-green-200'}  w-[20px] hover:shadow rounded-[50%]`}>+</button>
+                            <button onClick={()=>{
+                                if(qty>0){
+                                    const updatedItem={...item,
+                                        qty:item.qty + qty*1
+                                    }
+                                    dispatch(updateProduct(updatedItem));
+                                }
+                            }} className={`${checkNumber ? 'bg-green-300':'bg-green-200'}  w-[20px] hover:shadow rounded-[50%]`}>+</button>
                         </div>
                         }
                     {updateItem && <button onClick={() => { dispatch(openModal()); dispatch(updateItem(item)); }}><PencilIcon className="w-6 y-6 p-1 text-green-800 hover:shadow hover:rounded" /></button>}

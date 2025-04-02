@@ -5,7 +5,7 @@ import { showToast } from "../../slices/appSlice";
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
 
-const SearchedItem = ({product,index})=>{
+const SearchedItem = ({product,index,setQuery})=>{
     const [qtyTobuy,setQtyTobuy]=useState(1);
     const [added,setAdded]=useState(false);
     const dispatch = useDispatch();
@@ -44,6 +44,7 @@ const SearchedItem = ({product,index})=>{
                                         qty:qtyTobuy,
                                         total:qtyTobuy * product.price
                                     }));
+                                    setQuery('');
                                     if(!added){
                                         setAdded(true);
                                     }
