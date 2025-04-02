@@ -115,5 +115,8 @@
     "total_expireds":"total of expireds",
     "product_fields_configuration":"product fields configuration",
     "annual_expireds":"annual expireds",
-    "expired":"expired"
+    "expired":"expired",
+    "quantity":"quantity",
+    "received_tpa":"received on Tpa",
+    "product_name_or_code":"Product name or Code"
 }

@@ -46,12 +46,12 @@ const Table = ({ collection, addItem=null, deleteItem = () => { }, update = () =
                 }
 
                 {appState.error=='' && !appState.loading && collection.length > 0 &&
-                    <div className={`w-100 overflow-scroll p-1 h-[300px] ${create?'':'mt-[2rem]'}`}>
-                        <table className="rounded shadow-md  w-[100%]" style={{borderLeft:'4px solid green'}}>
+                    <div className={`w-100 overflow-scroll p-1 h-[350px] mt-[1.5rem]`}>
+                        <table className="rounded shadow-md  w-full table-auto" >
                             <Thead filterRows={filterRows} object={collection[0]} />
                             <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows}  updateItem={update} deleteItem={deleteItem} items={collection} />
                         </table>
-                    </div>
+                     </div>
                 }
             </div>
         </>

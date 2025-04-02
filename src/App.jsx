@@ -18,7 +18,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts } from './slices/productSlice'
 import Spent from './components/Spent/Spent'
 import User from './components/user/User'
-import { fetchCurrency } from './slices/appSlice'
+import { fetchCurrency, StopExporting } from './slices/appSlice'
+import Export from './components/general/Export'
 
 function App() {
 
@@ -72,7 +73,9 @@ function App() {
       {!appState.isLogged && (<Login/>)}
 
       { appState.showToast && (<ShowToast object={appState.toastObject} />)}
-      
+
+      { appState.isExporting && (<Export stopExporting={StopExporting} />) }
+
       {/* <Footer/> */}
      </div>
     </>

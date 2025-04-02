@@ -38,7 +38,7 @@ const Product=()=>{
         <TabWrapper>
         
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
-        <Table filterDetails={filterProductDetails} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
+        <Table addItem={true} filterDetails={filterProductDetails} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}

@@ -14,7 +14,8 @@ const initialState = {
     loading:false,
     itemDetails:{},
     error:'',
-    currency:{}
+    currency:{},
+    isExporting:false
 }
 
 export const fetchCurrency= createAsyncThunk("appState/fetchCurrency",async ()=>{
@@ -52,6 +53,12 @@ const appSlice=createSlice({
         },
         StopSearching:(state)=>{
             state.isSearching = false;
+        },
+        Exporting:(state)=>{
+            state.isExporting = true;
+        },
+        StopExporting:(state)=>{
+            state.isExporting = false;
         },
         activeTab:(state,action)=>{
             state.activeTab=action.payload;
@@ -202,4 +209,4 @@ const appSlice=createSlice({
 });
 
 export default appSlice.reducer;
-export const {itemDetails, cleanItemDetails, showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged} = appSlice.actions;
+export const {itemDetails, cleanItemDetails, showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged,Exporting,StopExporting} = appSlice.actions;

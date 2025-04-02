@@ -32,7 +32,7 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
            <div className="flex gap-4">
 
             <div className="flex gap-3 items-center">
-                <label for="clienteType" className="text-xl">{firstCapitalize(t('payment_way'))}</label>
+                <label htmlFor="clienteType" className="text-xl">{firstCapitalize(t('payment_way'))}</label>
                 <select id="clienteType" onChange={(el)=>{
                     dispatch(setPaymentType(el.target.value));
                 }}

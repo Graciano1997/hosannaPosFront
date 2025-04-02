@@ -21,6 +21,7 @@ const SearchedProducts = ()=>{
                 <div className="flex flex-col bg-green-100 rounded">
                 <div className='bg-green-100  flex justify-between items-center rounded p-1 shadow'>
                 <input type='text' id="searchProduct"
+                value={query}
                 onChange={(el)=>{
                     setQuery(el.target.value)
                 }}
@@ -33,7 +34,7 @@ const SearchedProducts = ()=>{
                             setSearch(true);
                         }
                 }}
-                placeholder="Nome do produto ou Codigo de barra"
+                placeholder={firstCapitalize(t('product_name_or_code'))}
                 className='p-1 rounded outline-none  bg-green-100 w-[100%]'/>
                 <MagnifyingGlassIcon
                 onClick={()=>{
@@ -54,13 +55,13 @@ const SearchedProducts = ()=>{
             <>
              <div className="grid grid-cols-5 p-1 text-black font-bold">
                     <p>{firstCapitalize(t('name'))}</p>
-                    <p>{firstCapitalize('price')}</p>
-                    <p>{firstCapitalize('stock')}</p>
-                    <p>{firstCapitalize('quantity')}</p>
+                    <p>{firstCapitalize(t('price'))}</p>
+                    <p>{firstCapitalize(t('stock'))}</p>
+                    <p>{firstCapitalize(t('quantity'))}</p>
                     <p></p>
             </div>
             <div className="h-[200px] flex flex-col gap-1" style={{overflowY:'scroll'}}>
-            {searchedProducts.map((product,index) => <SearchedItem index={index} product={product}/>)
+            {searchedProducts.map((product,index) => <SearchedItem index={index} setQuery={setQuery} product={product}/>)
             }
             </div>
             </>
