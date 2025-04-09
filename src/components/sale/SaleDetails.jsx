@@ -15,6 +15,8 @@ const SaleDetails = ()=>{
     const dispatch = useDispatch();
     const products = useSelector((state)=>state.productState.products);
     const selectedProducts = useSelector ((state)=>state.saleState.items);
+    const saleState = useSelector ((state)=>state.saleState);
+
     const {t}=useTranslation();
     
     const dispatchSearchHandler = ()=>{
@@ -29,7 +31,7 @@ const SaleDetails = ()=>{
         <div className="flex flex-col saleDetails relative h-[500px]">
         
         <div className="flex flex-col gap-3">
-                <label htmlFor="searchProduct">Search Product</label>
+                <label htmlFor="searchProduct">{ firstCapitalize(t('search'))}</label>
                 <div className="flex flex-col bg-green-100 rounded">
                 <div className='bg-green-100  flex justify-between items-center rounded p-1 shadow'>
                 <input type='text' readOnly id="searchProduct" onClick={dispatchSearchHandler}
@@ -58,7 +60,7 @@ const SaleDetails = ()=>{
                 }
             </div>
             
-        <ButtonGroup/>
+        <ButtonGroup saleState={saleState}/>
         </div>
         </div> 
     );

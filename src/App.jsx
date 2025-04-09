@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import Dashboard from './components/dashboard/Dashboard'
 import Header from './components/general/Header'
 import Navegation from './components/general/Navegation'
+import _404 from './components/general/_404'
 import Footer from './components/general/Footer'
-import { Route, Routes, useFetcher, useLocation } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Product from './components/product/Product'
 import Search from './components/general/Search'
 import Request from './components/requests/Request'
@@ -18,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts } from './slices/productSlice'
 import Spent from './components/Spent/Spent'
 import User from './components/user/User'
-import { fetchCurrency, StopExporting } from './slices/appSlice'
+import {  StopExporting } from './slices/appSlice'
 import Export from './components/general/Export'
 
 function App() {
@@ -32,27 +33,26 @@ function App() {
   const dispatch = useDispatch();
   const {pathname}= useLocation();
   
-  useEffect(()=>{
-    // dispatch(fetchProducts());
-    dispatch(fetchCurrency());
-  },[]);
-  
-  const excludePathName =['/','/logout'];
+  // useEffect(()=>{
+  //   // dispatch(fetchProducts());
+  //   // dispatch(fetchCurrency());
+  // },[]);
 
+  const excludePathName =['/','/logout'];
   return (
     <>    
-     <div className={`h-screen w-screen p-3  ${!appState.isLogged?'flex items-center justify-center':''}`}>   
+     <div className={`h-100 w-100 p-3  ${!appState.isLogged?'flex items-center justify-center':''}`}>   
       
-      {appState.isLogged && (
-      <>
-      
+     {/* appState.isLogged */}
+      {
+      localStorage.getItem("isLogged")=="true" && (
+      <>    
       {(!excludePathName.includes(pathname)) && 
       <>
       <Header searchHandleClick={setIsSearching} setVisibility={setIsVisible}/>
       <Navegation visible={isVisible} setVisibility={setIsVisible}/>
       </>
       }
-
       <Routes>
       <Route path='/' element={<Login/>} />
       <Route path='/logout' element={<Login/>} />
@@ -65,16 +65,16 @@ function App() {
       <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />
       <Route path='/users' element={<User/>} /> 
       <Route path='/setting' element={<Setting/>} />
+      <Route path='*' element={<_404/>} />
       </Routes>
+
       {appState.isSearching && (<Search/>)}
+      { appState.showToast && (<ShowToast object={appState.toastObject} />)}
+      { appState.isExporting && (<Export stopExporting={StopExporting} />) }
       </>
       )}
-      
-      {!appState.isLogged && (<Login/>)}
-
-      { appState.showToast && (<ShowToast object={appState.toastObject} />)}
-
-      { appState.isExporting && (<Export stopExporting={StopExporting} />) }
+      {!localStorage.getItem("isLogged") && (<Login/>)}
+      {/* {false && (<Login/>)} */}
 
       {/* <Footer/> */}
      </div>

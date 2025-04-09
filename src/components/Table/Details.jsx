@@ -8,7 +8,7 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const Details = ({cleanItemDetails,filterDetails=[]}) =>{
 
-    const moneyFields = ['price', 'total', 'amount', 'cost_price'];
+    const moneyFields = ['price','discount', 'total', 'amount', 'cost_price'];
     const detailsItem = useSelector((state)=>state.appState.itemDetails);
     let keys = Object.keys(detailsItem);
     const hasImage = detailsItem.image?true:false;
@@ -45,15 +45,16 @@ const Details = ({cleanItemDetails,filterDetails=[]}) =>{
                     <>
                     <h2 className="text-end text-xl p-1">{firstCapitalize(t('products'))}</h2>
                  <div className="shadow p-2" >
-                    <div className="grid grid-cols-4 gap-2 p-4">
+                    <div className="grid grid-cols-5 gap-2 p-4">
                     { Object.keys(detailsItem.sale_products[0]).map((item)=><p className="font-bold">{firstCapitalize(t(item))}</p>)}
                     </div>
 
                     {detailsItem.sale_products.map((item,index)=>
-                    <div className={`${index % 2 == 0 ? 'bg-green-100' : ''} hover:shadow grid grid-cols-4 gap-2 p-2 font-light`}>
+                    <div className={`${index % 2 == 0 ? 'bg-green-100' : ''} hover:shadow grid grid-cols-5 gap-2 p-2 font-light`}>
                         <p>{item.code}</p>
                         <p>{item.name}</p>
                         <p>{item.qty}</p>
+                        <p><Money amount={item.price}/></p>
                         <p><Money amount={item.subtotal}/></p>
                     </div>
                     )}

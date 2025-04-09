@@ -4,12 +4,13 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import ClientDetails from "./ClientDetails";
 import SaleDetails from "./SaleDetails";
-import QrCodeReader from "../QrCode/QrCodeReader";
 import ProductDetails from "./ProductDetails";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../general/Modal";
 import SearchedProducts from "./SearchedProducts";
 import { fetchProducts } from "../../slices/productSlice";
+import SaleConfirmation from "./SaleConfirmation";
+import { saleNotConfirm } from "../../slices/saleSlice";
 
 const Sale=({setToastObject})=>{
     const dispatch=useDispatch();
@@ -23,6 +24,7 @@ const Sale=({setToastObject})=>{
     const [readValue,setReadValue]= useState(null);    
     const globalState = useSelector((state)=>state.appState);
     const isSelectedProduct = useSelector((state)=>state.saleState.selectedItem);
+    const {saleConfirmationIsOpen} = useSelector((state)=>state.saleState);
 
         return(
         <>
@@ -33,15 +35,9 @@ const Sale=({setToastObject})=>{
 
         {isSelectedProduct && <ProductDetails/>}
 
-        {globalState.isOpen && <Modal><SearchedProducts/></Modal>}
-  
+        {globalState.isOpen && <Modal><SearchedProducts/></Modal>}  
+        {saleConfirmationIsOpen && <Modal helper={saleNotConfirm}><SaleConfirmation/></Modal> }
         </div>
-        {isReadingQr && (<QrCodeReader 
-        setToastObject={setToastObject}
-        readValue={readValue}
-         setReadValue={setReadValue}
-          setIsReadingQr={setIsReadingQr}
-          />)}
         </>
     )
 };

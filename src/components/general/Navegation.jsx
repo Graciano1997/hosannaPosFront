@@ -1,14 +1,18 @@
 import { useEffect, useRef} from "react";
 import image from "../../assets/Img/gra.jpeg";
 import CurrentUser from "./CurrentUser";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CubeIcon, HomeIcon,ShoppingCartIcon, TruckIcon, UserGroupIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../slices/appSlice";
 
 const Navegation =({visible,setVisibility})=>{
     const {t} = useTranslation();
     const {pathname}=useLocation();
+    const dispatch = useDispatch();
+    const navegate = useNavigate();
 
     const navegationRef = useRef(null);
     const adm=true;
@@ -31,7 +35,7 @@ const Navegation =({visible,setVisibility})=>{
     return(
         <nav ref={navegationRef} className={`flex flex-col p-3 items-center justify-between rounded  fixed h-[100%]  md:w-[30%] lg:w-[18%] bg-white top-[0] shadow-md left-[-50%] transition-all duration-700 navegation ${visible ? 'visible':''} navegation z-10`}>
         <div className="w-[100%]">
-        <ul className="flex flex-col gap-2 w-[100%]">
+        <ul className="flex flex-col gap-3 w-[100%]">
             <li>
                 <Link to={"/dashboard"} 
                 className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/dashboard'?'rounded bg-green-100':''}`} >
@@ -82,10 +86,14 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li>
             <li>
-                <Link to={"/logout"} className="flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-red-300" >
+                <button onClick={()=>{
+                    dispatch(logoutUser())
+                    navegate('/logout');
+                    
+                }} className="flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-red-300" >
                 <ArrowLeftStartOnRectangleIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('logout'))}
-                </Link>
+                </button>
             </li>
         </ul>  
         </div>

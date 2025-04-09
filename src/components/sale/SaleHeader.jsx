@@ -22,10 +22,9 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
             <select onChange={(el)=>{
                 dispatch(setInvoiceType(el.target.value));
             }} 
-            className="cursor-pointer h-[35px] text-black p-3 rounded transition-all duration-200 bg-white shadow">
-                <option value={SaleType.SALE}>{t('sale')}</option>
-                <option value={SaleType.CREDIT}>{t('credit')}</option>
-                <option value={SaleType.PORFORM}>{t('proforma')}</option>
+            className="cursor-pointer p-2 rounded transition-all duration-200 bg-white shadow">
+                <option value={SaleType.SALE}>{firstCapitalize(t('sale'))}</option>
+                <option value={SaleType.PORFORM}>{firstCapitalize(t('proforma'))}</option>
             </select>
             </div>
            
@@ -36,10 +35,9 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
                 <select id="clienteType" onChange={(el)=>{
                     dispatch(setPaymentType(el.target.value));
                 }}
-                 className="cursor-pointer h-[35px] text-black p-3 rounded transition-all duration-200 bg-white shadow">
-                    <option value={PaymentType.CASH}>{t('money')}</option>
-                    <option value={PaymentType.TPA}>{t('tpa')}</option>
-                    <option value={PaymentType.TRANSFER}>{t('transfer')}</option>
+                 className="cursor-pointer text-black p-2 rounded transition-all duration-200 bg-white shadow">
+                    <option value={PaymentType.CASH}>{ firstCapitalize(t('money'))}</option>
+                    <option value={PaymentType.TPA}>{ firstCapitalize(t('tpa'))}</option>
                 </select>
             </div>
             

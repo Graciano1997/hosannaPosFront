@@ -6,7 +6,7 @@ import Money from "../general/Money";
 const SaleItem = ({product,index})=>{
     const dispatch = useDispatch();
     return(
-        <div className={`grid grid-cols-[5fr_25fr_15fr_20fr_25fr_10fr] place-items-center text-md ${index%2==0?'bg-green-50':'bg-green-100'} p-3 cursor-pointer`}>
+        <div className={`grid grid-cols-[15fr_15fr_15fr_20fr_25fr_10fr] place-items-center text-md ${index%2==0?'bg-green-50':'bg-green-100'} p-3 cursor-pointer`}>
                 <p>{product.code}</p>
                 <p>{product.name}</p>
                 <p><Money amount={product.price}/></p>

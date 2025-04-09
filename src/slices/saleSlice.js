@@ -14,7 +14,8 @@ const initialState = {
     receivedCash:0,
     total:0,
     sales:[],
-    difference:0
+    difference:0,
+    saleConfirmationIsOpen:false
 }
 
 export const order=createAsyncThunk('saleState/order',async (sale)=>{
@@ -63,6 +64,12 @@ const saleSlice = createSlice({
             state.totalItems = sum(state.items).totalItems;
         },
 
+        saleConfirm:(state)=>{
+            state.saleConfirmationIsOpen=true;
+        },
+        saleNotConfirm:(state)=>{
+            state.saleConfirmationIsOpen=false;
+        },
         removeItem:(state,action)=>{
             state.items=state.items.filter((item)=>item.id!==action.payload.id);
             state.total = sum(state.items).total;
@@ -162,7 +169,8 @@ const saleSlice = createSlice({
             state.saleDetails = saleDetailsDraft;
         },
         setReceivedCash:(state,action)=>{
-            state.receivedCash = action.payload;
+            console.log(action.payload);
+            state.receivedCash = action.payload*1;
             if(state.paymentType == PaymentType.CASH && (action.payload - state.total) > 0 ){
                 state.difference =  state.receivedCash - state.total;
             }else{
@@ -176,6 +184,7 @@ const saleSlice = createSlice({
             state.difference = 0;
             state.totalItems = 0,
             state.total = 0;
+            state.saleConfirmationIsOpen = false;
             state.clientDetails = { client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
         }
     },
@@ -183,9 +192,12 @@ const saleSlice = createSlice({
         builder.addCase(fetchSales.fulfilled,(state,action)=>{
             state.sales = action.payload.data
         })
+        builder.addCase(order.fulfilled,(state,action)=>{
+            state.saleConfirmationIsOpen = false;
+        })
     }
 });
 
 
 export default saleSlice.reducer;
-export const {saleClean, setReceivedCash,increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType,setInvoiceType, setClientDetails} = saleSlice.actions;
+export const {saleClean, setReceivedCash,increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType,setInvoiceType, setClientDetails,saleConfirm,saleNotConfirm} = saleSlice.actions;
