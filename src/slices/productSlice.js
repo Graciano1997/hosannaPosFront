@@ -16,6 +16,7 @@ const initialState = {
     filterRowsOp:[],
     expireds:[],
     anualExpireds:[],
+    isSearching:false
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async ()=>{
@@ -77,13 +78,19 @@ const productSlice = createSlice({
     },
     clearSearchedProduct:(state)=>{
         state.productsSearched = [];
+        state.isSearching =false;
     },
     creatingProduct: (state)=>{
         state.isCreating = true;
     },
-    stopCreatingProduct : (state)=>{
-        state.isCreating = false;
+
+    searchingProduct: (state)=>{
+        state.isSearching = true;
     },
+    stopSearchingProduct: (state)=>{
+        state.isSearching = false;
+    }
+    ,
     updatingProduct: (state,action)=>{
         state.isUpdating = true;
         state.productToUpdate=action.payload;
@@ -180,6 +187,10 @@ const productSlice = createSlice({
         }
     })
 
+    builder.addCase(fetchProductsFields.rejected,(state,action)=>{
+        console.log(action.payload);
+    })
+
      builder.addCase(updateProduct.fulfilled,(state,action)=>{
                 state.isUpdating = false;
                 state.productToUpdate = {};
@@ -196,4 +207,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct} = productSlice.actions;
+export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct,searchingProduct} = productSlice.actions;

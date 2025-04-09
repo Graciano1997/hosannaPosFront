@@ -27,7 +27,7 @@
     "name":"nome",
     "code":"código",
     "qty":"qty",
-    "price":"preço",
+    "price":"preço_venda",
     "category_id":"categoria_id",
     "created_at":"criado_em",
     "updated_at":"atualizado_em",

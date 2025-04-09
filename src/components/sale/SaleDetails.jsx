@@ -5,7 +5,7 @@ import SaleItem from "./SaleItem";
 import { useDispatch, useSelector } from "react-redux";
 import { selectItem } from "../../slices/saleSlice";
 import { useState } from "react";
-import { clearSearchedProduct, searchProduct } from "../../slices/productSlice";
+import { clearSearchedProduct, searchingProduct, searchProduct } from "../../slices/productSlice";
 import { openModal } from "../../slices/appSlice";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
@@ -22,6 +22,7 @@ const SaleDetails = ()=>{
     const dispatchSearchHandler = ()=>{
         dispatch(openModal());
         dispatch(clearSearchedProduct());
+        dispatch(searchingProduct());
     }
     
     return(

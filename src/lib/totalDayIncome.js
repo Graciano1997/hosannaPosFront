@@ -1,4 +1,4 @@
-export const totalDayIncome = (collection, date) => {
+export const totalDayIncome = (collection=[], date) => {
 
     let total = 0;
 
