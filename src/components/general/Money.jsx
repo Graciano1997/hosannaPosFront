@@ -9,7 +9,7 @@ const currencySetting = useSelector((state)=>state.appState.currency);
         {currency(amount, {
             separator: ',',    // Thousands separator
             decimal: '.',      // Decimal separator
-            symbol:currencySetting.symbol + ' ',      // Correct currency symbol
+            symbol:'KZ ',      // Correct currency symbol
             precision: 2       // Decimal precision
         }).format()
     }

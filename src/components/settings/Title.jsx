@@ -5,6 +5,9 @@ import { Link, useLocation } from "react-router-dom";
 import { activeTab } from "../../slices/appSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import { ComputerDesktopIcon, ServerIcon } from "@heroicons/react/16/solid";
+import { ArchiveBoxIcon } from "@heroicons/react/20/solid";
+import { HomeIcon } from "@heroicons/react/24/solid";
 
 const Title=({title,create})=>{
     const [showElipse,setShowElipse]=useState(true);
@@ -61,39 +64,13 @@ const Title=({title,create})=>{
                 { firstCapitalize(t('profile'))}
                 </Link>
             </li>
-            {
-                pathname == '/products'
-                 &&
-                <>
-                <li>
-                <Link to={""}
-                onClick={()=>dispatch(activeTab('tab3'))} 
-                className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''} `} >
-                <RectangleGroupIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
-                {firstCapitalize(t('product_categories'))}
-                </Link>
-            </li>
-
             <li>
-                <Link to={""}
-                onClick={()=>dispatch(activeTab('tab4'))} 
-                className={`flex items-center gap-2 transition-all duration-300 text-red-700 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''} `} >
-                <ClockIcon className="w-4 y-4 cursor-pointer hover:shadow"/>
-                {firstCapitalize(t('expired_product'))}
+                <Link to={"#"} onClick={()=>dispatch(activeTab('tab4'))} 
+                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''}`} >
+                <HomeIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
+                { firstCapitalize(t('company_details'))}
                 </Link>
             </li>
-
-            <li>
-                <Link to={""}
-                onClick={()=>dispatch(activeTab('tab5'))} 
-                className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab5"?'activeTab':''} `} >
-                <WrenchIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('configuration'))}
-                </Link>
-            </li>
-                </>
-            }
-            
         </ul>   
     </nav>
         </div>

@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
-const Table = ({ collection, addItem=null, deleteItem = () => { }, update = () => { }, create = () => { }, filterRows = [], filterDetails = [] }) => {
+const Table = ({ collection=[], addItem=null, deleteItem = () => { }, update = () => { }, create = () => { }, filterRows = [], filterDetails = [] }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const appState= useSelector((state)=>state.appState);

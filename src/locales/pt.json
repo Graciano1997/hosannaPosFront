@@ -27,7 +27,7 @@
     "name":"nome",
     "code":"código",
     "qty":"qty",
-    "price":"preço_de_venda",
+    "price":"preço",
     "category_id":"categoria_id",
     "created_at":"criado_em",
     "updated_at":"atualizado_em",
@@ -87,7 +87,7 @@
     "last_outputs":"últimas saidas",
     "destinatary":"destinatário",
     "create":"criar",
-    "update":"update",
+    "update":"atualizar",
     "client_details":"detalhes do cliente",
     "sale_details":"detalhes da venda",
     "no_founded_item":"não encontrado",
@@ -119,5 +119,12 @@
     "expired":"expirado",
     "quantity":"quantidade",
     "received_tpa":"recebido em Tpa",
-    "product_name_or_code":"Nome do produto ou Codigo"
+    "product_name_or_code":"Nome do produto ou Codigo",
+    "company_details":"Informações da Empresa",
+    "phone":"telefone",
+    "address":"endereço",
+    "search":"busque o produto",
+    "successlogin":"Logado com sucesso",
+    "password":"senha",
+    "invalid_email_or_password":"Palavra passe ou email inválido"
 }

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { deleteProduct, fetchProducts, productConfiguration, registerProduct, searchProduct, updateProduct } from "./productSlice";
 import { addItem, fetchSales, order, removeItem, updateItem } from "./saleSlice";
 import { createCategory, deleteCategory, fetchCategories, updateCategory } from "./categorySlice";
-import currency from "currency.js";
+import { deleteCompany, registerCompany } from "./companySlice";
 
 const initialState = {
     isOpen:false,
@@ -10,18 +10,22 @@ const initialState = {
     showToast:false,
     toastObject:undefined,
     activeTab:'tab1',
-    isLogged:true,
     loading:false,
     itemDetails:{},
     error:'',
-    currency:{},
-    isExporting:false
+    isExporting:false,
+    isLogged:true
 }
 
-export const fetchCurrency= createAsyncThunk("appState/fetchCurrency",async ()=>{
-    const response = await fetch('http://localhost:3000/api/currencies/active');
+ export const authenticate= createAsyncThunk("appState/authenticate",async (user)=>{
+    const response = await fetch(`http://localhost:3000/api/authentication/login`,
+        { method:'POST',
+          body:JSON.stringify(user),
+          headers:{'Content-Type':'application/json'}
+        });
     return response.json();
-});
+ });
+
 
 const appSlice=createSlice({
     name:'appState',
@@ -30,6 +34,11 @@ const appSlice=createSlice({
         itemDetails: (state,action)=>{
             state.itemDetails = action.payload
         },
+        logoutUser: ()=>{
+        localStorage.removeItem("isLogged")
+        localStorage.removeItem("currentUser");
+        },
+
         cleanItemDetails: (state)=>{
             state.itemDetails = {}
         },
@@ -70,9 +79,9 @@ const appSlice=createSlice({
             state.isOpen=true;            
         });
 
-        builder.addCase(fetchCurrency.fulfilled,(state,action)=>{
-            state.currency = action.payload.currency;            
-        });
+        // builder.addCase(fetchCurrency.fulfilled,(state,action)=>{
+        //     state.currency = action.payload.currency;            
+        // });
 
         builder.addCase(addItem,(state,action)=>{
             state.showToast=true;
@@ -205,8 +214,49 @@ const appSlice=createSlice({
                 state.toastObject = { error:true, message:`Nao pode eliminar categoria ja associada a um produto`}
             }
         })
+
+
+        builder.addCase(registerCompany.fulfilled,(state,action)=>{
+            state.showToast=true;
+               state.toastObject = { success:true, message:`Empresa criada com sucesso`}       
+       })
+
+       builder.addCase(registerCompany.rejected,(state,action)=>{
+        state.showToast=true;
+           state.toastObject = { success:true, message:`Algum erro ao tentar criar a Empresa`}       
+        })
+       
+        builder.addCase(deleteCompany.rejected,(state,action)=>{
+        state.showToast=true;
+           state.toastObject = { success:true, message:`Algum erro ao tentar eliminar a Empresa`}       
+        })
+
+        builder.addCase(deleteCompany.fulfilled,(state,action)=>{
+            state.showToast=true;
+           if(action.payload.id){
+               state.toastObject = { success:true, message:`Empresa eliminada com sucesso`}       
+           }else{
+               state.toastObject = { error:true, message:`Nao pode eliminar esta empresa`}
+           }
+       })
+
+        builder.addCase(authenticate.fulfilled,(state,action)=>{
+            console.log(action.payload);
+            if(action.payload.error){
+                state.error = action.payload.error;
+            }else if(action.payload.user){
+                localStorage.setItem("isLogged",true);
+                localStorage.setItem("currentUser",JSON.stringify(action.payload.user));
+                window.location.href="/dashboard";                
+            }
+        });
+
+        builder.addCase(authenticate.rejected,(state,action)=>{
+         console.log(action);
+        });
+
     }
 });
 
 export default appSlice.reducer;
-export const {itemDetails, cleanItemDetails, showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged,Exporting,StopExporting} = appSlice.actions;
+export const {itemDetails, cleanItemDetails, showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged,Exporting,StopExporting,logoutUser} = appSlice.actions;

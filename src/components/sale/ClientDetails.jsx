@@ -62,7 +62,7 @@ const ClientDetails = ()=>{
             {sale.paymentType==PaymentType.CASH &&
             <div className="flex flex-col gap-3">
                 <label for="cashReceived">Dinheiro Recebido</label>
-                <input type="number" id="cashReceived" name="received_cash"  value={saleDetails.receivedCash}  onChange={(el)=>{
+                <input type="number" id="cashReceived" name="received_cash"  value={received}  onChange={(el)=>{
                     setReceived(el.target.value);
                     
                     if(el.target.value*1 > sale.total && sale.total > 0 ){

@@ -118,5 +118,12 @@
     "expired":"expired",
     "quantity":"quantity",
     "received_tpa":"received on Tpa",
-    "product_name_or_code":"Product name or Code"
+    "product_name_or_code":"Product name or Code",
+    "company_details":"company details",
+    "phone":"phone",
+    "address":"address",
+    "search":"Search Product",
+    "successlogin":"Login successfully",
+    "password":"password",
+    "invalid_email_or_password":"Email ou palavra passe Invalido"
 }
