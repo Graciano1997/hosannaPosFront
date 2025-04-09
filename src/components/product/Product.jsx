@@ -24,7 +24,6 @@ const Product=()=>{
     const filterCategoryDetails =['id','parent_category_id'];
 
     useEffect(()=>{
-        dispatch(fetchProductConfiguration());
         dispatch(fetchProducts());
         dispatch(fetchCategories());
         dispatch(fetchExpiredProducts());

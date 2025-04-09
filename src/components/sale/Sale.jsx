@@ -25,8 +25,8 @@ const Sale=({setToastObject})=>{
     const globalState = useSelector((state)=>state.appState);
     const isSelectedProduct = useSelector((state)=>state.saleState.selectedItem);
     const {saleConfirmationIsOpen} = useSelector((state)=>state.saleState);
-    const {productsSearched} = useSelector((state)=>state.productState);
-
+    const {isSearching} = useSelector((state)=>state.productState);
+    
         return(
         <>
         <SaleHeader title={t('sales')} setIsReadingQr={setIsReadingQr} setReadValue={setReadValue} />
@@ -36,7 +36,7 @@ const Sale=({setToastObject})=>{
 
         {isSelectedProduct && <ProductDetails/>}
 
-        {globalState.isOpen && <Modal helper={clearSearchedProduct}><SearchedProducts/></Modal>}  
+        {globalState.isOpen && isSearching && <Modal helper={clearSearchedProduct}><SearchedProducts/></Modal>}  
         {saleConfirmationIsOpen && <Modal helper={saleNotConfirm}><SaleConfirmation/></Modal> }
         </div>
         </>

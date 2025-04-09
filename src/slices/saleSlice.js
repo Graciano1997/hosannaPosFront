@@ -19,7 +19,6 @@ const initialState = {
 }
 
 export const order=createAsyncThunk('saleState/order',async (sale)=>{
-    console.log(sale);
     const response = await fetch('http://localhost:3000/api/sales/',{
         method:'POST',
         body:JSON.stringify(sale),
@@ -191,11 +190,12 @@ const saleSlice = createSlice({
     },
     extraReducers:(builder)=>{
         builder.addCase(fetchSales.fulfilled,(state,action)=>{
-            state.sales = action.payload.data
-        })
+            state.sales = action.payload.data;
+        });
+
         builder.addCase(order.fulfilled,(state,action)=>{
             state.saleConfirmationIsOpen = false;
-        })
+        });
     }
 });
 

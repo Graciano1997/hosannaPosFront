@@ -107,7 +107,7 @@ const Create = ({ stopCreating }) => {
                                 <select name="status" value={product.status?product.status:""} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
                                     <option value="" disabled>Estado do produto</option>
                                     <option value={true}>{t('active')}</option>
-                                    <option value={true}>{t('disative')}</option>
+                                    <option value={false}>{t('disative')}</option>
                                 </select>
                             </label>
                         }

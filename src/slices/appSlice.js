@@ -103,9 +103,9 @@ const appSlice=createSlice({
             state.error = '';
         });
 
-        builder.addCase(fetchProducts.rejected,(state)=>{
+        builder.addCase(fetchProducts.rejected,(state,action)=>{
             state.loading=false;
-            state.error = '';
+            state.error=action.error.message;
         });
 
         builder.addCase(fetchProducts.fulfilled,(state)=>{
@@ -254,6 +254,8 @@ const appSlice=createSlice({
         builder.addCase(authenticate.rejected,(state,action)=>{
          console.log(action);
         });
+
+
 
     }
 });
