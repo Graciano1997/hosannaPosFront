@@ -14,10 +14,12 @@ const Login = ()=>{
     const navegate = useNavigate();
     const [user,setUser]=useState({});
     
-    useEffect(()=>{
+    useEffect(()=>{        
      if(pathname=="/logout"){
          dispatch(logoutUser());
      }
+     
+     if(pathname=="/" && localStorage.getItem("isLogged")){ navegate('/dashboard'); }
      },[]);
 
     const handleInputChange=(el)=>{

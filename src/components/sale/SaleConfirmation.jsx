@@ -3,6 +3,7 @@ import { order, saleClean, saleNotConfirm } from "../../slices/saleSlice";
 import { closeModal, showToast } from "../../slices/appSlice";
 import { PaymentType } from "../../lib/Enums";
 import { useTranslation } from "react-i18next";
+import { clearSearchedProduct } from "../../slices/productSlice";
 
 const SaleConfirmation = ()=>{
     const {t}=useTranslation();
@@ -17,6 +18,7 @@ const SaleConfirmation = ()=>{
                     ...saleState.clientDetails
                 },
                 sale:{
+                    invoiceType:saleState.invoiceType*1,
                     qty:saleState.totalItems,
                     payment_way:saleState.paymentType,
                     received_cash:saleState.paymentType== PaymentType.CASH ? saleState.receivedCash:null,
@@ -34,6 +36,7 @@ const SaleConfirmation = ()=>{
             .then(()=>{
             dispatch(showToast({ success:true, message:t('order_sucessfuly')}));
             dispatch(saleClean());
+            dispatch(clearSearchedProduct());
             })
             dispatch(closeModal());
         };
