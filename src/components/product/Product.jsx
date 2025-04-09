@@ -27,6 +27,7 @@ const Product=()=>{
         dispatch(fetchProducts());
         dispatch(fetchCategories());
         dispatch(fetchExpiredProducts());
+        dispatch(fetchProductConfiguration());
     },[dispatch])
     
     const products = productState.products || [];
