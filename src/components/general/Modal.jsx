@@ -19,7 +19,6 @@ const Modal = ({children, helper = undefined })=>{
          onClick={()=>{ 
           dispatch(closeModal());
           if(helper !=undefined){
-            console.log(helper());
             dispatch(helper());
           }
         }}

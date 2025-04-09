@@ -19,6 +19,7 @@ const initialState = {
 }
 
 export const order=createAsyncThunk('saleState/order',async (sale)=>{
+    console.log(sale);
     const response = await fetch('http://localhost:3000/api/sales/',{
         method:'POST',
         body:JSON.stringify(sale),

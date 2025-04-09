@@ -8,7 +8,7 @@ import ProductDetails from "./ProductDetails";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../general/Modal";
 import SearchedProducts from "./SearchedProducts";
-import { fetchProducts } from "../../slices/productSlice";
+import { clearSearchedProduct, fetchProducts } from "../../slices/productSlice";
 import SaleConfirmation from "./SaleConfirmation";
 import { saleNotConfirm } from "../../slices/saleSlice";
 
@@ -25,6 +25,7 @@ const Sale=({setToastObject})=>{
     const globalState = useSelector((state)=>state.appState);
     const isSelectedProduct = useSelector((state)=>state.saleState.selectedItem);
     const {saleConfirmationIsOpen} = useSelector((state)=>state.saleState);
+    const {productsSearched} = useSelector((state)=>state.productState);
 
         return(
         <>
@@ -35,7 +36,7 @@ const Sale=({setToastObject})=>{
 
         {isSelectedProduct && <ProductDetails/>}
 
-        {globalState.isOpen && <Modal><SearchedProducts/></Modal>}  
+        {globalState.isOpen && <Modal helper={clearSearchedProduct}><SearchedProducts/></Modal>}  
         {saleConfirmationIsOpen && <Modal helper={saleNotConfirm}><SaleConfirmation/></Modal> }
         </div>
         </>

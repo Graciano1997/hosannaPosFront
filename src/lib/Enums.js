@@ -12,9 +12,8 @@ export const PaymentType = {
 export const DefaultClientePhone = 911111111;
 
 export const SaleType = {
-    SALE:'SALE',
-    CREDIT:'CREDIT',
-    PORFORM:'PROFORMA'
+    SALE:1,
+    PORFORM:2
 }
 
 export const ProductState = {
