@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { removeDiacritics } from "../lib/removeDiacritic";
-import { fetchCategories } from "./categorySlice";
 
 const initialState = {
     products:[],
@@ -21,6 +20,11 @@ const initialState = {
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async ()=>{
     const response = await fetch('http://localhost:3000/api/products/',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    return response.json();
+});
+
+export const expiredProductJob = createAsyncThunk("productState/expiredProductJob", async ()=>{
+    const response = await fetch('http://localhost:3000/api/products/expired_product_job',{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
@@ -74,7 +78,7 @@ const productSlice = createSlice({
   initialState,
   reducers:{
     searchProduct:(state,action)=>{
-        state.productsSearched = state.products.filter((product)=>(removeDiacritics(product.name)).includes(removeDiacritics(action.payload)) || product.code==action.payload || product.lote==action.payload);
+        state.productsSearched = state.products.filter((product)=>product.status && ((removeDiacritics(product.name)).includes(removeDiacritics(action.payload)) || product.code==action.payload || product.lote==action.payload));
     },
     clearSearchedProduct:(state)=>{
         state.productsSearched = [];

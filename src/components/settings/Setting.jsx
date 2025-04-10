@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { creatingCompany, deleteCompany, fetchCompanies, updateCompany, updatingCompany } from "../../slices/companySlice";
 import Table from "../Table/Table";
 import Create from "./Create";
+import Profile from "./Profile";
 
 const Setting=()=>{
     const dispatch = useDispatch();
@@ -28,7 +29,11 @@ const Setting=()=>{
         // <Table filterDetails={filterProductDetails} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
         } */}
 
-        {appState.activeTab=="tab4" && 
+        {appState.activeTab=="tab2" && 
+        <Profile/>
+        }
+
+        {appState.activeTab=="tab3" && 
         (
             companyState.companies.length?
             <Table filterDetails={[]} filterRows={companyState.companyFilterRows} update={updatingCompany} create={null} deleteItem={deleteCompany} collection={companyState.companies}/>

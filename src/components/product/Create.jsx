@@ -83,18 +83,6 @@ const Create = ({ stopCreating }) => {
                             </select>
                         </label>
 
-                        {!productFilterRows.includes('product_type') &&
-                            <label>
-                            {firstCapitalize(t('product_type'))}
-                                <br />
-                                <select name="product_type" value={product.product_type} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                                    <option value="" disabled selected>Selecione o tipo de produto </option>
-                                    <option value="good">{t('good')}</option>
-                                    <option value="service">{t('service')}</option>
-                                </select>
-                            </label>
-                        }
-
                         {!productFilterRows.includes('taxes') &&
 
                             <label>

@@ -45,28 +45,28 @@ const Title=({title,create})=>{
                 <Link to={"#"} onClick={()=>dispatch(activeTab('tab1'))} 
                 className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab1"?'activeTab':''}`} >
                 <UserIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('acount'))}
+                { firstCapitalize(t('account'))}
                 </Link>
             </li>
-            <li>
+            {/* <li>
                 <Link to={""}
                 onClick={()=>dispatch(activeTab('tab2'))} 
                 className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab2"?'activeTab':''} `} >
                 <CurrencyDollarIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('currency'))}
                 </Link>
-            </li>
+            </li> */}
 
             <li>
-                <Link to={"#"} onClick={()=>dispatch(activeTab('tab3'))} 
-                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''}`} >
+                <Link to={"#"} onClick={()=>dispatch(activeTab('tab2'))} 
+                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab2"?'activeTab':''}`} >
                 <UserGroupIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('profile'))}
                 </Link>
             </li>
             <li>
-                <Link to={"#"} onClick={()=>dispatch(activeTab('tab4'))} 
-                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''}`} >
+                <Link to={"#"} onClick={()=>dispatch(activeTab('tab3'))} 
+                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''}`} >
                 <HomeIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('company_details'))}
                 </Link>

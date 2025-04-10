@@ -18,6 +18,8 @@ export const fetchUsers = createAsyncThunk("userState/fetchUsers", async () => {
  });
 
  export const registerUser = createAsyncThunk("userState/registerUser", async (formData) => {
+     
+     console.log(formData);
      const response = await fetch(`http://localhost:3000/api/users/`, { method: 'POST', body: formData });
      return response.json();
  });

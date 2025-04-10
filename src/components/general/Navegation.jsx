@@ -98,7 +98,7 @@ const Navegation =({visible,setVisibility})=>{
         </ul>  
         </div>
         
-        <CurrentUser username="Graciano Henrique" image={image} />
+        <CurrentUser/>
         </nav>
     )
 };
