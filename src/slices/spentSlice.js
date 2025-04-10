@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { sum } from "../lib/sumCollection";
+import { Ip } from "../lib/ip";
 
 const initialState = {
     spents: [],
@@ -13,37 +14,37 @@ const initialState = {
 };
 
 export const fetchSpents = createAsyncThunk("spentState/fetchSpents", async () => {
-    const response = await fetch('http://localhost:3000/api/spents/');
+    const response = await fetch(`${Ip}/api/spents/`);
     return response.json();
 })
 
 export const fetchLastSpents = createAsyncThunk("spentState/lastSpents", async (number=3) => {
-    const response = await fetch(`http://localhost:3000/api/spents/last_spents/${number}/`);
+    const response = await fetch(`${Ip}/api/spents/last_spents/${number}/`);
     return response.json();
 })
 
 export const fetchAnualSpents = createAsyncThunk("spentState/fetchAnualSpents", async (year=new Date().getFullYear()) => {
-    const response = await fetch(`http://localhost:3000/api/spents/anual_spents/${year}`);
+    const response = await fetch(`${Ip}/api/spents/anual_spents/${year}`);
     return response.json();
 })
 
 export const fetchMinYearSpents = createAsyncThunk("spentState/fetchMinYearSpents", async (year=new Date().getFullYear()) => {
-    const response = await fetch(`http://localhost:3000/api/spents/min_year_spends`);
+    const response = await fetch(`${Ip}/api/spents/min_year_spends`);
     return response.json();
 })
 
 export const deleteSpent = createAsyncThunk("spentState/deleteSpent", async (id) => {
-    const response = await fetch(`http://localhost:3000/api/spents/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
+    const response = await fetch(`${Ip}/api/spents/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
     return response.json();
 });
 
 export const registerSpent = createAsyncThunk("spentState/registerSpent", async (spent) => {
-    const response = await fetch(`http://localhost:3000/api/spents/`, { method: 'POST', body: JSON.stringify(spent), headers: { 'Content-Type': 'application/json' } });
+    const response = await fetch(`${Ip}/api/spents/`, { method: 'POST', body: JSON.stringify(spent), headers: { 'Content-Type': 'application/json' } });
     return response.json();
 });
 
 export const updateSpent = createAsyncThunk("spentState/updateSpent", async (spent) => {
-    const response = await fetch(`http://localhost:3000/api/spents/${spent.id}`,
+    const response = await fetch(`${Ip}/api/spents/${spent.id}`,
         {
             method: 'PUT',
             body: JSON.stringify(spent),

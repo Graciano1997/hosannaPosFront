@@ -17,8 +17,8 @@ const Sales=()=>{
 
     const dispatch = useDispatch();
     useEffect(()=>{
-        dispatch(fetchSales());
         dispatch(activeTab("tab1"));
+        dispatch(fetchSales());
     },[])
 
     const sales= useSelector((state)=>state.saleState.sales);

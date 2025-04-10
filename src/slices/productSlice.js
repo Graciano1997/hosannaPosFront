@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { removeDiacritics } from "../lib/removeDiacritic";
+import { Ip } from "../lib/ip";
 
 const initialState = {
     products:[],
@@ -19,43 +20,43 @@ const initialState = {
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async ()=>{
-    const response = await fetch('http://localhost:3000/api/products/',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/products/`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const expiredProductJob = createAsyncThunk("productState/expiredProductJob", async ()=>{
-    const response = await fetch('http://localhost:3000/api/products/expired_product_job',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/products/expired_product_job`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const fetchExpiredProducts = createAsyncThunk("productState/fetchExpiredProducts", async ()=>{
-    const response = await fetch('http://localhost:3000/api/products/expireds',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/products/expireds`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const fetchAnualExpiredProducts = createAsyncThunk("productState/fetchAnualExpiredProducts", async (year=new Date().getFullYear())=>{
-    const response = await fetch(`http://localhost:3000/api/products/anual_expireds/${year}`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/products/anual_expireds/${year}`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const fetchProductsFields = createAsyncThunk("productState/fetchProductsFields", async ()=>{
-    const response = await fetch('http://localhost:3000/api/products/product_fields',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/products/product_fields`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 
 export const deleteProduct = createAsyncThunk("productState/deleteProduct", async (id)=>{
-    const response = await fetch(`http://localhost:3000/api/products/${id}`,{ method:'DELETE', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/products/${id}`,{ method:'DELETE', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const registerProduct = createAsyncThunk("productState/registerProduct", async (product)=>{
-    const response = await fetch(`http://localhost:3000/api/products/`,{ method:'POST', body:JSON.stringify(product), headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/products/`,{ method:'POST', body:JSON.stringify(product), headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const updateProduct = createAsyncThunk("productState/updateProduct",async (product)=>{
-    const response = await fetch(`http://localhost:3000/api/products/${product.id}`,
+    const response = await fetch(`${Ip}/api/products/${product.id}`,
     {method:'PUT',
         body:JSON.stringify(product),
      headers:{'Content-Type':'application/json'}});
@@ -63,12 +64,12 @@ export const updateProduct = createAsyncThunk("productState/updateProduct",async
 });
 
 export const fetchProductConfiguration = createAsyncThunk("productState/fetchProductConfiguration", async ()=>{
-    const response = await fetch('http://localhost:3000/api/product_configurations/',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/product_configurations/`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const productConfiguration = createAsyncThunk("productState/productConfiguration", async (products)=>{
-    const response = await fetch(`http://localhost:3000/api/product_configurations/`,{ method:'POST', body:JSON.stringify(products), headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/product_configurations/`,{ method:'POST', body:JSON.stringify(products), headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 

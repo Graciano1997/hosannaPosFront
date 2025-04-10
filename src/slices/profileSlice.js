@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Ip } from "../lib/ip";
 
 const initialState = {
     selectedProfile:null,
@@ -6,22 +7,22 @@ const initialState = {
 };
 
 export const fetchProfiles = createAsyncThunk("profileState/fetchProfiles", async () => {
-    const response = await fetch('http://localhost:3000/api/profiles/');
+    const response = await fetch(`${Ip}/api/profiles/`);
     return response.json();
 })
 
 //  export const deleteUser = createAsyncThunk("userState/deleteUser", async (id) => {
-//      const response = await fetch(`http://localhost:3000/api/users/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
+//      const response = await fetch(`${Ip}/api/users/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
 //      return response.json();
 //  });
 
 //  export const registerUser = createAsyncThunk("spentState/registerSpent", async (user) => {
-//      const response = await fetch(`http://localhost:3000/api/profiles/`, { method: 'POST', body: JSON.stringify(user), headers: { 'Content-Type': 'application/json' } });
+//      const response = await fetch(`${Ip}/api/profiles/`, { method: 'POST', body: JSON.stringify(user), headers: { 'Content-Type': 'application/json' } });
 //      return response.json();
 //  });
 
 // export const updateSpent = createAsyncThunk("spentState/updateSpent", async (spent) => {
-//     const response = await fetch(`http://localhost:3000/api/products/${spent.id}`,
+//     const response = await fetch(`${Ip}/api/products/${spent.id}`,
 //         {
 //             method: 'PUT',
 //             body: JSON.stringify(spent),

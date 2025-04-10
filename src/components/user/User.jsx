@@ -8,21 +8,23 @@ import { creatingProduct, deleteProduct, fetchProductConfiguration, fetchProduct
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { creatingUser, deleteUser, fetchUsers, stopCreatingOrUpdateingUser, updatingUser } from "../../slices/userSlice";
+import { activeTab } from "../../slices/appSlice";
 
 const User=()=>{
     
-    const appState=useSelector((state)=>state.appState);
-    const {t}=useTranslation();
-    const [isShowing,setIsShowing]=useState(false);
     const dispatch = useDispatch();
-    const userState = useSelector((state)=>state.userState);
-    const filterDetails =['id','image','profile_id']
-
+    
     useEffect(()=>{
         dispatch(fetchUsers());
+        dispatch(activeTab('tab1'))
     },[])
-    
+
+    const appState=useSelector((state)=>state.appState);
+    const {t}=useTranslation();
+    const userState = useSelector((state)=>state.userState);
+    const filterDetails =['id','image','profile_id']    
     const users = userState.users;
+   
     return(
         <CardWrapper>
         <Title create={creatingProduct} update={updatingUser} title={t('users')}/>

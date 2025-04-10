@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Dashboard from './components/dashboard/Dashboard'
 import Header from './components/general/Header'
@@ -21,6 +21,10 @@ import Spent from './components/Spent/Spent'
 import User from './components/user/User'
 import {  StopExporting } from './slices/appSlice'
 import Export from './components/general/Export'
+import { fetchUsers } from './slices/userSlice'
+import { fetchSpents } from './slices/spentSlice'
+import { fetchCategories } from './slices/categorySlice'
+import { fetchCompanies } from './slices/companySlice'
 
 function App() {
 
@@ -33,12 +37,19 @@ function App() {
   const dispatch = useDispatch();
   const {pathname}= useLocation();
   
-  // useEffect(()=>{
-  //   // dispatch(fetchProducts());
+  useEffect(()=>{
+     dispatch(fetchProducts());
+     dispatch(fetchUsers());
+     dispatch(fetchSpents());
+     dispatch(fetchCategories());
+     dispatch(fetchCompanies());
+
+
   //   // dispatch(fetchCurrency());
-  // },[]);
+   },[]);
 
   const excludePathName =['/','/logout'];
+  
   return (
     <>    
      <div className={`h-100 w-100 p-3  ${!appState.isLogged?'flex items-center justify-center':''}`}>   

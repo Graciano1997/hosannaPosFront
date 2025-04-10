@@ -3,6 +3,7 @@ import { deleteProduct, fetchProducts, productConfiguration, registerProduct, se
 import { addItem, fetchSales, order, removeItem, updateItem } from "./saleSlice";
 import { createCategory, deleteCategory, fetchCategories, updateCategory } from "./categorySlice";
 import { deleteCompany, registerCompany } from "./companySlice";
+import { Ip } from "../lib/ip";
 
 const initialState = {
     isOpen:false,
@@ -14,11 +15,12 @@ const initialState = {
     itemDetails:{},
     error:'',
     isExporting:false,
-    isLogged:true
+    isLogged:true,
+    currentTableCollection:[]
 }
 
  export const authenticate= createAsyncThunk("appState/authenticate",async (user)=>{
-    const response = await fetch(`http://localhost:3000/api/authentication/login`,
+    const response = await fetch(`${Ip}/api/authentication/login`,
         { method:'POST',
           body:JSON.stringify(user),
           headers:{'Content-Type':'application/json'}
@@ -69,6 +71,10 @@ const appSlice=createSlice({
         StopExporting:(state)=>{
             state.isExporting = false;
         },
+        setTableCurrentCollection: (state,action)=>{
+            state.currentTableCollection = action.payload;
+        },
+
         activeTab:(state,action)=>{
             state.activeTab=action.payload;
         },
@@ -164,10 +170,9 @@ const appSlice=createSlice({
                 state.toastObject = { error:true, message:action.payload.message[0] }
            }else{
                state.toastObject = { success:true, message:`Produto ${action.payload.product.name} criado com sucesso`}       
+               state.currentTableCollection.push({...action.payload.product});
            }
         });
-
-
 
         builder.addCase(deleteProduct.fulfilled,(state)=>{
             state.showToast=true;
@@ -187,7 +192,9 @@ const appSlice=createSlice({
             state.showToast=true;
             
             state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} criada com sucesso`}       
-        //    if(action.payload.error){
+            state.currentTableCollection.push({...action.payload.category});
+        
+            //    if(action.payload.error){
         //         state.toastObject = { error:true, message:action.payload.message[0] }
         //    }else{
         //    }
@@ -253,11 +260,8 @@ const appSlice=createSlice({
         builder.addCase(authenticate.rejected,(state,action)=>{
          console.log(action);
         });
-
-
-
     }
 });
 
 export default appSlice.reducer;
-export const {itemDetails, cleanItemDetails, showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged,Exporting,StopExporting,logoutUser} = appSlice.actions;
+export const {itemDetails, cleanItemDetails, showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged,Exporting,StopExporting,logoutUser,setTableCurrentCollection} = appSlice.actions;
