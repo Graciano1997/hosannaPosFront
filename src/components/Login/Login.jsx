@@ -18,7 +18,7 @@ const Login = ()=>{
      if(pathname=="/logout"){
          dispatch(logoutUser());
      }
-     
+
      if(pathname=="/" && localStorage.getItem("isLogged")){ navegate('/dashboard'); }
      },[]);
 
@@ -48,15 +48,14 @@ const Login = ()=>{
     <input type='password' onChange={handleInputChange}  name="password" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
     </label>
     {appState.error &&
-    <span>
-        {t('invalid_email_or_password')}
+    <span className="text-red-500">
+        {firstCapitalize(t('invalid_email_or_password'))}
     </span>
 
     }
 
-
-    <div className="flex justify-center mt-[2rem] p-2">
-        <button type="submit" className="p-2 bg-green-100 rounded">Entrar</button>
+    <div className="flex justify-center mt-[0.5rem] p-2">
+        <button type="submit" className="p-2 bg-green-100 rounded">{firstCapitalize(t('sign_in'))}</button>
     </div>
    </form>
     </div>

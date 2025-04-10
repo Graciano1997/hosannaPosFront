@@ -241,7 +241,6 @@ const appSlice=createSlice({
        })
 
         builder.addCase(authenticate.fulfilled,(state,action)=>{
-            console.log(action.payload);
             if(action.payload.error){
                 state.error = action.payload.error;
             }else if(action.payload.user){

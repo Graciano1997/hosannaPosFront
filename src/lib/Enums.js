@@ -21,3 +21,8 @@ export const ProductState = {
     EXPIRED:2,
     FINISHED:3
 }
+
+export const Profiles = {
+    MASTER:1,
+    OPERATOR:2
+}

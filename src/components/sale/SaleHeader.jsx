@@ -23,8 +23,8 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
                 dispatch(setInvoiceType(el.target.value));
             }} 
             className="cursor-pointer p-2 rounded transition-all duration-200 bg-white shadow">
-                <option value={SaleType.SALE}>{firstCapitalize(t('sale'))}</option>
-                <option value={SaleType.PORFORM}>{firstCapitalize(t('proforma'))}</option>
+                <option value={SaleType.SALE} selected>{firstCapitalize(t('sale'))}</option>
+                {/* <option value={SaleType.PORFORM}>{firstCapitalize(t('proforma'))}</option> */}
             </select>
             </div>
            

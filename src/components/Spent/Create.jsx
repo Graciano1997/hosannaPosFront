@@ -61,6 +61,7 @@ const Create=()=>{
                 <br />
                 <select name="user_id" onChange={formHandler} value={spent.user_id} className='p-1 rounded w-[100%] outline-none'>
                 <option value="" disabled selected>Selecione uma Responsavel</option>
+                <option value={0}>{firstCapitalize(t('none'))}</option>
                     {userState.users.map((user)=>
                     <option value={user.id}>{user.name}</option>
                     )}

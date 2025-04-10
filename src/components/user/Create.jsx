@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProfiles } from "../../slices/profileSlice";
 import { useTranslation } from "react-i18next";
 import { registerUser, stopCreatingOrUpdateingUser, updateUser } from "../../slices/userSlice";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const Create=()=>{
 
@@ -38,8 +39,12 @@ const Create=()=>{
     formData.append(`user[email]`,user.email);
     formData.append(`user[profile_id]`,parseInt(user.profile_id));
     formData.append(`user[active]`,user.active);
-    formData.append('user[image]', image.current.files[0]);   
-   
+    formData.append(`user[password]`,user.password);
+
+    if(image.current.files[0]) {
+        formData.append('user[image]', image.current.files[0]);   
+      }
+    
     let treatedUserObject = { ...user }
 
        if(treatedUserObject.id){
@@ -94,8 +99,28 @@ const Create=()=>{
                 </select>
                 </label>
                 </div>
-                <input type="file" name="image" ref={image}/>
                 </div>
+
+                <div className="flex gap-5">
+                <div className="w-[50%]">
+                <label>
+                {firstCapitalize(t('password'))}
+                <br />
+                <input type='password' onChange={formHandler} name="password"   className='p-1 rounded w-[100%] outline-none'/>
+                </label>
+                </div>
+
+                <div className="w-[50%]">
+                <label>
+                {firstCapitalize(t('image'))}
+                <br />
+                <input type="file" name="image" ref={image}/>
+                </label>
+                </div>
+
+
+                </div>
+                
 
                 </div>
                 <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{ user.id? 'Update':'Create'}</button></div>

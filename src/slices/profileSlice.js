@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    selectedProfile:null,
     profiles: [],
 };
 
@@ -33,7 +34,12 @@ const profileSlice = createSlice({
     name: 'profileState',
     initialState: initialState,
     reducers: {
-        
+        selectProfile:(state,action)=>{
+            state.selectedProfile=action.payload;
+        },
+        unselectProfile:(state)=>{
+            state.selectedProfile=null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchProfiles.fulfilled, (state, action) => {
@@ -67,4 +73,4 @@ const profileSlice = createSlice({
 });
 
 export default profileSlice.reducer;
-export const {  } = profileSlice.actions;
+export const { selectProfile,unselectProfile } = profileSlice.actions;

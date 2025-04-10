@@ -26,8 +26,8 @@
     "product_categories":"categorias",
     "name":"nome",
     "code":"código",
-    "qty":"qty",
-    "price":"preço_venda",
+    "qty":"qtd",
+    "price":"preço",
     "category_id":"categoria_id",
     "created_at":"criado_em",
     "updated_at":"atualizado_em",
@@ -126,5 +126,13 @@
     "search":"busque o produto",
     "successlogin":"Logado com sucesso",
     "password":"senha",
-    "invalid_email_or_password":"Palavra passe ou email inválido"
+    "invalid_email_or_password":"Palavra passe ou email inválido",
+    "sign_in":"entrar",
+    "none":"nenhum(a)",
+    "admin":"administrador",
+    "run_expired_verification":"Executar verificação dos expirados",
+    "product_verification_runing": "Executando a verificação de produto em segundo plano",
+    "in_stock":"em stock",
+    "image":"imagem",
+    "account":"conta"
 }

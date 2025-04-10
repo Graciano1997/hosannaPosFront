@@ -5,12 +5,15 @@ import Create from "./Create";
 import Title from "../general/Title";
 import ProductDashboard from "./ProductDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { creatingProduct, deleteProduct, fetchExpiredProducts, fetchProductConfiguration, fetchProducts, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";
+import { creatingProduct, deleteProduct, expiredProductJob, fetchExpiredProducts, fetchProductConfiguration, fetchProducts, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { creatingCategory, deleteCategory, fetchCategories, updateCategory, updatingCategory } from "../../slices/categorySlice";
 import CreateCategory from "./CreateCategory";
 import ProductConfiguration from "./ProductConfiguration";
+import { firstCapitalize } from "../../lib/firstCapitalize";
+import { showToast } from "../../slices/appSlice";
+import ExpiredProducts from "./ExpiredProducts";
 
 const Product=()=>{
     
@@ -43,7 +46,9 @@ const Product=()=>{
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}
         {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']}  collection={categoryState.categories || []}/>}
-        {appState.activeTab=="tab4" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} create={null} update={null} deleteItem={null} collection={productState.expireds || []}/>}
+        {appState.activeTab=="tab4" && !productState.error && !productState.loading && 
+        <ExpiredProducts/>
+        }
         {appState.activeTab=="tab5" && !productState.error && !productState.loading && <ProductConfiguration />}
 
         </TabWrapper>
