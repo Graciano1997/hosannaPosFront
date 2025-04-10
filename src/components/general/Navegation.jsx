@@ -99,6 +99,7 @@ const Navegation =({visible,setVisibility})=>{
         </div>
         
         <CurrentUser/>
+        <div><span className="text-[15px]">{t('slogan')}</span></div>
         </nav>
     )
 };

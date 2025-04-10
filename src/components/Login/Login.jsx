@@ -4,6 +4,7 @@ import { useFetcher, useLocation, useNavigate } from "react-router-dom";
 import { authenticate,logoutUser, showToast } from "../../slices/appSlice";
 import { useEffect, useState } from "react";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import Footer from "../general/Footer";
 
 const Login = ()=>{
     
