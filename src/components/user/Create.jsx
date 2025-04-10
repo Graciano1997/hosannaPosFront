@@ -48,7 +48,8 @@ const Create=()=>{
     let treatedUserObject = { ...user }
 
        if(treatedUserObject.id){
-         dispatch(updateUser(treatedUserObject.id,formData));
+        formData.append("user[id]",treatedUserObject.id);
+         dispatch(updateUser(formData));
        }else{
            dispatch(registerUser(formData));
        }

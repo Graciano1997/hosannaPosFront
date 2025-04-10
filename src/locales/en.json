@@ -134,5 +134,7 @@
     "in_stock":"in stock",
     "image":"image",
     "account":"account",
-    "slogan":"with ♥ by Hosanna"
+    "slogan":"with ♥ by Hosanna",
+    "client_type":"client type",
+    "filter":"filter"
 }

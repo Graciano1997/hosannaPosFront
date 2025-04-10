@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Ip } from "../lib/ip";
 
 const initialState = {
     categories: [],
@@ -8,19 +9,19 @@ const initialState = {
 };
 
 export const fetchCategories = createAsyncThunk("categoryState/fetchCategories",async ()=>{
-    const response = await fetch('http://localhost:3000/api/categories/',{method:'GET', headers:{'Content-Type':'application/json'}});
+    const response = await fetch(`${Ip}/api/categories/`,{method:'GET', headers:{'Content-Type':'application/json'}});
     return response.json();
 });
 
 export const createCategory = createAsyncThunk("categoryState/createCategory",async (category)=>{
-    const response = await fetch('http://localhost:3000/api/categories/',{method:'POST',
+    const response = await fetch(`${Ip}/api/categories/`,{method:'POST',
         body:JSON.stringify(category),
      headers:{'Content-Type':'application/json'}});
     return response.json();
 });
 
 export const updateCategory = createAsyncThunk("categoryState/updateCategory",async (category)=>{
-    const response = await fetch(`http://localhost:3000/api/categories/${category.id}`,
+    const response = await fetch(`${Ip}/api/categories/${category.id}`,
     {method:'PUT',
         body:JSON.stringify(category),
      headers:{'Content-Type':'application/json'}});
@@ -28,7 +29,7 @@ export const updateCategory = createAsyncThunk("categoryState/updateCategory",as
 });
 
 export const deleteCategory = createAsyncThunk("categoryState/deleteCategory",async (id)=>{
-    const response = await fetch(`http://localhost:3000/api/categories/${id}`,{ method:'DELETE' });
+    const response = await fetch(`${Ip}/api/categories/${id}`,{ method:'DELETE' });
     return response.json();
 });
 

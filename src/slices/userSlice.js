@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Ip } from "../lib/ip";
 
 const initialState = {
     isCreating : false,
@@ -8,31 +9,29 @@ const initialState = {
 };
 
 export const fetchUsers = createAsyncThunk("userState/fetchUsers", async () => {
-    const response = await fetch('http://localhost:3000/api/users/');
+    const response = await fetch(`${Ip}/api/users/`);
     return response.json();
 })
 
  export const deleteUser = createAsyncThunk("userState/deleteUser", async (id) => {
-     const response = await fetch(`http://localhost:3000/api/users/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
+     const response = await fetch(`${Ip}/api/users/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
      return response.json();
  });
 
  export const registerUser = createAsyncThunk("userState/registerUser", async (formData) => {
      
-     console.log(formData);
-     const response = await fetch(`http://localhost:3000/api/users/`, { method: 'POST', body: formData });
+     const response = await fetch(`${Ip}/api/users/`, { method: 'POST', body: formData });
      return response.json();
  });
 
-export const updateUser = createAsyncThunk("userState/updateUser", async (userId,formData) => {
-    console.log(formData);
-     const response = await fetch(`http://localhost:3000/api/users/${userId}`,
-         {
-             method: 'PUT',
-             body: formData,
-         });
-         console.log(response.json());
-     return response.json();
+export const updateUser = createAsyncThunk("userState/updateUser", async (formData) => {
+
+    const response = await fetch(`${Ip}/api/users/${formData.get("user[id]")}`,
+          {
+              method: 'PUT',
+              body: formData,
+          });
+      return response.json();
  });
 
 const userSlice = createSlice({

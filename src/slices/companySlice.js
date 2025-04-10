@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Ip } from "../lib/ip";
 
 const initialState = {
     companies:[],
@@ -12,27 +13,27 @@ const initialState = {
 };
 
 export const fetchCompanies = createAsyncThunk("companyState/fetchCompanies", async ()=>{
-    const response = await fetch('http://localhost:3000/api/companies/',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/companies/`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const fetchCompaniesFields = createAsyncThunk("companyState/fetchCompaniesFields", async ()=>{
-    const response = await fetch('http://localhost:3000/api/companies/company_fields',{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/companies/company_fields`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const deleteCompany = createAsyncThunk("companyState/deleteCompany", async (id)=>{
-    const response = await fetch(`http://localhost:3000/api/companies/${id}`,{ method:'DELETE', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/companies/${id}`,{ method:'DELETE', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const registerCompany = createAsyncThunk("companyState/registerCompany", async (company)=>{
-    const response = await fetch(`http://localhost:3000/api/companies/`,{ method:'POST', body:JSON.stringify(company), headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/companies/`,{ method:'POST', body:JSON.stringify(company), headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const updateCompany = createAsyncThunk("companyState/updateCompany",async (company)=>{
-    const response = await fetch(`http://localhost:3000/api/companies/${company.id}`,
+    const response = await fetch(`${Ip}/api/companies/${company.id}`,
     {method:'PUT',
         body:JSON.stringify(company),
      headers:{'Content-Type':'application/json'}});

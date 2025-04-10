@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { sum } from "../lib/sumSale";
 import { ClientType, DefaultClientePhone, PaymentType, SaleType } from "../lib/Enums";
+import { Ip } from "../lib/ip";
 
 const initialState = {
     loading:false,
@@ -19,7 +20,7 @@ const initialState = {
 }
 
 export const order=createAsyncThunk('saleState/order',async (sale)=>{
-    const response = await fetch('http://localhost:3000/api/sales/',{
+    const response = await fetch(`${Ip}/api/sales/`,{
         method:'POST',
         body:JSON.stringify(sale),
         headers:{ 'Content-Type':'application/json'}
@@ -28,7 +29,7 @@ export const order=createAsyncThunk('saleState/order',async (sale)=>{
 });
 
 export const fetchSales=createAsyncThunk('saleState/fetchSales',async ()=>{
-    const response = await fetch('http://localhost:3000/api/sales/',{
+    const response = await fetch(`${Ip}/api/sales/`,{
         method:'GET',
         headers:{ 'Content-Type':'application/json'}
     });
