@@ -26,8 +26,7 @@ const SaleConfirmation = ()=>{
                     descount:0,
                     difference:saleState.paymentType == PaymentType.TPA ? 0 : (saleState.receivedCash*1 - saleState.total*1),
                     total: saleState.total,
-                    client_id:1,
-                    user_id:1                
+                    user_id:JSON.parse(localStorage.getItem('currentUser')).id             
                 },
                 items : saleState.items
             }
