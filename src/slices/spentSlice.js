@@ -65,6 +65,9 @@ const spentSlice = createSlice({
             state.isUpdating = true;
             state.spentToUpdate=action.payload;
         },
+        setSpents:(state,action)=>{
+            state.spents=action.payload;
+        },
         stopCreatingOrUpdateingSpent : (state)=>{
             state.isCreating = false;
             state.isUpdating = false;
@@ -120,4 +123,4 @@ const spentSlice = createSlice({
 });
 
 export default spentSlice.reducer;
-export const { calcTotalSpents,creatingSpent, updatingSpent, stopCreatingOrUpdateingSpent  } = spentSlice.actions;
+export const { calcTotalSpents,creatingSpent, updatingSpent, stopCreatingOrUpdateingSpent, setSpents  } = spentSlice.actions;

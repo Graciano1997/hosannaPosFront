@@ -89,16 +89,23 @@ const productSlice = createSlice({
         state.isCreating = true;
     },
 
+    setExpireds: (state,action)=>{
+        state.expireds = action.payload;
+    },
+
     searchingProduct: (state)=>{
         state.isSearching = true;
     },
     stopSearchingProduct: (state)=>{
         state.isSearching = false;
-    }
-    ,
+    },
     updatingProduct: (state,action)=>{
         state.isUpdating = true;
         state.productToUpdate=action.payload;
+    },
+
+    setProducts: (state,action)=>{
+        state.products = action.payload; 
     },
 
     addProductField:(state,action)=>{
@@ -212,4 +219,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct,searchingProduct} = productSlice.actions;
+export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct,searchingProduct, setProducts,setExpireds} = productSlice.actions;

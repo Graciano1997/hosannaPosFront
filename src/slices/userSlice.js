@@ -46,6 +46,9 @@ const userSlice = createSlice({
             state.isUpdating = false;
             state.userToUpdate = {};
         },
+        setUser:(state,action)=>{
+            state.users=action.payload;
+        },
         
         updatingUser: (state,action)=>{
             state.isUpdating = true;
@@ -84,4 +87,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { creatingUser, stopCreatingOrUpdateingUser, updatingUser } = userSlice.actions;
+export const { creatingUser, stopCreatingOrUpdateingUser, updatingUser,setUser } = userSlice.actions;

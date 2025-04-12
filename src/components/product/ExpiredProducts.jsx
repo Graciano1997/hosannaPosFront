@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { expiredProductJob, fetchAnualExpiredProducts, fetchExpiredProducts } from "../../slices/productSlice";
+import { expiredProductJob, fetchAnualExpiredProducts, fetchExpiredProducts, setExpireds } from "../../slices/productSlice";
 import { showToast } from "../../slices/appSlice";
 import { useEffect } from "react";
 import Table from "../Table/Table";
@@ -17,7 +17,7 @@ const ExpiredProducts=()=>{
 
     return(
         <>
-        <Table filterDetails={[]} create={null} update={null} deleteItem={null} collection={productState.expireds || []}/>
+        <Table filterDetails={[]} create={null} update={null} fetcher={fetchAnualExpiredProducts} dispatcher={setExpireds} deleteItem={null} collection={productState.expireds || []}/>
         <div className="flex justify-end p-2 mt-auto"><button type="button" onClick={()=>{
             dispatch(expiredProductJob())
             .then(()=>{

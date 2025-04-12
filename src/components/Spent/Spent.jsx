@@ -7,7 +7,7 @@ import SpendDashboard from "./SpentDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
-import { creatingSpent, deleteSpent, fetchAnualSpents, fetchSpents, updatingSpent } from "../../slices/spentSlice";
+import { creatingSpent, deleteSpent, fetchAnualSpents, fetchSpents, setSpents, updatingSpent } from "../../slices/spentSlice";
 import { activeTab } from "../../slices/appSlice";
 
 const Spent = () => {
@@ -30,7 +30,7 @@ const Spent = () => {
         <CardWrapper>
             <Title setIsShowing={setIsShowing} title={t('spents')} />
             <TabWrapper>
-                {appState.activeTab == "tab1" && (<Table filterDetails={filterSpentDetails} filterRows={['user_id','image','id']} collection={spents} update={updatingSpent} deleteItem={deleteSpent}  create={creatingSpent} />)}
+                {appState.activeTab == "tab1" && (<Table filterDetails={filterSpentDetails} filterRows={['user_id','image','id']} collection={spents} update={updatingSpent} deleteItem={deleteSpent} fetcher={fetchSpents} dispatcher={setSpents}  create={creatingSpent} />)}
                 {appState.activeTab == "tab2" && (<SpendDashboard />)}
             </TabWrapper>
             {(spentState.isCreating || spentState.isUpdating) && appState.isOpen &&  (<Create />)}

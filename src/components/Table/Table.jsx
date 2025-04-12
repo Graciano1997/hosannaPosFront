@@ -9,29 +9,19 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 import searchCollection from "../../lib/seach";
 import { useEffect, useState } from "react";
 
-const Table = ({ collection=[], addItem=null, deleteItem = () => { }, update = () => { }, create = () => { }, filterRows = [], filterDetails = [] }) => {
+const Table = ({ collection=[], addItem=null, deleteItem = () => { }, update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = ()=>{ }, fetcher=()=>{} }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const appState= useSelector((state)=>state.appState);
     const [query,setQuery]=useState('');
-    
-    useEffect(()=>{
-        dispatch(setTableCurrentCollection(collection));
-    },[]);
-
-    
-
-    const collections = useSelector((state)=>state.appState.currentTableCollection);
+   
     
     const searchHandler = ()=>{
-            if(query){
-                const result = searchCollection(collection,query);
-                   dispatch(setTableCurrentCollection(result));
-                }else{
-                dispatch(setTableCurrentCollection(collection));
+    if(query){
+            const result = searchCollection(collection,query);
+                dispatch(dispatcher(result));
             }
     }
-
     return (
         <>
             <div className="">
@@ -67,8 +57,7 @@ const Table = ({ collection=[], addItem=null, deleteItem = () => { }, update = (
 
                 {appState.error=='' && !appState.loading && collection.length > 0 &&
                     <div className={`w-100 overflow-scroll p-1 h-[350px] mt-[1.5rem]`}>
-                   {
-                    false && 
+
                     <div className="mb-2">
                     <label htmlFor="search"
                     className="mr-[10px]"
@@ -80,16 +69,15 @@ const Table = ({ collection=[], addItem=null, deleteItem = () => { }, update = (
                         }}  
                         onChange={(el)=>{
                             setQuery(el.target.value);
-
+                            
                             if(el.target.value == "")
-                                dispatch(setTableCurrentCollection(collection));    
+                                dispatch(fetcher());    
                         }}
                          className="p-[4px_15px_4px_4px] border-none outline outline-1 outline-green-300 " id="search" placeholder={firstCapitalize(t('filter'))} />
                   <button 
                   onClick={searchHandler}
                   className="bg-black p-[5px_25px] text-white relative top-[5px]"><MagnifyingGlassIcon onClick={(e)=>{}} className="w-5 y-5 cursor-pointer"/></button>
                     </div>
-                   } 
                         <table className="rounded shadow-md  w-full table-auto" >
                             <Thead filterRows={filterRows} object={collection[0]} />
                             <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows}  updateItem={update} deleteItem={deleteItem} items={collection} />
