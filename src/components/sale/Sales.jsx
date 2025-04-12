@@ -6,7 +6,7 @@ import Title from "../general/Title";
 import { useDispatch, useSelector } from "react-redux";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
-import { fetchSales } from "../../slices/saleSlice";
+import { fetchSales, setSales } from "../../slices/saleSlice";
 import { activeTab } from "../../slices/appSlice";
 
 const Sales=()=>{
@@ -27,7 +27,7 @@ const Sales=()=>{
         <CardWrapper>
         <Title title={t('sales')}/>
         <TabWrapper>    
-        {appState.activeTab=="tab1" && (<Table filterRows={filterRows} filterDetails={filterRows} create={null} collection={sales}/>)}
+        {appState.activeTab=="tab1" && (<Table filterRows={filterRows} filterDetails={filterRows} create={null} fetcher={fetchSales} dispatcher={setSales} collection={sales}/>)}
         {appState.activeTab=="tab2"  && (<SaleDashboard/>)} 
         </TabWrapper>
         </CardWrapper>

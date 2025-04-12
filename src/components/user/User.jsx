@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { creatingProduct, deleteProduct, fetchProductConfiguration, fetchProducts, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
-import { creatingUser, deleteUser, fetchUsers, stopCreatingOrUpdateingUser, updatingUser } from "../../slices/userSlice";
+import { creatingUser, deleteUser, fetchUsers, setUser, stopCreatingOrUpdateingUser, updatingUser } from "../../slices/userSlice";
 import { activeTab } from "../../slices/appSlice";
 
 const User=()=>{
@@ -41,7 +41,7 @@ const User=()=>{
             <h4 className="text-3xl text-red-700">{userstate.error}</h4>
         </div>
         } */}
-        {appState.activeTab=="tab1" && <Table filterDetails={filterDetails} filterRows={['profile_id']} update={updatingUser} create={creatingUser} deleteItem={deleteUser} collection={users}/>}
+        {appState.activeTab=="tab1" && <Table filterDetails={filterDetails} filterRows={['profile_id']} update={updatingUser} create={creatingUser} dispatcher={setUser} fetcher={fetchUsers} deleteItem={deleteUser} collection={users}/>}
         
         </TabWrapper>
         {(userState.isCreating  || userState.isUpdating ) && appState.isOpen && (<Create stopCreating={stopCreatingOrUpdateingUser}/>)}

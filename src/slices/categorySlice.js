@@ -45,6 +45,10 @@ export const categorySlice = createSlice({
             state.categoryToUpdate=action.payload;
         },
 
+        setCategories:(state,action)=>{
+            state.categories = action.payload;
+        },
+
         stopCreatingOrUpdateingCategory : (state)=>{
             state.isCreating = false;
             state.isUpdating = false;
@@ -84,4 +88,4 @@ export const categorySlice = createSlice({
 })
 
 export default categorySlice.reducer;
-export const { creatingCategory, updatingCategory, stopCreatingOrUpdateingCategory } = categorySlice.actions;
+export const { creatingCategory, updatingCategory, stopCreatingOrUpdateingCategory, setCategories } = categorySlice.actions;

@@ -68,6 +68,10 @@ const saleSlice = createSlice({
         saleConfirm:(state)=>{
             state.saleConfirmationIsOpen=true;
         },
+        setSales:(state,action)=>{
+            state.sales = action.payload;
+        }
+        ,
         saleNotConfirm:(state)=>{
             state.saleConfirmationIsOpen=false;
         },
@@ -202,4 +206,4 @@ const saleSlice = createSlice({
 
 
 export default saleSlice.reducer;
-export const {saleClean, setReceivedCash,increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType,setInvoiceType, setClientDetails,saleConfirm,saleNotConfirm} = saleSlice.actions;
+export const {saleClean, setReceivedCash,increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType,setInvoiceType, setClientDetails,saleConfirm,saleNotConfirm, setSales} = saleSlice.actions;
