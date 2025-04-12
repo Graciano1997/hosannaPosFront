@@ -137,5 +137,10 @@
     "account":"conta",
     "slogan":"With ♥ by Hosanna",
     "client_type":"tipo de cliente",
-    "filter":"filtrar"
+    "filter":"filtrar",
+    "back":"voltar",
+    "updated_succeed":"atualizado com sucesso",
+    "created_succeed":"criado com sucesso",
+    "select_status":"selecione o estado",
+    "select_profile":"selecione o perfil"
 }
