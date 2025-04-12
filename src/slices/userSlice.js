@@ -67,6 +67,27 @@ const userSlice = createSlice({
              }
          });
 
+        builder.addCase(updateUser.fulfilled,(state,action)=>{
+                    state.isUpdating = false;
+                    state.userToUpdate = {};
+                    if (action.payload.success && action.payload.user) {
+                        const atIndex = state.users.findIndex(item => item.id === action.payload.user.id);
+                        if (atIndex !== -1) {
+                        const updatedUsers = [...state.users]; 
+                        updatedUsers[atIndex] = action.payload.user;
+                        state.users = updatedUsers;
+                        }
+                    }            
+                })
+
+        // builder.addCase(updateUser.fulfilled, (state, action) => {
+        //     //  state.isCreating = false;
+        //     //  if (!action.payload.error) {
+        //     //      state.users.push({ ...action.payload.user });
+        //     //  }
+        //     console.log(action.payload);
+        //  });
+
         builder.addCase(deleteUser.fulfilled, (state, action) => {
              state.users = state.users.filter((user) => user.id !== action.payload.id);
          });

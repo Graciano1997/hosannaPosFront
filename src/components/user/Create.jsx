@@ -5,6 +5,7 @@ import { fetchProfiles } from "../../slices/profileSlice";
 import { useTranslation } from "react-i18next";
 import { registerUser, stopCreatingOrUpdateingUser, updateUser } from "../../slices/userSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import { showToast } from "../../slices/appSlice";
 
 const Create=()=>{
 
@@ -21,7 +22,6 @@ const Create=()=>{
    const profileState = useSelector((state)=>state.profileState);
    const profiles = profileState.profiles;
    const [user,setUser]=useState(userState.userToUpdate);
-
 
    const formHandler = (el)=>{
     setUser({
@@ -49,9 +49,15 @@ const Create=()=>{
 
        if(treatedUserObject.id){
         formData.append("user[id]",treatedUserObject.id);
-         dispatch(updateUser(formData));
+         dispatch(updateUser(formData))
+         .then(()=>{
+            dispatch(showToast({success:true,message:firstCapitalize(t('updated_succeed'))}));
+         });
        }else{
-           dispatch(registerUser(formData));
+           dispatch(registerUser(formData))
+           .then(()=>{
+            dispatch(showToast({success:true,message:firstCapitalize(t('created_succeed'))}));
+         });
        }
    }
 
@@ -63,7 +69,7 @@ const Create=()=>{
                 <div className="flex gap-5">
                 <div className="w-[50%]">
                 <label>
-                {t('name')}
+                {firstCapitalize(t('name'))}
                 <br />
                 <input type='text' onChange={formHandler} name="name" value={user.name}  className='p-1 rounded w-[100%] outline-none'/>
                 </label>
@@ -71,7 +77,7 @@ const Create=()=>{
                
                 <div className="w-[50%]">
                 <label>
-                {t('email')}
+                {firstCapitalize(t('email'))}
                 <br />
                 <input type='email' onChange={formHandler} name="email" value={user.email}  className='p-1 rounded w-[100%] outline-none'/>
                 </label>
@@ -80,10 +86,10 @@ const Create=()=>{
                 <div className="flex gap-5">
                 <div className="w-[50%]">
                 <label>
-                {t('status')}
+                {firstCapitalize(t('status'))}
                 <br />
                 <select name="active" value={user.active}  className='p-2 rounded w-[100%] outline-none' onChange={formHandler}>
-                <option value="" disabled selected>Selecione o estado</option>
+                <option value="" disabled selected>{t('select_status')}</option>
                     <option value={true}>{t('active')}</option>
                     <option value={false}>{t('disative')}</option>
                 </select>
@@ -92,10 +98,10 @@ const Create=()=>{
 
                 <div className="w-[50%]">
                 <label>
-                {t('profile')}
+                {firstCapitalize(t('profile'))}
                 <br />
                 <select name="profile_id" value={user.profile_id}  className='p-2 rounded w-[100%] outline-none' onChange={formHandler}>
-                <option value="" disabled selected>Selecione o perfil</option>
+                <option value="" disabled selected>{firstCapitalize(t('select_profile'))}</option>
                 {profiles.map((profile,index)=><option key={index} value={profile.id}>{profile.name}</option>)}
                 </select>
                 </label>
@@ -103,13 +109,16 @@ const Create=()=>{
                 </div>
 
                 <div className="flex gap-5">
-                <div className="w-[50%]">
-                <label>
-                {firstCapitalize(t('password'))}
-                <br />
-                <input type='password' onChange={formHandler} name="password"   className='p-1 rounded w-[100%] outline-none'/>
-                </label>
-                </div>
+                {(user.id == JSON.parse(localStorage.getItem("currentUser")).id || user.id == undefined ) &&
+                    <div className="w-[50%]">
+                    <label>
+                    {firstCapitalize(t('password'))}
+                    <br />
+                    <input type='password' onChange={formHandler} name="password"   className='p-1 rounded w-[100%] outline-none'/>
+                    </label>
+                    </div>
+                }
+
 
                 <div className="w-[50%]">
                 <label>
@@ -118,11 +127,7 @@ const Create=()=>{
                 <input type="file" name="image" ref={image}/>
                 </label>
                 </div>
-
-
                 </div>
-                
-
                 </div>
                 <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{ user.id? 'Update':'Create'}</button></div>
                 </form>

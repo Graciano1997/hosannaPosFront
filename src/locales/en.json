@@ -136,5 +136,10 @@
     "account":"account",
     "slogan":"with ♥ by Hosanna",
     "client_type":"client type",
-    "filter":"filter"
+    "filter":"filter",
+    "back":"voltar",
+    "updated_succeed":"updated successfully",
+    "created_succeed":"created successfully",
+    "select_status":"select state",
+    "select_profile":"select profile"
 }

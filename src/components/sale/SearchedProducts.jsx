@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { searchProduct } from "../../slices/productSlice";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import SearchedItem from "./SearchedItem";
@@ -12,6 +12,11 @@ const SearchedProducts = ()=>{
     const [query,setQuery]=useState('');
     const [search,setSearch] = useState(false);
     const {t}=useTranslation();
+    const inputRef= useRef(null);
+
+    useEffect(()=>{
+        inputRef.current.focus();
+    },[]);
 
     let searchedProducts = useSelector((state)=>state.productState.productsSearched);
 
@@ -22,6 +27,7 @@ const SearchedProducts = ()=>{
                 <div className='bg-green-100  flex justify-between items-center rounded p-1 shadow'>
                 <input type='text' id="searchProduct"
                 value={query}
+                ref={inputRef}
                 onChange={(el)=>{
                     setQuery(el.target.value)
                 }}

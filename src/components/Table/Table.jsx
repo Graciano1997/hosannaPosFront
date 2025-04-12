@@ -2,7 +2,7 @@ import { MagnifyingGlassCircleIcon, MagnifyingGlassIcon, PlusIcon } from "@heroi
 import Tbody from "./Tbody";
 import Thead from "./Thead";
 import { useDispatch, useSelector } from "react-redux";
-import { openModal, setTableCurrentCollection } from "../../slices/appSlice";
+import { activeTab, openModal, setTableCurrentCollection } from "../../slices/appSlice";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { firstCapitalize } from "../../lib/firstCapitalize";
@@ -49,8 +49,13 @@ const Table = ({ collection=[], addItem=null, deleteItem = () => { }, update = (
 
                 {(collection.length==0) && appState.error=='' && !appState.loading &&
                     <div className="rounded text-center w-[100%] mt-[5rem]">
-                        <div className=" mt-[5rem] flex justify-center">
+                        <div className=" mt-[5rem] flex flex-col justify-center">
                             <p className="text-2xl font-light p-1"> {firstCapitalize(t('no_registry'))}</p>
+                            <button
+                            onClick={()=>{
+                                dispatch(fetcher());
+                            }}
+                             className="rounded-[4px] p-2  bg-black text-white">{firstCapitalize(t('back'))}</button>
                         </div>
                     </div>
                 }
