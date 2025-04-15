@@ -145,5 +145,6 @@
     "select_parent_category":"select parent category",
     "singular":"singular",
     "company":"company",
-    "nif":"fiscal number"
+    "nif":"fiscal number",
+    "reload":"reload"
 }

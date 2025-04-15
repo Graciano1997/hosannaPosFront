@@ -1,4 +1,4 @@
-import { MagnifyingGlassCircleIcon, MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { ArrowPathIcon, MagnifyingGlassCircleIcon, MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Tbody from "./Tbody";
 import Thead from "./Thead";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,15 +9,15 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 import searchCollection from "../../lib/seach";
 import { useEffect, useState } from "react";
 
+
 const Table = ({ collection=[], addItem=null, deleteItem = () => { }, update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = ()=>{ }, fetcher=()=>{} }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const appState= useSelector((state)=>state.appState);
     const [query,setQuery]=useState('');
-   
     
     const searchHandler = ()=>{
-    if(query){
+    if(query.trim().length>0){
             const result = searchCollection(collection,query);
                 dispatch(dispatcher(result));
             }
@@ -51,11 +51,16 @@ const Table = ({ collection=[], addItem=null, deleteItem = () => { }, update = (
                     <div className="rounded text-center w-[100%] mt-[5rem]">
                         <div className=" mt-[5rem] flex flex-col justify-center">
                             <p className="text-2xl font-light p-1"> {firstCapitalize(t('no_registry'))}</p>
+                            
+                            <div className="flex justify-center mt-[1rem]">
                             <button
                             onClick={()=>{
                                 dispatch(fetcher());
                             }}
-                             className="rounded-[4px] p-2  bg-black text-white">{firstCapitalize(t('back'))}</button>
+                            className="rounded-[4px] p-2  flex items-center  bg-black text-white">{firstCapitalize(t('reload'))}
+                            <ArrowPathIcon className="w-5 h-5 cursor-pointer relative left-[5px]"/>
+                            </button>
+                            </div>
                         </div>
                     </div>
                 }
@@ -73,10 +78,12 @@ const Table = ({ collection=[], addItem=null, deleteItem = () => { }, update = (
                             }
                         }}  
                         onChange={(el)=>{
-                            setQuery(el.target.value);
-                            
-                            if(el.target.value == "")
-                                dispatch(fetcher());    
+                            if((el.target.value).trim()!=""){
+                                setQuery(el.target.value);
+                            }else{
+                                setQuery('');
+                                dispatch(fetcher());
+                            }
                         }}
                          className="p-[4px_15px_4px_4px] border-none outline outline-1 outline-green-300 " id="search" placeholder={firstCapitalize(t('filter'))} />
                   <button 
