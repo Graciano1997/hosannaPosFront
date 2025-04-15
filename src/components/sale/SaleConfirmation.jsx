@@ -29,8 +29,7 @@ const SaleConfirmation = ()=>{
                 },
                 items : saleState.items
             }
-            console.log(treatedSaleObject);
-            
+                        
             dispatch(order(treatedSaleObject))
             .then(()=>{
             dispatch(showToast({ success:true, message:t('order_sucessfuly')}));

@@ -39,7 +39,10 @@ const Create=()=>{
     formData.append(`user[email]`,user.email);
     formData.append(`user[profile_id]`,parseInt(user.profile_id));
     formData.append(`user[active]`,user.active);
-    formData.append(`user[password]`,user.password);
+    
+    if(user.password!=undefined && user.password.length>0 ){
+        formData.append(`user[password]`,user.password);
+    }
 
     if(image.current.files[0]) {
         formData.append('user[image]', image.current.files[0]);   
@@ -47,6 +50,8 @@ const Create=()=>{
     
     let treatedUserObject = { ...user }
 
+    console.log(treatedUserObject);
+    
        if(treatedUserObject.id){
         formData.append("user[id]",treatedUserObject.id);
          dispatch(updateUser(formData))

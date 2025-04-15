@@ -9,11 +9,11 @@ import { updateProduct } from "../../slices/productSlice";
 
 const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem }) => {
     
-    const moneyFields = ['price', 'total', 'amount', 'cost_price','difference','received_cash'];
+    const moneyFields = ['price', 'total', 'amount', 'cost_price','difference','received_cash','received_tpa'];
     const dispatch = useDispatch();
     const [checkNumber,setCheckNumber]=useState(false);
     const [qty,setQty]=useState(0);
-
+    
     let keys = Object.keys(item);
     keys = keys.filter((item) => !filterRows.includes(item))
     const itemDetail = useSelector((state)=>state.appState.itemDetails);
@@ -33,10 +33,9 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                 <td className="flex justify-end gap-[5px] pr-3">
                     <div className="flex gap-3">
     
-                        {addItem && 
+                        {item.status && addItem && 
                         <div className="flex gap-2 items-center rounded-[16px]  bg-green-100 p-1">                                      
-                            <button onClick={()=>{
-                                
+                            <button onClick={()=>{       
                                 if(qty*1 >0 && item.qty - qty>=0){
                                     const updatedItem={...item,
                                         qty:item.qty-qty*1

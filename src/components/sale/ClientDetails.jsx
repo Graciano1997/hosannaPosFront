@@ -36,6 +36,11 @@ const ClientDetails = ()=>{
             </div>
 
             <div className="flex flex-col gap-3">
+                <label for="clienteAddress">{firstCapitalize(t('address'))}</label>
+                <input type="text" name="address" onChange={formHandler} value={clientDetails.address} id="clienteAddress"  className="bg-green-100 rounded p-2"/>
+            </div>
+
+            <div className="flex flex-col gap-3">
                 <label for="clienteContact">{firstCapitalize(t('phone'))}</label>
                 <input type="number" name="phone" onChange={formHandler} value={clientDetails.phone} id="clienteContact" defaultValue={DefaultClientePhone} className="bg-green-100 rounded p-2"></input>
             </div>

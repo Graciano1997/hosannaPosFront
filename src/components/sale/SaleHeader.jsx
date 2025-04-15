@@ -36,8 +36,8 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
                     dispatch(setPaymentType(el.target.value));
                 }}
                  className="cursor-pointer text-black p-2 rounded transition-all duration-200 bg-white shadow">
-                    <option value={firstCapitalize(t('money'))}>{ firstCapitalize(t('money'))}</option>
-                    <option value={firstCapitalize(t('tpa'))}>{ firstCapitalize(t('tpa'))}</option>
+                    <option value={PaymentType.CASH}>{ firstCapitalize(t('money'))}</option>
+                    <option value={PaymentType.TPA}>{ firstCapitalize(t('tpa'))}</option>
                 </select>
             </div>
             
