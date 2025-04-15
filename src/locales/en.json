@@ -58,7 +58,7 @@
     "active":"active",
     "disative":"desative",
     "money":"cash",
-    "tpa":"bank Card",
+    "tpa":"POS terminal",
     "transfer":"bank Transfer",
     "payment_way": "payment way",
     "users":"users",
@@ -142,5 +142,8 @@
     "created_succeed":"created successfully",
     "select_status":"select state",
     "select_profile":"select profile",
-    "select_parent_category":"select parent category"
+    "select_parent_category":"select parent category",
+    "singular":"singular",
+    "company":"company",
+    "nif":"fiscal number"
 }

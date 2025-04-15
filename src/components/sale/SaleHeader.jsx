@@ -36,8 +36,8 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
                     dispatch(setPaymentType(el.target.value));
                 }}
                  className="cursor-pointer text-black p-2 rounded transition-all duration-200 bg-white shadow">
-                    <option value={PaymentType.CASH}>{ firstCapitalize(t('money'))}</option>
-                    <option value={PaymentType.TPA}>{ firstCapitalize(t('tpa'))}</option>
+                    <option value={firstCapitalize(t('money'))}>{ firstCapitalize(t('money'))}</option>
+                    <option value={firstCapitalize(t('tpa'))}>{ firstCapitalize(t('tpa'))}</option>
                 </select>
             </div>
             
@@ -60,7 +60,7 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
             </div>
 
             <div className="flex gap-5 items-center">
-            <p className="font-bold">Total: <Money amount={sale.total} /></p>
+            <p className="font-bold">{firstCapitalize('total')}: <Money amount={sale.total} /></p>
             <div className="flex flex-col" style={{position:'relative'}}>
              <p className="bg-green-200 p-1 text-black opacity-90" style={{position:'absolute',borderRadius:'50%', fontSize:'12px',top:'-22px',right:'-10px'}}>{sale.totalItems}</p>   
             <ShoppingCartIcon className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>
