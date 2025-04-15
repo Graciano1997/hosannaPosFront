@@ -44,10 +44,18 @@ function App() {
      dispatch(fetchSpents());
      dispatch(fetchCategories());
      dispatch(fetchCompanies());
-
-
   //   // dispatch(fetchCurrency());
    },[]);
+
+  useEffect(()=>{
+    
+    if(isVisible){
+      setTimeout(() => {
+        setIsVisible(false);
+      }, 5000);
+    } 
+
+  },[isVisible]);
 
   const excludePathName =['/','/logout'];
   

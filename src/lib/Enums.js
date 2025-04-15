@@ -1,3 +1,4 @@
+
 export const ClientType = {
     SINGULAR:'SINGULAR',
     COMPANY:'COMPANY'
