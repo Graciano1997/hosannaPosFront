@@ -25,6 +25,7 @@ import { fetchUsers } from './slices/userSlice'
 import { fetchSpents } from './slices/spentSlice'
 import { fetchCategories } from './slices/categorySlice'
 import { fetchCompanies } from './slices/companySlice'
+import PdfViewer from './components/Pdf/PdfViewer'
 
 function App() {
 
@@ -68,6 +69,7 @@ function App() {
       <Route path='/' element={<Login/>} />
       <Route path='/logout' element={<Login/>} />
       <Route path='/dashboard' element={<Dashboard/>} />
+      <Route path='/pdf' element={<PdfViewer/>} />
       <Route path='/requests' element={<Request/>} />
       <Route path='/notifications' element={<Notification/>} />
       <Route path='/sales' element={<Sales/>} />

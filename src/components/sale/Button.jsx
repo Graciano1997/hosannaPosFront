@@ -1,13 +1,14 @@
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import { saleConfirm } from "../../slices/saleSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { saleConfirm, setSaleObject } from "../../slices/saleSlice";
 import { PaymentType } from "../../lib/Enums";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const ButtonGroup = ({saleState})=>{
     const {t}=useTranslation();
-    const dispatch = useDispatch();
 
+    const dispatch = useDispatch();
+   
     return(
     <div className="absolute bottom-[-7px]  w-[100%] flex justify-end">
         {

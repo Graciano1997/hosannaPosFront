@@ -49,7 +49,7 @@ const CreateCategory=()=>{
                 <div className="flex gap-5">
                 <div className="w-[50%]">
                 <label>
-                Nome
+                {firstCapitalize(t('name'))}
                 <br />
                 <input type='text' onChange={formHandler} name="name" value={category.name} className='p-1 rounded w-[100%] outline-none'/>
                 </label>
@@ -57,10 +57,10 @@ const CreateCategory=()=>{
                
                 <div className="w-[50%]">
                 <label>
-                Parent Category
+                {firstCapitalize(t('parent_category'))}
                 <br />
                 <select name="parent_category_id" value={category.parent_category_id?category.parent_category_id:""} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                <option value="" disabled>Selecione uma categoria Parente</option>
+                <option value="" disabled>{firstCapitalize(t('select_parent_category'))}</option>
                 <option value={0}>Nenhuma</option>
                 {categories.map((category)=><option value={category.id*1}>{category.name}</option>)}
                 </select>
@@ -73,9 +73,9 @@ const CreateCategory=()=>{
                 Status
                 <br />
                 <select name="status" value={category.status} className='p-2 rounded w-[100%] outline-none' onChange={formHandler}>
-                <option value="" disabled selected>Selecione o estado</option>
-                    <option value={true}>Ativo</option>
-                    <option value={false}>Desativo</option>
+                <option value="" disabled selected>{firstCapitalize(t('select_status'))}</option>
+                    <option value={true}>{firstCapitalize(t('active'))}</option>
+                    <option value={false}>{firstCapitalize(t('disative'))}</option>
                 </select>
                 </label>
                 </div>
@@ -84,7 +84,7 @@ const CreateCategory=()=>{
                 <div className="flex gap-5">
                 <div className="w-[50%]">
                 <label>
-                    Description
+                    {firstCapitalize(t('description'))}
                 <br />
                 <textarea name="description" value={category.description} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'></textarea>
                 </label>
