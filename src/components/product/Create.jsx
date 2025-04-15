@@ -68,12 +68,13 @@ const Create = ({ stopCreating }) => {
                             <input type='text' name="code" onChange={formHandler} value={product.code} className='p-1 rounded w-[100%] outline-none' />
                         </label>
 
+                        {!productFilterRows.includes('lote') &&
                         <label>
                         {firstCapitalize(t('lote'))}
                             <br />
                             <input type='text' name="lote" onChange={formHandler} value={product.lote} className='p-1 rounded w-[100%] outline-none' />
                         </label>
-
+                        }
                         <label>
                         {firstCapitalize(t('category'))}
                             <br />

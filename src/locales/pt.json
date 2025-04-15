@@ -146,5 +146,6 @@
     "select_parent_category":"selecione uma categoria parente",
     "singular":"singular",
     "company":"empresa",
-    "nif":"nif"
+    "nif":"nif",
+    "reload":"recarregar"
 }
