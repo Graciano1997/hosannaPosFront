@@ -26,34 +26,34 @@ const ClientDetails = ()=>{
         <div className={`h-[100%] bg-white rounded shadow-md p-3 flex flex-col  gap-2`}>
             <h1 className="font-bold mt-1 text-end"> * {firstCapitalize(t('client_details'))}</h1>
             <div className="flex flex-col gap-3 mt-1">
-                <label for="clienteNome">{t('name')}</label>
+                <label for="clienteNome">{firstCapitalize(t('name'))}</label>
                 <input type="text" name="name" onChange={formHandler} value={clientDetails.name} className="bg-green-100 rounded p-2"></input>
             </div>
 
             <div className="flex flex-col gap-3 mt-1">
-                <label for="clienteEmail">{t('email')}</label>
+                <label for="clienteEmail">{firstCapitalize(t('email'))}</label>
                 <input type="email" onChange={formHandler} name="email" value={clientDetails.email} id="clienteEmail" className="bg-green-100 rounded p-2"></input>
             </div>
 
             <div className="flex flex-col gap-3">
-                <label for="clienteContact">Tel.Numero</label>
+                <label for="clienteContact">{firstCapitalize(t('phone'))}</label>
                 <input type="number" name="phone" onChange={formHandler} value={clientDetails.phone} id="clienteContact" defaultValue={DefaultClientePhone} className="bg-green-100 rounded p-2"></input>
             </div>
 
             <div className="flex flex-col gap-3">
-                <label for="clienteType">{t('client_type')}</label>
+                <label for="clienteType">{ firstCapitalize(t('client_type'))}</label>
                 <select id="clienteType" value={clientDetails.client_type } defaultValue={ClientType.SINGULAR} name="client_type" className="bg-green-100 rounded p-2" onChange={(el)=>{
                     formHandler(el);
                     setClientType(el.target.value);
                 }}>
-                    <option value={ClientType.SINGULAR}>Singular</option>
-                    <option value={ClientType.COMPANY}>Empresa</option>
+                    <option value={ClientType.SINGULAR}>{firstCapitalize(t('singular'))}</option>
+                    <option value={ClientType.COMPANY}>{firstCapitalize(t('company'))}</option>
                 </select>
             </div>
             
             {clientType==ClientType.COMPANY &&
             <div className="flex flex-col gap-3">
-                <label for="clienteNif">NIF</label>
+                <label for="clienteNif">{firstCapitalize(t('nif'))}</label>
                 <input type="text" name="nif" value={clientDetails.nif}  onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2"></input>
             </div>
             }
