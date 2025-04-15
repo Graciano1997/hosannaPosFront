@@ -141,5 +141,6 @@
     "updated_succeed":"updated successfully",
     "created_succeed":"created successfully",
     "select_status":"select state",
-    "select_profile":"select profile"
+    "select_profile":"select profile",
+    "select_parent_category":"select parent category"
 }

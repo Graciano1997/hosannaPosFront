@@ -20,7 +20,9 @@ const initialState = {
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async ()=>{
-    const response = await fetch(`${Ip}/api/products/`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/products/`,{ method:'GET', headers:{'Content-Type':'application/json',
+    Accept: "application/json"
+     }});
     return response.json();
 });
 

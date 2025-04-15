@@ -16,7 +16,8 @@ const initialState = {
     total:0,
     sales:[],
     difference:0,
-    saleConfirmationIsOpen:false
+    saleConfirmationIsOpen:false,
+    saleObject:{}
 }
 
 export const order=createAsyncThunk('saleState/order',async (sale)=>{
@@ -80,6 +81,10 @@ const saleSlice = createSlice({
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
         },
+        setSaleObject:(state,action)=>{
+            state.saleObject=action.payload;
+        },
+
         updateItem: (state,action)=>{
             const atIndex = state.items.findIndex(item=>item.id===action.payload.id);
             
@@ -206,4 +211,4 @@ const saleSlice = createSlice({
 
 
 export default saleSlice.reducer;
-export const {saleClean, setReceivedCash,increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType,setInvoiceType, setClientDetails,saleConfirm,saleNotConfirm, setSales} = saleSlice.actions;
+export const {saleClean, setReceivedCash,increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType,setInvoiceType, setClientDetails,saleConfirm,saleNotConfirm, setSales,setSaleObject} = saleSlice.actions;

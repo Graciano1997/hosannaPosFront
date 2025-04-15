@@ -9,7 +9,9 @@ const initialState = {
 };
 
 export const fetchUsers = createAsyncThunk("userState/fetchUsers", async () => {
-    const response = await fetch(`${Ip}/api/users/`);
+    const response = await fetch(`${Ip}/api/users/`,{
+        headers: { "Content-Type": "application/json", Accept: "application/json" }
+    });
     return response.json();
 })
 
