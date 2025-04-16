@@ -40,11 +40,11 @@
     "weight":"peso",
     "dimension":"dimensões",
     "location_in_stock":"localização",
-    "taxes":"imposto",
+    "taxes":"imposto_Iva(%)",
     "keyword":"palavra_chave",
     "observation":"observação",
     "promotion":"promoção",
-    "discount":"desconto",
+    "discount":"desconto(%)",
     "product_type":"tipo",
     "parent_category":"categoria_parente",
     "mandatory":"obrigatório",
@@ -132,7 +132,7 @@
     "admin":"administrador",
     "run_expired_verification":"Executar verificação dos expirados",
     "product_verification_runing": "Executando a verificação de produto em segundo plano",
-    "in_stock":"em stock",
+    "in_stock":"em_stock",
     "image":"imagem",
     "account":"conta",
     "slogan":"With ♥ by Hosanna",
@@ -147,5 +147,6 @@
     "singular":"singular",
     "company":"empresa",
     "nif":"nif",
-    "reload":"recarregar"
+    "reload":"recarregar",
+    "withoutpermition":"sem permição suficiente"
 }

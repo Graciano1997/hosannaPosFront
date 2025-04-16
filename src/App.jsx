@@ -95,9 +95,6 @@ function App() {
       </>
       )}
       {!localStorage.getItem("isLogged") && (<Login/>)}
-      {/* {false && (<Login/>)} */}
-
-
      </div>
     </>
   )

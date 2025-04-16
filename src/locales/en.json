@@ -39,11 +39,11 @@
     "weight":"weight",
     "dimension":"dimension",
     "location_in_stock":"location_in_stock",
-    "taxes":"taxes",
+    "taxes":"tax(%)",
     "keyword":"keyword",
     "observation":"observation",
     "promotion":"promotion",
-    "discount":"discount",
+    "discount":"discount(%)",
     "product_type":"product_type",
     "parent_category":"parent category",
     "mandatory":"mandatory",
@@ -131,7 +131,7 @@
     "admin":"administrator",
     "run_expired_verification":"run expired verification",
     "product_verification_runing": "Product verification is running in background",
-    "in_stock":"in stock",
+    "in_stock":"in_stock",
     "image":"image",
     "account":"account",
     "slogan":"with ♥ by Hosanna",
@@ -146,5 +146,6 @@
     "singular":"singular",
     "company":"company",
     "nif":"fiscal number",
-    "reload":"reload"
+    "reload":"reload",
+    "withoutpermition":"without permition"
 }

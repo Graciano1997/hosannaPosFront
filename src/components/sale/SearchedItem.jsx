@@ -4,6 +4,7 @@ import { addItem } from "../../slices/saleSlice";
 import { showToast } from "../../slices/appSlice";
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
+import { totalWithTaxesAndDiscounts } from "../../lib/totalWithTaxes";
 
 const SearchedItem = ({product,index,setQuery})=>{
     const [qtyTobuy,setQtyTobuy]=useState(1);
@@ -11,7 +12,7 @@ const SearchedItem = ({product,index,setQuery})=>{
     const dispatch = useDispatch();
     const {t}=useTranslation();
     return(
-        <div className={`grid grid-cols-5  p-1 ${index%2==0?'bg-green-50':'bg-green-100'}`}>
+        <div className={`grid grid-cols-7  p-1 ${index%2==0?'bg-green-50':'bg-green-100'}`}>
                         <p>
                         {product.name}
                         </p>
@@ -20,6 +21,12 @@ const SearchedItem = ({product,index,setQuery})=>{
                         </p>
                         <p>
                          {(product.qty - product.output)}
+                        </p>
+                        <p>
+                         {(product.discount ? product.discount : 0 )}
+                        </p>
+                        <p>
+                         {(product.taxes ? product.taxes : 0 )}
                         </p>
                         <div className="">
                             <input className="w-[70%] text-center p-1 rounded" onChange={
@@ -40,9 +47,11 @@ const SearchedItem = ({product,index,setQuery})=>{
                                         name:product.name,
                                         price:product.price,
                                         stock:product.qty,
+                                        discount:product.discount ? product.discount * 1 : 0,
+                                        taxes:product.taxes ? product.taxes * 1 : 0,
                                         output:product.output,
                                         qty:qtyTobuy,
-                                        total:qtyTobuy * product.price
+                                        total:totalWithTaxesAndDiscounts(product,qtyTobuy)
                                     }));
                                     setQuery('');
                                     if(!added){

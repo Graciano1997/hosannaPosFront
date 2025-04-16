@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { sum } from "../lib/sumSale";
 import { ClientType, DefaultClientePhone, PaymentType, SaleType } from "../lib/Enums";
 import { Ip } from "../lib/ip";
+import { totalWithTaxesAndDiscounts } from "../lib/totalWithTaxes";
 
 const initialState = {
     loading:false,
@@ -111,7 +112,7 @@ const saleSlice = createSlice({
                 state.items[atIndex] = {
                     ...state.items[atIndex],
                     qty: (parseInt(action.payload.qty) + 1 ),
-                    total:(parseInt(state.items[atIndex].qty) + 1)*state.items[atIndex].price,
+                    total: totalWithTaxesAndDiscounts(state.items[atIndex],(parseInt(action.payload.qty) + 1)),
                 }
             }
             }
@@ -136,7 +137,7 @@ const saleSlice = createSlice({
                     state.items[atIndex] = {
                         ...state.items[atIndex],
                         qty:action.payload.qty-1,
-                        total:(state.items[atIndex].qty - 1 )*state.items[atIndex].price,
+                        total: totalWithTaxesAndDiscounts(state.items[atIndex],(action.payload.qty-1)),
                     }
                 }
             }

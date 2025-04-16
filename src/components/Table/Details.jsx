@@ -8,10 +8,10 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const Details = ({cleanItemDetails,filterDetails=[]}) =>{
 
-    const moneyFields = ['price','discount', 'total', 'amount', 'cost_price'];
+    const moneyFields = ['price','total', 'amount', 'cost_price'];
     const detailsItem = useSelector((state)=>state.appState.itemDetails);
     let keys = Object.keys(detailsItem);
-    const hasImage = detailsItem.image?true:false;
+    const hasImage = detailsItem.image ?true:false;
     keys = keys.filter((item) => !filterDetails.includes(item))
     const {t}= useTranslation();
     

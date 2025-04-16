@@ -48,7 +48,6 @@ export const categorySlice = createSlice({
         setCategories:(state,action)=>{
             state.categories = action.payload;
         },
-
         stopCreatingOrUpdateingCategory : (state)=>{
             state.isCreating = false;
             state.isUpdating = false;
