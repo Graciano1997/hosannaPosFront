@@ -59,10 +59,12 @@ const SearchedProducts = ()=>{
 
             {searchedProducts.length>0 &&(
             <>
-             <div className="grid grid-cols-5 p-1 text-black font-bold">
+             <div className="grid grid-cols-7 p-1 text-black font-bold">
                     <p>{firstCapitalize(t('name'))}</p>
                     <p>{firstCapitalize(t('price'))}</p>
                     <p>{firstCapitalize(t('stock'))}</p>
+                    <p>{firstCapitalize(t('discount'))}</p>
+                    <p>{firstCapitalize(t('taxes'))}</p>
                     <p>{firstCapitalize(t('quantity'))}</p>
                     <p></p>
             </div>

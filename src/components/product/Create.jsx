@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerProduct, updateProduct } from "../../slices/productSlice";
+import { registerProduct,updateProduct } from "../../slices/productSlice";
 import LargeModal from "../general/LargeModal";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";

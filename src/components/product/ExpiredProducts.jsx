@@ -23,7 +23,7 @@ const ExpiredProducts=()=>{
             .then(()=>{
                dispatch(showToast({success:true,message:firstCapitalize(t('product_verification_runing'))}));
             })
-        }}className="p-2 bg-green-300 rounded">{firstCapitalize(t('run_expired_verification'))}</button></div>
+        }}className="p-2 bg-green-200 rounded">{firstCapitalize(t('run_expired_verification'))}</button></div>
         </>
     )
 };

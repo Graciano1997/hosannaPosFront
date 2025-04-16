@@ -5,7 +5,7 @@ import Create from "./Create";
 import Title from "../general/Title";
 import ProductDashboard from "./ProductDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { creatingProduct, deleteProduct, expiredProductJob, fetchExpiredProducts, fetchProductConfiguration, fetchProducts, setProducts, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";
+import { creatingProduct, deleteProduct, expiredProductJob, fetchExpiredProducts, fetchProductConfiguration, fetchProducts, setProducts, stopCreatingOrUpdateingProduct, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { creatingCategory, deleteCategory, fetchCategories, setCategories, updateCategory, updatingCategory } from "../../slices/categorySlice";
@@ -53,7 +53,7 @@ const Product=()=>{
 
         </TabWrapper>
         {(categoryState.isCreating || categoryState.isUpdating) && appState.isOpen && (<CreateCategory/>)}
-        {(productState.isCreating  || productState.isUpdating ) && appState.isOpen && (<Create stopCreating={stopCreatingProduct} setIsShowing={setIsShowing}/>)}
+        {(productState.isCreating  || productState.isUpdating ) && appState.isOpen && (<Create stopCreating={stopCreatingOrUpdateingProduct} setIsShowing={setIsShowing}/>)}
         </CardWrapper>
     )
 };

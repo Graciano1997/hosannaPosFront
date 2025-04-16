@@ -7,11 +7,11 @@ const Money = ({ amount }) => {
   return (
     <p className="">
       {currency(amount, {
-        separator: '.',    // Milhar com ponto
-        decimal: ',',      // Decimal com vírgula
+        separator: ',',    // Milhar com ponto
+        decimal: '.',      // Decimal com vírgula
         symbol: '',        // Pode ser 'Kz' se quiseres
         precision: 2
-      }).format()} {'Kz'}
+      }).format()}
     </p>
   );
 };

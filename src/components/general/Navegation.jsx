@@ -6,7 +6,7 @@ import { ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAl
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../slices/appSlice";
+import { logoutUser, showToast } from "../../slices/appSlice";
 import { Profiles } from "../../lib/Enums";
 
 const Navegation =({visible,setVisibility})=>{
@@ -16,10 +16,14 @@ const Navegation =({visible,setVisibility})=>{
     const navegate = useNavigate();
     const [master,setMaster]=useState(JSON.parse(localStorage.getItem("currentUser")).profileId==Profiles.MASTER);
     const navegationRef = useRef(null);
-    const adm=true;
+    
+    const handleMasterMessage = ()=>{
+        if(!master){
+            dispatch(showToast({error:true,message:firstCapitalize(t('withoutpermition'))}));
+        }
+    };
 
     useEffect(()=>{
-
         const handlerClick=(event)=>{
             if(!((navegationRef.current).contains(event.target))){ 
                 setVisibility(false); }
@@ -40,6 +44,7 @@ const Navegation =({visible,setVisibility})=>{
 
             <li>
                 <Link to={ master ? "/dashboard":'#'} 
+                onClick={handleMasterMessage}
                 className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/dashboard'?'rounded bg-green-100':''}`} >
                 <HomeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('dashboard'))}
@@ -52,19 +57,25 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li>
             <li>
-                <Link to={  master ? "/products":'#'} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/products'?'rounded bg-green-100':''}`} >
+                <Link
+                onClick={handleMasterMessage}
+                to={  master ? "/products":'#'} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/products'?'rounded bg-green-100':''}`} >
                 <CubeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('products'))}
                 </Link>
             </li> 
             <li>
-                <Link to={ master ? "/spents":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/spends'?'rounded bg-green-100':''}`} >
+                <Link
+                onClick={handleMasterMessage}
+                to={ master ? "/spents":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/spends'?'rounded bg-green-100':''}`} >
                 <ArrowTrendingUpIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('spents'))}
                 </Link>
             </li>           
                    <li>
-                <Link to={ master ? "/sales": "#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sales'?'rounded bg-green-100':''}`} >
+                <Link 
+                onClick={handleMasterMessage}
+                to={ master ? "/sales": "#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sales'?'rounded bg-green-100':''}`} >
                 <CircleStackIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('sales'))}
                 </Link>
@@ -76,13 +87,17 @@ const Navegation =({visible,setVisibility})=>{
                 </Link>
             </li> */}
             <li>
-                <Link to={  master ? "/users":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
+                <Link
+                onClick={handleMasterMessage}
+                to={  master ? "/users":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
                 <UserGroupIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('users'))}
                 </Link>
             </li>
             <li>
-                <Link to={ master ? "/setting":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/setting'?'rounded bg-green-100':''}`} >
+                <Link 
+                onClick={handleMasterMessage}
+                to={ master ? "/setting":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/setting'?'rounded bg-green-100':''}`} >
                 <Cog8ToothIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('settings'))}
                 </Link>

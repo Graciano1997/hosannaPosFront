@@ -12,7 +12,7 @@ import { expiredProducts } from "../../lib/expiredProducts";
 import { sortCollection } from "../../lib/sortCollection";
 import { sum } from "../../lib/sumCollection";
 import { useEffect } from "react";
-import { fetchAnualExpiredProducts } from "../../slices/productSlice";
+import { fetchAnualExpiredProducts, fetchProducts } from "../../slices/productSlice";
 import { annualMonths } from "../../lib/Months";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import Money from "../general/Money";
@@ -21,6 +21,7 @@ const ProductDashboard=()=>{
   const dispatch = useDispatch()
     useEffect(()=>{
       dispatch(fetchAnualExpiredProducts());
+      dispatch(fetchProducts());
     },[]);
 
     const {t}=useTranslation();

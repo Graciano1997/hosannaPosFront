@@ -106,6 +106,12 @@ const productSlice = createSlice({
         state.productToUpdate=action.payload;
     },
 
+    stopCreatingOrUpdateingProduct : (state)=>{
+        state.isCreating = false;
+        state.isUpdating = false;
+        state.productToUpdate = {};
+    },
+
     setProducts: (state,action)=>{
         state.products = action.payload; 
     },
@@ -221,4 +227,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct,searchingProduct, setProducts,setExpireds} = productSlice.actions;
+export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct,searchingProduct,stopCreatingOrUpdateingProduct, setProducts,setExpireds} = productSlice.actions;
