@@ -4,6 +4,7 @@ import { closeModal, showToast } from "../../slices/appSlice";
 import { PaymentType } from "../../lib/Enums";
 import { useTranslation } from "react-i18next";
 import { clearSearchedProduct } from "../../slices/productSlice";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const SaleConfirmation = ()=>{
     const {t}=useTranslation();
@@ -30,8 +31,6 @@ const SaleConfirmation = ()=>{
                 items : saleState.items
             }
             
-            console.log(treatedSaleObject);
-            
             dispatch(order(treatedSaleObject))
             .then(()=>{
             dispatch(showToast({ success:true, message:t('order_sucessfuly')}));
@@ -43,20 +42,15 @@ const SaleConfirmation = ()=>{
         };
     return(
     <div className="mt-[100px] text-center">
-            <h1 style={{
-                "fontSize":"20pt",
-                "fontFamily":"Arial,Helvetica,SansSerif",
-                "marginBottom":"30px"
-            }}>Confirmar a venda</h1>
-            <h2 className="text-2xl">Confirmar a venda e gerar a fatura da compra</h2>
+            <h2 className="text-2xl">{firstCapitalize( t('confirm_sale'))}</h2>
             <div className="mt-[2rem]">
                 <button onClick={(el)=>{
                         dispatch(saleNotConfirm());
                         dispatch(closeModal());
                     el.stopPropagation();
                 }} 
-                className="bg-blue-600 text-white rounded-[4px] m-[10px_20px] p-[10px_40px]">Cancelar</button>
-                <button onClick={orderHandler} className=" bg-[rgba(0,50,0,0.3)] text-white rounded-[4px] m-[10px_20px] p-[10px_40px]"  >Confirmar</button>
+                className="bg-blue-600 text-white rounded-[4px] m-[10px_20px] p-[10px_40px]">{firstCapitalize(t('cancel'))}</button>
+                <button onClick={orderHandler} className=" bg-[rgba(0,50,0,0.3)] text-white rounded-[4px] m-[10px_20px] p-[10px_40px]"> {firstCapitalize(t('confirm'))}</button>
             </div>
         </div>
     );

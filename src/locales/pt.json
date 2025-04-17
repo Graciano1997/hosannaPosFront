@@ -148,5 +148,12 @@
     "company":"empresa",
     "nif":"nif",
     "reload":"recarregar",
-    "withoutpermition":"sem permição suficiente"
+    "withoutpermition":"sem permição suficiente",
+    "cancel":"cancelar",
+    "confirm":"comfirmar",
+    "confirm_sale":"desejas confirmar a venda e gerar a fatura da compra ?",
+    "not_found_url":"página não encontrada" ,
+    "fieldsToExport":"campos a exportar",
+    "whichformatToExport":"qual formato de exportação ?",
+    "select_at_least_one_field":"selecione pelo menos um campo"
 }

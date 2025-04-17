@@ -5,6 +5,7 @@ import { createCategory, deleteCategory, fetchCategories, updateCategory } from 
 import { deleteCompany, registerCompany } from "./companySlice";
 import { Ip } from "../lib/ip";
 
+
 const initialState = {
     isOpen:false,
     isSearching:false,
@@ -15,17 +16,47 @@ const initialState = {
     itemDetails:{},
     error:'',
     isExporting:false,
+    exportingModel:{},
     isLogged:true,
     currentTableCollection:[]
 }
 
  export const authenticate= createAsyncThunk("appState/authenticate",async (user)=>{
-    const response = await fetch(`${Ip}/api/authentication/login`,
-        { method:'POST',
-          body:JSON.stringify(user),
-          headers:{'Content-Type':'application/json'}
-        });
-    return response.json();
+    try{
+        const response = await fetch(`${Ip}/api/authentication/login`,
+            { method:'POST',
+              body:JSON.stringify(user),
+              headers:{'Content-Type':'application/json'}
+            });
+        return response.json();
+    }catch(error){
+        console.log(error);
+    }
+ });
+
+ export const exporting= createAsyncThunk("appState/exporting",async (data)=>{
+    try{
+        const response = await fetch(`${Ip}/api/export/excel`,
+            { 
+                method:'POST',
+                body:JSON.stringify(data),                
+                headers:{"Content-Type":"Application/json"}
+            });
+
+            console.log(response)
+
+            const url = window.URL.createObjectURL(await response.blob());
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'export_data.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+
+    }catch(error){
+        console.log(error);
+    }
  });
 
 
@@ -34,15 +65,15 @@ const appSlice=createSlice({
     initialState,
     reducers:{
         itemDetails: (state,action)=>{
-            state.itemDetails = action.payload
+            state.itemDetails = action.payload;
         },
         logoutUser: ()=>{
-        localStorage.removeItem("isLogged")
+        localStorage.removeItem("isLogged");
         localStorage.removeItem("currentUser");
         },
 
         cleanItemDetails: (state)=>{
-            state.itemDetails = {}
+            state.itemDetails = {};
         },
 
         showToast:(state,action)=>{
@@ -65,11 +96,13 @@ const appSlice=createSlice({
         StopSearching:(state)=>{
             state.isSearching = false;
         },
-        Exporting:(state)=>{
+        Exporting:(state,action)=>{
             state.isExporting = true;
+            state.exportingModel = action.payload;
         },
         StopExporting:(state)=>{
             state.isExporting = false;
+            state.exportingModel = [];
         },
         setTableCurrentCollection: (state,action)=>{
             state.currentTableCollection = action.payload;
@@ -192,12 +225,7 @@ const appSlice=createSlice({
             state.showToast=true;
             
             state.toastObject = { success:true, message:`Categoria ${action.payload.category.name} criada com sucesso`}       
-            state.currentTableCollection.push({...action.payload.category});
-        
-            //    if(action.payload.error){
-        //         state.toastObject = { error:true, message:action.payload.message[0] }
-        //    }else{
-        //    }
+            state.currentTableCollection.push({...action.payload.category});       
         })
 
         builder.addCase(updateCategory.fulfilled,(state,action)=>{
@@ -248,9 +276,10 @@ const appSlice=createSlice({
        })
 
         builder.addCase(authenticate.fulfilled,(state,action)=>{
-            if(action.payload.error){
+            
+            if(action.payload!=undefined && action.payload.error){
                 state.error = action.payload.error;
-            }else if(action.payload.user){
+            }else if(action.payload!=undefined && action.payload.user){
                 localStorage.setItem("isLogged",true);
                 localStorage.setItem("currentUser",JSON.stringify(action.payload.user));
                 window.location.href="/dashboard";                
@@ -258,7 +287,15 @@ const appSlice=createSlice({
         });
 
         builder.addCase(authenticate.rejected,(state,action)=>{
-         console.log(action);
+            state.error = action.error.message;
+         console.log(action.error);
+        });
+
+        builder.addCase(exporting.fulfilled,(state,action)=>{
+           
+        });
+        builder.addCase(exporting.rejected,(state,action)=>{
+            state.error = action.error.message;
         });
     }
 });

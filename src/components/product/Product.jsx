@@ -21,23 +21,49 @@ const Product=()=>{
     const {t}=useTranslation();
     const [isShowing,setIsShowing]=useState(false);
     const dispatch = useDispatch();
-    const productState = useSelector((state)=>state.productState);
-    const categoryState = useSelector((state)=>state.categoryState);
-    const filterProductDetails =['id','category_id'];
-    const filterCategoryDetails =['id','parent_category_id'];
 
     useEffect(()=>{
         dispatch(fetchProducts());
         dispatch(fetchCategories());
         dispatch(fetchExpiredProducts());
         dispatch(fetchProductConfiguration());
-    },[dispatch])
+    },[dispatch]);
     
+    const productState = useSelector((state)=>state.productState);
+    const categoryState = useSelector((state)=>state.categoryState);
+    const filterProductDetails =['id','category_id'];
+    const filterCategoryDetails =['id','parent_category_id'];
     const products = productState.products || [];
+    
+    const [collectionToExport,setColumnsToExport]=useState({
+        model:t('products'),
+        data:products
+    });
+
+    useEffect(()=>{
+        if(appState.activeTab=="tab3"){
+            setColumnsToExport({
+                model:t('category'),
+                data:categoryState.categories              
+        })}
+
+        if(appState.activeTab=="tab4"){
+            setColumnsToExport({
+                model:t('expired_product'),
+                data:productState.expireds              
+        })}
+    },[appState.activeTab]);
+
+    
 
     return(
         <CardWrapper>
-        <Title create={creatingProduct} title={t('products')}/>
+        <Title create={creatingProduct} title={t('products')}
+        collectionToExport={collectionToExport}
+        />
+
+
+
         <TabWrapper>
         
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&

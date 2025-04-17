@@ -52,7 +52,7 @@ function App() {
     if(isVisible){
       setTimeout(() => {
         setIsVisible(false);
-      }, 5000);
+      }, 6000);
     } 
 
   },[isVisible]);

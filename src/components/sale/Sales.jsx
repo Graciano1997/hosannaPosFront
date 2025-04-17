@@ -25,7 +25,11 @@ const Sales=()=>{
 
     return(
         <CardWrapper>
-        <Title title={t('sales')}/>
+        <Title title={t('sales')}
+        collectionToExport={{
+            model:t('sales'),
+            data:sales}}
+        />
         <TabWrapper>    
         {appState.activeTab=="tab1" && (<Table filterRows={filterRows} filterDetails={filterRows} create={null} fetcher={fetchSales} dispatcher={setSales} collection={sales}/>)}
         {appState.activeTab=="tab2"  && (<SaleDashboard/>)} 
