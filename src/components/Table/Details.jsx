@@ -66,9 +66,9 @@ const Details = ({cleanItemDetails,filterDetails=[]}) =>{
                 </div>
                 </div>
                 </div>
-                <div className="mt-[2rem] flex justify-end">
+                {/* <div className="mt-[2rem] flex justify-end">
                 <button className="bg-green-200 p-2 rounded hover:shadow"> {firstCapitalize(t('export'))}</button>
-                </div>
+                </div> */}
             </div>
             </div>
         </Modal>

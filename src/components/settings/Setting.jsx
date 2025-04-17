@@ -14,8 +14,6 @@ import Account from "./Account";
 const Setting=()=>{
     const dispatch = useDispatch();
     
-
-
     useEffect(()=>{
         dispatch(fetchCompanies());
     },[]);

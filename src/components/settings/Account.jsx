@@ -60,9 +60,6 @@ const Account=()=>{
 
     return(
         <>
-        <div className="relative top-[0px] right-[0px]">
-        <CurrentUser/>
-        </div>
         <form onSubmit={handleFormSubmition} className='flex flex-col h-[100%]  mt-[1rem] rounded p-3'>
                 <div className="flex flex-col gap-4">
                 <div className="flex gap-5">
