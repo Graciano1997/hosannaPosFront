@@ -2,12 +2,13 @@ import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, Rect
 import {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
-import { activeTab } from "../../slices/appSlice";
+import { activeTab, showToast } from "../../slices/appSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { ComputerDesktopIcon, ServerIcon } from "@heroicons/react/16/solid";
 import { ArchiveBoxIcon } from "@heroicons/react/20/solid";
 import { HomeIcon } from "@heroicons/react/24/solid";
+import { Profiles } from "../../lib/Enums";
 
 const Title=({title,create})=>{
     const [showElipse,setShowElipse]=useState(true);
@@ -16,6 +17,15 @@ const Title=({title,create})=>{
     const appState= useSelector((state)=>state.appState);
     const dispatch = useDispatch();
     const {pathname}=useLocation();
+    const [master,setMaster]=useState(JSON.parse(localStorage.getItem("currentUser")).profileId==Profiles.MASTER);
+            
+            const handleMasterMessage = ()=>{
+                if(!master){
+                    dispatch(showToast({error:true,message:firstCapitalize(t('withoutpermition'))}));
+                    return false;
+                }
+                return true;
+            };
 
     return(
         <>
@@ -58,14 +68,25 @@ const Title=({title,create})=>{
             </li> */}
 
             <li>
-                <Link to={"#"} onClick={()=>dispatch(activeTab('tab2'))} 
+                <Link to={"#"} onClick={
+                    (el)=>{
+                        el.preventDefault();
+                        if(handleMasterMessage()){
+                            dispatch(activeTab('tab2'))}
+                        }
+                } 
                 className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab2"?'activeTab':''}`} >
                 <UserGroupIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('profile'))}
                 </Link>
             </li>
             <li>
-                <Link to={"#"} onClick={()=>dispatch(activeTab('tab3'))} 
+                <Link to={"#"} onClick={(el)=>{
+                     el.preventDefault();
+                    if(handleMasterMessage()){
+                        dispatch(activeTab('tab3'))}
+                    }
+                } 
                 className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''}`} >
                 <HomeIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('company_details'))}

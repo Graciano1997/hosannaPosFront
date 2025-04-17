@@ -1,41 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import ExportButton from "../ExportButton";
 
-const Export = ({ stopExporting }) => {
-    const dispatch = useDispatch();
+const Export = ({ stopExporting}) => {
     const {t}=useTranslation();
-
+    const [columnsToExport,setColumnsToExport]=useState([]);
+    const filterFilter = ['image','profile_id','sale_products','user_id','client_id','category_id','parent_category_id'];    
+    
+    const exportingModel = useSelector((state) =>state.appState.exportingModel);
+    const exportingModelKeys = Object.keys(exportingModel.data[0]);
+    
     const formHandler = (el) => {
-        setProduct({
-            ...product,
-            [el.target.name]: el.target.value
-        })
-    }
-
-    const handleFormSubmition = (el) => {
-        el.preventDefault();
-
-        // let treatedProductObject = {
-        //     ...product,
-        //     category_id: parseInt(product.category_id),
-        //     dimension: JSON.stringify(dimensionVector)
-        // }
-
-        //  if (treatedProductObject.id) {
-        //      dispatch(updateProduct(treatedProductObject));
-        //  } else {
-        //      dispatch(registerProduct(treatedProductObject));
-        //  }
+        if(columnsToExport.includes(el.target.name)){
+            setColumnsToExport(columnsToExport.filter((item)=>item!=el.target.name))    
+        }else{
+            setColumnsToExport([...columnsToExport,el.target.name])
+        }
     }
 
     return (
         <>
             <Modal helper={stopExporting}>
-                <form onSubmit={handleFormSubmition} action="POST" className='flex flex-col h-[100%]  mt-[1rem] rounded p-3'>
-                    
+                <form className='flex flex-col h-[100%]  mt-[1rem] rounded p-3'>
                 <label>
                     {firstCapitalize(t('whichformatToExport'))}
                      <br />
@@ -44,11 +33,31 @@ const Export = ({ stopExporting }) => {
                         <option value="service">{firstCapitalize(t('excel'))}</option>
                         <option value="good">{firstCapitalize(t('word'))}</option>
                         <option value="service">{firstCapitalize(t('pdf'))}</option>
-                        <option value="service">{firstCapitalize(t('img'))}</option>
                         </select>
                 </label>
+
+                <label className="mt-8">
+                    {firstCapitalize(t('fieldsToExport'))}
+                    <br /> 
+                    </label>
+                <div className="flex flex-wrap gap-3 mt-3">
+                    {exportingModelKeys.map((key, index) => {
+                        if(filterFilter.includes(key)){
+                            return null;
+                        }
+                        return (
+
+                            <div key={index} className="flex gap-2 p-2 rounded-[20px] items-center bg-green-100">
+                            <input type="checkbox" onChange={formHandler} name={key} id={key} onClick={(el)=>{el.stopPropagation()}} className="cursor-pointer w-[18px] h-[18px]"  />
+                            <label className="cursor-pointer" for={key}>{firstCapitalize(t(key))}</label>
+                            </div>
+                        );  
+                    })}
+                </div>
                     
-                    <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{firstCapitalize(t('export'))}</button></div>
+                    <div className="flex justify-end p-2 mt-auto">
+                        <ExportButton data={exportingModel.data} columnsToExport={columnsToExport} model={exportingModel.model}/>
+                    </div>
                 </form>
             </Modal>
         </>

@@ -43,8 +43,7 @@ const Navegation =({visible,setVisibility})=>{
         <ul className="flex flex-col gap-3 w-[100%]">
 
             <li>
-                <Link to={ master ? "/dashboard":'#'} 
-                onClick={handleMasterMessage}
+                <Link to={"/dashboard"} 
                 className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/dashboard'?'rounded bg-green-100':''}`} >
                 <HomeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('dashboard'))}
@@ -96,8 +95,8 @@ const Navegation =({visible,setVisibility})=>{
             </li>
             <li>
                 <Link 
-                onClick={handleMasterMessage}
-                to={ master ? "/setting":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/setting'?'rounded bg-green-100':''}`} >
+
+                to={"/setting"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/setting'?'rounded bg-green-100':''}`} >
                 <Cog8ToothIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('settings'))}
                 </Link>

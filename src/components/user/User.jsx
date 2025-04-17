@@ -10,10 +10,10 @@ import TabWrapper from "../general/TabWrapper";
 import { creatingUser, deleteUser, fetchUsers, setUser, stopCreatingOrUpdateingUser, updatingUser } from "../../slices/userSlice";
 import { activeTab } from "../../slices/appSlice";
 
-const User=()=>{
-    
+const User=()=>{    
     const dispatch = useDispatch();
-    
+    const [userCollectionKeys,setUserCollectionKeys]=useState([]);
+
     useEffect(()=>{
         dispatch(fetchUsers());
         dispatch(activeTab('tab1'))
@@ -24,23 +24,15 @@ const User=()=>{
     const userState = useSelector((state)=>state.userState);
     const filterDetails =['id','image','profile_id']    
     const users = userState.users;
-   
+
+
     return(
         <CardWrapper>
-        <Title create={creatingProduct} update={updatingUser} title={t('users')}/>
+        <Title create={creatingProduct} update={updatingUser} title={t('users')} collectionToExport={{
+            model:t('users'),
+            data:users}}/>
         <TabWrapper>
-        {/* {appState.activeTab=="tab1" && userstate.loading && 
-        <div className=" mt-[5rem] flex justify-center">
-            <h4 className="text-3xl">Loading the Users...</h4>
-        </div>
-        } */}
-
-        {/* {appState.activeTab=="tab1" && !userstate.loading && 
-        userstate.error &&
-        <div className="mt-[5rem] flex justify-center">
-            <h4 className="text-3xl text-red-700">{userstate.error}</h4>
-        </div>
-        } */}
+      
         {appState.activeTab=="tab1" && <Table filterDetails={filterDetails} filterRows={['profile_id']} update={updatingUser} create={creatingUser} dispatcher={setUser} fetcher={fetchUsers} deleteItem={deleteUser} collection={users}/>}
         
         </TabWrapper>

@@ -4,15 +4,18 @@ import Title from "./Title";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { creatingCompany, deleteCompany, fetchCompanies, updateCompany, updatingCompany } from "../../slices/companySlice";
 import Table from "../Table/Table";
 import Create from "./Create";
 import Profile from "./Profile";
+import Account from "./Account";
 
 const Setting=()=>{
     const dispatch = useDispatch();
     
+
+
     useEffect(()=>{
         dispatch(fetchCompanies());
     },[]);
@@ -24,16 +27,17 @@ const Setting=()=>{
     return(
         <CardWrapper>
         <Title title={t('settings')}/>
-        <TabWrapper>   
-        {/* {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
-        // <Table filterDetails={filterProductDetails} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} collection={products}/>
-        } */}
+        <TabWrapper>
 
-        {appState.activeTab=="tab2" && 
+        {appState.activeTab=="tab1" &&
+        <Account/>
+        }
+
+        { appState.activeTab=="tab2" && 
         <Profile/>
         }
 
-        {appState.activeTab=="tab3" && 
+        { appState.activeTab=="tab3" && 
         (
             companyState.companies.length?
             <Table filterDetails={[]} filterRows={companyState.companyFilterRows} update={updatingCompany} create={null} deleteItem={deleteCompany} collection={companyState.companies}/>
