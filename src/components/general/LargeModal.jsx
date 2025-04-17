@@ -13,7 +13,9 @@ const LargeModal = ({children,stopCreating,helper = undefined})=>{
          onClick={()=>{
           if(typeof(stopCreating)=="function"){ dispatch(stopCreating());}
           dispatch(closeModal())
-          dispatch(helper());
+          if(helper!=undefined){
+            dispatch(helper());
+          }
         }}
         className="absolute text-red-500 text-2xl bg-white p-2 rounded shadow  right-[15px] top-[20px] transition-all duration-200 hover:bg-green-100">X</button>
             <div className='p-3 mt-[5rem]  w-[97%] h-[80%]  rounded bg-white shadow overflow-auto' style={{zIndex:2000}}>

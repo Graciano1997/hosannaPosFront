@@ -155,5 +155,6 @@
     "not_found_url":"página não encontrada" ,
     "fieldsToExport":"campos a exportar",
     "whichformatToExport":"qual formato de exportação ?",
-    "select_at_least_one_field":"selecione pelo menos um campo"
+    "select_at_least_one_field":"selecione pelo menos um campo",
+    "forbiden":"proibido"
 }
