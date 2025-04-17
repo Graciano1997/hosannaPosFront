@@ -84,6 +84,12 @@ const saleSlice = createSlice({
             if(state.total == 0){
                 state.receivedCash = 0;
                 state.difference = 0;
+            }else{
+                if((state.paymentType == PaymentType.CASH) && (state.receivedCash - state.total) >=0 ){
+                    state.difference =  state.receivedCash - state.total;
+                }else{
+                    state.difference = 0;
+                }
             }
         },
         setSaleObject:(state,action)=>{
