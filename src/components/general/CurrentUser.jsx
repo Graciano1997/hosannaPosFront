@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Footer from "./Footer";
+
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const CurrentUser=()=>{

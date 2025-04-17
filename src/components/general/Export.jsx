@@ -8,10 +8,15 @@ import ExportButton from "../ExportButton";
 const Export = ({ stopExporting}) => {
     const {t}=useTranslation();
     const [columnsToExport,setColumnsToExport]=useState([]);
-    const filterFilter = ['image','profile_id','sale_products','user_id','client_id','category_id','parent_category_id'];    
+    const filterFilter = ['image','profile_id','sale_products','user_id','client_id','category_id','parent_category_id'];
     
     const exportingModel = useSelector((state) =>state.appState.exportingModel);
-    const exportingModelKeys = Object.keys(exportingModel.data[0]);
+    let exportingModelKeys=[];
+
+    if(exportingModel.data.length!=0){
+        exportingModelKeys = Object.keys(exportingModel.data[0]);
+    }
+
     
     const formHandler = (el) => {
         if(columnsToExport.includes(el.target.name)){
@@ -41,7 +46,7 @@ const Export = ({ stopExporting}) => {
                     <br /> 
                     </label>
                 <div className="flex flex-wrap gap-3 mt-3">
-                    {exportingModelKeys.map((key, index) => {
+                    {exportingModelKeys.length>0 && exportingModelKeys.map((key, index) => {
                         if(filterFilter.includes(key)){
                             return null;
                         }

@@ -114,7 +114,7 @@ const Navegation =({visible,setVisibility})=>{
         </ul>  
         </div>
         
-        <CurrentUser/>
+        <CurrentUser size={{w:40,y:40}} />
         <div><span className="text-[15px]">{t('slogan')}</span></div>
         </nav>
     )

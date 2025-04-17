@@ -43,8 +43,6 @@ const initialState = {
                 headers:{"Content-Type":"Application/json"}
             });
 
-            console.log(response)
-
             const url = window.URL.createObjectURL(await response.blob());
             const a = document.createElement('a');
             a.href = url;
