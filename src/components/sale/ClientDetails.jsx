@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ClientType, DefaultClientePhone, PaymentType } from "../../lib/Enums";
 import { useDispatch, useSelector } from "react-redux";
 import Money from "../general/Money";
@@ -12,6 +12,7 @@ const ClientDetails = ()=>{
     const [remain,setRemain]=useState(null);
     const [received,setReceived]=useState(null);
     const dispatch = useDispatch();
+    const receivedCash = useSelector((state)=>state.saleState.receivedCash);
 
     const saleDetails = useSelector((state)=>state.saleState);
     const clientDetails = saleDetails.clientDetails;
@@ -22,22 +23,26 @@ const ClientDetails = ()=>{
 
        const {t}= useTranslation();
 
+       useEffect(()=>{
+        setReceived(receivedCash);
+       },[saleDetails]);
+
     return(
         <div className={`h-[100%] bg-white rounded shadow-md p-3 flex flex-col  gap-2`}>
             <h1 className="font-bold mt-1 text-end"> * {firstCapitalize(t('client_details'))}</h1>
             <div className="flex flex-col gap-3 mt-1">
                 <label for="clienteNome">{firstCapitalize(t('name'))}</label>
-                <input type="text" name="name" onChange={formHandler} value={clientDetails.name} className="bg-green-100 rounded p-2"></input>
+                <input type="text" name="name" onChange={formHandler} value={clientDetails.name != undefined ? clientDetails.name:''} className="bg-green-100 rounded p-2"></input>
             </div>
 
             <div className="flex flex-col gap-3 mt-1">
                 <label for="clienteEmail">{firstCapitalize(t('email'))}</label>
-                <input type="email" onChange={formHandler} name="email" value={clientDetails.email} id="clienteEmail" className="bg-green-100 rounded p-2"></input>
+                <input type="email" onChange={formHandler} name="email" value={clientDetails.email != undefined ? clientDetails.email:''} id="clienteEmail" className="bg-green-100 rounded p-2"></input>
             </div>
 
             <div className="flex flex-col gap-3">
                 <label for="clienteAddress">{firstCapitalize(t('address'))}</label>
-                <input type="text" name="address" onChange={formHandler} value={clientDetails.address} id="clienteAddress"  className="bg-green-100 rounded p-2"/>
+                <input type="text" name="address" onChange={formHandler} value={clientDetails.address != undefined ? clientDetails.address:''} id="clienteAddress"  className="bg-green-100 rounded p-2"/>
             </div>
 
             <div className="flex flex-col gap-3">
@@ -59,14 +64,14 @@ const ClientDetails = ()=>{
             {clientType==ClientType.COMPANY &&
             <div className="flex flex-col gap-3">
                 <label for="clienteNif">{firstCapitalize(t('nif'))}</label>
-                <input type="text" name="nif" value={clientDetails.nif}  onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2"></input>
+                <input type="text" name="nif" value={clientDetails.nif != undefined ? clientDetails.nif:''}  onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2"></input>
             </div>
             }
             
-            {sale.paymentType==PaymentType.CASH &&
+            {sale.paymentType==PaymentType.CASH && sale.total > 0 &&
             <div className="flex flex-col gap-3">
                 <label for="cashReceived">{firstCapitalize(t('received_cash'))}</label>
-                <input type="number" id="cashReceived" name="received_cash"  value={received}  onChange={(el)=>{
+                <input type="number" id="cashReceived" name="received_cash"  value={received ? received :receivedCash }  onChange={(el)=>{
                     setReceived(el.target.value);
                     
                     if(el.target.value*1 > sale.total && sale.total > 0 ){
@@ -81,7 +86,7 @@ const ClientDetails = ()=>{
             </div>
             }
 
-        {sale.paymentType==PaymentType.CASH && sale.difference > 0 &&
+        {sale.paymentType==PaymentType.CASH && sale.total>0 && sale.difference > 0 &&
             <div className="flex flex-col gap-3">
                 <label for="cashRemain">{firstCapitalize(t('difference'))}</label>
                 <div className="bg-green-100 rounded p-2">

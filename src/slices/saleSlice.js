@@ -81,6 +81,10 @@ const saleSlice = createSlice({
             state.items=state.items.filter((item)=>item.id!==action.payload.id);
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
+            if(state.total == 0){
+                state.receivedCash = 0;
+                state.difference = 0;
+            }
         },
         setSaleObject:(state,action)=>{
             state.saleObject=action.payload;
