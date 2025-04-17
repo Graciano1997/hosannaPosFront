@@ -134,7 +134,7 @@ const Create=()=>{
                 </div>
                 </div>
                 </div>
-                <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{ user.id? 'Update':'Create'}</button></div>
+                <div className="flex justify-end p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{ user.id? firstCapitalize(t('update')): firstCapitalize(t('create'))}</button></div>
                 </form>
         </Modal>
     </>

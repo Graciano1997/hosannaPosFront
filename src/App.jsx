@@ -4,8 +4,9 @@ import Dashboard from './components/dashboard/Dashboard'
 import Header from './components/general/Header'
 import Navegation from './components/general/Navegation'
 import _404 from './components/general/_404'
+import _401 from './components/general/_401'
 import Footer from './components/general/Footer'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Product from './components/product/Product'
 import Search from './components/general/Search'
 import Request from './components/requests/Request'
@@ -26,6 +27,9 @@ import { fetchSpents } from './slices/spentSlice'
 import { fetchCategories } from './slices/categorySlice'
 import { fetchCompanies } from './slices/companySlice'
 import PdfViewer from './components/Pdf/PdfViewer'
+import { Profiles } from './lib/Enums'
+import { firstCapitalize } from './lib/firstCapitalize'
+import { useTranslation } from 'react-i18next'
 
 function App() {
 
@@ -37,7 +41,11 @@ function App() {
   const [toastObject,setToastObject] = useState({});
   const dispatch = useDispatch();
   const {pathname}= useLocation();
-  
+  const {t}=useTranslation();
+  const navegate = useNavigate();
+  const masterProfile = localStorage.getItem("currentUser") ? JSON.parse(localStorage.getItem("currentUser")).profileId==Profiles.MASTER:null;
+
+
   useEffect(()=>{
      dispatch(fetchProducts());
      dispatch(fetchUsers());
@@ -52,18 +60,18 @@ function App() {
     if(isVisible){
       setTimeout(() => {
         setIsVisible(false);
-      }, 6000);
+      }, 6500);
     } 
 
   },[isVisible]);
 
   const excludePathName =['/','/logout'];
   
+
   return (
     <>    
      <div className={`h-100 w-100 p-3  ${!appState.isLogged?'flex items-center justify-center':''}`}>   
       
-     {/* appState.isLogged */}
       {
       localStorage.getItem("isLogged")=="true" && (
       <>    
@@ -73,18 +81,19 @@ function App() {
       <Navegation visible={isVisible} setVisibility={setIsVisible}/>
       </>
       }
+
       <Routes>
       <Route path='/' element={<Login/>} />
       <Route path='/logout' element={<Login/>} />
       <Route path='/dashboard' element={<Dashboard/>} />
-      <Route path='/pdf' element={<PdfViewer/>} />
-      <Route path='/requests' element={<Request/>} />
-      <Route path='/notifications' element={<Notification/>} />
-      <Route path='/sales' element={<Sales/>} />
-      <Route path='/products' element={<Product/>} />
-      <Route path='/spents' element={<Spent/>} />  
-      <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />
-      <Route path='/users' element={<User/>} /> 
+      <Route path='/pdf' element={masterProfile ? <PdfViewer/>:<_401/>} />
+      <Route path='/requests' element={masterProfile ? <Request/>:<_401/>} />
+      <Route path='/notifications' element={masterProfile ? <Notification/> : <_401/>} />
+      <Route path='/sales' element={masterProfile ? <Sales/> : <_401/>} />
+      <Route path='/products' element={masterProfile ? <Product/> : <_401/>} />
+      <Route path='/spents' element={masterProfile ? <Spent/>: <_401/>} />  
+      <Route path='/users' element={masterProfile ? <User/>: <_401/>} /> 
+      <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />      
       <Route path='/setting' element={<Setting/>} />
       <Route path='*' element={<_404/>} />
       </Routes>

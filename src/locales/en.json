@@ -154,5 +154,6 @@
     "not_found_url":"not found page",
     "fieldsToExport":"fields to export",
     "whichformatToExport":"which format to export ?",
-    "select_at_least_one_field":"select at least one field"
+    "select_at_least_one_field":"select at least one field",
+    "forbiden":"forbiden"
 }
