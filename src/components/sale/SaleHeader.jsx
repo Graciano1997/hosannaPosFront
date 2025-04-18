@@ -3,7 +3,7 @@ import { Bars4Icon } from "@heroicons/react/24/solid";
 import { EllipsisHorizontalIcon, QrCodeIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { PaymentType, SaleType } from "../../lib/Enums";
-import { setInvoiceType, setPaymentType } from "../../slices/saleSlice";
+import { setInvoiceType, setPaymentType, setReceivedCash } from "../../slices/saleSlice";
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
@@ -34,6 +34,9 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
                 <label htmlFor="clienteType" className="text-xl">{firstCapitalize(t('payment_way'))}</label>
                 <select id="clienteType" onChange={(el)=>{
                     dispatch(setPaymentType(el.target.value));
+                    if(el.target.value ==PaymentType.TPA){        
+                    dispatch(setReceivedCash(0));
+                    }
                 }}
                  className="cursor-pointer text-black p-2 rounded transition-all duration-200 bg-white shadow">
                     <option value={PaymentType.CASH}>{ firstCapitalize(t('money'))}</option>

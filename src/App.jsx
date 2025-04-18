@@ -83,7 +83,7 @@ function App() {
       }
 
       <Routes>
-      <Route path='/' element={appState.isLogged?<Dashboard/> : <Login/>} />
+      <Route path='/' element={<Login/>} />
       <Route path='/logout' element={<Login/>} />
       <Route path='/dashboard' element={<Dashboard/>} />
       <Route path='/pdf' element={masterProfile ? <PdfViewer/>:<_401/>} />

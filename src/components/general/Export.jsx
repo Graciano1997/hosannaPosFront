@@ -36,7 +36,7 @@ const Export = ({ stopExporting}) => {
                         <select name="product_type" value={true} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
                         <option value="" disabled selected>Selecione o tipo de formato </option>
                         <option value="service">{firstCapitalize(t('excel'))}</option>
-                        <option value="good">{firstCapitalize(t('word'))}</option>
+                        {/* <option value="good">{firstCapitalize(t('word'))}</option> */}
                         <option value="service">{firstCapitalize(t('pdf'))}</option>
                         </select>
                 </label>
