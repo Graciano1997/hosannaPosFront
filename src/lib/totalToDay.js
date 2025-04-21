@@ -1,4 +1,4 @@
-export const totalDayIncome = (collection=[], date) => {
+export const totalToDay = (collection=[], date,key=undefined) => {
 
     let total = 0;
 
@@ -6,7 +6,11 @@ export const totalDayIncome = (collection=[], date) => {
          collection.forEach(element => {
             const saleDate = new Date(element.created_at);
             if(saleDate.getDate()==date.getDate() && saleDate.getMonth()==date.getMonth() && saleDate.getFullYear()==date.getFullYear()){
-                total+=element.total*1
+                if(key){
+                    total+=element[key]*1
+                }else{
+                    total+=element.total*1
+                }
             }
             });
      }
