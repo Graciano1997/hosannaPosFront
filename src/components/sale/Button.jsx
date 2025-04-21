@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { saleConfirm, setSaleObject } from "../../slices/saleSlice";
-import { PaymentType } from "../../lib/Enums";
+import { PaymentType, SaleType } from "../../lib/Enums";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const ButtonGroup = ({saleState})=>{
@@ -20,7 +20,7 @@ const ButtonGroup = ({saleState})=>{
         onClick={()=>{
             dispatch(saleConfirm());
         }}
-         className="bg-green-200 rounded p-2 hover:shadow">{firstCapitalize(t('order'))}</button>}
+         className="bg-green-200 rounded p-2 hover:shadow">{saleState.invoiceType==SaleType.SALE ?  firstCapitalize(t('order')) : firstCapitalize(t('confirm'))}</button>}
     </div>
     )
 };

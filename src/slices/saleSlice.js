@@ -205,6 +205,7 @@ const saleSlice = createSlice({
             state.difference = 0;
             state.totalItems = 0,
             state.total = 0;
+            state.invoiceType= SaleType.SALE;
             state.saleConfirmationIsOpen = false;
             state.clientDetails = { client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
         }

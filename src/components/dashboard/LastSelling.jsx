@@ -1,31 +1,66 @@
 import { useTranslation } from "react-i18next";
 import CardTitle from "../general/CardTitle";
 import Money from "../general/Money";
+import { firstCapitalize } from "../../lib/firstCapitalize";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { EyeDropperIcon, EyeIcon } from "@heroicons/react/24/solid";
 
 const LastSelling =({width=200,height=300,info})=>{    
-
     const {t}=useTranslation();
-    
-    const lastSellings= [{name:"Amoxi",qty:5,total:1000},{name:"Neurobion",qty:5,total:1000},
-        {name:"Vitamina C",qty:5,total:1000}];
+    const {sales} = useSelector((state)=>state.saleState);
+    const [lastSales,setLastSales] = useState([]);
+
+    useEffect(()=>{
+        if(sales.length>0){
+            setLastSales(sales.slice(0,3));
+        }
+    },[sales]);
+
+    const navegate = useNavigate();
 
     return(
-         <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
-             <CardTitle title={info.title} />
-             <div className="p-2">
+         <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto_50px] bg-white rounded shadow-md`}>
+             <CardTitle>
+             {info.title}
+            </CardTitle>
+
+            {lastSales.length == 0 &&
+            <div className="p-2 flex items-center justify-center">
+                <h3 className="text-center text-2xl">{firstCapitalize(t('without_items'))}</h3>
+            </div>
+            }
+            {lastSales.length > 0 &&
+            <>
+                         <div className="p-2">
                 <ul className="h-[100%] flex flex-col justify-around">
                 <li className="h-[40px] bg-white  grid grid-cols-3 items-center justify-center">
-                    <p>{'Nome'}</p>
-                    <p>{'Qty'}</p>
-                    <p>{'Total'}</p>
+                    <p>{firstCapitalize(t('client'))}</p>
+                    <p className="text-center">{firstCapitalize(t('qty'))}</p>
+                    <p>{firstCapitalize(t('total'))}</p>
                     </li>
-                    {lastSellings.map((el)=><li className="h-[40px] bg-green-100 cursor-pointer justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
-                    <p>{el.name}</p>
-                    <p>{el.qty}</p>
+                    {lastSales.map((el)=>
+                    <li className="h-[40px] bg-green-100 cursor-pointer text-light text-sm justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
+                    <p>{el.client}</p>
+                    <p className="text-center">{el.qty}</p>
                     <Money amount={el.total}/>
                     </li>)}
                 </ul>
              </div>
+             <div className="p-1">
+                <button 
+                onClick={()=>{
+                    navegate('/sales');
+                }}
+                className="bg-black/90 text-white shadow w-full p-2 rounded-[8px] flex gap-4 justify-center items-center">
+                    <EyeIcon className="w-5 h-5" />
+                    {firstCapitalize(t('see_more'))}
+                    </button>
+             </div>
+            </>
+            }
+
         </div>
     );
 };

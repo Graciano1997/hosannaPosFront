@@ -1,3 +1,5 @@
 export const firstCapitalize = (string)=>{
-    return string[0].toUpperCase().concat(string.slice(1));
+    if (string){
+        return string[0].toUpperCase().concat(string.slice(1));
+    }
 };

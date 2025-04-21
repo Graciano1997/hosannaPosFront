@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ClientType, DefaultClientePhone, PaymentType } from "../../lib/Enums";
+import { ClientType, DefaultClientePhone, PaymentType, SaleType } from "../../lib/Enums";
 import { useDispatch, useSelector } from "react-redux";
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
@@ -61,14 +61,14 @@ const ClientDetails = ()=>{
                 </select>
             </div>
             
-            {clientType==ClientType.COMPANY &&
+            {clientDetails.client_type==ClientType.COMPANY &&
             <div className="flex flex-col gap-3">
                 <label for="clienteNif">{firstCapitalize(t('nif'))}</label>
                 <input type="text" name="nif" value={clientDetails.nif != undefined ? clientDetails.nif:''}  onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2"></input>
             </div>
             }
             
-            {sale.paymentType==PaymentType.CASH && sale.total > 0 &&
+            {sale.invoiceType==SaleType.SALE && sale.paymentType==PaymentType.CASH && sale.total > 0 &&
             <div className="flex flex-col gap-3">
                 <label for="cashReceived">{firstCapitalize(t('received_cash'))}</label>
                 <input type="number" id="cashReceived" name="received_cash"  value={received ? received :receivedCash }  onChange={(el)=>{
@@ -86,7 +86,7 @@ const ClientDetails = ()=>{
             </div>
             }
 
-        {sale.paymentType==PaymentType.CASH && sale.total>0 && sale.difference > 0 &&
+        {sale.invoiceType==SaleType.SALE && sale.paymentType==PaymentType.CASH && sale.total>0 && sale.difference > 0 &&
             <div className="flex flex-col gap-3">
                 <label for="cashRemain">{firstCapitalize(t('difference'))}</label>
                 <div className="bg-green-100 rounded p-2">

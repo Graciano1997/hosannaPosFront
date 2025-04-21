@@ -52,18 +52,16 @@ function App() {
      dispatch(fetchSpents());
      dispatch(fetchCategories());
      dispatch(fetchCompanies());
-  //   // dispatch(fetchCurrency());
    },[]);
 
-  useEffect(()=>{
-    
-    if(isVisible){
-      setTimeout(() => {
-        setIsVisible(false);
-      }, 6500);
-    } 
+  // useEffect(()=>{    
+  //   if(isVisible){
+  //     setTimeout(() => {
+  //       setIsVisible(false);
+  //     }, 10000);
+  //   } 
 
-  },[isVisible]);
+  // },[isVisible]);
 
   const excludePathName =['/','/logout'];
   

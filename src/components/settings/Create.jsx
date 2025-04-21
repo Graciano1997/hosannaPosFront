@@ -10,7 +10,6 @@ const Create=()=>{
     const companyState = useSelector((state)=> state.companyState );
     const dispatch = useDispatch();
     
-    
     const [company,setCompany] = useState(companyState.companyToUpdate);
     const {t}=useTranslation();
 
@@ -73,15 +72,15 @@ const Create=()=>{
 
                 <div className="w-[50%]">
                 <label>
-                { firstCapitalize(t('address'))}
+                { firstCapitalize(t('alternative_phone'))}
                 <br />
-                <input type="text" name="address" onChange={formHandler} value={company.address} className='p-1 rounded w-[100%] outline-none'/>
+                <input type="text" name="alternative_phone" onChange={formHandler} value={company.alternative_phone} className='p-1 rounded w-[100%] outline-none'/>
                 </label>
                 </div>
                 </div>
 
                 <div className="flex gap-3">
-                <div className="w-[100%]">
+                <div className="w-[50%]">
                 <label>
                 {firstCapitalize(t('nif'))}
                 <input type="text" name="nif" onChange={formHandler} value={company.nif} className='p-1 rounded w-[100%] outline-none'/>
@@ -89,6 +88,23 @@ const Create=()=>{
                 </label>
 
                 </div>
+                <div className="w-[50%]">
+                <label>
+                {firstCapitalize(t('website'))}
+                <input type="text" name="website" onChange={formHandler} value={company.website} className='p-1 rounded w-[100%] outline-none'/>
+                <br />
+                </label>
+                </div>
+                </div>
+                
+                <div className="flex gap-3">
+                <div className="w-[100%]">
+                <label>
+                { firstCapitalize(t('address'))}
+                <br />
+                <input type="text" name="address" onChange={formHandler} value={company.address} className='p-1 rounded w-[100%] outline-none'/>
+                </label>
+                </div> 
                 </div>
                 </div>
                 <div className="flex justify-end mt-auto p-2"><button className="p-2 bg-green-100 rounded">{company.id ? firstCapitalize(t('update')) : firstCapitalize(t('create'))}</button></div>

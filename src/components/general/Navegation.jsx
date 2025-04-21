@@ -27,6 +27,7 @@ const Navegation =({visible,setVisibility})=>{
         const handlerClick=(event)=>{
             if(!((navegationRef.current).contains(event.target))){ 
                 setVisibility(false); }
+                event.stopPropagation();
         }
         
         window.addEventListener("click",handlerClick)

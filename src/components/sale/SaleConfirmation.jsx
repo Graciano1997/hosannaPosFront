@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { order, saleClean, saleNotConfirm, setSaleObject } from "../../slices/saleSlice";
 import { closeModal, showToast } from "../../slices/appSlice";
-import { PaymentType } from "../../lib/Enums";
+import { PaymentType, SaleType } from "../../lib/Enums";
 import { useTranslation } from "react-i18next";
 import { clearSearchedProduct } from "../../slices/productSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
@@ -33,7 +33,11 @@ const SaleConfirmation = ()=>{
             
             dispatch(order(treatedSaleObject))
             .then(()=>{
-            dispatch(showToast({ success:true, message:t('order_sucessfuly')}));
+                if(saleState.invoiceType==SaleType.SALE){
+                    dispatch(showToast({ success:true, message:t('order_sucessfuly')}));
+                }else{
+                    dispatch(showToast({ success:true, message:t('success')}));
+                }
             dispatch(saleClean());
             dispatch(clearSearchedProduct());
             });
@@ -42,7 +46,15 @@ const SaleConfirmation = ()=>{
         };
     return(
     <div className="mt-[100px] text-center">
+        {
+            saleState.invoiceType==SaleType.SALE &&
             <h2 className="text-2xl">{firstCapitalize( t('confirm_sale'))}</h2>
+        }
+
+{
+            saleState.invoiceType==SaleType.PORFORM &&
+            <h2 className="text-2xl">{firstCapitalize( t('confirm_proform'))}</h2>
+        }
             <div className="mt-[2rem]">
                 <button onClick={(el)=>{
                         dispatch(saleNotConfirm());
