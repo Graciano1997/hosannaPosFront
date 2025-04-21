@@ -35,9 +35,7 @@ const Export = ({ stopExporting}) => {
                      <br />
                         <select name="product_type" value={true} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
                         <option value="" disabled selected>Selecione o tipo de formato </option>
-                        <option value="service">{firstCapitalize(t('excel'))}</option>
-                        {/* <option value="good">{firstCapitalize(t('word'))}</option> */}
-                        <option value="service">{firstCapitalize(t('pdf'))}</option>
+                        <option value="excel">{firstCapitalize(t('excel'))}</option>
                         </select>
                 </label>
 
@@ -59,10 +57,11 @@ const Export = ({ stopExporting}) => {
                         );  
                     })}
                 </div>
-                    
+                {exportingModelKeys.length>0 &&
                     <div className="flex justify-end p-2 mt-auto">
                         <ExportButton data={exportingModel.data} columnsToExport={columnsToExport} model={exportingModel.model}/>
                     </div>
+                    }
                 </form>
             </Modal>
         </>

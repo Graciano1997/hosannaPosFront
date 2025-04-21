@@ -18,8 +18,15 @@ const initialState = {
     sales:[],
     difference:0,
     saleConfirmationIsOpen:false,
-    saleObject:{}
+    saleObject:{},
+    anualSales:[]
 }
+
+
+export const fetchAnualSales = createAsyncThunk("saleState/fetchAnualSales", async (year=new Date().getFullYear()) => {
+    const response = await fetch(`${Ip}/api/sales/anual_sales/${year}`);
+    return response.json();
+})
 
 export const order=createAsyncThunk('saleState/order',async (sale)=>{
     const response = await fetch(`${Ip}/api/sales/`,{
@@ -213,6 +220,10 @@ const saleSlice = createSlice({
     extraReducers:(builder)=>{
         builder.addCase(fetchSales.fulfilled,(state,action)=>{
             state.sales = action.payload.data;
+        });
+
+        builder.addCase(fetchAnualSales.fulfilled,(state,action)=>{
+            state.anualSales = action.payload.data;
         });
 
         builder.addCase(order.fulfilled,(state,action)=>{

@@ -18,6 +18,8 @@ import { firstCapitalize } from '../../lib/firstCapitalize';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAnualSpents, fetchMinYearSpents } from '../../slices/spentSlice';
 import { annualMonths } from '../../lib/Months';
+import { fetchAnualSales } from '../../slices/saleSlice';
+import { fetchAnualExpiredProducts } from '../../slices/productSlice';
 
 ChartJS.register(
   CategoryScale,
@@ -43,8 +45,24 @@ export const options = {
   },
 };
 
-export function LineChart({data = [],width=200,height=300,info}) {
+export function LineChart({data,width=400,height=300,info}) {
   
+ let yearSpents=data.spents;
+ let yearSales=data.sales;
+ let yearExpireds=data.expireds;
+
+
+  if(yearSpents.length>0){
+   yearSpents=(data.spents).map((spent)=>spent*1);
+  }
+
+ if(yearSales.length>0){
+  yearSales=(data.sales).map((sale)=>sale*1);
+ }
+
+ if(yearExpireds.length>0){
+  yearExpireds=(data.expireds).map((product)=>product*1);
+ }
   const {t}=useTranslation();
   const graphContainerRef=useRef(null);
   const dispatch = useDispatch();
@@ -56,21 +74,21 @@ export function LineChart({data = [],width=200,height=300,info}) {
     labels: annualMonths.map((month)=>firstCapitalize(t(month))),
     datasets: [{
       label: firstCapitalize(t('income')),
-      data: [10, 59, 80],
+      data: yearSales,
       fill: false,
       borderColor: 'rgb(54, 235, 108)',
       tension: 0.5
     },
     {
       label: firstCapitalize(t('spents')),
-      data: [65, 10, 90, 81, 56, 55, 40],
+      data: yearSpents,
       fill: false,
       borderColor: 'rgb(255, 99, 132)',
       tension: 0.5
     },
     {
       label: firstCapitalize(t('expired')),
-      data: [20, 59, 80, 60, 56, 55, 40],
+      data: yearExpireds,
       fill: false,
       borderColor: 'rgb(255, 205, 86)',
       tension: 0.5
@@ -83,17 +101,22 @@ export function LineChart({data = [],width=200,height=300,info}) {
     dispatch(fetchMinYearSpents());
   },[]);
 
-  for(let index = spendState.minYear ; index <= (new Date().getFullYear()); index++)
-    years.push(index);
+  if(spendState.minYear){
+    for(let index = spendState.minYear; index <= (new Date().getFullYear()); index++){
+      years.push(index);
+    }
+  }
 
   return(
-    <div className={`grid grid-rows-[50px_auto] hidden sm:block w-[${width}px] h-[${height}px] bg-white rounded shadow-md`}>
+    <div style={{width:width, height:height }} className={`grid grid-rows-[50px_auto] hidden sm:block bg-white rounded shadow-md`}>
     <CardTitle>
       <div className='flex justify-between items-center w-[100%] h-[100%]'>
          <h2 className="">{firstCapitalize(info)}</h2>
-         {years.length >0 && 
+         {/* {years.length >0 && 
          <select onChange={(el)=>{
           dispatch(fetchAnualSpents(el.target.value));
+          dispatch(fetchAnualSales(el.target.value));
+          dispatch(fetchAnualExpiredProducts(el.target.value));
          }} name="" id="" className='cursor-pointer p-1 rounded bg-white w-[20%] shadow outline-none'>
           {
             years.map((year)=>
@@ -101,7 +124,7 @@ export function LineChart({data = [],width=200,height=300,info}) {
             )
           }
          </select>
-         }
+         } */}
       </div>
     </CardTitle>
     <div ref={graphContainerRef} style={{padding:2}} className='h-[100%] transition-all duration-500 ease-in-out'>
@@ -110,15 +133,6 @@ export function LineChart({data = [],width=200,height=300,info}) {
   datasetIdKey='lineesGraph'
   data={dataLines}
 />
-      
-      {/* <Line
-      ref={graphContainerRef} 
-      style={{
-        height:graphContainerRef.innerHeight,
-        width:graphContainerRef.innerWidth
-      }}
-      options={options} data={data} />
-       */}
     </div>
   </div>
   )

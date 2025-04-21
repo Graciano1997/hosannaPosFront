@@ -41,6 +41,12 @@ const Product=()=>{
     });
 
     useEffect(()=>{
+        if(appState.activeTab=="tab1"){
+            setColumnsToExport({
+                model:t('products'),
+                data:products              
+        })}
+
         if(appState.activeTab=="tab3"){
             setColumnsToExport({
                 model:t('category'),

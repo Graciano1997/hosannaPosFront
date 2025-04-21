@@ -42,7 +42,9 @@ export const fetchAnualExpiredProducts = createAsyncThunk("productState/fetchAnu
 });
 
 export const fetchProductsFields = createAsyncThunk("productState/fetchProductsFields", async ()=>{
-    const response = await fetch(`${Ip}/api/products/product_fields`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${Ip}/api/products/product_fields`,{ method:'GET',
+    headers:{'Content-Type':'application/json' }
+});
     return response.json();
 });
 

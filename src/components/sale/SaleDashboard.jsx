@@ -4,14 +4,14 @@ import { BarChart } from "../dashboard/BarChart";
 import LastSelling from "../dashboard/LastSelling";
 import currency from "currency.js";
 import { useSelector } from "react-redux";
-import { totalDayIncome } from "../../lib/totalDayIncome";
 import Money from "../general/Money";
+import { totalToDay } from "../../lib/totalToDay";
 
 const SaleDashboard=()=>{
     const {t}=useTranslation(); 
     const {sales}=useSelector((state)=>state.saleState);
 
-    const today_balance = totalDayIncome(sales,new Date());
+    const today_balance = totalToDay(sales,new Date());
     return(
         <>
         <div className="flex flex-wrap justify-center gap-3 mt-4 p-1 ">
