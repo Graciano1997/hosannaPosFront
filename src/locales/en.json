@@ -134,7 +134,7 @@
     "in_stock":"in_stock",
     "image":"image",
     "account":"account",
-    "slogan":"with ♥ by Hosanna",
+    "slogan":"created With ♥ ",
     "client_type":"client type",
     "filter":"filter",
     "back":"voltar",
@@ -165,5 +165,7 @@
     "client":"client",
     "income_outcome_expiration": "Incomes, Outcomes and Expirations",
     "see_more":"see more",
-    "without_items":"no items"
+    "without_items":"no items",
+    "invoice_number":"Nº invoice",
+    "sale_observation":"sale observation"
 }

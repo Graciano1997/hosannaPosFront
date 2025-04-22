@@ -18,8 +18,6 @@ import { firstCapitalize } from '../../lib/firstCapitalize';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAnualSpents, fetchMinYearSpents } from '../../slices/spentSlice';
 import { annualMonths } from '../../lib/Months';
-import { fetchAnualSales } from '../../slices/saleSlice';
-import { fetchAnualExpiredProducts } from '../../slices/productSlice';
 
 ChartJS.register(
   CategoryScale,
@@ -112,25 +110,12 @@ export function LineChart({data,width=400,height=300,info}) {
     <CardTitle>
       <div className='flex justify-between items-center w-[100%] h-[100%]'>
          <h2 className="">{firstCapitalize(info)}</h2>
-         {/* {years.length >0 && 
-         <select onChange={(el)=>{
-          dispatch(fetchAnualSpents(el.target.value));
-          dispatch(fetchAnualSales(el.target.value));
-          dispatch(fetchAnualExpiredProducts(el.target.value));
-         }} name="" id="" className='cursor-pointer p-1 rounded bg-white w-[20%] shadow outline-none'>
-          {
-            years.map((year)=>
-              <option value={year}>{year}</option>
-            )
-          }
-         </select>
-         } */}
       </div>
     </CardTitle>
     <div ref={graphContainerRef} style={{padding:2}} className='h-[100%] transition-all duration-500 ease-in-out'>
       
     <Line
-  datasetIdKey='lineesGraph'
+  datasetIdKey='lineGraph'
   data={dataLines}
 />
     </div>

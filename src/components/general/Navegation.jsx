@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState} from "react";
-import image from "../../assets/Img/gra.jpeg";
 import CurrentUser from "./CurrentUser";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CubeIcon, HomeIcon,ShoppingCartIcon, TruckIcon, UserGroupIcon, UsersIcon } from "@heroicons/react/24/solid";
@@ -80,12 +79,6 @@ const Navegation =({visible,setVisibility})=>{
                 { firstCapitalize(t('sales'))}
                 </Link>
             </li>      
-                  {/* <li>
-                <Link to={"/notifications"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/notifications'?'rounded bg-green-100':''}`} >
-                <BellAlertIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {t('notifications')}
-                </Link>
-            </li> */}
             <li>
                 <Link
                 onClick={handleMasterMessage}
@@ -107,8 +100,8 @@ const Navegation =({visible,setVisibility})=>{
                     dispatch(logoutUser())
                     navegate('/logout');
                     
-                }} className="flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-red-300" >
-                <ArrowLeftStartOnRectangleIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                }} className="flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-red-300 hover:text-white" >
+                <ArrowLeftStartOnRectangleIcon className="w-5 y-5  cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('logout'))}
                 </button>
             </li>
@@ -116,7 +109,7 @@ const Navegation =({visible,setVisibility})=>{
         </div>
         
         <CurrentUser size={{w:40,y:40}} />
-        <div><span className="text-[15px]">{t('slogan')}</span></div>
+        <div><span className="text-[17px] text-light text-red-400">{firstCapitalize(t('slogan'))}</span></div>
         </nav>
     )
 };
