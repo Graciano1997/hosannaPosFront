@@ -2,9 +2,9 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-// Import translation files
 import en from './locales/en.json';
 import pt from './locales/pt.json';
+import fr from './locales/fr.json';
 
 i18n
   .use(LanguageDetector) // Detect language
@@ -13,6 +13,7 @@ i18n
     resources: {
       en: { translation: en },
       pt: { translation: pt },
+      fr: { translation: fr },
     },
     fallbackLng: 'en', // Default language
     interpolation: {

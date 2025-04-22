@@ -11,6 +11,7 @@
     "requests":"requests",
     "english":"🇬🇧 En",
     "portuguese":"🇵🇹 Pt",
+    "french": "🇫🇷 Fr",
     "last_selling":"last sellings",
     "expireds":"last expireds",
     "footer_description":"with ♥ by Graciano Henrique",
@@ -167,5 +168,9 @@
     "see_more":"see more",
     "without_items":"no items",
     "invoice_number":"Nº invoice",
-    "sale_observation":"sale observation"
+    "sale_observation":"sale observation",
+    "exist_only":"exist only",
+    "units":"units",
+    "added":"added",
+    "removed":"removed"
 }

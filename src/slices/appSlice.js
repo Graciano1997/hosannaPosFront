@@ -120,15 +120,6 @@ const appSlice=createSlice({
         //     state.currency = action.payload.currency;            
         // });
 
-        builder.addCase(addItem,(state,action)=>{
-            state.showToast=true;
-            state.toastObject = {success:true,message:`Produto ${action.payload.name} Adicionado a compra`}
-        });
-        builder.addCase(removeItem,(state,action)=>{
-            state.showToast=true;
-            state.toastObject = {success:true,message:`Produto ${action.payload.name} Removido da compra`}
-        })
-
         builder.addCase(updateItem,(state,action)=>{
             state.showToast=true;
             state.toastObject = {success:true,message:`Foi atualizada a quantidade do Produto ${action.payload.name} para ${action.payload.qty} `}

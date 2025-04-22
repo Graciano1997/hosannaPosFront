@@ -10,8 +10,9 @@
     "sale":"vender",
     "settings":"definições",
     "requests":"pedidos",
-    "english":"🇬🇧 En",
+    "english":"🇬🇧 In",
     "portuguese":"🇵🇹 Pt",
+    "french": "🇫🇷 Fr",
     "last_selling":"últimos vendidos",
     "expireds":"últimos expirados",
     "footer_description":"feito com ♥ por Graciano Henrique",
@@ -168,5 +169,10 @@
     "see_more":"ver mais",
     "without_items":"sem itens",
     "invoice_number":"Nº fatura",
-    "sale_observation":"observação da venda"
+    "sale_observation":"observação da venda",
+    "exist_only":"existe apenas",
+   "units":"unidades",
+   "added":"adicionado",
+   "removed":"removido"
+
 }
