@@ -22,6 +22,7 @@ const Header=({setVisibility})=>{
                     }}>
                         <option value="en">{t('english')}</option>
                         <option value="pt">{t('portuguese')}</option>
+                        <option value="fr">{t('french')}</option>
                     </select>
                 </div>
             </div>          

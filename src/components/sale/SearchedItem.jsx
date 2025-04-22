@@ -5,6 +5,7 @@ import { showToast } from "../../slices/appSlice";
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
 import { totalWithTaxesAndDiscounts } from "../../lib/totalWithTaxes";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const SearchedItem = ({product,index,setQuery})=>{
     const [qtyTobuy,setQtyTobuy]=useState(1);
@@ -38,10 +39,10 @@ const SearchedItem = ({product,index,setQuery})=>{
                         { (product.qty - product.output)>= qtyTobuy && qtyTobuy > 0 &&
                         <button  onClick={()=>{
                             if(qtyTobuy > product.stock){
-                                dispatch(showToast({error:true,message:`Existem apenas ${product.stock} quantidades de ${product.name} disponiveis pra venda`}))
+                                dispatch(showToast({error:true,message:`${firstCapitalize(t('exist_only'))} ${product.stock} ${t('units')}`}));
                             }else{
                                 if(qtyTobuy){
-                                    dispatch(addItem({
+                                   dispatch(addItem({
                                         id:product.id,
                                         code:product.code,
                                         name:product.name,
@@ -52,7 +53,8 @@ const SearchedItem = ({product,index,setQuery})=>{
                                         output:product.output,
                                         qty:qtyTobuy,
                                         total:totalWithTaxesAndDiscounts(product,qtyTobuy)
-                                    }));
+                                    }))
+                                        dispatch(showToast({success:true,message:`${firstCapitalize(t('added'))} ${product.name}`}));
                                     setQuery('');
                                     if(!added){
                                         setAdded(true);

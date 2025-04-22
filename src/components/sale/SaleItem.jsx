@@ -2,9 +2,14 @@ import { PencilIcon, TrashIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { useDispatch } from "react-redux";
 import { decreaseOne, increaseOne, removeItem, selectItem } from "../../slices/saleSlice";
 import Money from "../general/Money";
+import { showToast } from "../../slices/appSlice";
+import { firstCapitalize } from "../../lib/firstCapitalize";
+import { useTranslation } from "react-i18next";
 
 const SaleItem = ({product,index})=>{
     const dispatch = useDispatch();
+    const {t}=useTranslation();
+
     return(
         <div className={`grid grid-cols-[10fr_10fr_10fr_10fr_10fr_25fr_10fr] place-items-center text-md ${index%2==0?'bg-green-50':'bg-green-100'} p-3 cursor-pointer`}>
                 {/* <p>{product.code}</p> */}
@@ -30,7 +35,11 @@ const SaleItem = ({product,index})=>{
                 <p><Money amount={product.total }/></p>
                 <div className="flex justify-between items-center gap-6">
                     <PencilIcon onClick={(evt)=>{ dispatch(selectItem(product)); evt.stopPropagation();}} className="w-5 h-5 text-green-500 hover:shadow"/>
-                    <XMarkIcon onClick={(evt)=>{ dispatch(removeItem(product)); evt.stopPropagation();}} className="w-7 h-7 text-red-400 hover:shadow" />
+                    <XMarkIcon onClick={(evt)=>{ 
+                       if(dispatch(removeItem(product))){
+                           dispatch(showToast({success:true,message:`${firstCapitalize(t('removed'))} ${product.name}`}));
+                       }
+                        evt.stopPropagation();}} className="w-7 h-7 text-red-400 hover:shadow" />
                 </div>
         </div>
     );
