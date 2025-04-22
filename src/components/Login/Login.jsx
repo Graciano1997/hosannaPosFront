@@ -36,7 +36,7 @@ const Login = ()=>{
     }
 
     return(
-    <div className="w-100 h-screen flex justify-center items-center">
+    <div className="w-100 h-screen flex justify-center items-center bg-[url('/src/assets/Img/Logo.svg')] bg-no-repeat  bg-[length:32%] bg-left bg-top sm:bg-right">
     <form method="POST" onSubmit={formHandler} className="bg-white w-[400px] sm:w-[500px] h-[300px] rounded shadow-md p-7 flex flex-col gap-3">
     <label>
     {firstCapitalize(t('email'))}

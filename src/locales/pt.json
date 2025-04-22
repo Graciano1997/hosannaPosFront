@@ -135,7 +135,7 @@
     "in_stock":"em_stock",
     "image":"imagem",
     "account":"conta",
-    "slogan":"With ♥ by Hosanna",
+    "slogan":"feito com ♥ ",
     "client_type":"tipo de cliente",
     "filter":"filtrar",
     "back":"voltar",
@@ -166,5 +166,7 @@
     "client":"cliente",
     "income_outcome_expiration":"Entradas, Saídas e Expirações",
     "see_more":"ver mais",
-    "without_items":"sem itens"
+    "without_items":"sem itens",
+    "invoice_number":"Nº fatura",
+    "sale_observation":"observação da venda"
 }

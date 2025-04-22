@@ -98,15 +98,24 @@ const Create=()=>{
                 </div>
                 
                 <div className="flex gap-3">
-                <div className="w-[100%]">
+                <div className="w-[50%]">
                 <label>
                 { firstCapitalize(t('address'))}
                 <br />
                 <input type="text" name="address" onChange={formHandler} value={company.address} className='p-1 rounded w-[100%] outline-none'/>
                 </label>
                 </div> 
+
+                <div className="w-[50%] h-[100%]">
+                <label>
+                {firstCapitalize(t('sale_observation'))}
+                <textarea name="sale_observation" onChange={formHandler} value={company.sale_observation} className='p-1 rounded w-[100%]  outline-none '/>
+                <br />
+                </label>
                 </div>
                 </div>
+                </div>
+
                 <div className="flex justify-end mt-auto p-2"><button className="p-2 bg-green-100 rounded">{company.id ? firstCapitalize(t('update')) : firstCapitalize(t('create'))}</button></div>
              </form>
         </Modal>

@@ -48,16 +48,6 @@ const LastSelling =({width=200,height=300,info})=>{
                     </li>)}
                 </ul>
              </div>
-             <div className="p-1">
-                <button 
-                onClick={()=>{
-                    navegate('/sales');
-                }}
-                className="bg-black/90 text-white shadow w-full p-2 rounded-[8px] flex gap-4 justify-center items-center">
-                    <EyeIcon className="w-5 h-5" />
-                    {firstCapitalize(t('see_more'))}
-                    </button>
-             </div>
             </>
             }
 

@@ -52,3 +52,11 @@ form textarea{
   transition: all ease-in-out;
   transition-duration: 1s;
 }
+
+.bg-custom {
+  background-image: url('/src/assets/Img/Logo.svg');
+  background-size: 32%;
+  background-position: right;
+  background-repeat: no-repeat;
+
+}
