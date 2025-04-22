@@ -12,7 +12,6 @@ const SaleItem = ({product,index})=>{
 
     return(
         <div className={`grid grid-cols-[10fr_10fr_10fr_10fr_10fr_25fr_10fr] place-items-center text-md ${index%2==0?'bg-green-50':'bg-green-100'} p-3 cursor-pointer`}>
-                {/* <p>{product.code}</p> */}
                 <p>{product.name}</p>
                 <p><Money amount={product.price}/></p>
                 <p>{product.discount}</p>
