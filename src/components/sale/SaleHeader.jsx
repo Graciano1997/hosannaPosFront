@@ -14,7 +14,7 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
     const {t}= useTranslation();
 
     return(
-        <div className="mt-[3rem] flex justify-between items-center w-[100%] h-[100px] bg-white rounded p-4">  
+        <div className="mt-[3rem] flex flex-col sm:flex-row gap-5 sm:justify-between sm:items-center  w-[100%] sm:h-[100px] bg-white rounded p-4">  
             <div className="flex gap-3 items-center">
             <label className="text-xl">
             {t('invoice')}
@@ -31,7 +31,7 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
            <div className="flex gap-4">
 
             <div className="flex gap-3 items-center">
-                <label htmlFor="clienteType" className="text-xl">{firstCapitalize(t('payment_way'))}</label>
+                <label htmlFor="clienteType" className="sm:text-xl">{firstCapitalize(t('payment_way'))}</label>
                 <select id="clienteType" onChange={(el)=>{
                     dispatch(setPaymentType(el.target.value));
                     if(el.target.value ==PaymentType.TPA){        
@@ -62,7 +62,7 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
             </div>
             </div>
 
-            <div className="flex gap-5 items-center">
+            <div className="flex mt-[1rem] sm:mt-0 gap-5 sm:items-center">
             <p className="font-bold flex gap-1">
             <BanknotesIcon className="w-5 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>
             {firstCapitalize('total')}:<Money amount={sale.total} /></p>
