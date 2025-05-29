@@ -108,7 +108,7 @@ const Navegation =({visible,setVisibility})=>{
         </ul>  
         </div>
         
-        <CurrentUser size={{w:40,y:40}} />
+        <CurrentUser size={{w:40,y:40}}/>
         <div><span className="text-[17px] text-light text-red-400">{firstCapitalize(t('slogan'))}</span></div>
         </nav>
     )

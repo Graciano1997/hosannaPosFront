@@ -4,7 +4,6 @@ import { useFetcher, useLocation, useNavigate } from "react-router-dom";
 import { authenticate,logoutUser, showToast } from "../../slices/appSlice";
 import { useEffect, useState } from "react";
 import { firstCapitalize } from "../../lib/firstCapitalize";
-import Footer from "../general/Footer";
 
 const Login = ()=>{
     
@@ -36,6 +35,7 @@ const Login = ()=>{
     }
 
     return(
+    <>
     <div className="w-100 h-screen flex justify-center items-center bg-[url('/src/assets/Img/Logo.svg')] bg-no-repeat  bg-[length:32%] bg-left bg-top sm:bg-right">
     <form method="POST" onSubmit={formHandler} className="bg-white w-[400px] sm:w-[500px] h-[300px] rounded shadow-md p-7 flex flex-col gap-3">
     <label>
@@ -60,6 +60,11 @@ const Login = ()=>{
     </div>
    </form>
     </div>
+    <div className="flex flex-col justify-center gap-[8px]">
+   <p className="text-center text-light text-red-900">{t('author')}</p>
+   <a href="https://portofolio-graciano.vercel.app/" target="_blank" className="text-center text-light text-red-700 cursor-pointer">{t('visit_me')}</a>
+    </div>
+   </>
     );
 };
 

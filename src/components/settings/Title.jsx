@@ -39,25 +39,11 @@ const Title=({title,create})=>{
             ref={ref}>
              <div className="flex justify-between mt-4">
                 <h1 className="text-3xl">{firstCapitalize(title)}</h1>
-
-                {/* {showElipse && (<EllipsisHorizontalIcon onClick={()=>{setShowElipse(!showElipse)}} className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>)}
-                {!showElipse && (        
-                <ul   className="flex flex-col gap-3 w-[150px] h-[35px] right-[20px] justify-center bg-white shadow rounded absolute z-2000" id="elipseMenu">
-                <li className="m-0.5 flex gap-3 items-center justify-center hover:cursor-pointer"><span className="">{firstCapitalize(t('export'))}</span><ArrowUpTrayIcon className="w-4 h-4"/></li>
-                </ul>
-                )
-            } */}
              </div>
     
             <nav className="mt-[20px]">
             <ul className="flex flex gap-5">
-            <li>
-                <Link to={"#"} onClick={()=>dispatch(activeTab('tab1'))} 
-                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab1"?'activeTab':''}`} >
-                <UserIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('account'))}
-                </Link>
-            </li>
+         
             {/* <li>
                 <Link to={""}
                 onClick={()=>dispatch(activeTab('tab2'))} 
@@ -68,6 +54,18 @@ const Title=({title,create})=>{
             </li> */}
 
             <li>
+                <Link to={"#"} onClick={(el)=>{
+                     el.preventDefault();
+                    if(handleMasterMessage()){
+                        dispatch(activeTab('tab1'))}
+                    }
+                } 
+                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''}`} >
+                <HomeIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
+                { firstCapitalize(t('company_details'))}
+                </Link>
+            </li>
+                        <li>
                 <Link to={"#"} onClick={
                     (el)=>{
                         el.preventDefault();
@@ -78,18 +76,6 @@ const Title=({title,create})=>{
                 className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab2"?'activeTab':''}`} >
                 <UserGroupIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('profile'))}
-                </Link>
-            </li>
-            <li>
-                <Link to={"#"} onClick={(el)=>{
-                     el.preventDefault();
-                    if(handleMasterMessage()){
-                        dispatch(activeTab('tab3'))}
-                    }
-                } 
-                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''}`} >
-                <HomeIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('company_details'))}
                 </Link>
             </li>
         </ul>   
