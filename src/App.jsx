@@ -30,6 +30,7 @@ import PdfViewer from './components/Pdf/PdfViewer'
 import { Profiles } from './lib/Enums'
 import { firstCapitalize } from './lib/firstCapitalize'
 import { useTranslation } from 'react-i18next'
+import Account from './components/settings/Account'
 
 function App() {
 
@@ -54,14 +55,14 @@ function App() {
      dispatch(fetchCompanies());
    },[]);
 
-  // useEffect(()=>{    
-  //   if(isVisible){
-  //     setTimeout(() => {
-  //       setIsVisible(false);
-  //     }, 10000);
-  //   } 
+   useEffect(()=>{    
+     if(isVisible){
+       setTimeout(() => {
+         setIsVisible(false);
+       }, 60000);
+     } 
 
-  // },[isVisible]);
+   },[isVisible]);
 
   const excludePathName =['/','/logout'];
   
@@ -93,6 +94,7 @@ function App() {
       <Route path='/users' element={masterProfile ? <User/>: <_401/>} /> 
       <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />      
       <Route path='/setting' element={<Setting/>} />
+      <Route path='/profile' element={<Account/>} />
       <Route path='*' element={<_404/>} />
       </Routes>
 

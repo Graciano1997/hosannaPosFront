@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import Card from "../general/Card";
 import Title from "./Title";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
@@ -9,7 +8,6 @@ import { creatingCompany, deleteCompany, fetchCompanies, updateCompany, updating
 import Table from "../Table/Table";
 import Create from "./Create";
 import Profile from "./Profile";
-import Account from "./Account";
 
 const Setting=()=>{
     const dispatch = useDispatch();
@@ -27,15 +25,12 @@ const Setting=()=>{
         <Title title={t('settings')}/>
         <TabWrapper>
 
-        {appState.activeTab=="tab1" &&
-        <Account/>
-        }
 
         { appState.activeTab=="tab2" && 
         <Profile/>
         }
 
-        { appState.activeTab=="tab3" && 
+        { appState.activeTab=="tab1" && 
         (
             companyState.companies.length?
             <Table filterDetails={[]} filterRows={companyState.companyFilterRows} update={updatingCompany} create={null} deleteItem={deleteCompany} collection={companyState.companies}/>
@@ -44,10 +39,6 @@ const Setting=()=>{
         )
         }
         
-        {/* {appState.activeTab=="tab2"  && (<ProductDashboard/>)}
-        {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']}  collection={categoryState.categories || []}/>}
-        {appState.activeTab=="tab5" && !productState.error && !productState.loading && <ProductConfiguration />} */}
-
         </TabWrapper>
         {(companyState.isCreating || companyState.isUpdating) && appState.isOpen && (<Create/>)}
         </CardWrapper>
