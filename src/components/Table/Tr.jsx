@@ -6,9 +6,13 @@ import { cleanItemDetails, itemDetails, openModal } from "../../slices/appSlice"
 import Details from "./Details";
 import { useState } from "react";
 import { updateProduct } from "../../slices/productSlice";
+import { useTranslation } from "react-i18next";
+import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem }) => {
-    
+  
+    const {t}= useTranslation();
+
     const moneyFields = ['price', 'total', 'amount', 'cost_price','difference','received_cash','received_tpa'];
     const dispatch = useDispatch();
     const [checkNumber,setCheckNumber]=useState(false);
@@ -24,7 +28,7 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                 {keys.map((key) =>
                     <td onClick={()=>{ dispatch(itemDetails(item))}} className="p-1 text-center">
                         {moneyFields.includes(key) &&  <Money amount={item[key]} />}
-                        {typeof (item[key]) == "boolean" && stateDisplay(item[key]) }
+                        {typeof (item[key]) == "boolean" && (item[key]? firstCapitalize(t('yes')) : firstCapitalize(t('not'))) }
                         {key=="image" && item[key]!="none" && <div className="flex justify-center"><img src={item[key]} className="w-[40px] h-[40px] rounded-[20px] duration-200 transition-all hover:shadow" /></div>}
                         {key!=="image" && !moneyFields.includes(key) && typeof(item[key]) != "boolean" &&  textDisplay(item[key])}
                     </td>
