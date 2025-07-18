@@ -86,11 +86,11 @@ const Dashboard=()=>{
         </div>
     </div>
 
-    <div className="flex flex-col mt-[2rem] items-center sm:items-start sm:flex-row justify-end gap-4 sm:mt-[3%] w-full">
+    <div className="flex flex-col mt-[2rem] mb-[0rem] items-center sm:items-start sm:flex-row justify-end gap-4 sm:mt-[3%] w-full">
 
  <LastSelling width={400} height={350} info={{title:firstCapitalize(t('last_selling')), description:t('about')}}/>
 <DoughnutChart width={350} height={400} data={[today_balance,today_spents]} info={firstCapitalize(t('today_status'))}/>
-<LineChart width={500} height={400} data={{spents: anualSpents,sales:anualSales, expireds:anualExpired}} info={firstCapitalize(t('income_outcome_expiration'))}/>
+<LineChart width={500} height={350} data={{spents: anualSpents,sales:anualSales, expireds:anualExpired}} info={firstCapitalize(t('income_outcome_expiration'))}/>
 </div>
     </div>
         </div>
