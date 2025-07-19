@@ -176,9 +176,10 @@
     "author":"Developed by Graciano Henrique",
     "visit_me":"Visit my portfolio",
     "select_category": "Select a category",
-    "product_in_promotion": "product on sale",
+    "product_in_promotion": "product on promotion",
     "select_unit": "select a unit",
     "kilogram":"kilogram (kg)",
     "unit":"unit (un)",
-    "liter":"liter (l)"
+    "liter":"liter (l)",
+    "product_status":"product status"
 }

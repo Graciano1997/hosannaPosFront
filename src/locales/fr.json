@@ -179,5 +179,6 @@
     "select_unit": "sélectionnez une unité",
     "kilogram":"kilogramme (kg)",
     "unit":"unité (un)",
-    "liter":"litre (l)"
+    "liter":"litre (l)",
+    "product_status": "statut du produit"
 }

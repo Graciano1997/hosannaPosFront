@@ -181,5 +181,6 @@
    "select_unit":"seleciona uma unidade",
    "kilogram":"quilogram (kg)",
    "unit":"unidade (un)",
-   "liter":"litro (l)"
+   "liter":"litro (l)",
+   "product_status":"estado do produto"
 }
