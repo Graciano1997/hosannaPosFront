@@ -271,7 +271,7 @@ const appSlice=createSlice({
             }else if(action.payload!=undefined && action.payload.user){
                 localStorage.setItem("isLogged",true);
                 localStorage.setItem("currentUser",JSON.stringify(action.payload.user));
-                window.location.href="/dashboard";                
+                window.location.href=`${Ip}+/dashboard`;                
             }
         });
 
