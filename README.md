@@ -11,7 +11,7 @@
 ---
 
 ## 🚀 Live 
-- [visit hosannaPosFront](https://hosannaposfront.onrender.com/)
+- [visit hosannaPosFront](https://hosanna-pos-front.vercel.app/)
 
 
 ## 🚀 Getting Started
