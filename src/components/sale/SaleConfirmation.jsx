@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { order, saleClean, saleNotConfirm, setSaleObject } from "../../slices/saleSlice";
-import { closeModal, showToast } from "../../slices/appSlice";
+import { closeModal, printing, showToast } from "../../slices/appSlice";
 import { PaymentType, SaleType } from "../../lib/Enums";
 import { useTranslation } from "react-i18next";
 import { clearSearchedProduct } from "../../slices/productSlice";
@@ -32,12 +32,19 @@ const SaleConfirmation = ()=>{
             }
             
             dispatch(order(treatedSaleObject))
-            .then(()=>{
+            .then((resultAction)=>{
                 if(saleState.invoiceType==SaleType.SALE){
                     dispatch(showToast({ success:true, message:t('order_sucessfuly')}));
                 }else{
                     dispatch(showToast({ success:true, message:t('success')}));
                 }
+            
+                //THis action ensure to print in the Java print server App
+                if(order.fulfilled.match(resultAction)) {
+                    dispatch(printing(resultAction.payload.invoice_item));
+                }
+
+
             dispatch(saleClean());
             dispatch(clearSearchedProduct());
             });
