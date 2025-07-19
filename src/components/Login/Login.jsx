@@ -31,7 +31,11 @@ const Login = ()=>{
 
     const formHandler= (el)=>{
         el.preventDefault();
-        dispatch(authenticate(user));       
+         dispatch(authenticate(user)).then((resultAction) => {
+            if (authenticate.fulfilled.match(resultAction)) {
+        if (resultAction.payload?.user) {
+          navegate("/dashboard");
+        }}});
     }
 
     return(
