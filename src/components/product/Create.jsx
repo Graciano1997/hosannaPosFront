@@ -79,7 +79,7 @@ const Create = ({ stopCreating }) => {
                         {firstCapitalize(t('category'))}
                             <br />
                             <select name="category_id" value={product.category_id} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                                <option value="" disabled selected>{firstCapitalize('select_category')}</option>
+                                <option value="" disabled selected>{firstCapitalize(t('select_category'))}</option>
                                 {categories.map((category) => <option value={category.id}>{category.name}</option>)}
                             </select>
                         </label>
@@ -99,7 +99,7 @@ const Create = ({ stopCreating }) => {
                         {firstCapitalize(t('status'))}
                                 <br />
                                 <select name="status" value={product.status?product.status:""} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                                    <option value="" disabled>Estado do produto</option>
+                                    <option value="" disabled>{firstCapitalize(t('product_status'))}</option>
                                     <option value={true}>{t('active')}</option>
                                     <option value={false}>{t('disative')}</option>
                                 </select>
