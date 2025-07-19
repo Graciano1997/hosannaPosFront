@@ -174,5 +174,11 @@
     "added":"added",
     "removed":"removed",
     "author":"Developed by Graciano Henrique",
-    "visit_me":"Visit my portfolio"
+    "visit_me":"Visit my portfolio",
+    "select_category": "Select a category",
+    "product_in_promotion": "product on sale",
+    "select_unit": "select a unit",
+    "kilogram":"kilogram (kg)",
+    "unit":"unit (un)",
+    "liter":"liter (l)"
 }

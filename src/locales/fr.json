@@ -173,5 +173,11 @@
     "units":"Unité(s)",
     "added":"Ajouté",
     "removed":"Retiré",
-    "author":"Desenvolvido por Graciano Henrique"
+    "author":"Desenvolvido por Graciano Henrique",
+    "select_category": "Sélectionnez une catégorie",
+    "product_in_promotion": "produit en promotion",
+    "select_unit": "sélectionnez une unité",
+    "kilogram":"kilogramme (kg)",
+    "unit":"unité (un)",
+    "liter":"litre (l)"
 }

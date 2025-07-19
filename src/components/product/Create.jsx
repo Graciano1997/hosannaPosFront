@@ -79,7 +79,7 @@ const Create = ({ stopCreating }) => {
                         {firstCapitalize(t('category'))}
                             <br />
                             <select name="category_id" value={product.category_id} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                                <option value="" disabled selected>Selecione uma categoria</option>
+                                <option value="" disabled selected>{firstCapitalize('select_category')}</option>
                                 {categories.map((category) => <option value={category.id}>{category.name}</option>)}
                             </select>
                         </label>
@@ -127,9 +127,9 @@ const Create = ({ stopCreating }) => {
                             {firstCapitalize(t('promotion'))}
                                 <br />
                                 <select name="promotion" value={product.promotion} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                                    <option value="" disabled selected>Produto em promocao </option>
-                                    <option value={true}>Sim</option>
-                                    <option value={false}>Nao</option>
+                                    <option value="" disabled selected>{firstCapitalize(t('product_in_promotion'))} </option>
+                                    <option value={true}>{firstCapitalize(t('yes'))}</option>
+                                    <option value={false}>{firstCapitalize(t('not'))}</option>
 
                                 </select>
                             </label>
@@ -156,10 +156,10 @@ const Create = ({ stopCreating }) => {
                                 {firstCapitalize(t('mesure_unit'))}
                                 <br />
                                 <select name="mesure_unit" value={product.mesure_unit} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                                    <option value="" disabled selected>Selecione a unidade </option>
-                                    <option value="kg">kilograma (kg)</option>
-                                    <option value="un">unidade (un)</option>
-                                    <option value="l">litros (l)</option>
+                                    <option value="" disabled selected>{firstCapitalize(t('select_unit'))} </option>
+                                    <option value="kg">{firstCapitalize(t('kilogram'))}</option>
+                                    <option value="un">{firstCapitalize(t('unit'))}</option>
+                                    <option value="l">{firstCapitalize(t('liter'))}</option>
                                 </select>
                             </label>
                         }
