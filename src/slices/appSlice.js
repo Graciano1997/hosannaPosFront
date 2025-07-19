@@ -28,7 +28,7 @@ const initialState = {
               body:JSON.stringify(user),
               headers:{'Content-Type':'application/json'}
             });
-        return response.json();
+            return response.json();
     }catch(error){
         console.log(error);
     }
@@ -271,7 +271,6 @@ const appSlice=createSlice({
             }else if(action.payload!=undefined && action.payload.user){
                 localStorage.setItem("isLogged",true);
                 localStorage.setItem("currentUser",JSON.stringify(action.payload.user));
-                window.location.href=`${Ip}/dashboard`;                
             }
         });
 
