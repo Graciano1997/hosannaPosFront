@@ -175,5 +175,11 @@
    "added":"adicionado",
    "removed":"removido",
    "author":"Desenvolvido por Graciano Henrique",
-   "visit_me":"Vê meu portfolio"
+   "visit_me":"Vê meu portfolio",
+   "select_category": "Selecione uma categoria",
+   "product_in_promotion":"produto em promoção",
+   "select_unit":"seleciona uma unidade",
+   "kilogram":"quilogram (kg)",
+   "unit":"unidade (un)",
+   "liter":"litro (l)"
 }
