@@ -34,6 +34,22 @@ const initialState = {
     }
  });
 
+  export const printing = createAsyncThunk("appState/printing",async (invoiceItem)=>{
+    try{
+        const response = await fetch(`http://localhost:5000/print`,
+            { method:'POST',
+              body:JSON.stringify(invoiceItem),
+              headers:{'Content-Type':'application/json'}
+            });
+            
+            console.log(invoiceItem);
+            console.log(response.json());
+            return response.json();
+    }catch(error){
+        console.log(error);
+    }
+ });
+
  export const exporting= createAsyncThunk("appState/exporting",async (data)=>{
     try{
         const response = await fetch(`${Ip}/api/export/excel`,
@@ -284,6 +300,17 @@ const appSlice=createSlice({
         });
         builder.addCase(exporting.rejected,(state,action)=>{
             state.error = action.error.message;
+        });
+
+
+    /* Fetch Printing cases */
+        // builder.addCase(fetchProducts.rejected,(state,action)=>{
+        //     state.loading=false;
+        //     state.error=action.error.message;
+        // });
+        
+        builder.addCase(printing.fulfilled,(state)=>{
+            console.log("print Successfully!");
         });
     }
 });

@@ -13,6 +13,7 @@
 ## 🚀 Live 
 - [visit hosannaPosFront](https://hosannaposfront.onrender.com/)
 
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -35,6 +36,55 @@ npm run dev
 npm run build
 ```
 
+#🖨️ Printing Solution Dependency.
+
+**Hosanna Sale Point** prints the envoices using a desktop server API Java solution 
+🧾GFatura – Java  created and mainted by myself in a separate repository
+[🧾GFatura - Repository]( https://github.com/Graciano1997/gfatura.git).
+
+First Download here or visit the above repository: [🧾GFatura-app.zip ]( https://github.com/Graciano1997/gfatura/releases/download/Alfa/gfatura-app.zip)
+
+ 
+
+
+```bash
+# unzip the gfatura-app.zip
+
+cd gfatura-app/ 
+
+▶️ How to use:
+
+    @Windows: Double-click the "run.bat" file for windows OS.
+
+    @Linux & @mac: Open terminal and  execute. 
+    
+        ./run.sh 
+   
+
+#GFatura
+
+Invoice printing system.
+
+📌 Requirements:
+    Java 11 or higher installed on the machine
+    Check with: java -version
+    Operating System: Windows, Linux, or macOS
+    Internet or local network (if sending JSON from another system like Rails)
+    The following libraries must be included in the same directory or in the classpath:
+
+        jackson-core-2.17.0.jar
+
+        jackson-databind-2.17.0.jar
+
+        jackson-annotations-2.17.0.jar
+
+
+
+If Java is not installed, download it here:
+https://www.java.com/en/download/
+```
+
+
 🔗 Backend Repository
 
 The Backend built with Ruby on Rails is available at:
@@ -53,6 +103,8 @@ The Backend built with Ruby on Rails is available at:
     Push to the branch (git push origin feature/your-feature)
 
     Open a Pull Request
+
+
 
 ✨ Author
 
