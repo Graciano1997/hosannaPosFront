@@ -197,7 +197,6 @@ const saleSlice = createSlice({
             state.saleDetails = saleDetailsDraft;
         },
         setReceivedCash:(state,action)=>{
-            console.log(action.payload);
             state.receivedCash = action.payload*1;
             if(state.paymentType == PaymentType.CASH && (action.payload - state.total) > 0 ){
                 state.difference =  state.receivedCash - state.total;
