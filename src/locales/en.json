@@ -181,5 +181,6 @@
     "kilogram":"kilogram (kg)",
     "unit":"unit (un)",
     "liter":"liter (l)",
-    "product_status":"product status"
+    "product_status":"product status",
+    "ordered_without_printing":"Sale completed! However, we couldn't print the invoice. Please make sure the printing application is open and connected."
 }

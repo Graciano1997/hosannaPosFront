@@ -180,5 +180,6 @@
     "kilogram":"kilogramme (kg)",
     "unit":"unité (un)",
     "liter":"litre (l)",
-    "product_status": "statut du produit"
+    "product_status": "statut du produit",
+    "ordered_without_printing": "Vente réalisée ! Cependant, nous n’avons pas pu imprimer la facture. Veuillez vous assurer que l’application d’impression est ouverte et connectée."
 }
