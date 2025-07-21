@@ -11,6 +11,8 @@ const SaleConfirmation = ()=>{
 
         const dispatch = useDispatch();
         const saleState = useSelector((state)=>state.saleState);
+        const appState = useSelector((state)=>state.appState);
+
         const orderHandler = ()=>{
     
             const treatedSaleObject = {
@@ -32,7 +34,7 @@ const SaleConfirmation = ()=>{
             }
             
             dispatch(order(treatedSaleObject))
-            .then((resultAction)=>{
+            .then((orderResultState)=>{
                 if(saleState.invoiceType==SaleType.SALE){
                     dispatch(showToast({ success:true, message:t('order_sucessfuly')}));
                 }else{
@@ -40,12 +42,14 @@ const SaleConfirmation = ()=>{
                 }
             
                 //THis action ensure to print in the Java print server App
-                if(order.fulfilled.match(resultAction)) {
-                   const test= dispatch(printing(resultAction.payload.invoice_item))
-                   console.log(test);
+                if(order.fulfilled.match(orderResultState)) {
+                   dispatch(printing(orderResultState.payload.invoice_item))
+                   .then((printingResultState)=>{
+                    if(printing.rejected.match(printingResultState)){
+                        dispatch(showToast({ warning:true, message:firstCapitalize(t('ordered_without_printing'))}));
+                    }})
                 }
-
-
+                
             dispatch(saleClean());
             dispatch(clearSearchedProduct());
             });
