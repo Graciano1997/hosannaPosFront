@@ -41,7 +41,8 @@ const SaleConfirmation = ()=>{
             
                 //THis action ensure to print in the Java print server App
                 if(order.fulfilled.match(resultAction)) {
-                    dispatch(printing(resultAction.payload.invoice_item));
+                   const test= dispatch(printing(resultAction.payload.invoice_item))
+                   console.log(test);
                 }
 
 

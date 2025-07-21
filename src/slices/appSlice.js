@@ -15,6 +15,7 @@ const initialState = {
     loading:false,
     itemDetails:{},
     error:'',
+    printingError:false,
     isExporting:false,
     exportingModel:{},
     isLogged:true,
@@ -35,19 +36,14 @@ const initialState = {
  });
 
   export const printing = createAsyncThunk("appState/printing",async (invoiceItem)=>{
-    try{
         const response = await fetch(`http://localhost:5000/print`,
             { method:'POST',
               body:JSON.stringify(invoiceItem),
               headers:{'Content-Type':'application/json'}
             });
             
-            console.log(invoiceItem);
             console.log(response.json());
             return response.json();
-    }catch(error){
-        console.log(error);
-    }
  });
 
  export const exporting= createAsyncThunk("appState/exporting",async (data)=>{
@@ -309,8 +305,16 @@ const appSlice=createSlice({
         //     state.error=action.error.message;
         // });
         
+        builder.addCase(printing.pending,(state)=>{
+            state.printingError=false;
+        });
+
         builder.addCase(printing.fulfilled,(state)=>{
-            console.log("print Successfully!");
+            state.printingError=false;
+        });
+
+        builder.addCase(printing.rejected,(state)=>{
+            state.printingError=true;
         });
     }
 });
