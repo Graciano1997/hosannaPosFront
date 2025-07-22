@@ -1,15 +1,15 @@
-import { PencilIcon, PlusCircleIcon, PlusIcon, TrashIcon, UserIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, PlusCircleIcon, PlusIcon, PrinterIcon, TrashIcon, UserIcon } from "@heroicons/react/24/solid";
 import Money from "../general/Money";
 import { useDispatch, useSelector } from "react-redux";
 import { stateDisplay, textDisplay } from "../../lib/activeDisplay";
-import { cleanItemDetails, itemDetails, openModal } from "../../slices/appSlice";
+import { cleanItemDetails, getInvoiceItem, itemDetails, openModal, printing, showToast } from "../../slices/appSlice";
 import Details from "./Details";
 import { useState } from "react";
 import { updateProduct } from "../../slices/productSlice";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
-const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem }) => {
+const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem, printItem=null }) => {
   
     const {t}= useTranslation();
 
@@ -69,6 +69,24 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                         </div>
                         }
                     {updateItem && <button onClick={() => { dispatch(openModal()); dispatch(updateItem(item)); }}><PencilIcon className="w-6 y-6 p-1 text-green-800 hover:shadow hover:rounded" /></button>}
+                    {printItem && <button onClick={()=> { 
+                        dispatch(getInvoiceItem(item.id))
+                        .then((invoiceResultState)=>{
+                            if(getInvoiceItem.fulfilled.match(invoiceResultState)){
+                                dispatch(printing(invoiceResultState.payload.invoice_item))
+                                .then((printingStateResult)=>{
+                                    if(printing.fulfilled.match(printingStateResult)){
+                                        dispatch(showToast({success:true,message:firstCapitalize(t('reprinting'))}))
+                                    }
+                                    
+                                    if(printing.rejected.match(printingStateResult)){
+                                        dispatch(showToast({error:true,message:firstCapitalize(t('error_reprinting'))}))
+                                    }
+                                })
+                            }
+                        })
+
+                     }}><PrinterIcon className="w-6 y-6 p-1 text-black hover:shadow hover:rounded" /></button>}
                     {deleteItem && <button onClick={() => { dispatch(deleteItem(item.id)) }}><TrashIcon className="w-6 y-6 p-1 text-red-300 hover:shadow hover:rounded" /></button> } 
                     </div>
                 </td>

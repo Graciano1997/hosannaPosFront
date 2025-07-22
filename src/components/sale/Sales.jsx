@@ -31,7 +31,7 @@ const Sales=()=>{
             data:sales}}
         />
         <TabWrapper>    
-        {appState.activeTab=="tab1" && (<Table filterRows={filterRows} filterDetails={filterRows} create={null} fetcher={fetchSales} dispatcher={setSales} collection={sales}/>)}
+        {appState.activeTab=="tab1" && (<Table filterRows={filterRows} filterDetails={filterRows} create={null} printItem={true} fetcher={fetchSales} dispatcher={setSales} collection={sales}/>)}
         {appState.activeTab=="tab2"  && (<SaleDashboard/>)} 
         </TabWrapper>
         </CardWrapper>

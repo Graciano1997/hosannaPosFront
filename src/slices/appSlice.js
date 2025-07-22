@@ -35,6 +35,18 @@ const initialState = {
     }
  });
 
+  export const getInvoiceItem= createAsyncThunk("appState/getInvoiceItem",async (saleId)=>{
+    try{
+        const response = await fetch(`${Ip}/api/sales/reprint/${saleId}`,
+            { method:'GET',
+              headers:{'Content-Type':'application/json'}
+            });
+            return response.json();
+    }catch(error){
+        console.log(error);
+    }
+ });
+
   export const printing = createAsyncThunk("appState/printing",async (invoiceItem)=>{
         const response = await fetch(`http://localhost:5000/print`,
             { method:'POST',
@@ -316,6 +328,7 @@ const appSlice=createSlice({
         builder.addCase(printing.rejected,(state)=>{
             state.printingError=true;
         });
+
     }
 });
 
