@@ -182,5 +182,8 @@
     "unit":"unit (un)",
     "liter":"liter (l)",
     "product_status":"product status",
-    "ordered_without_printing":"Sale completed! However, we couldn't print the invoice. Please make sure the printing application is open and connected."
+    "ordered_without_printing":"Sale completed! However, we couldn't print the invoice. Please make sure the printing application is open and connected.",
+    "client_phone":"client phone",
+    "reprinting":"reprinting the invoice",
+    "error_reprinting":"we couldn't reprint the invoice. Please make sure the printing application is open and connected."
 }
