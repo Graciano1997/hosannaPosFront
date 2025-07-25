@@ -75,13 +75,13 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                             if(getInvoiceItem.fulfilled.match(invoiceResultState)){
                                 dispatch(printing(invoiceResultState.payload.invoice_item))
                                 .then((printingStateResult)=>{
-                                    if(printing.fulfilled.match(printingStateResult)){
+                                    // if(printing.fulfilled.match(printingStateResult)){
                                         dispatch(showToast({success:true,message:firstCapitalize(t('reprinting'))}))
-                                    }
+                                    // }
                                     
-                                    if(printing.rejected.match(printingStateResult)){
-                                        dispatch(showToast({error:true,message:firstCapitalize(t('error_reprinting'))}))
-                                    }
+                                      if(printing.rejected.match(printingStateResult)){
+                                          dispatch(showToast({error:true,message:firstCapitalize(t('error_reprinting'))}))
+                                          }
                                 })
                             }
                         })
