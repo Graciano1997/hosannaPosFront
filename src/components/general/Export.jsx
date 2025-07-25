@@ -13,6 +13,7 @@ const Export = ({ stopExporting}) => {
     const exportingModel = useSelector((state) =>state.appState.exportingModel);
     let exportingModelKeys=[];
 
+    // this will be refractored......
     if(exportingModel.data.length!=0){
         exportingModelKeys = Object.keys(exportingModel.data[0]);
     }
@@ -29,7 +30,7 @@ const Export = ({ stopExporting}) => {
     return (
         <>
             <Modal helper={stopExporting}>
-                <form className='flex flex-col h-[100%]  mt-[1rem] rounded p-3'>
+                <form className='flex flex-col h-[100%]  mt-[1rem] rounded p-3 overflow-y-auto'>
                 <label>
                     {firstCapitalize(t('whichformatToExport'))}
                      <br />
