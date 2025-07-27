@@ -186,5 +186,5 @@
     "ordered_without_printing": "Venda realizada! Mas não conseguimos imprimir a fatura. Certifique-se de que a aplicação de impressão está aberta e conectada.",
     "client_phone":"contato do cliente",
     "reprinting":"reimprimindo a fatura",
-    "error_reprinting":"Não conseguimos re-imprimir a fatura. Certifique-se de que a aplicação de impressão está aberta e conectada."
+    "error_reprinting":"Não conseguimos reimprimir a fatura. Certifique-se de que a aplicação de impressão está aberta e conectada."
 }
