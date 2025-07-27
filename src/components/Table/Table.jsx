@@ -92,9 +92,9 @@ const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteIt
                 }
 
                 {appState.error == '' && !appState.loading && collection.length > 0 &&
-                    <div className={`w-100 overflow-scroll p-1 h-[350px] mt-[1.5rem]`}>
+                    <div className={`w-100 overflow-scroll p-1 h-[400px]  mt-[1.5rem] resize-y`}>
                         
-                        <table className="rounded shadow-md  w-full table-auto" >
+                        <table className="rounded shadow-md  w-full h-full table-auto" >
                             <Thead filterRows={filterRows} setCollection={setCollection} items={collection} object={collection[0]} />
                             <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} printItem={printItem} items={collection} />
                         </table>
