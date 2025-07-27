@@ -33,7 +33,7 @@ const User=()=>{
             data:users}}/>
         <TabWrapper>
       
-        {appState.activeTab=="tab1" && <Table filterDetails={filterDetails} filterRows={['profile_id']} update={updatingUser} create={creatingUser} dispatcher={setUser} fetcher={fetchUsers} deleteItem={deleteUser} collection={users}/>}
+        {appState.activeTab=="tab1" && <Table setCollection={setUser} filterDetails={filterDetails} filterRows={['profile_id']} update={updatingUser} create={creatingUser} dispatcher={setUser} fetcher={fetchUsers} deleteItem={deleteUser} collection={users}/>}
         
         </TabWrapper>
         {(userState.isCreating  || userState.isUpdating ) && appState.isOpen && (<Create stopCreating={stopCreatingOrUpdateingUser}/>)}

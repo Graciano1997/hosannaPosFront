@@ -1,5 +1,7 @@
 export const sortCollection = (collectionArr,key,desc=false,date=false)=>{
 
+    if(collectionArr.length<=1) return collectionArr;
+
     const collection = [...collectionArr]
     for(let i=0; i < collection.length; i++){
         for(let j=0; j<collection.length-1; j++){

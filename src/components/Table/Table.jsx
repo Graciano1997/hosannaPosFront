@@ -10,7 +10,7 @@ import searchCollection from "../../lib/seach";
 import { useEffect, useState } from "react";
 
 
-const Table = ({ collection = [], addItem = null, deleteItem = () => { }, printItem=null , update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { } }) => {
+const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteItem = () => { }, printItem=null , update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { } }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const appState = useSelector((state) => state.appState);
@@ -95,7 +95,7 @@ const Table = ({ collection = [], addItem = null, deleteItem = () => { }, printI
                     <div className={`w-100 overflow-scroll p-1 h-[350px] mt-[1.5rem]`}>
                         
                         <table className="rounded shadow-md  w-full table-auto" >
-                            <Thead filterRows={filterRows} items={collection} object={collection[0]} />
+                            <Thead filterRows={filterRows} setCollection={setCollection} items={collection} object={collection[0]} />
                             <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} printItem={printItem} items={collection} />
                         </table>
                     </div>

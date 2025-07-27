@@ -73,11 +73,11 @@ const Product=()=>{
         <TabWrapper>
         
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
-        <Table addItem={true} filterDetails={filterProductDetails} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} dispatcher={setProducts} fetcher={fetchProducts} collection={products}/>
+        <Table addItem={true} filterDetails={filterProductDetails} setCollection={setProducts} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} dispatcher={setProducts} fetcher={fetchProducts} collection={products}/>
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}
-        {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']} fetcher={fetchCategories} dispatcher={setCategories}  collection={categoryState.categories || []}/>}
+        {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']} setCollection={setCategories} fetcher={fetchCategories} dispatcher={setCategories}  collection={categoryState.categories || []}/>}
         {appState.activeTab=="tab4" && !productState.error && !productState.loading && 
         <ExpiredProducts/>
         }
