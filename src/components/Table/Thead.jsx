@@ -19,16 +19,22 @@ const Thead = ({ object, filterRows, items=[], setCollection }) => {
     <thead className="sticky bg-white top-[-8px]" >
       <tr className="p-2 shadow h-[45px]">
         {keys.map((label) => 
-        <th className="p-2 text-sm cursor-pointer" onClick={()=>{
+        <th className="p-2 text-sm cursor-pointer"  onClick={()=>{
+          
+          let defaultState=false;
+
           if(activeSortCol==label){
-            setActiveSortOrdDesc(!activeSortOrdDesc);
+            defaultState=!activeSortOrdDesc;
+            setActiveSortOrdDesc(defaultState);
           }else{
-            setActiveSortOrdDesc(false);
+            defaultState=false;
+
+            setActiveSortOrdDesc(defaultState);
             if(!sortingFieldFilter.includes(label))
               setActiveSortCol(label);
           }
-          //this ensure to set the sorted collection....
           dispatch(setCollection(sortCollection(items,label,activeSortOrdDesc)));
+          //this ensure to set the sorted collection....
           }}>
             <div className="flex justify-center items-center gap-3 ">{firstCapitalize(t(label))}
               {<SortIcon desc={activeSortOrdDesc} show={ sortingFieldFilter.includes(label)? false: label==activeSortCol}/>}
