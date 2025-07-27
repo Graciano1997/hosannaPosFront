@@ -4,7 +4,7 @@ import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { creatingCompany, deleteCompany, fetchCompanies, updateCompany, updatingCompany } from "../../slices/companySlice";
+import { creatingCompany, deleteCompany, fetchCompanies, setCompany, updateCompany, updatingCompany } from "../../slices/companySlice";
 import Table from "../Table/Table";
 import Create from "./Create";
 import Profile from "./Profile";
@@ -33,9 +33,9 @@ const Setting=()=>{
         { appState.activeTab=="tab1" && 
         (
             companyState.companies.length?
-            <Table filterDetails={[]} filterRows={companyState.companyFilterRows} update={updatingCompany} create={null} deleteItem={deleteCompany} collection={companyState.companies}/>
+            <Table filterDetails={[]} setCollection={setCompany}  filterRows={companyState.companyFilterRows} update={updatingCompany} create={null} deleteItem={deleteCompany} collection={companyState.companies}/>
             :
-            <Table filterDetails={[]} filterRows={companyState.companyFilterRows} update={updatingCompany} create={creatingCompany} deleteItem={deleteCompany} collection={companyState.companies}/>
+            <Table filterDetails={[]} setCollection={setCompany} filterRows={companyState.companyFilterRows} update={updatingCompany} create={creatingCompany} deleteItem={deleteCompany} collection={companyState.companies}/>
         )
         }
         

@@ -34,7 +34,7 @@ const Spent = () => {
                     data:spents}}
             />
             <TabWrapper>
-                {appState.activeTab == "tab1" && (<Table filterDetails={filterSpentDetails} filterRows={['user_id','image']} collection={spents} update={updatingSpent} deleteItem={deleteSpent} fetcher={fetchSpents} dispatcher={setSpents}  create={creatingSpent} />)}
+                {appState.activeTab == "tab1" && (<Table filterDetails={filterSpentDetails} setCollection={setSpents} filterRows={['user_id','image']} collection={spents} update={updatingSpent} deleteItem={deleteSpent} fetcher={fetchSpents} dispatcher={setSpents}  create={creatingSpent} />)}
                 {appState.activeTab == "tab2" && (<SpendDashboard />)}
             </TabWrapper>
             {(spentState.isCreating || spentState.isUpdating) && appState.isOpen &&  (<Create />)}

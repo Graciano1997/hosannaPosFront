@@ -50,6 +50,9 @@ const companySlice = createSlice({
     stopCreatingCompany : (state)=>{
         state.isCreating = false;
     },
+    setCompany : (state,action)=>{
+        state.companies = action.payload;
+    },
     updatingCompany: (state,action)=>{
         state.isUpdating = true;
         state.companyToUpdate=action.payload;
@@ -123,4 +126,4 @@ const companySlice = createSlice({
 });
 
 export default companySlice.reducer;
-export const { creatingCompany,updatingCompany, stopCreatingCompany, stopCreatingOrUpdateingCompany} = companySlice.actions;
+export const { creatingCompany,updatingCompany, stopCreatingCompany, stopCreatingOrUpdateingCompany, setCompany} = companySlice.actions;
