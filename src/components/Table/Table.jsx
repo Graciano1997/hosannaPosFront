@@ -95,7 +95,7 @@ const Table = ({ collection = [], addItem = null, deleteItem = () => { }, printI
                     <div className={`w-100 overflow-scroll p-1 h-[350px] mt-[1.5rem]`}>
                         
                         <table className="rounded shadow-md  w-full table-auto" >
-                            <Thead filterRows={filterRows} object={collection[0]} />
+                            <Thead filterRows={filterRows} items={collection} object={collection[0]} />
                             <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} printItem={printItem} items={collection} />
                         </table>
                     </div>
