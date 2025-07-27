@@ -38,7 +38,7 @@ const Navegation =({visible,setVisibility})=>{
     },[]);
 
     return(
-        <nav ref={navegationRef} className={`flex flex-col p-3 items-center justify-between rounded  fixed h-[100%]  md:w-[30%] lg:w-[18%] bg-white top-[0] shadow-md left-[-50%] transition-all duration-700 navegation ${visible ? 'visible':''} navegation z-10`}>
+        <nav ref={navegationRef} className={`flex flex-col p-3 items-center justify-between rounded  fixed h-full w-[250px] bg-white top-[0] shadow-md left-[-100%] transition-all duration-700 navegation ${visible ? 'visible':''} navegation z-10`}>
         <div className="w-[100%]">
         <ul className="flex flex-col gap-3 w-[100%]">
 
@@ -66,7 +66,7 @@ const Navegation =({visible,setVisibility})=>{
             <li>
                 <Link
                 onClick={handleMasterMessage}
-                to={ master ? "/spents":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/spends'?'rounded bg-green-100':''}`} >
+                to={ master ? "/spents":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/spents'?'rounded bg-green-100':''}`} >
                 <ArrowTrendingUpIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('spents'))}
                 </Link>
@@ -82,7 +82,7 @@ const Navegation =({visible,setVisibility})=>{
             <li>
                 <Link
                 onClick={handleMasterMessage}
-                to={  master ? "/users":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/requests'?'rounded bg-green-100':''}`} >
+                to={  master ? "/users":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/users'?'rounded bg-green-100':''}`} >
                 <UserGroupIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('users'))}
                 </Link>
