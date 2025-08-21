@@ -8,6 +8,7 @@ import { creatingCompany, deleteCompany, fetchCompanies, setCompany, updateCompa
 import Table from "../Table/Table";
 import Create from "./Create";
 import Profile from "./Profile";
+import Print from "./Print";
 
 const Setting=()=>{
     const dispatch = useDispatch();
@@ -26,10 +27,6 @@ const Setting=()=>{
         <TabWrapper>
 
 
-        { appState.activeTab=="tab2" && 
-        <Profile/>
-        }
-
         { appState.activeTab=="tab1" && 
         (
             companyState.companies.length?
@@ -38,6 +35,16 @@ const Setting=()=>{
             <Table filterDetails={[]} setCollection={setCompany} filterRows={companyState.companyFilterRows} update={updatingCompany} create={creatingCompany} deleteItem={deleteCompany} collection={companyState.companies}/>
         )
         }
+        
+        { appState.activeTab=="tab2" && 
+        <Profile/>
+        }
+
+        { appState.activeTab=="tab3" && 
+        <Print/>
+        }
+
+        
         
         </TabWrapper>
         {(companyState.isCreating || companyState.isUpdating) && appState.isOpen && (<Create/>)}

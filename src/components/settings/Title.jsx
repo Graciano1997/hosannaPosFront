@@ -1,4 +1,4 @@
-import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon, ArrowDownIcon, ArrowDownTrayIcon, ClockIcon, UserIcon, CurrencyBangladeshiIcon, CurrencyEuroIcon, CurrencyDollarIcon, UserGroupIcon } from "@heroicons/react/24/solid";
+import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon, ArrowDownIcon, ArrowDownTrayIcon, ClockIcon, UserIcon, CurrencyBangladeshiIcon, CurrencyEuroIcon, CurrencyDollarIcon, UserGroupIcon, PrinterIcon } from "@heroicons/react/24/solid";
 import {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
@@ -60,7 +60,7 @@ const Title=({title,create})=>{
                         dispatch(activeTab('tab1'))}
                     }
                 } 
-                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''}`} >
+                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab1"?'activeTab':''}`} >
                 <HomeIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('company_details'))}
                 </Link>
@@ -76,6 +76,19 @@ const Title=({title,create})=>{
                 className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab2"?'activeTab':''}`} >
                 <UserGroupIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('profile'))}
+                </Link>
+            </li>
+                        <li>
+                <Link to={"#"} onClick={
+                    (el)=>{
+                        el.preventDefault();
+                        if(handleMasterMessage()){
+                            dispatch(activeTab('tab3'))}
+                        }
+                } 
+                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''}`} >
+                <PrinterIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
+                { firstCapitalize(t('printer'))}
                 </Link>
             </li>
         </ul>   
