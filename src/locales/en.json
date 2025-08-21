@@ -185,5 +185,22 @@
     "ordered_without_printing":"Sale completed! However, we couldn't print the invoice. Please make sure the printing application is open and connected.",
     "client_phone":"client phone",
     "reprinting":"reprinting the invoice",
-    "error_reprinting":"we couldn't reprint the invoice. Please make sure the printing application is open and connected."
+    "error_reprinting":"we couldn't reprint the invoice. Please make sure the printing application is open and connected.",
+    "printer":"printer",
+    "printer_type": "Printer Type",
+    "thermal_80mm": "Thermal 80 mm",
+    "thermal_58mm": "Thermal 58 mm",
+    "a4_office": "A4 / Office Printer",
+    "connected_printers":"connected printers",
+    "finish_and_print": "Finish and Print",
+    "margins":"margins",
+    "margin_top": "Top",
+    "margin_bottom": "Bottom",
+    "font_type":"font Type",
+    "size":"size",
+    "header":"header",
+    "body":"body",
+    "note":"note",
+    "copy_numbers":"copy number",
+    "print_test":"Print Test"
 }

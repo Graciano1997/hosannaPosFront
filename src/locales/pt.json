@@ -186,5 +186,22 @@
     "ordered_without_printing": "Venda realizada! Mas não conseguimos imprimir a fatura. Certifique-se de que a aplicação de impressão está aberta e conectada.",
     "client_phone":"contato do cliente",
     "reprinting":"reimprimindo a fatura",
-    "error_reprinting":"Não conseguimos reimprimir a fatura. Certifique-se de que a aplicação de impressão está aberta e conectada."
+    "error_reprinting":"Não conseguimos reimprimir a fatura. Certifique-se de que a aplicação de impressão está aberta e conectada.",
+    "printer":"impressora",
+    "printer_type": "tipo de impressora",
+    "thermal_80mm": "Térmica 80 mm",
+    "thermal_58mm": "Térmica 58 mm",
+    "a4_office": "A4 / Impressora de escritório",
+    "connected_printers":"impressoras conectadas",
+    "finish_and_print": "Finalizar e Imprimir",
+    "margins":"margens",
+    "margin_top": "Superior",
+    "margin_bottom": "Inferior",
+    "font_type":"Tipo de Fonte",
+    "size": "tamanho",
+    "header": "cabeçalho",
+    "body": "corpo",
+    "note": "nota",
+    "copy_numbers": "número de cópia",
+    "print_test":"Imprimir Teste"
 }

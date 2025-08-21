@@ -17,7 +17,7 @@ const LargeModal = ({children,stopCreating,helper = undefined})=>{
             dispatch(helper());
           }
         }}
-        className="absolute text-red-500 text-2xl bg-white p-2 rounded shadow  right-[15px] top-[20px] transition-all duration-200 hover:bg-green-100">X</button>
+        className="absolute text-red-500 text-2xl bg-white p-2 rounded shadow  right-[15px] top-[15px] transition-all duration-200 hover:bg-red-400 hover:text-white">X</button>
             <div className='p-3 mt-[5rem]  w-[97%] h-[80%]  rounded bg-white shadow overflow-auto' style={{zIndex:2000}}>
               {children} 
             </div>
