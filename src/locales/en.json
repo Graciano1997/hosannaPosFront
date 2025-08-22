@@ -196,11 +196,20 @@
     "margins":"margins",
     "margin_top": "Top",
     "margin_bottom": "Bottom",
+    "margin_left": "left",
+    "margin_right": "right",
     "font_type":"font Type",
     "size":"size",
     "header":"header",
     "body":"body",
     "note":"note",
     "copy_numbers":"copy number",
-    "print_test":"Print Test"
+    "print_test":"Print Test",
+    "no_printers":"No available printers",
+    "rescan_printers":"Refresh Printers",
+    "printers_found":"Printers found",
+    "printers_not_found":"No printers found, please check the printers connected to your machine.",
+    "printers_server_error":"Print server unavailable, please check if the print service is running.",
+    "print_from_browser":"print from Browser",
+    "preview_before_printing":"preview before printing"
 }

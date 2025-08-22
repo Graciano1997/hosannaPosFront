@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useFetcher, useLocation, useNavigate } from "react-router-dom";
-import { authenticate,logoutUser, printing, showToast } from "../../slices/appSlice";
+import { authenticate,logoutUser, showToast } from "../../slices/appSlice";
 import { useEffect, useState } from "react";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 

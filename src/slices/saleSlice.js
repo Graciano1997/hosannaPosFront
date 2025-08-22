@@ -212,6 +212,7 @@ const saleSlice = createSlice({
             state.totalItems = 0,
             state.total = 0;
             state.invoiceType= SaleType.SALE;
+            state.paymentType=PaymentType.CASH;
             state.saleConfirmationIsOpen = false;
             state.clientDetails = { client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
         }

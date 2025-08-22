@@ -197,11 +197,20 @@
     "margins":"margens",
     "margin_top": "Superior",
     "margin_bottom": "Inferior",
+    "margin_left": "esquerda",
+    "margin_right": "direita",
     "font_type":"Tipo de Fonte",
     "size": "tamanho",
     "header": "cabeçalho",
     "body": "corpo",
     "note": "nota",
     "copy_numbers": "número de cópia",
-    "print_test":"Imprimir Teste"
+    "print_test":"Imprimir Teste",
+    "no_printers":"Sem impressoras disponíveis",
+    "rescan_printers":"Recarregar Impressoras",
+    "printers_found":"Impressoras encontradas",
+    "printers_not_found":"Nenhuma impressora encontrada, verifique as impressoras conectadas na sua máquina.",
+    "printers_server_error":"Servidor de impressão indisponível, verifique se o serviço de impressão está em execução..",
+    "print_from_browser":"imprimir pelo navegador",
+    "preview_before_printing":"ver antes de imprimir"
 }

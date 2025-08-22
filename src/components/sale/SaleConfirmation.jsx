@@ -12,9 +12,10 @@ const SaleConfirmation = ()=>{
         const dispatch = useDispatch();
         const saleState = useSelector((state)=>state.saleState);
         const appState = useSelector((state)=>state.appState);
+        const {printerConfiguration} = useSelector((state)=>state.printerState);
+        console.log(printerConfiguration);
 
         const orderHandler = ()=>{
-    
             const treatedSaleObject = {
                 client:{
                     ...saleState.clientDetails
@@ -43,11 +44,16 @@ const SaleConfirmation = ()=>{
             
                 //THis action ensure to print in the Java print server App
                 if(order.fulfilled.match(orderResultState)) {
+
+                    //prints only if the user printerConfiguration is set to finish and print.
+                    if(printerConfiguration.finishAndprint==="true"){
                    dispatch(printing(orderResultState.payload.invoice_item))
                    .then((printingResultState)=>{
                     if(printing.rejected.match(printingResultState)){
                         dispatch(showToast({ warning:true, message:firstCapitalize(t('ordered_without_printing'))}));
                     }})
+                    }
+
                 }
                 
             dispatch(saleClean());

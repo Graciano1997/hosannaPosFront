@@ -194,10 +194,17 @@
     "margins": "Marges",
     "margin_top": "supérieure",
     "margin_bottom": "inférieure",
+    "margin_left": "gauche",
+    "margin_right": "droite",
     "size": "taille",
     "header": "en-tête",
     "body": "corps",
     "note": "note",
     "copy_numbers": "numéro de copie",
-    "print_test": "Imprimer le test"
+    "print_test": "Imprimer le test",
+    "no_printers":"Aucune imprimante disponible",
+    "rescan_printers":"Actualiser Imprimantes",
+    "printers_found":"Imprimantes trouvées",
+    "printers_not_found":"Aucune imprimante trouvée, veuillez vérifier les imprimantes connectées à votre machine.",
+    "printers_server_error":"Serveur d'impression indisponible, veuillez vérifier si le service d'impression est en cours d'exécution."
 }

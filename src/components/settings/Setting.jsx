@@ -9,12 +9,15 @@ import Table from "../Table/Table";
 import Create from "./Create";
 import Profile from "./Profile";
 import Print from "./Print";
+import { fetchPrinterConfig, fetchPrinters } from "../../slices/printerSlice";
 
 const Setting=()=>{
     const dispatch = useDispatch();
     
     useEffect(()=>{
         dispatch(fetchCompanies());
+        dispatch(fetchPrinterConfig());
+        dispatch(fetchPrinters()); 
     },[]);
 
     const appState = useSelector((state)=>state.appState);
