@@ -183,7 +183,7 @@
    "unit":"unidade (un)",
    "liter":"litro (l)",
    "product_status":"estado do produto",
-    "ordered_without_printing": "Venda realizada! Mas não conseguimos imprimir a fatura. Certifique-se de que a aplicação de impressão está aberta e conectada.",
+    "ordered_without_printing": "Venda realizada! Mas não conseguimos imprimir a fatura. Certifique-se de que a aplicação de impressão está aberta e conectada, ou verifique as definições de impressão.",
     "client_phone":"contato do cliente",
     "reprinting":"reimprimindo a fatura",
     "error_reprinting":"Não conseguimos reimprimir a fatura. Certifique-se de que a aplicação de impressão está aberta e conectada.",
@@ -212,5 +212,6 @@
     "printers_not_found":"Nenhuma impressora encontrada, verifique as impressoras conectadas na sua máquina.",
     "printers_server_error":"Servidor de impressão indisponível, verifique se o serviço de impressão está em execução..",
     "print_from_browser":"imprimir pelo navegador",
-    "preview_before_printing":"ver antes de imprimir"
+    "preview_before_printing":"ver antes de imprimir",
+    "printers_test":"o teste de impressão foi enviado a impressora [x]"
 }

@@ -10,13 +10,12 @@ const initialState = {
 };
 
 export const printing = createAsyncThunk("printerState/printing", async (data) => {
+    
     const response = await fetch(`${printerIp}/print`,{
-          headers: { "Content-Type": "application/json", Accept: "application/json",
+          headers: { "Content-Type": "application/json", Accept: "application/json"},
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body:JSON.stringify({data})
-         }
-    });
+          body:JSON.stringify(data)
+         });
     return response.json();
 });
 
@@ -50,11 +49,12 @@ export const fetchPrinters = createAsyncThunk("printerState/fetchPrinters", asyn
     return response.json();
 });
 
- export const printTest = createAsyncThunk("printerState/printTest", async () => {
-     const response = await fetch(`${printerIp}/printtest`, 
+ export const printTest = createAsyncThunk("printerState/printTest", async (data) => {
+    console.log(data);
+     const response = await fetch(`${printerIp}/print_test`, 
         { method: 'POST',
           headers: { 'Content-Type': 'application/json'},
-          body:JSON.stringify({})
+          body:JSON.stringify(data)
         });
      return response.json();
  });
@@ -95,6 +95,15 @@ const printerSlice = createSlice({
             state.loading=false;
             state.error=null;
             localStorage.setItem(action.payload.data.user,JSON.stringify(action.payload.data.value));
+            state.printerConfiguration=action.payload.data.value;
+        });
+        builder.addCase(printing.fulfilled, (state, action) => {
+            state.loading=false;
+            state.error=null;
+        });
+        builder.addCase(printing.rejected, (state, action) => {
+            state.loading=false;
+            state.error=null;
         });
     }
 });

@@ -14,7 +14,7 @@ const Modal = ({children, helper = undefined })=>{
         <div className="flex items-center">
         <div className="fixed w-[100%] h-[100%] top-[0] left-[0] blur-sm">
         </div>
-        <div className='fixed  bg-black/5 w-[100%] h-[100%] top-[0] left-[0] flex justify-center'>
+        <div className='fixed  bg-black/30 w-[100%] h-[100%] top-[0] left-[0] flex justify-center'>
          <button
          onClick={()=>{ 
           dispatch(closeModal());

@@ -19,7 +19,9 @@ const initialState = {
     isExporting:false,
     exportingModel:{},
     isLogged:true,
-    currentTableCollection:[]
+    currentTableCollection:[],
+    invoiceView:false,
+    urlItem:''
 }
 
  export const authenticate= createAsyncThunk("appState/authenticate",async (user)=>{
@@ -47,14 +49,15 @@ const initialState = {
     }
  });
 
-  export const printing = createAsyncThunk("appState/printing",async (invoiceItem)=>{
+  export const printing = createAsyncThunk("appState/printing",async (invoiceObject)=>{
+    
+        console.log("INVOICE",invoiceObject);
+
         const response = await fetch(`http://localhost:5000/print`,
             { method:'POST',
-              body:JSON.stringify(invoiceItem),
+              body:JSON.stringify(invoiceObject),
               headers:{'Content-Type':'application/json'}
-            });
-            
-            console.log(response.json());
+            });            
             return response.json();
  });
 
@@ -88,6 +91,14 @@ const appSlice=createSlice({
     reducers:{
         itemDetails: (state,action)=>{
             state.itemDetails = action.payload;
+        },
+        openInvoiceView: (state,action)=>{
+            state.invoiceView = true;
+            state.urlItem=action.payload;
+        },
+        closeInvoiceView: (state)=>{
+            state.invoiceView = false;
+            state.urlItem='';
         },
         logoutUser: ()=>{
         localStorage.removeItem("isLogged");
@@ -321,16 +332,18 @@ const appSlice=createSlice({
             state.printingError=false;
         });
 
-        builder.addCase(printing.fulfilled,(state)=>{
+        builder.addCase(printing.fulfilled,(state,action)=>{
             state.printingError=false;
+            console.log(action.payload);
         });
 
-        builder.addCase(printing.rejected,(state)=>{
+        builder.addCase(printing.rejected,(state,action)=>{
             state.printingError=true;
+            console.log(action.payload);
         });
 
     }
 });
 
 export default appSlice.reducer;
-export const {itemDetails, cleanItemDetails, showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged,Exporting,StopExporting,logoutUser,setTableCurrentCollection} = appSlice.actions;
+export const {itemDetails, cleanItemDetails, showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged,Exporting,StopExporting,logoutUser,setTableCurrentCollection,openInvoiceView,closeInvoiceView} = appSlice.actions;

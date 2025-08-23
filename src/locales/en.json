@@ -182,7 +182,7 @@
     "unit":"unit (un)",
     "liter":"liter (l)",
     "product_status":"product status",
-    "ordered_without_printing":"Sale completed! However, we couldn't print the invoice. Please make sure the printing application is open and connected.",
+    "ordered_without_printing":"Sale completed! However, we couldn't print the invoice. Please make sure the printing application is open and connected or check the printing configuration.",
     "client_phone":"client phone",
     "reprinting":"reprinting the invoice",
     "error_reprinting":"we couldn't reprint the invoice. Please make sure the printing application is open and connected.",
@@ -211,5 +211,6 @@
     "printers_not_found":"No printers found, please check the printers connected to your machine.",
     "printers_server_error":"Print server unavailable, please check if the print service is running.",
     "print_from_browser":"print from Browser",
-    "preview_before_printing":"preview before printing"
+    "preview_before_printing":"preview before printing",
+    "printers_test":"the printing test was send to the [x] printer"
 }

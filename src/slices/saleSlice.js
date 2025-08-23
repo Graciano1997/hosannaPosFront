@@ -227,6 +227,7 @@ const saleSlice = createSlice({
         });
 
         builder.addCase(order.fulfilled,(state,action)=>{
+            console.log(action.payload);
             state.saleConfirmationIsOpen = false;
         });
     }

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import pdfFile from './item.pdf';
 import LargeModal from '../general/LargeModal';
 
-function PdfViewer() {
+function PdfViewer({url,closeHandler=()=>{}}) {
   // You can use state to control which PDF is displayed
-  const [pdfUrl, setPdfUrl] = useState(pdfFile);
+  const [pdfUrl, setPdfUrl] = useState(url);
   
   // Optional: Function to change the PDF source dynamically
   const changePdf = (newUrl) => {
@@ -12,7 +12,7 @@ function PdfViewer() {
   };
 
   return (
-    <LargeModal>
+    <LargeModal closeHandler={closeHandler} >
     <div className="pdf-container">
       {false && <div className="pdf-header">
         {/* Example buttons to change PDFs */}

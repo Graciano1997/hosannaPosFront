@@ -206,5 +206,6 @@
     "rescan_printers":"Actualiser Imprimantes",
     "printers_found":"Imprimantes trouvées",
     "printers_not_found":"Aucune imprimante trouvée, veuillez vérifier les imprimantes connectées à votre machine.",
-    "printers_server_error":"Serveur d'impression indisponible, veuillez vérifier si le service d'impression est en cours d'exécution."
+    "printers_server_error":"Serveur d'impression indisponible, veuillez vérifier si le service d'impression est en cours d'exécution.",
+    "printers_test":"o teste de impressão foi enviado a impressora [x]"
 }

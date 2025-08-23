@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts } from './slices/productSlice'
 import Spent from './components/Spent/Spent'
 import User from './components/user/User'
-import {  StopExporting } from './slices/appSlice'
+import {  closeInvoiceView, StopExporting } from './slices/appSlice'
 import Export from './components/general/Export'
 import { fetchUsers } from './slices/userSlice'
 import { fetchSpents } from './slices/spentSlice'
@@ -31,6 +31,7 @@ import { Profiles } from './lib/Enums'
 import { firstCapitalize } from './lib/firstCapitalize'
 import { useTranslation } from 'react-i18next'
 import Account from './components/settings/Account'
+import { fetchPrinterConfig } from './slices/printerSlice'
 
 function App() {
 
@@ -53,6 +54,7 @@ function App() {
      dispatch(fetchSpents());
      dispatch(fetchCategories());
      dispatch(fetchCompanies());
+     dispatch(fetchPrinterConfig());
    },[]);
 
    useEffect(()=>{    
@@ -97,6 +99,12 @@ function App() {
       <Route path='/profile' element={<Account/>} />
       <Route path='*' element={<_404/>} />
       </Routes>
+
+      {
+        appState.invoiceView && appState.urlItem &&
+        <PdfViewer closeHandler={closeInvoiceView} url={appState.urlItem}/>
+      }
+      
 
       {appState.isSearching && (<Search/>)}
       { appState.showToast && (<ShowToast object={appState.toastObject} />)}
