@@ -15,8 +15,6 @@ const SaleConfirmation = () => {
     const appState = useSelector((state) => state.appState);
     const { printerConfiguration } = useSelector((state) => state.printerState);
 
-    console.log(printerConfiguration);
-
     const orderHandler = () => {
         const treatedSaleObject = {
             client: {

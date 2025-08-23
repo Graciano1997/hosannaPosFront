@@ -45,6 +45,19 @@ export const fetchSales=createAsyncThunk('saleState/fetchSales',async ()=>{
     return response.json();
 });
 
+  export const getInvoiceItem= createAsyncThunk("saleState/getInvoiceItem",async (saleId)=>{
+    try{
+        const response = await fetch(`${Ip}/api/sales/reprint/${saleId}`,
+            { method:'GET',
+              headers:{'Content-Type':'application/json'}
+            });
+            return response.json();
+    }catch(error){
+        console.log(error);
+    }
+ });
+
+
 const saleSlice = createSlice({
     name:'saleState',
     initialState,
@@ -229,6 +242,10 @@ const saleSlice = createSlice({
         builder.addCase(order.fulfilled,(state,action)=>{
             console.log(action.payload);
             state.saleConfirmationIsOpen = false;
+        });
+
+        builder.addCase(getInvoiceItem.fulfilled,(state,action)=>{
+            console.log(action.payload);
         });
     }
 });

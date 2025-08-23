@@ -37,18 +37,6 @@ const initialState = {
     }
  });
 
-  export const getInvoiceItem= createAsyncThunk("appState/getInvoiceItem",async (saleId)=>{
-    try{
-        const response = await fetch(`${Ip}/api/sales/reprint/${saleId}`,
-            { method:'GET',
-              headers:{'Content-Type':'application/json'}
-            });
-            return response.json();
-    }catch(error){
-        console.log(error);
-    }
- });
-
   export const printing = createAsyncThunk("appState/printing",async (invoiceObject)=>{
     
         console.log("INVOICE",invoiceObject);

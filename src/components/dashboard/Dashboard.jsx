@@ -21,6 +21,7 @@ import { Cog8ToothIcon } from "@heroicons/react/16/solid";
 import { activeTab } from "../../slices/appSlice";
 import { Profiles } from "../../lib/Enums";
 import { fetchAnualExpiredProducts } from "../../slices/productSlice";
+import { PrintingGeneric } from "../general/PrintingGeneric";
 
 const Dashboard=()=>{
     const {t}=useTranslation();
@@ -85,7 +86,7 @@ const Dashboard=()=>{
             
         </div>
     </div>
-
+    
     <div className="flex flex-col mt-[2rem] mb-[0rem] items-center sm:items-start sm:flex-row justify-end gap-4 sm:mt-[3%] w-full">
 
  <LastSelling width={400} height={350} info={{title:firstCapitalize(t('last_selling')), description:t('about')}}/>

@@ -10,7 +10,7 @@ const initialState = {
 };
 
 export const printing = createAsyncThunk("printerState/printing", async (data) => {
-    
+
     const response = await fetch(`${printerIp}/print`,{
           headers: { "Content-Type": "application/json", Accept: "application/json"},
           method: 'POST',
@@ -38,7 +38,6 @@ export const setPrinterConfig = createAsyncThunk("printerState/setPrinterConfig"
         body:JSON.stringify({user:`user-${CurrentUser.id}-printerConfiguration`,value:printerConfiguration})
     });
 
-    console.log({user:`user-${CurrentUser.id}-printerConfiguration`,value:printerConfiguration});
     return response.json();
 });
 
