@@ -17,6 +17,7 @@ const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteIt
     const appState = useSelector((state) => state.appState);
     const [query, setQuery] = useState('');
     const [currentPage,setCurrentPage]=useState(1);
+    const tablePage = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
     const searchHandler = () => {
         if(query.trim().length > 0) {
@@ -102,22 +103,25 @@ const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteIt
                         </table>
                     </div>
                 }
-            <div className="w-100 rounded  h-[40px] flex justify-center items-center gap-4 mt-[0.3rem]">
+              {
+                  !appState.loading && !appState.error && (collection.length > 0) &&
+                              <div className="w-100 rounded  h-[40px] flex justify-center items-center gap-4 mt-[0.3rem]">
                 {
-                    currentPage>=1 &&
-                <button className="p-1 rounded-[50%] cursor-pointer bg-black/90 text-white">
+                    currentPage>0 &&  currentPage!=1 &&
+                <button className="p-1 rounded-[50%] cursor-pointer bg-black/90 text-white flex items-center justify-center">
                 <ChevronDoubleLeftIcon onClick={()=>{setCurrentPage(currentPage-1)}} className="w-6 h-6" />
                 </button>
                 }
-                <TableNavegationItem currentPage={currentPage} setCurrentPage={setCurrentPage} number={1}/>
-                <TableNavegationItem currentPage={currentPage} setCurrentPage={setCurrentPage} number={2}/>
-                <TableNavegationItem currentPage={currentPage} setCurrentPage={setCurrentPage} number={3}/>
-                <TableNavegationItem currentPage={currentPage} setCurrentPage={setCurrentPage} number={4}/>
-                <TableNavegationItem currentPage={currentPage} setCurrentPage={setCurrentPage} number={5}/>
-                <button className="p-1 rounded-[50%] cursor-pointer bg-black/90 text-white">
+
+                {tablePage.map((navItemNumber)=><TableNavegationItem currentPage={currentPage} setCurrentPage={setCurrentPage} number={navItemNumber}/>)}
+                {
+                    currentPage < tablePage.length  &&  currentPage!=tablePage[tablePage.length-1] &&
+                <button className="p-1 rounded-[50%] cursor-pointer bg-black/90 text-white flex items-center justify-center">
                 <ChevronDoubleRightIcon onClick={()=>{setCurrentPage(currentPage+1)}} className="w-6 h-6" />
                 </button>
-              </div>
+                }
+            </div>
+              } 
             </div>
         </>
     );
