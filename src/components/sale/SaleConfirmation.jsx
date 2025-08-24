@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { order, saleClean, saleNotConfirm, setSaleObject } from "../../slices/saleSlice";
 import { closeModal, openInvoiceView, showToast } from "../../slices/appSlice";
-import { PaymentType, SaleType } from "../../lib/Enums";
+import { ClientType, PaymentType, SaleType } from "../../lib/Enums";
 import { useTranslation } from "react-i18next";
 import { clearSearchedProduct } from "../../slices/productSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
@@ -18,7 +18,8 @@ const SaleConfirmation = () => {
     const orderHandler = () => {
         const treatedSaleObject = {
             client: {
-                ...saleState.clientDetails
+                ...saleState.clientDetails,
+                nif:saleState.clientDetails.client_type??999999999
             },
             sale: {
                 invoiceType: saleState.invoiceType * 1,

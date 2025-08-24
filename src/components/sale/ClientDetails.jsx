@@ -64,7 +64,7 @@ const ClientDetails = ()=>{
             {clientDetails.client_type==ClientType.COMPANY &&
             <div className="flex flex-col gap-3">
                 <label for="clienteNif">{firstCapitalize(t('nif'))}</label>
-                <input type="text" name="nif" value={clientDetails.nif != undefined ? clientDetails.nif:''}  onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2"></input>
+                <input type="text" name="nif" value={clientDetails.nif != undefined ? clientDetails.nif:'Consumidor Final'}  onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2"></input>
             </div>
             }
             
