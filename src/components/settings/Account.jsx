@@ -84,7 +84,6 @@ const Account = () => {
                             <input type='password' onChange={formHandler} name="password" placeholder={firstCapitalize(t('password'))} className='p-1 rounded w-[100%] outline-none' />
                         }
 
-
                         <label for="image" className="text-black/80">{firstCapitalize(t('picture'))}</label>
                         <input type="file"  id="image" name="image" ref={image} />
                         <div className="flex justify-center p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{firstCapitalize(t('update'))}</button></div>

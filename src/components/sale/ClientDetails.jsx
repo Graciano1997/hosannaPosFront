@@ -79,7 +79,7 @@ const ClientDetails = ()=>{
                     }else{
                         setRemain(null)
                     }
-
+                    
                     dispatch(setReceivedCash(el.target.value*1));
                     
                 }} className="bg-green-100 rounded p-2"></input>

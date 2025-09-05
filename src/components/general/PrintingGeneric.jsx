@@ -4,7 +4,6 @@ import { printing } from "../../slices/printerSlice";
 
 export const PrintingGeneric = ({queueId='', rejectedMessage='', pdf_url = null} ) => {
 
-
     const { printerConfiguration } = useSelector((state) => state.printerState);
 
     if (printerConfiguration.finishAndprint == "true") {

@@ -21,13 +21,15 @@ const Product=()=>{
     const {t}=useTranslation();
     const [isShowing,setIsShowing]=useState(false);
     const dispatch = useDispatch();
+    const productState = useSelector((state)=>state.productState);
 
     useEffect(()=>{
+        dispatch(fetchProducts(productState.last_created_at));
         dispatch(fetchExpiredProducts());
         dispatch(fetchProductConfiguration());
     },[dispatch]);
     
-    const productState = useSelector((state)=>state.productState);
+
     const categoryState = useSelector((state)=>state.categoryState);
     const filterProductDetails =['id','category_id'];
     const filterCategoryDetails =['id','parent_category_id'];
@@ -64,9 +66,6 @@ const Product=()=>{
         <Title create={creatingProduct} title={t('products')}
         collectionToExport={collectionToExport}
         />
-
-
-
         <TabWrapper>
         
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
@@ -74,7 +73,7 @@ const Product=()=>{
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}
-        {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']} setCollection={setCategories} fetcher={fetchCategories} dispatcher={setCategories}  collection={categoryState.categories || []}/>}
+        {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']} setCollection={setCategories} fetcher={fetchCategories} dispatcher={setCategories}  collection={categoryState.categories || []} fetcherParam={categoryState.last_created_at} />}
         {appState.activeTab=="tab4" && !productState.error && !productState.loading && 
         <ExpiredProducts/>
         }

@@ -7,21 +7,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { creatingProduct, deleteProduct, fetchProductConfiguration, fetchProducts, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
-import { creatingUser, deleteUser, fetchUsers, setUser, stopCreatingOrUpdateingUser, updatingUser } from "../../slices/userSlice";
+import { creatingUser, deleteUser, fetchUsers, searchUsers, setUser, stopCreatingOrUpdateingUser, updatingUser } from "../../slices/userSlice";
 import { activeTab } from "../../slices/appSlice";
 
 const User=()=>{    
     const dispatch = useDispatch();
     const [userCollectionKeys,setUserCollectionKeys]=useState([]);
+    const userState = useSelector((state)=>state.userState);
 
     useEffect(()=>{
-        dispatch(fetchUsers());
+        dispatch(fetchUsers(userState.last_created_at));
         dispatch(activeTab('tab1'))
     },[])
 
     const appState=useSelector((state)=>state.appState);
     const {t}=useTranslation();
-    const userState = useSelector((state)=>state.userState);
     const filterDetails =['id','image','profile_id']    
     const users = userState.users;
 
@@ -33,7 +33,7 @@ const User=()=>{
             data:users}}/>
         <TabWrapper>
       
-        {appState.activeTab=="tab1" && <Table setCollection={setUser} filterDetails={filterDetails} filterRows={['profile_id']} update={updatingUser} create={creatingUser} dispatcher={setUser} fetcher={fetchUsers} deleteItem={deleteUser} collection={users} fetcherParam={userState.last_created_at}/>}
+    {appState.activeTab=="tab1" && <Table setCollection={setUser} filterDetails={filterDetails} filterRows={['profile_id']} update={updatingUser} create={creatingUser} dispatcher={setUser} fetcher={fetchUsers} deleteItem={deleteUser} collection={users} fetcherParam={userState.last_created_at} searchBackEndHandler={searchUsers} />}
         
         </TabWrapper>
         {(userState.isCreating  || userState.isUpdating ) && appState.isOpen && (<Create stopCreating={stopCreatingOrUpdateingUser}/>)}

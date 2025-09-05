@@ -14,10 +14,11 @@ import { saleNotConfirm } from "../../slices/saleSlice";
 
 const Sale=({setToastObject})=>{
     const dispatch=useDispatch();
-
-     useEffect(()=>{
-         dispatch(fetchProducts());
-     },[]);
+    const productState = useSelector((state)=>state.productState);
+    
+      useEffect(()=>{
+          dispatch(fetchProducts(productState.last_created_at));
+      },[]);
 
     const {t}=useTranslation();
     const [isReadingQr,setIsReadingQr]=useState(false);

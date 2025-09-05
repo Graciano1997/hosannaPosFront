@@ -60,7 +60,7 @@ export function DoughnutChart({data = [],width=150,height=150,info}) {
   };;
 
   useEffect(()=>{
-    dispatch(fetchAnualSpents()); 
+    // dispatch(fetchAnualSpents()); 
     dispatch(fetchMinYearSpents());
   },[]);
 

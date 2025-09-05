@@ -46,8 +46,6 @@ const Setting=()=>{
         { appState.activeTab=="tab3" && 
         <Print/>
         }
-
-        
         
         </TabWrapper>
         {(companyState.isCreating || companyState.isUpdating) && appState.isOpen && (<Create/>)}

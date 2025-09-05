@@ -19,13 +19,15 @@ import Money from "../general/Money";
 
 const ProductDashboard=()=>{
   const dispatch = useDispatch()
-    useEffect(()=>{
+  const productState = useSelector((state)=>state.productState);
+  
+  useEffect(()=>{
       dispatch(fetchAnualExpiredProducts());
-      dispatch(fetchProducts());
+      // dispatch(fetchProducts(productState.last_created_at));
     },[]);
 
     const {t}=useTranslation();
-    const productState = useSelector((state)=>state.productState);   
+   
     const products = productState.products;   
     const lastExpireds=sortCollection(expiredProducts(products),'expire',true,true);
 

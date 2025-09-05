@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Ip } from "../lib/ip";
+import { removeDuplicate } from "../lib/removeDuplicate";
 
 const initialState = {
     isCreating : false,
@@ -9,13 +10,19 @@ const initialState = {
     last_created_at:null
 };
 
-export const fetchUsers = createAsyncThunk("userState/fetchUsers", async (last_created_at=null) => {
-    const response = await fetch(`${Ip}/api/users/${last_created_at?`last/${last_created_at}/`:''}`,
-        {
-        headers: { "Content-Type": "application/json", Accept: "application/json" }
-    });
-    return response.json();
-})
+    export const fetchUsers = createAsyncThunk("userState/fetchUsers", async (last_created_at=null) => {
+        const response = await fetch(`${Ip}/api/users/${last_created_at?`last/${last_created_at}/`:''}`,
+            {
+            headers: { "Content-Type": "application/json", Accept: "application/json" }
+        });
+        return response.json();
+    })
+
+    export const searchUsers = createAsyncThunk("userState/searchUsers", async (query) => {
+        const response = await fetch(`${Ip}/api/users/search/${query}/`, 
+            { headers: { "Content-Type": "application/json", Accept: "application/json" }});
+        return response.json();
+    })
 
  export const deleteUser = createAsyncThunk("userState/deleteUser", async (id) => {
      const response = await fetch(`${Ip}/api/users/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
@@ -64,11 +71,12 @@ const userSlice = createSlice({
         
             state.last_created_at=action.payload.last_created_at;
             
+
             if(action.payload.last_created_at && (action.payload.data).length){
                 if((state.users).length==0){
                     state.users = action.payload.data;
                 }else{
-                    state.users = [...state.users,...action.payload.data];
+                    state.users = removeDuplicate([...state.users,...action.payload.data],'id');
                 }
             }
         });

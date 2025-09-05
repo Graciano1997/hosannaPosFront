@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Ip } from "../lib/ip";
+import { removeDuplicate } from "../lib/removeDuplicate";
 
 const initialState = {
     categories: [],
@@ -8,8 +9,8 @@ const initialState = {
     categoryToUpdate:{}
 };
 
-export const fetchCategories = createAsyncThunk("categoryState/fetchCategories",async ()=>{
-    const response = await fetch(`${Ip}/api/categories/`,{method:'GET', headers:{'Content-Type':'application/json'}});
+export const fetchCategories = createAsyncThunk("categoryState/fetchCategories",async (last_created_at=null)=>{
+    const response = await fetch(`${Ip}/api/categories/${last_created_at?`last/${last_created_at}/`:''}`,{method:'GET', headers:{'Content-Type':'application/json'}});
     return response.json();
 });
 
@@ -57,7 +58,14 @@ export const categorySlice = createSlice({
     },
     extraReducers:(builder)=>{
         builder.addCase(fetchCategories.fulfilled,(state,action)=>{
-            state.categories = action.payload.data;
+                state.last_created_at=action.payload.last_created_at;
+                if(action.payload.last_created_at && (action.payload.data).length){
+                    if((state.categories).length==0){
+                        state.categories = action.payload.data;
+                    }else{
+                        state.categories = removeDuplicate([...state.categories,...action.payload.data],'id');                     
+                    }
+                }
         })
 
         builder.addCase(createCategory.fulfilled,(state,action)=>{

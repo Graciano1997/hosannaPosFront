@@ -11,6 +11,8 @@ const ProductConfiguration = ()=>{
     const { t } = useTranslation();
 
     const dispatch = useDispatch();
+    const productState = useSelector((state)=>state.productState);
+
 
     useEffect(()=>{
         dispatch(fetchProductsFields());
@@ -33,7 +35,7 @@ const ProductConfiguration = ()=>{
         dispatch(productConfiguration(productConfigurationFilterElements))
         .then(()=>{
             dispatch(showToast({ success:true, message:t('saved_sucessfuly')}))
-            dispatch(fetchProducts());
+            dispatch(fetchProducts(productState.last_created_at));
             dispatch(fetchProductsFields());
             dispatch(fetchProductConfiguration());
             dispatch(activeTab('tab1'));

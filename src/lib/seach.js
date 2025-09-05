@@ -2,9 +2,7 @@ import { removeDiacritics } from "./removeDiacritic";
 
 const searchCollection = (collection,key)=>{
 
-    
    let item = collection.find(item=>item.id==key);
-
    let auxiliar = [];
 
    //means that it founded the searched id item....
@@ -13,7 +11,6 @@ const searchCollection = (collection,key)=>{
        return auxiliar;
     }
     
-
    const numericFields = [];
    const textFields = [];
 

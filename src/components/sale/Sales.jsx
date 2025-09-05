@@ -25,8 +25,6 @@ const Sales=()=>{
         dispatch(fetchSales(saleState.last_created_at));
     },[])
 
-
-
     return(
         <CardWrapper>
         <Title title={t('sales')}

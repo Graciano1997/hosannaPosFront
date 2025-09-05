@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { removeDiacritics } from "../lib/removeDiacritic";
 import { Ip } from "../lib/ip";
+import { removeDuplicate } from "../lib/removeDuplicate";
 
 const initialState = {
     products:[],
@@ -150,11 +151,13 @@ const productSlice = createSlice({
     state.error='';
     
     state.last_created_at=action.payload.last_created_at;
-    if(action.payload.last_created_at && (action.payload.data).length){
+    
+    if(action.payload.last_created_at && (action.payload.data).length){    
+
         if((state.products).length==0){
             state.products = action.payload.data;
         }else{
-            state.products = [...state.products,...action.payload.data];
+            state.products = removeDuplicate([...state.products,...action.payload.data],'id');                     
         }
     }
     });

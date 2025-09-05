@@ -3,6 +3,7 @@ import { sum } from "../lib/sumSale";
 import { ClientType, DefaultClientePhone, PaymentType, SaleType } from "../lib/Enums";
 import { Ip } from "../lib/ip";
 import { totalWithTaxesAndDiscounts } from "../lib/totalWithTaxes";
+import { removeDuplicate } from "../lib/removeDuplicate";
 
 const initialState = {
     loading:false,
@@ -239,7 +240,7 @@ const saleSlice = createSlice({
                 if((state.sales).length==0){
                     state.sales = action.payload.data;
                 }else{
-                    state.sales = [...state.sales,...action.payload.data];
+                    state.sales = removeDuplicate([...state.sales,...action.payload.data],'id');
                 }
             }
 

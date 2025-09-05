@@ -50,7 +50,7 @@ function App() {
 
 
   useEffect(()=>{
-     dispatch(fetchProducts(productState.last_created_at));
+    // dispatch(fetchProducts(productState.last_created_at));
      dispatch(fetchUsers());
      dispatch(fetchSpents());
      dispatch(fetchCategories());
