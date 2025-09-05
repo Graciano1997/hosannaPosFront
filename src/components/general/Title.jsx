@@ -17,7 +17,7 @@ const Title=({title,create,collectionToExport})=>{
     return(
         <>
         <div
-            className="flex flex-col w-full h-[120px] bg-white rounded p-4 overflow-x-hidden overflow-y-hidden" 
+            className="flex flex-col w-full h-[120px] bg-white rounded-t p-4 overflow-x-hidden overflow-y-hidden" 
             onClick={(el)=>{
                 if(ref.current.contains(el.target) && !showElipse ){
                     setShowElipse(!showElipse);

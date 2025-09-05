@@ -10,7 +10,8 @@ const initialState = {
     lastSpents:[],
     anualSpends:[],
     minYear:0,
-    total:0
+    total:0,
+    last_created_at:null
 };
 
 export const fetchSpents = createAsyncThunk("spentState/fetchSpents", async () => {

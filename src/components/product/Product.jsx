@@ -23,8 +23,6 @@ const Product=()=>{
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        dispatch(fetchProducts());
-        dispatch(fetchCategories());
         dispatch(fetchExpiredProducts());
         dispatch(fetchProductConfiguration());
     },[dispatch]);
@@ -60,7 +58,6 @@ const Product=()=>{
         })}
     },[appState.activeTab]);
 
-    
 
     return(
         <CardWrapper>
@@ -73,7 +70,7 @@ const Product=()=>{
         <TabWrapper>
         
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
-        <Table addItem={true} filterDetails={filterProductDetails} setCollection={setProducts} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} dispatcher={setProducts} fetcher={fetchProducts} collection={products}/>
+        <Table addItem={true} filterDetails={filterProductDetails} setCollection={setProducts} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} dispatcher={setProducts} fetcher={fetchProducts} collection={products} fetcherParam={productState.last_created_at}/>
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}

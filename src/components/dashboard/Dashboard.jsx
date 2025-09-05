@@ -54,14 +54,13 @@ const Dashboard=()=>{
         <div className="mt-[3%]">
     <div className="p-0 pt-5 ">
     <div className="flex gap-2 justify-end rounded">
-        <div className="flex p-0 gap-5">
+        <div className="flex p-0 gap-3">
             <button onClick={()=>{
                 navegate('/sale');
             }} className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex cursor-pointer">
-            <ShoppingCartIcon className="w-5 y-5 text-[#323232] "/>
-          
+            <ShoppingCartIcon className="w-5 y-5 text-[#323232] "/>   
             <h4>{firstCapitalize(t('sale'))}</h4>
-            
+    
             </button>
             {master && 
             <>
@@ -89,9 +88,9 @@ const Dashboard=()=>{
     
     <div className="flex flex-col mt-[2rem] mb-[0rem] items-center sm:items-start sm:flex-row justify-end gap-4 sm:mt-[3%] w-full">
 
- <LastSelling width={400} height={350} info={{title:firstCapitalize(t('last_selling')), description:t('about')}}/>
-<DoughnutChart width={350} height={400} data={[today_balance,today_spents]} info={firstCapitalize(t('today_status'))}/>
-<LineChart width={500} height={350} data={{spents: anualSpents,sales:anualSales, expireds:anualExpired}} info={firstCapitalize(t('income_outcome_expiration'))}/>
+<LastSelling width={350} height={350} info={{title:firstCapitalize(t('last_selling')), description:t('about')}}/>
+<DoughnutChart width={300} height={390} data={[today_balance,today_spents]} info={firstCapitalize(t('today_status'))}/>
+<LineChart width={450} height={350} data={{spents: anualSpents,sales:anualSales, expireds:anualExpired}} info={firstCapitalize(t('income_outcome_expiration'))}/>
 </div>
     </div>
         </div>

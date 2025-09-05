@@ -16,11 +16,12 @@ const initialState = {
     filterRowsOp:[],
     expireds:[],
     anualExpireds:[],
-    isSearching:false
+    isSearching:false,
+    last_created_at:null
 };
 
-export const fetchProducts = createAsyncThunk("productState/fetchProducts", async ()=>{
-    const response = await fetch(`${Ip}/api/products/`,{ method:'GET', headers:{'Content-Type':'application/json',
+export const fetchProducts = createAsyncThunk("productState/fetchProducts", async (last_created_at=null)=>{
+    const response = await fetch(`${Ip}/api/products/${last_created_at?`last/${last_created_at}/`:''}`,{ method:'GET', headers:{'Content-Type':'application/json',
     Accept: "application/json"
      }});
     return response.json();
@@ -145,11 +146,17 @@ const productSlice = createSlice({
     });
 
     builder.addCase(fetchProducts.fulfilled,(state,action)=>{
-        state.loading=false;
-        if(action.payload!=undefined){
+    state.loading=false;
+    state.error='';
+    
+    state.last_created_at=action.payload.last_created_at;
+    if(action.payload.last_created_at && (action.payload.data).length){
+        if((state.products).length==0){
             state.products = action.payload.data;
-            state.error='';
+        }else{
+            state.products = [...state.products,...action.payload.data];
         }
+    }
     });
 
     builder.addCase(fetchProducts.rejected,(state,action)=>{

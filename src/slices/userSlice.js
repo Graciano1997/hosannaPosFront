@@ -6,10 +6,12 @@ const initialState = {
     isUpdating:false,
     userToUpdate:{},
     users: [],
+    last_created_at:null
 };
 
-export const fetchUsers = createAsyncThunk("userState/fetchUsers", async () => {
-    const response = await fetch(`${Ip}/api/users/`,{
+export const fetchUsers = createAsyncThunk("userState/fetchUsers", async (last_created_at=null) => {
+    const response = await fetch(`${Ip}/api/users/${last_created_at?`last/${last_created_at}/`:''}`,
+        {
         headers: { "Content-Type": "application/json", Accept: "application/json" }
     });
     return response.json();
@@ -59,7 +61,16 @@ const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
-            state.users = action.payload.data;
+        
+            state.last_created_at=action.payload.last_created_at;
+            
+            if(action.payload.last_created_at && (action.payload.data).length){
+                if((state.users).length==0){
+                    state.users = action.payload.data;
+                }else{
+                    state.users = [...state.users,...action.payload.data];
+                }
+            }
         });
 
         builder.addCase(registerUser.fulfilled, (state, action) => {

@@ -19,7 +19,8 @@ const initialState = {
     difference:0,
     saleConfirmationIsOpen:false,
     saleObject:{},
-    anualSales:[]
+    anualSales:[],
+    last_created_at:null
 }
 
 
@@ -37,8 +38,8 @@ export const order=createAsyncThunk('saleState/order',async (sale)=>{
     return response.json();
 });
 
-export const fetchSales=createAsyncThunk('saleState/fetchSales',async ()=>{
-    const response = await fetch(`${Ip}/api/sales/`,{
+export const fetchSales=createAsyncThunk('saleState/fetchSales',async (last_created_at=null)=>{           
+    const response = await fetch(`${Ip}/api/sales/${last_created_at?`last/${last_created_at}/`:''}`,{
         method:'GET',
         headers:{ 'Content-Type':'application/json'}
     });
@@ -232,7 +233,16 @@ const saleSlice = createSlice({
     },
     extraReducers:(builder)=>{
         builder.addCase(fetchSales.fulfilled,(state,action)=>{
-            state.sales = action.payload.data;
+            
+            state.last_created_at=action.payload.last_created_at;
+            if(action.payload.last_created_at && (action.payload.data).length){
+                if((state.sales).length==0){
+                    state.sales = action.payload.data;
+                }else{
+                    state.sales = [...state.sales,...action.payload.data];
+                }
+            }
+
         });
 
         builder.addCase(fetchAnualSales.fulfilled,(state,action)=>{

@@ -1,6 +1,6 @@
 const CardTitle=({children})=>{
     return(
-        <div className="shadow bg-white-500 p-3 rounded-t">
+        <div className="shadow bg-white p-3 rounded-t">
             {children}
      </div>
     );

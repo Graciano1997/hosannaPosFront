@@ -36,6 +36,7 @@ import { fetchPrinterConfig } from './slices/printerSlice'
 function App() {
 
   const appState=useSelector((state)=>state.appState);
+  const productState=useSelector((state)=>state.productState);
 
   const [isVisible,setIsVisible]=useState(false);
   const [isSearching,setIsSearching]=useState(false);
@@ -49,7 +50,7 @@ function App() {
 
 
   useEffect(()=>{
-     dispatch(fetchProducts());
+     dispatch(fetchProducts(productState.last_created_at));
      dispatch(fetchUsers());
      dispatch(fetchSpents());
      dispatch(fetchCategories());
