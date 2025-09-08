@@ -4,26 +4,25 @@ export const Thermal = () => {
 
     const [invoice, setInvoice] = useState({});
 
-    return (
-        <section id="tpl-receipt"
-            class="#{@printer_type == '80mm' ? 'receipt-80' : 'receipt-58'}"
-            style="#{(@printer_type == '80mm' || @printer_type == '58mm') ? '':'display:none;'}">
 
-            <div class="rc-header">
-                <h2>{invoice.empresa}</h2>
-                <p>NIF {invoice.nif}</p>
-                <p>{invoice.local}</p>
-                <p>Tel: {invoice.empresaPhone}</p>
-                <div class="rc-line"></div>
-                <p><strong>Fatura</strong> Nº {invoice.numeroRecibo} · Série { serie }</p>
-                <p>{invoice.dataEmissao}</p>
-                <div class="rc-line"></div>
+
+    return (
+        <section id="tpl-receipt" class="#{@printer_type == '80mm' ? 'receipt-80' : 'receipt-58'}" style="">
+
+            <div style={{textAlign:center}}>
+                <h2>{invoice.company_name}</h2>
+                <b>Endereço: {invoice.company_address}</b>
+                <b>Nif: {invoice.company_nif} {' Tel:'} {invoice.company_phone}</b>
+                <b>Email:{invoice.company_email}</b>
+                <br/>
+                <p><strong>Fatura</strong> Nº {invoice.invoice_number}</p>
+                <p>Data: {invoice.sale_date}</p>
             </div>
 
             <div class="rc-meta">
-                <p>Cliente: {invoice.cliente}</p>
-                <p>NIF: {0}</p>
-                <p>Tel: {invoice.telefone}</p>
+                <p>Cliente: {invoice.client_name}</p>
+                <p>NIF: {invoice.client_nif}</p>
+                <p>Tel: {invoice.client_phone}</p>
             </div>
 
             <div class="rc-items">
@@ -38,7 +37,20 @@ export const Thermal = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {invoice.produtos}
+                        {invoice.produtos.map((item)=>{
+                            return(
+                            <tr>
+                                <td>{item.name}</td>
+                                <td class="rc-right">#{item.qty}</td>
+                                <td class="rc-right">#{item.preco}</td>
+                                <td class="rc-right">#{item.taxe} %</td>
+                                <td class="rc-right">#{item.subtotal}</td>
+                            </tr>
+                            )
+                        })
+                        
+                        }
+
                     </tbody>
                 </table>
             </div>
@@ -46,8 +58,8 @@ export const Thermal = () => {
             <div class="rc-line"></div>
 
             <div class="rc-totals">
-                <div class="row"><span>Subtotal</span><span>{subtotal}</span></div>
-                <div class="row"><span>IVA</span><span>{iva_total}</span></div>
+                <div class="row"><span>Subtotal</span><span>{invoice.subtotal}</span></div>
+                <div class="row"><span>IVA</span><span>{invoice.ivatotal}</span></div>
                 <div class="row" style="font-weight:700;"><span>Total</span><span>{invoice.total}</span></div>
                 <div class="row"><span>Pago</span><span>{valor_pago}</span></div>
                 <div class="row"><span>Troco</span><span>{invoice.troco}</span></div>

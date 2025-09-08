@@ -63,7 +63,11 @@ const ClientDetails = ()=>{
             
             <div className="flex flex-col gap-3">
                 <label for="clienteNif">{firstCapitalize(t('nif'))}</label>
-                <input type="text" name="nif" value={ clientType==ClientType.SINGULAR ? '999999999':''}  onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2" />
+                <input 
+                type="text" 
+                name="nif" 
+                defaultValue={clientType==ClientType.SINGULAR ? '999999999':''}  
+                onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2" />
             </div>
             
             

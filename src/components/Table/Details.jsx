@@ -8,7 +8,7 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const Details = ({cleanItemDetails,filterDetails=[]}) =>{
 
-    const moneyFields = ['price','total', 'amount', 'cost_price'];
+    const moneyFields = ['price','total', 'amount', 'cost_price','discount','difference','received_cash'];
     const detailsItem = useSelector((state)=>state.appState.itemDetails);
     let keys = Object.keys(detailsItem);
     const hasImage = detailsItem.image ?true:false;
@@ -22,12 +22,12 @@ const Details = ({cleanItemDetails,filterDetails=[]}) =>{
                 <h4 className="text-3xl font-light text-end">{ firstCapitalize(t('details'))}</h4>
                 <div className={`mt-[2rem] p-1 ${hasImage?'grid gap-[2rem] justify-center':'flex'}`} style={{gridTemplateColumns:`${ hasImage ?'10fr 90fr':'100fr'}`}}>      
                 { hasImage && <div className="h-[100%]">
-                <div className="w-[250px] h-[250px] sm:shadow rounded-[16px]">
+                <div className="w-[250px] h-[300px] sm:shadow rounded-[16px]">
                     {detailsItem.image==="none" && <UserIcon className="w-[100%] h-[100%] rounded-[16px]"/> }
                     {detailsItem.image!=="none" &&  <img src={detailsItem.image} className="w-[100%] h-[100%] rounded-[16px]" />}
                 </div>
                 </div>}
-                <div className="flex flex-col w-[100%] h-[250px] p-3 rounded sm:shadow overflow-y-scroll">
+                <div className="flex flex-col w-[100%] h-[300px] p-3 rounded sm:shadow overflow-y-scroll">
                 <div className="mt-2">
                 {keys.map((item)=>
                 <div className="flex flex-col gap-1 hover:shadow p-2">

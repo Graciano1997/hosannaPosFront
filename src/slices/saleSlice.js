@@ -251,7 +251,7 @@ const saleSlice = createSlice({
         });
 
         builder.addCase(order.fulfilled,(state,action)=>{
-            console.log(action.payload);
+            state.sales.unshift(action.payload.sale_item);
             state.saleConfirmationIsOpen = false;
         });
 
