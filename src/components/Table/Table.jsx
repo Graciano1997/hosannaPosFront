@@ -9,7 +9,7 @@ import searchCollection from "../../lib/seach";
 import {  useState } from "react";
 
 
-const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteItem = () => { }, printItem=null , update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { },fetcherParam=null, searchBackEndHandler=()=>{} }) => {
+const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteItem = () => { }, printItem=null , update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { },fetcherParam=null, searchBackEndHandler=null }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const appState = useSelector((state) => state.appState);
@@ -23,13 +23,12 @@ const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteIt
             const result = searchCollection(collection, query);
 
             if(result.length==0){
-                 dispatch(searchBackEndHandler())
-                .then((searchResultAction)=>{
-                console.log(searchResultAction);
-                    //   if(searchHandler.fullfiled.match(searchResultAction)){
-                        
-                    //   }
-                 })
+                if(searchBackEndHandler){
+                    dispatch(searchBackEndHandler())
+                   .then((searchResultAction)=>{
+                   console.log(searchResultAction);
+                    })
+                }
             }
 
             setSearchResult(result);

@@ -32,12 +32,12 @@ const ClientDetails = ()=>{
             <h1 className="font-bold mt-1 text-end"> * {firstCapitalize(t('client_details'))}</h1>
             <div className="flex flex-col gap-3 mt-1">
                 <label for="clienteNome">{firstCapitalize(t('name'))}</label>
-                <input type="text" name="name" onChange={formHandler} value={clientDetails.name != undefined ? clientDetails.name:''} className="bg-green-100 rounded p-2"></input>
+                <input type="text" name="name" onChange={formHandler} value={clientDetails.name != undefined ? clientDetails.name:''} className="bg-green-100 rounded p-2"/>
             </div>
 
             <div className="flex flex-col gap-3 mt-1">
                 <label for="clienteEmail">{firstCapitalize(t('email'))}</label>
-                <input type="email" onChange={formHandler} name="email" value={clientDetails.email != undefined ? clientDetails.email:''} id="clienteEmail" className="bg-green-100 rounded p-2"></input>
+                <input type="email" onChange={formHandler} name="email" value={clientDetails.email != undefined ? clientDetails.email:''} id="clienteEmail" className="bg-green-100 rounded p-2"/>
             </div>
 
             <div className="flex flex-col gap-3">
@@ -47,7 +47,7 @@ const ClientDetails = ()=>{
 
             <div className="flex flex-col gap-3">
                 <label for="clienteContact">{firstCapitalize(t('phone'))}</label>
-                <input type="number" name="phone" onChange={formHandler} value={clientDetails.phone} id="clienteContact" defaultValue={DefaultClientePhone} className="bg-green-100 rounded p-2"></input>
+                <input type="number" name="phone" onChange={formHandler} value={clientDetails.phone} id="clienteContact" defaultValue={DefaultClientePhone} className="bg-green-100 rounded p-2"/>
             </div>
 
             <div className="flex flex-col gap-3">
@@ -61,12 +61,11 @@ const ClientDetails = ()=>{
                 </select>
             </div>
             
-            {clientDetails.client_type==ClientType.COMPANY &&
             <div className="flex flex-col gap-3">
                 <label for="clienteNif">{firstCapitalize(t('nif'))}</label>
-                <input type="text" name="nif" value={clientDetails.nif != undefined ? clientDetails.nif:'Consumidor Final'}  onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2"></input>
+                <input type="text" name="nif" value={ clientType==ClientType.SINGULAR ? '999999999':''}  onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2" />
             </div>
-            }
+            
             
             {sale.invoiceType==SaleType.SALE && sale.paymentType==PaymentType.CASH && sale.total > 0 &&
             <div className="flex flex-col gap-3">
@@ -82,7 +81,7 @@ const ClientDetails = ()=>{
                     
                     dispatch(setReceivedCash(el.target.value*1));
                     
-                }} className="bg-green-100 rounded p-2"></input>
+                }} className="bg-green-100 rounded p-2"/>
             </div>
             }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerProduct,updateProduct } from "../../slices/productSlice";
 import LargeModal from "../general/LargeModal";
@@ -11,9 +11,11 @@ const Create = ({ stopCreating }) => {
     const [dimensionVector, setDimensionVector] = useState({});
     const dispatch = useDispatch();
     const {t}=useTranslation();
+    let [promotion,setPromotion]= useState(product.promotion==undefined?false:product.promotion);
 
     const categories = useSelector((state) => state.categoryState.categories);
     const productFilterRows = useSelector((state) => state.productState.productFilterRows)
+
 
     const formHandler = (el) => {
         setProduct({
@@ -123,25 +125,53 @@ const Create = ({ stopCreating }) => {
                             </label>
                         }
                         {!productFilterRows.includes('promotion') &&
+                                <>
                             <label>
                             {firstCapitalize(t('promotion'))}
                                 <br />
-                                <select name="promotion" value={product.promotion} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
+                                <select name="promotion" value={product.promotion} onChange={
+                                    (el)=>{
+                                       setPromotion(el.target.value =="true"?true:false);
+                                    formHandler(el);
+                                }
+                                } className='p-2 rounded w-[100%] outline-none'>
                                     <option value="" disabled selected>{firstCapitalize(t('product_in_promotion'))} </option>
                                     <option value={true}>{firstCapitalize(t('yes'))}</option>
                                     <option value={false}>{firstCapitalize(t('not'))}</option>
 
                                 </select>
                             </label>
+                            { promotion && 
+                            <>
+                                                        <label>
+                                {firstCapitalize(t('promotion_start'))} 
+                                <br />
+                                <input type='date' name="promotion_start" onChange={formHandler} value={product.promotion_start} className='p-1 rounded w-[100%] outline-none bg-green-100' />
+                            </label>
+                            <label>
+                                {firstCapitalize(t('promotion_end'))} 
+                                <br />
+                                <input type='date' name="promotion_end" onChange={formHandler} value={product.promotion_end} className='p-1 rounded w-[100%] outline-none bg-green-100' />
+                            </label>
+                              <label>
+                            {firstCapitalize(t('discount'))}
+                            <br />
+                                <input type='number' onChange={formHandler} name="discount" value={product.discount} className='p-1 rounded w-[100%] outline-none bg-green-100' min={0} />
+                            </label>
+                            </>
+                            }
+
+
+                                </>
                         }
 
-                        {!productFilterRows.includes('discount') &&
+                        {/* {!productFilterRows.includes('discount') &&
                             <label>
                    {firstCapitalize(t('discount'))}
                    <br />
                                 <input type='number' onChange={formHandler} name="discount" value={product.discount} className='p-1 rounded w-[100%] outline-none' min={0} />
                             </label>
-                        }
+                        } */}
 
 
                         {!productFilterRows.includes('weight') &&
