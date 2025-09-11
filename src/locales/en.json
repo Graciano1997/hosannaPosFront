@@ -212,5 +212,6 @@
     "printers_server_error":"Print server unavailable, please check if the print service is running.",
     "print_from_browser":"print from Browser",
     "preview_before_printing":"preview before printing",
-    "printers_test":"the printing test was send to the [x] printer"
+    "printers_test":"the printing test was send to the [x] printer",
+    "save":"save"
 }

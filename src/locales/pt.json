@@ -215,5 +215,6 @@
     "preview_before_printing":"ver antes de imprimir",
     "printers_test":"o teste de impressão foi enviado a impressora [x]",
     "promotion_start":"promoção_inicio",
-    "promotion_end":"promoção_fim"
+    "promotion_end":"promoção_fim",
+    "save":"salvar"
 }

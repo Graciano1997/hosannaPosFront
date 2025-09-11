@@ -71,17 +71,17 @@ const Print = () => {
                     <button
                         onClick={() => {
                             dispatch(fetchPrinters()).then((resultAction) => {
-                                if (fetchPrinters.rejected.match(resultAction)) {
-                                    dispatch(showToast({ error: true, message: firstCapitalize(t('printers_server_error')) }));
-                                }
-                                if (fetchPrinters.fulfilled.match(resultAction)) {
-                                    dispatch(showToast({ success: true, message: firstCapitalize(t('printers_found')) }));
-                                }
+                                 if (fetchPrinters.rejected.match(resultAction)) {
+                                     dispatch(showToast({ error: true, message: firstCapitalize(t('printers_server_error')) }));
+                                 }
+                                 if (fetchPrinters.fulfilled.match(resultAction)) {
+                                     dispatch(showToast({ success: true, message: firstCapitalize(t('printers_found')) }));
+                                 }
                             });
                         }}
                         className="rounded bg-gray-500 p-2">{firstCapitalize(t('rescan_printers'))}</button>
                     <button onClick={() => { 
-                        dispatch(printTest({printer:printerState.printerConfiguration.printer}))
+                        dispatch(printTest({printer:"DeskJet-2300-series"}))
                         .then((resultAction)=>{
                              if(printTest.rejected.match(resultAction)) {
                                     dispatch(showToast({ error: true, message: firstCapitalize(t('printers_server_error')) }));

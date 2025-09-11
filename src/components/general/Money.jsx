@@ -3,15 +3,15 @@ import { useSelector } from "react-redux";
 
 const Money = ({ amount }) => {
   const currencySetting = useSelector((state) => state.appState.currency);
+ 
+  const formattedMoney = new Intl.NumberFormat("pt-AO",{
+    style:"currency",
+    currency:"AOA"
+  }).format(amount);
 
   return (
     <p className="">
-      {currency(amount, {
-        separator: ',',    // Milhar com ponto
-        decimal: '.',      // Decimal com vírgula
-        symbol: '',        // Pode ser 'Kz' se quiseres
-        precision: 2
-      }).format()}
+      {formattedMoney}
     </p>
   );
 };

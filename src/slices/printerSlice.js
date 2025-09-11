@@ -43,7 +43,10 @@ export const setPrinterConfig = createAsyncThunk("printerState/setPrinterConfig"
 
 export const fetchPrinters = createAsyncThunk("printerState/fetchPrinters", async () => {
     const response = await fetch(`${printerIp}/printers`,{
-        headers: { "Content-Type": "application/json", Accept: "application/json" }
+        headers: { "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    Accept: "application/json"
+                 }
     });
     return response.json();
 });
