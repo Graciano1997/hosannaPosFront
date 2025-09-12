@@ -56,16 +56,14 @@ export const deleteProduct = createAsyncThunk("productState/deleteProduct", asyn
     return response.json();
 });
 
-export const registerProduct = createAsyncThunk("productState/registerProduct", async (product)=>{
-    const response = await fetch(`${Ip}/api/products/`,{ method:'POST', body:JSON.stringify(product), headers:{'Content-Type':'application/json' }});
+export const registerProduct = createAsyncThunk("productState/registerProduct", async (productFormData)=>{
+    const response = await fetch(`${Ip}/api/products/`,{ method:'POST', body:productFormData });
     return response.json();
 });
 
-export const updateProduct = createAsyncThunk("productState/updateProduct",async (product)=>{
-    const response = await fetch(`${Ip}/api/products/${product.id}`,
-    {method:'PUT',
-        body:JSON.stringify(product),
-     headers:{'Content-Type':'application/json'}});
+export const updateProduct = createAsyncThunk("productState/updateProduct",async (productFormData)=>{
+    const response = await fetch(`${Ip}/api/products/${productFormData.get("product[id]")}`,
+    {method:'PUT', body:productFormData});
     return response.json();
 });
 
@@ -223,18 +221,18 @@ const productSlice = createSlice({
         console.log(action.payload);
     })
 
-     builder.addCase(updateProduct.fulfilled,(state,action)=>{
-                state.isUpdating = false;
-                state.productToUpdate = {};
-                if (action.payload.success && action.payload.product) {
-                    const atIndex = state.products.findIndex(item => item.id === action.payload.product.id);
-                    if (atIndex !== -1) {
-                      const updatedProducts = [...state.products]; // Create a new array
-                      updatedProducts[atIndex] = action.payload.product; // Update the specific item
-                      state.products = updatedProducts; // Assign the new array to state
-                    }
-                  }            
-            })
+    builder.addCase(updateProduct.fulfilled,(state,action)=>{
+        state.isUpdating = false;
+        state.productToUpdate = {};
+        if (action.payload.success && action.payload.product) {
+            const atIndex = state.products.findIndex(item => item.id === action.payload.product.id);
+            if (atIndex !== -1) {
+                const updatedProducts = [...state.products]; // Create a new array
+                updatedProducts[atIndex] = action.payload.product; // Update the specific item
+                state.products = updatedProducts; // Assign the new array to state
+            }
+            }            
+    })
 }
 });
 

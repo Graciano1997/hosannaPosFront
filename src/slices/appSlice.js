@@ -201,7 +201,6 @@ const appSlice=createSlice({
 
         /* Fetch Sales cases */
       
-
         builder.addCase(registerProduct.pending,(state)=>{
             state.loading=true;
             state.error = '';
@@ -228,7 +227,7 @@ const appSlice=createSlice({
             state.showToast=true;
             state.loading=false;
             state.error = '';
-               state.toastObject = { success:true, message:`Produto ${action.payload.product.name} atualizado com sucesso`}       
+            state.toastObject = { success:true, message:`Produto ${action.payload.product.name} atualizado com sucesso`}       
         })
 
          builder.addCase(createCategory.fulfilled,(state,action)=>{
@@ -329,7 +328,6 @@ const appSlice=createSlice({
             state.printingError=true;
             console.log(action.payload);
         });
-
     }
 });
 

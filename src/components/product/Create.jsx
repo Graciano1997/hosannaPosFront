@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const Create = ({ stopCreating }) => {
+    const image = useRef(null);
     const productState = useSelector((state) => state.productState);
     const [product, setProduct] = useState(productState.productToUpdate);
     const [dimensionVector, setDimensionVector] = useState({});
@@ -15,7 +16,6 @@ const Create = ({ stopCreating }) => {
 
     const categories = useSelector((state) => state.categoryState.categories);
     const productFilterRows = useSelector((state) => state.productState.productFilterRows)
-
 
     const formHandler = (el) => {
         setProduct({
@@ -33,10 +33,23 @@ const Create = ({ stopCreating }) => {
             dimension: JSON.stringify(dimensionVector)
         }
 
+        const productForm = new FormData();
+        
+        //this ensure to delete the image in the treatedProductObject because will be handler by formdate 
+        if(treatedProductObject.id){ delete treatedProductObject.image } 
+
+        Object.keys(treatedProductObject).map((key)=>{
+            productForm.append(`product[${key}]`,treatedProductObject[key]);
+        });
+        
+        if(image.current.files[0]){
+            productForm.append("product[image]",image.current.files[0]);
+        }
+
          if (treatedProductObject.id) {
-             dispatch(updateProduct(treatedProductObject));
+             dispatch(updateProduct(productForm));
          } else {
-             dispatch(registerProduct(treatedProductObject));
+             dispatch(registerProduct(productForm));
          }
     }
 
@@ -288,6 +301,17 @@ const Create = ({ stopCreating }) => {
                                 <br />
                                 <input type='text' onChange={formHandler} name="keyword" value={product.keyword} className='p-1 rounded w-[100%] outline-none' />
                             </label>
+                        }
+                        
+                        {!productFilterRows.includes('image') &&
+
+                            <label>
+                                {firstCapitalize(t('image'))} 
+                                <br />
+                                <input type='file' name="image" ref={image} className='p-1 rounded w-[100%] outline-none' />
+                            </label>
+
+                            
                         }
                     </div>
                     <div className="flex justify-end p-2 mt-auto"><button 
