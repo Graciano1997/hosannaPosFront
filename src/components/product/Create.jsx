@@ -5,6 +5,17 @@ import LargeModal from "../general/LargeModal";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
+export const  productFormHandler = (product)=>{
+    const productForm = new FormData();
+    if(product.id){ delete product.image } 
+
+    Object.keys(product).map((key)=>{
+        productForm.append(`product[${key}]`,product[key]);
+    });
+
+    return productForm 
+}
+
 const Create = ({ stopCreating }) => {
     const image = useRef(null);
     const productState = useSelector((state) => state.productState);
@@ -33,14 +44,7 @@ const Create = ({ stopCreating }) => {
             dimension: JSON.stringify(dimensionVector)
         }
 
-        const productForm = new FormData();
-        
-        //this ensure to delete the image in the treatedProductObject because will be handler by formdate 
-        if(treatedProductObject.id){ delete treatedProductObject.image } 
-
-        Object.keys(treatedProductObject).map((key)=>{
-            productForm.append(`product[${key}]`,treatedProductObject[key]);
-        });
+        let productForm = productFormHandler(treatedProductObject);
         
         if(image.current.files[0]){
             productForm.append("product[image]",image.current.files[0]);

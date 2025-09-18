@@ -9,6 +9,7 @@ import { updateProduct } from "../../slices/productSlice";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { getInvoiceItem } from "../../slices/saleSlice";
+import { productFormHandler } from "../product/Create";
 
 const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem, printItem = null }) => {
 
@@ -42,12 +43,15 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                         {item.status && addItem &&
                             <div className="flex gap-2 items-center rounded-[16px]  bg-green-100 p-1">
                                 <button onClick={() => {
-                                    if (qty * 1 > 0 && item.qty - qty >= 0) {
-                                        const updatedItem = {
+                                    if (qty*1 > 0 && item.qty - qty >= 0) {
+                                        let updatedItem = {
                                             ...item,
                                             qty: item.qty - qty * 1
                                         }
-                                        dispatch(updateProduct(updatedItem));
+                                     
+                                    const productForm = productFormHandler(updatedItem);
+
+                                    dispatch(updateProduct(productForm));
                                     }
                                 }} className={`${checkNumber ? 'bg-red-300' : 'bg-red-100'}  w-[20px] rounded-[50%] hover:shadow`}>-</button>
                                 <input type="text"
@@ -67,7 +71,8 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                                             ...item,
                                             qty: item.qty + qty * 1
                                         }
-                                        dispatch(updateProduct(updatedItem));
+                                    const productForm = productFormHandler(updatedItem);
+                                    dispatch(updateProduct(productForm));
                                     }
                                 }} className={`${checkNumber ? 'bg-green-300' : 'bg-green-200'}  w-[20px] hover:shadow rounded-[50%]`}>+</button>
                             </div>
