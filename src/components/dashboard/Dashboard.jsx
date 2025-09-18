@@ -1,12 +1,5 @@
 import { useTranslation } from "react-i18next";
-import Card from "../general/Card";
-import { BarChart } from "./BarChart";
 import LastSelling from "./LastSelling";
-import Title from "../general/Title";
-import LastExpired from "./LastExpired";
-import { PieChart } from "./PieChart";
-import currency from "currency.js";
-import Money from "../general/Money";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useDispatch, useSelector } from "react-redux";
 import { totalToDay } from "../../lib/totalToDay";
@@ -17,11 +10,9 @@ import { LineChart } from "./LineChart";
 import { DoughnutChart } from "./DoughnutChart";
 import { BanknotesIcon, CircleStackIcon, ClockIcon, ShoppingCartIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
-import { Cog8ToothIcon } from "@heroicons/react/16/solid";
 import { activeTab } from "../../slices/appSlice";
 import { Profiles } from "../../lib/Enums";
 import { fetchAnualExpiredProducts } from "../../slices/productSlice";
-import { PrintingGeneric } from "../general/PrintingGeneric";
 
 const Dashboard=()=>{
     const {t}=useTranslation();
