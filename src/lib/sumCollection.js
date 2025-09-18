@@ -1,5 +1,7 @@
 export const sum = (collection, keyElement, itemKey = undefined) => {
 
+    return 0;
+    
     let total = 0;
     let totalItems = 0;
 
