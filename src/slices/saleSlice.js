@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { sum } from "../lib/sumSale";
 import { ClientType, DefaultClientePhone, PaymentType, SaleType } from "../lib/Enums";
-import { Ip } from "../lib/ip";
+import { Ip, IpTenant } from "../lib/ip";
 import { totalWithTaxesAndDiscounts } from "../lib/totalWithTaxes";
 import { removeDuplicate } from "../lib/removeDuplicate";
 
@@ -26,12 +26,12 @@ const initialState = {
 
 
 export const fetchAnualSales = createAsyncThunk("saleState/fetchAnualSales", async (year=new Date().getFullYear()) => {
-    const response = await fetch(`${Ip}/api/sales/anual_sales/${year}`);
+    const response = await fetch(`${IpTenant}sales/anual_sales/${year}`);
     return response.json();
 })
 
 export const order=createAsyncThunk('saleState/order',async (sale)=>{
-    const response = await fetch(`${Ip}/api/sales/`,{
+    const response = await fetch(`${IpTenant}sales/`,{
         method:'POST',
         body:JSON.stringify(sale),
         headers:{ 'Content-Type':'application/json'}
@@ -40,7 +40,7 @@ export const order=createAsyncThunk('saleState/order',async (sale)=>{
 });
 
 export const fetchSales=createAsyncThunk('saleState/fetchSales',async (last_created_at=null)=>{           
-    const response = await fetch(`${Ip}/api/sales/${last_created_at?`last/${last_created_at}/`:''}`,{
+    const response = await fetch(`${IpTenant}sales/${last_created_at?`last/${last_created_at}/`:''}`,{
         method:'GET',
         headers:{ 'Content-Type':'application/json'}
     });
