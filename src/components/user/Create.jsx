@@ -106,7 +106,7 @@ const Create=()=>{
                 {firstCapitalize(t('profile'))}
                 <br />
                 <select name="profile_id" value={user.profile_id}  className='p-2 rounded w-[100%] outline-none' onChange={formHandler}>
-                <option value="" disabled selected>{firstCapitalize(t('select_profile'))}</option>
+                <option  disabled>{firstCapitalize(t('select_profile'))}</option>
                 {profiles.map((profile,index)=><option key={index} value={profile.id}>{profile.name}</option>)}
                 </select>
                 </label>

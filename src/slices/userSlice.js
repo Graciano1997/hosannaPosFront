@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Ip } from "../lib/ip";
+import { Ip, IpTenant } from "../lib/ip";
 import { removeDuplicate } from "../lib/removeDuplicate";
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 };
 
     export const fetchUsers = createAsyncThunk("userState/fetchUsers", async (last_created_at=null) => {
-        const response = await fetch(`${Ip}/api/users/${last_created_at?`last/${last_created_at}/`:''}`,
+        const response = await fetch(`${IpTenant}users/${last_created_at?`last/${last_created_at}/`:''}`,
             {
             headers: { "Content-Type": "application/json", Accept: "application/json" }
         });
@@ -19,25 +19,25 @@ const initialState = {
     })
 
     export const searchUsers = createAsyncThunk("userState/searchUsers", async (query) => {
-        const response = await fetch(`${Ip}/api/users/search/${query}/`, 
+        const response = await fetch(`${IpTenant}users/search/${query}/`, 
             { headers: { "Content-Type": "application/json", Accept: "application/json" }});
         return response.json();
     })
 
  export const deleteUser = createAsyncThunk("userState/deleteUser", async (id) => {
-     const response = await fetch(`${Ip}/api/users/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
+     const response = await fetch(`${IpTenant}users/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
      return response.json();
  });
 
  export const registerUser = createAsyncThunk("userState/registerUser", async (formData) => {
      
-     const response = await fetch(`${Ip}/api/users/`, { method: 'POST', body: formData });
+     const response = await fetch(`${IpTenant}users/`, { method: 'POST', body: formData });
      return response.json();
  });
 
 export const updateUser = createAsyncThunk("userState/updateUser", async (formData) => {
 
-    const response = await fetch(`${Ip}/api/users/${formData.get("user[id]")}`,
+    const response = await fetch(`${IpTenant}users/${formData.get("user[id]")}`,
           {
               method: 'PUT',
               body: formData,
