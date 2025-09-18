@@ -32,7 +32,7 @@ const Setting=()=>{
 
         { appState.activeTab=="tab1" && 
         (
-            companyState.companies.length?
+            companyState.companies.length>0?
             <Table filterDetails={[]} setCollection={setCompany}  filterRows={companyState.companyFilterRows} update={updatingCompany} create={null} deleteItem={deleteCompany} collection={companyState.companies}/>
             :
             <Table filterDetails={[]} setCollection={setCompany} filterRows={companyState.companyFilterRows} update={updatingCompany} create={creatingCompany} deleteItem={deleteCompany} collection={companyState.companies}/>
