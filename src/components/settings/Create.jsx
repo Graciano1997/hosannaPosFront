@@ -1,4 +1,4 @@
-import {useState } from "react";
+import {useRef, useState } from "react";
 import Modal from "../general/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,8 @@ const Create=()=>{
     
     const companyState = useSelector((state)=> state.companyState );
     const dispatch = useDispatch();
-    
+    const image = useRef(null);
+
     const [company,setCompany] = useState(companyState.companyToUpdate);
     const {t}=useTranslation();
 
@@ -22,17 +23,27 @@ const Create=()=>{
     
         const handleFormSubmition = (el) => {
             el.preventDefault();
-       
+
+            const companyForm = new FormData();
+            if(company.id ){ console.log(company.image); } 
+
+            Object.keys(company).map((key)=>{
+                companyForm.append(`company[${key}]`,company[key]);
+            });
+
+            if(image.current.files[0]){
+                companyForm.append("company[image]",image.current.files[0]);
+            }
+
               if (company.id) {
-                  dispatch(updateCompany(company))
+                  dispatch(updateCompany(companyForm))
                   .then(()=>{
-                    dispatch(fetchCompanies())
-                  })
-   
+                     dispatch(fetchCompanies())
+                  })   
               } else {
-                  dispatch(registerCompany(company))
+                  dispatch(registerCompany(companyForm))
                   .then(()=>{
-                    dispatch(fetchCompanies())
+                     dispatch(fetchCompanies())
                   })
               }
         }
@@ -114,6 +125,17 @@ const Create=()=>{
                 </label>
                 </div>
                 </div>
+                
+                <div className="flex gap-3">
+                <div className="w-[50%]">
+                <label>
+                { firstCapitalize(t('image'))}
+                <br />
+                <input type="file" name="image" ref={image} className='p-1 rounded w-[100%] outline-none'/>
+                </label>
+                </div>
+                </div> 
+
                 </div>
 
                 <div className="flex justify-end mt-auto p-2"><button className="p-2 bg-green-100 rounded">{company.id ? firstCapitalize(t('update')) : firstCapitalize(t('create'))}</button></div>

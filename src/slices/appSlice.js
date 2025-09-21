@@ -21,12 +21,13 @@ const initialState = {
     isLogged:true,
     currentTableCollection:[],
     invoiceView:false,
-    urlItem:''
+    urlItem:'',
+    storeId:localStorage.getItem("currentUser")? JSON.parse(localStorage.getItem("currentUser")).storeId:null
 }
 
  export const authenticate= createAsyncThunk("appState/authenticate",async (user)=>{
     try{
-        const response = await fetch(`${Ip}/api/authentication/login`,
+        const response = await fetch(`${Ip}/authentication/login`,
             { method:'POST',
               body:JSON.stringify(user),
               headers:{'Content-Type':'application/json'}
@@ -88,9 +89,10 @@ const appSlice=createSlice({
             state.invoiceView = false;
             state.urlItem='';
         },
-        logoutUser: ()=>{
+        logoutUser: (state)=>{
         localStorage.removeItem("isLogged");
         localStorage.removeItem("currentUser");
+        state.storeId=null;
         },
 
         cleanItemDetails: (state)=>{
@@ -287,13 +289,15 @@ const appSlice=createSlice({
        })
 
         builder.addCase(authenticate.fulfilled,(state,action)=>{
-            
-            if(action.payload!=undefined && action.payload.error){
+        
+            if(action.payload.error){
                 state.error = action.payload.error;
-            }else if(action.payload!=undefined && action.payload.user){
+            }else if(action.payload.user){
+                state.storeId=action.payload.user.storeId;
                 localStorage.setItem("isLogged",true);
                 localStorage.setItem("currentUser",JSON.stringify(action.payload.user));
             }
+
         });
 
         builder.addCase(authenticate.rejected,(state,action)=>{

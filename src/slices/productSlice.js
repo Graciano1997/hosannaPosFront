@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { removeDiacritics } from "../lib/removeDiacritic";
-import { Ip, IpTenant } from "../lib/ip";
+import { getIpTenant, Ip } from "../lib/ip";
 import { removeDuplicate } from "../lib/removeDuplicate";
 
 const initialState = {
@@ -22,24 +22,24 @@ const initialState = {
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async (last_created_at=null)=>{
-    const response = await fetch(`${IpTenant}products/${last_created_at?`last/${last_created_at}/`:''}`,{ method:'GET', headers:{'Content-Type':'application/json',
+    const response = await fetch(`${getIpTenant()}products/${last_created_at?`last/${last_created_at}/`:''}`,{ method:'GET', headers:{'Content-Type':'application/json',
     Accept: "application/json"
      }});
     return response.json();
 });
 
 export const expiredProductJob = createAsyncThunk("productState/expiredProductJob", async ()=>{
-    const response = await fetch(`${IpTenant}products/expired_product_job`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}products/expired_product_job`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const fetchExpiredProducts = createAsyncThunk("productState/fetchExpiredProducts", async ()=>{
-    const response = await fetch(`${IpTenant}products/expireds`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}products/expireds`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const fetchAnualExpiredProducts = createAsyncThunk("productState/fetchAnualExpiredProducts", async (year=new Date().getFullYear())=>{
-    const response = await fetch(`${IpTenant}products/anual_expireds/${year}`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}products/anual_expireds/${year}`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
@@ -49,28 +49,28 @@ export const fetchProductsFields = createAsyncThunk("productState/fetchProductsF
 });
 
 export const deleteProduct = createAsyncThunk("productState/deleteProduct", async (id)=>{
-    const response = await fetch(`${IpTenant}products/${id}`,{ method:'DELETE', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}products/${id}`,{ method:'DELETE', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const registerProduct = createAsyncThunk("productState/registerProduct", async (productFormData)=>{
-    const response = await fetch(`${IpTenant}products/`,{ method:'POST', body:productFormData });
+    const response = await fetch(`${getIpTenant()}products/`,{ method:'POST', body:productFormData });
     return response.json();
 });
 
 export const updateProduct = createAsyncThunk("productState/updateProduct",async (productFormData)=>{
-    const response = await fetch(`${IpTenant}products/${productFormData.get("product[id]")}`,
+    const response = await fetch(`${getIpTenant()}products/${productFormData.get("product[id]")}`,
     {method:'PUT', body:productFormData});
     return response.json();
 });
 
 export const fetchProductConfiguration = createAsyncThunk("productState/fetchProductConfiguration", async ()=>{
-    const response = await fetch(`${IpTenant}product_configurations/`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}product_configurations/`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const productConfiguration = createAsyncThunk("productState/productConfiguration", async (products)=>{
-    const response = await fetch(`${IpTenant}product_configurations/`,{ method:'POST', body:JSON.stringify(products), headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}product_configurations/`,{ method:'POST', body:JSON.stringify(products), headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 

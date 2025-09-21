@@ -27,7 +27,7 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
     return (
         <>
             <tr
-                className={`${index % 2 == 0 ? 'bg-green-100' : ''}  cursor-pointer hover:sm:shadow font-light`}>
+                className={`${index % 2 == 0 ? 'bg-green-100' : ''}  cursor-pointer hover:sm:shadow font-light `}>
                 {keys.map((key) =>
                     <td onClick={() => { dispatch(itemDetails(item)) }} className="p-1 text-center">
                         {moneyFields.includes(key) && <Money amount={item[key]} />}
@@ -37,8 +37,8 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                     </td>
                 )
                 }
-                <td className="flex justify-end gap-[5px] pr-3">
-                    <div className="flex gap-3">
+                <td className="flex justify-end  gap-[5px] pr-3">
+                    <div className="flex gap-3 ">
 
                         {item.status && addItem &&
                             <div className="flex gap-2 items-center rounded-[16px]  bg-green-100 p-1">
@@ -77,10 +77,12 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                                 }} className={`${checkNumber ? 'bg-green-300' : 'bg-green-200'}  w-[20px] hover:shadow rounded-[50%]`}>+</button>
                             </div>
                         }
+
+                        <div className={`flex item-center gap-3 ${item?.image ? 'mt-1':''}`}>
                         {updateItem && <button onClick={() => { dispatch(openModal()); dispatch(updateItem(item)); }}><PencilIcon className="w-6 y-6 p-1 text-green-800 hover:shadow hover:rounded" /></button>}
                         {printItem && <button onClick={() => {
                             dispatch(getInvoiceItem(item.id))
-                                .then((invoiceResultState) => {
+                            .then((invoiceResultState) => {
                                     if (getInvoiceItem.fulfilled.match(invoiceResultState)) {
                                             if (printerConfiguration.print_from_browser == "true") {
                                                 dispatch(openInvoiceView(invoiceResultState.payload.invoice_pdf));
@@ -97,24 +99,25 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                                                     }
                                                 })
                                         } 
-
-
-
+                                        
+                                        
+                                        
                                         //     dispatch(printing(invoiceResultState.payload.invoice_item))
                                         //     .then((printingStateResult)=>{
-                                        //             dispatch(showToast({success:true,message:firstCapitalize(t('reprinting'))}))
-                                        //           if(printing.rejected.match(printingStateResult)){
-                                        //               dispatch(showToast({error:true,message:firstCapitalize(t('error_reprinting'))}))
-                                        //               }
-                                        //     })
-                                    }
-                                    if(getInvoiceItem.rejected.match(invoiceResultState)){
-                                        dispatch(showToast({error:true, message:firstCapitalize(t('could_not_get_the_invoice'))}));
+                                            //             dispatch(showToast({success:true,message:firstCapitalize(t('reprinting'))}))
+                                            //           if(printing.rejected.match(printingStateResult)){
+                                                //               dispatch(showToast({error:true,message:firstCapitalize(t('error_reprinting'))}))
+                                                //               }
+                                                //     })
+                                            }
+                                            if(getInvoiceItem.rejected.match(invoiceResultState)){
+                                                dispatch(showToast({error:true, message:firstCapitalize(t('could_not_get_the_invoice'))}));
                                     }
                                 })
 
-                        }}><PrinterIcon className="w-6 y-6 p-1 text-black hover:shadow hover:rounded" /></button>}
+                            }}><PrinterIcon className="w-6 y-6 p-1 text-black hover:shadow hover:rounded" /></button>}
                         {deleteItem && <button onClick={() => { dispatch(deleteItem(item.id)) }}><TrashIcon className="w-6 y-6 p-1 text-red-300 hover:shadow hover:rounded" /></button>}
+                            </div>
                     </div>
                 </td>
             </tr>

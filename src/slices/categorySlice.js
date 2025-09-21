@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Ip, IpTenant } from "../lib/ip";
+import { getIpTenant, Ip} from "../lib/ip";
 import { removeDuplicate } from "../lib/removeDuplicate";
 
 const initialState = {
@@ -10,19 +10,19 @@ const initialState = {
 };
 
 export const fetchCategories = createAsyncThunk("categoryState/fetchCategories",async (last_created_at=null)=>{
-    const response = await fetch(`${IpTenant}categories/${last_created_at?`last/${last_created_at}/`:''}`,{method:'GET', headers:{'Content-Type':'application/json'}});
+    const response = await fetch(`${getIpTenant()}categories/${last_created_at?`last/${last_created_at}/`:''}`,{method:'GET', headers:{'Content-Type':'application/json'}});
     return response.json();
 });
 
 export const createCategory = createAsyncThunk("categoryState/createCategory",async (category)=>{
-    const response = await fetch(`${IpTenant}categories/`,{method:'POST',
+    const response = await fetch(`${getIpTenant()}categories/`,{method:'POST',
         body:JSON.stringify(category),
      headers:{'Content-Type':'application/json'}});
     return response.json();
 });
 
 export const updateCategory = createAsyncThunk("categoryState/updateCategory",async (category)=>{
-    const response = await fetch(`${IpTenant}categories/${category.id}`,
+    const response = await fetch(`${getIpTenant()}categories/${category.id}`,
     {method:'PUT',
         body:JSON.stringify(category),
      headers:{'Content-Type':'application/json'}});
@@ -30,7 +30,7 @@ export const updateCategory = createAsyncThunk("categoryState/updateCategory",as
 });
 
 export const deleteCategory = createAsyncThunk("categoryState/deleteCategory",async (id)=>{
-    const response = await fetch(`${IpTenant}categories/${id}`,{ method:'DELETE' });
+    const response = await fetch(`${getIpTenant()}categories/${id}`,{ method:'DELETE' });
     return response.json();
 });
 

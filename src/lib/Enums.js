@@ -17,6 +17,8 @@ export const SaleType = {
     PORFORM:2
 }
 
+
+
 export const ProductState = {
     AVAILABLE:1,
     EXPIRED:2,

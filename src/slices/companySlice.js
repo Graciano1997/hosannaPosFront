@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Ip, IpTenant } from "../lib/ip";
+import { getIpTenant, Ip, } from "../lib/ip";
 
 const initialState = {
     companies: [],
@@ -13,7 +13,7 @@ const initialState = {
 };
 
 export const fetchCompanies = createAsyncThunk("companyState/fetchCompanies", async () => {
-    const response = await fetch(`${IpTenant}companies/`, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+    const response = await fetch(`${getIpTenant()}companies/`, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
     return response.json();
 });
 
@@ -23,21 +23,20 @@ export const fetchCompaniesFields = createAsyncThunk("companyState/fetchCompanie
 });
 
 export const deleteCompany = createAsyncThunk("companyState/deleteCompany", async (id) => {
-    const response = await fetch(`${IpTenant}companies/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
+    const response = await fetch(`${getIpTenant()}companies/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
     return response.json();
 });
 
-export const registerCompany = createAsyncThunk("companyState/registerCompany", async (company) => {
-    const response = await fetch(`${IpTenant}companies/`, { method: 'POST', body: JSON.stringify(company), headers: { 'Content-Type': 'application/json' } });
+export const registerCompany = createAsyncThunk("companyState/registerCompany", async (companyForm) => {
+    const response = await fetch(`${getIpTenant()}companies/`, { method: 'POST', body: companyForm});
     return response.json();
 });
 
-export const updateCompany = createAsyncThunk("companyState/updateCompany", async (company) => {
-    const response = await fetch(`${IpTenant}companies/${company.id}`,
+export const updateCompany = createAsyncThunk("companyState/updateCompany", async (companyForm) => {
+    const response = await fetch(`${getIpTenant()}companies/${companyForm.get("company[id]")}`,
         {
             method: 'PUT',
-            body: JSON.stringify(company),
-            headers: { 'Content-Type': 'application/json' }
+            body: companyForm,
         });
     return response.json();
 });
