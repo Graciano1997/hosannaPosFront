@@ -31,6 +31,7 @@ import { firstCapitalize } from './lib/firstCapitalize'
 import { useTranslation } from 'react-i18next'
 import Account from './components/settings/Account'
 import { fetchPrinterConfig } from './slices/printerSlice'
+import { MyStore } from './components/mystore/Mystore'
 
 function Home() {
 
@@ -97,6 +98,7 @@ function Home() {
       <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />      
       <Route path='/setting' element={<Setting/>} />
       <Route path='/profile' element={<Account/>} />
+      <Route path='/mystore' element={<MyStore/>} />
       <Route path='*' element={<_404/>} />
       </Routes>
 

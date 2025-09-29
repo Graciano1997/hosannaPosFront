@@ -5,6 +5,7 @@ import { removeDuplicate } from "../lib/removeDuplicate";
 
 const initialState = {
     products:[],
+    alertProducts:[],
     loading:false,
     isCreating:false,
     isUpdating:false,
@@ -18,11 +19,20 @@ const initialState = {
     expireds:[],
     anualExpireds:[],
     isSearching:false,
-    last_created_at:null
+    last_created_at:null,
+    isLoadingMore:false
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async (last_created_at=null)=>{
     const response = await fetch(`${getIpTenant()}products/${last_created_at?`last/${last_created_at}/`:''}`,{ method:'GET', headers:{'Content-Type':'application/json',
+    Accept: "application/json"
+     }});
+    return response.json();
+    });
+
+export const fetchAlertProducts = createAsyncThunk("productState/fetchAlertProducts", async ()=>{
+    const response = await fetch(`${getIpTenant()}products/alert/`,{ method:'GET', 
+        headers:{'Content-Type':'application/json',
     Accept: "application/json"
      }});
     return response.json();
@@ -105,14 +115,20 @@ const productSlice = createSlice({
         state.productToUpdate=action.payload;
     },
 
+    loadingMore: (state)=>{
+        state.isLoadingMore = true;
+    },
+
     stopCreatingOrUpdateingProduct : (state)=>{
         state.isCreating = false;
         state.isUpdating = false;
         state.productToUpdate = {};
     },
-
     setProducts: (state,action)=>{
         state.products = action.payload; 
+    },
+    setAlertProducts: (state,action)=>{
+        state.alertProducts = action.payload; 
     },
 
     addProductField:(state,action)=>{
@@ -129,7 +145,7 @@ const productSlice = createSlice({
   },
 
   extraReducers:(builder)=>{
-    builder.addCase(fetchProducts.pending,(state)=>{
+    builder.addCase(fetchProducts.pending,(state,action)=>{
         state.loading=true;
     });
 
@@ -144,18 +160,39 @@ const productSlice = createSlice({
     builder.addCase(fetchProducts.fulfilled,(state,action)=>{
     state.loading=false;
     state.error='';
-    
     state.last_created_at=action.payload.last_created_at;
     
     if(action.payload.last_created_at && (action.payload.data).length){    
 
         if((state.products).length==0){
             state.products = action.payload.data;
-        }else{
-            state.products = removeDuplicate([...state.products,...action.payload.data],'id');                     
-        }
+         }else{
+            if(state.isLoadingMore){
+                state.products = removeDuplicate([...state.products,...action.payload.data],'id');
+            }else{
+            state.isLoadingMore = false;              
+            state.products = action.payload.data;
+            }
+         }
     }
     });
+
+
+    builder.addCase(fetchAlertProducts.fulfilled,(state,action)=>{
+    state.loading=false;
+    state.error='';
+    state.alertProducts = action.payload.data;
+    });
+    
+    builder.addCase(fetchAlertProducts.pending,(state,action)=>{
+        state.loading=true;
+    });
+    
+    builder.addCase(fetchAlertProducts.rejected,(state,action)=>{
+        state.loading =false;
+        state.error=action.error.message;
+        state.alertProducts = [];
+    })
 
     builder.addCase(fetchProducts.rejected,(state,action)=>{
         state.loading =false;
@@ -201,7 +238,6 @@ const productSlice = createSlice({
              });            
              state.productFilterRows = filterRows;
          }
-
       });
 
     builder.addCase(registerProduct.rejected,(state,action)=>{
@@ -235,4 +271,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct,searchingProduct,stopCreatingOrUpdateingProduct, setProducts,setExpireds} = productSlice.actions;
+export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct,searchingProduct,stopCreatingOrUpdateingProduct, setProducts, setAlertProducts,setExpireds, loadingMore} = productSlice.actions;

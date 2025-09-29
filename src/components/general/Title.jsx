@@ -1,4 +1,4 @@
-import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon, ArrowDownIcon, ArrowDownTrayIcon, ClockIcon } from "@heroicons/react/24/solid";
+import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon, ArrowDownIcon, ArrowDownTrayIcon, ClockIcon, BellAlertIcon } from "@heroicons/react/24/solid";
 import {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
@@ -77,10 +77,19 @@ const Title=({title,create,collectionToExport})=>{
                 </Link>
             </li>
 
-            <li>
+                       <li>
                 <Link to={""}
                 onClick={()=>dispatch(activeTab('tab4'))} 
-                className={`flex items-center gap-2 transition-all duration-300 text-red-700 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''} `} >
+                className={`flex items-center gap-2 transition-all duration-300 text-yellow-700 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''} `} >
+                <BellAlertIcon className="w-4 y-4 cursor-pointer hover:shadow alert"/>
+                {firstCapitalize(t('alert'))}
+                </Link>
+            </li>
+
+            <li>
+                <Link to={""}
+                onClick={()=>dispatch(activeTab('tab5'))} 
+                className={`flex items-center gap-2 transition-all duration-300 text-red-700 hover:rounded ${appState.activeTab=="tab5"?'activeTab':''} `} >
                 <ClockIcon className="w-4 y-4 cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('expired_product'))}
                 </Link>
@@ -88,8 +97,8 @@ const Title=({title,create,collectionToExport})=>{
 
             <li>
                 <Link to={""}
-                onClick={()=>dispatch(activeTab('tab5'))} 
-                className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab5"?'activeTab':''} `} >
+                onClick={()=>dispatch(activeTab('tab6'))} 
+                className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab6"?'activeTab':''} `} >
                 <WrenchIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('configuration'))}
                 </Link>

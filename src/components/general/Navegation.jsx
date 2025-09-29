@@ -87,13 +87,15 @@ const Navegation =({visible,setVisibility})=>{
                 { firstCapitalize(t('users'))}
                 </Link>
             </li>
+           {false &&
             <li>
                 <Link 
-                to={"/setting"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/setting'?'rounded bg-green-100':''}`} >
-                <GlobeAltIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('webstore'))}
+                to={"/mystore"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/mystore'?'rounded bg-green-100':''}`} >
+                <GlobeAltIcon className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow"/>
+                { firstCapitalize(t('My store'))}
                 </Link>
             </li>
+            } 
             <li>
                 <Link 
 

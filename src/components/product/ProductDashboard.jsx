@@ -41,8 +41,7 @@ const ProductDashboard=()=>{
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
       }
   ],
-  };
-
+};
 
     const labels = extractFieldToArray(products,'name');
      const data = {
@@ -50,7 +49,7 @@ const ProductDashboard=()=>{
         datasets: [
           {
             label: t('available'),
-            data: extractFieldToArray(products,'qty',{key1:'qty',key2:'output',op:'-'}),
+            data:products.map((product)=>{return product.qty;}),
             backgroundColor: labels.map(()=>`${RandomColor().background}`) ,
             borderColor: labels.map(()=>`${RandomColor().borderColor}`),
             borderWidth: 1,

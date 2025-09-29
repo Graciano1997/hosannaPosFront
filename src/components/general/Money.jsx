@@ -1,4 +1,3 @@
-import currency from "currency.js";
 import { useSelector } from "react-redux";
 
 const Money = ({ amount }) => {

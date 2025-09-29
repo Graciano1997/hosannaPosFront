@@ -122,7 +122,7 @@ const saleSlice = createSlice({
             const atIndex = state.items.findIndex(item=>item.id===action.payload.id);
             
             if(atIndex!=-1){
-                if((state.items[atIndex].stock - state.items[atIndex].output) >= (parseInt(action.payload.qty))){
+                if((state.items[atIndex].qty) >= (parseInt(action.payload.qty))){
                 state.items[atIndex] = {
                     ...state.items[atIndex],
                     qty:action.payload.qty,
@@ -140,7 +140,7 @@ const saleSlice = createSlice({
             const atIndex = state.items.findIndex(item=>item.id===action.payload.id);
 
             if(atIndex!=-1){
-            if((state.items[atIndex].stock - state.items[atIndex].output) >= (parseInt(action.payload.qty) + 1)){
+            if((state.items[atIndex].qty) >= (parseInt(action.payload.qty) + 1)){
                 state.items[atIndex] = {
                     ...state.items[atIndex],
                     qty: (parseInt(action.payload.qty) + 1 ),

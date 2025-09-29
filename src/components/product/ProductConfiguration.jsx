@@ -20,7 +20,7 @@ const ProductConfiguration = ()=>{
     },[]);
 
 
-    const filterRows = ['id','name','qty','price','category_id','code','mesure_unit','product_type'];
+    const filterRows = ['id','name','qty','price','category_id','code','mesure_unit','product_type','min_qty','store_id'];
     const [productFields,setProductFields]=useState([]);
 
     const product=useSelector((state)=>state.productState.productAllFields) || [];

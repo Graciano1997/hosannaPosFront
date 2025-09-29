@@ -307,6 +307,12 @@ const Create = ({ stopCreating }) => {
                             </label>
                         }
                         
+                        <label>
+                        {firstCapitalize(t('min_qty'))}
+                            <br />
+                            <input type='number' onChange={formHandler} name="min_qty" value={product.min_qty} className='p-1 rounded w-[100%] outline-none' />
+                        </label>
+                    
                         {!productFilterRows.includes('image') &&
 
                             <label>

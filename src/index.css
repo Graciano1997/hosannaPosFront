@@ -44,6 +44,22 @@ form textarea{
   }
 }
 
+@keyframes alertAppearing {
+  from {
+    transform: rotate(20deg);
+  }
+
+  to {
+    transform: rotate(-20deg);
+  }
+}
+
+
+.alert{
+animation: alertAppearing 2s ease-in-out;
+animation-iteration-count: infinite;
+}
+
 .productDetails {
   animation: rightToLeft 1s ease-in-out;
 }

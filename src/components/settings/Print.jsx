@@ -18,9 +18,7 @@ const Print = () => {
     };
 
     const printerState = useSelector((state) => state.printerState);
-    const [printerSetting, setPrinterSetting] = useState({ ...JSON.parse(localStorage.getItem(`user-${CurrentUser.id}-printerConfiguration`)) });
-
-
+    const [printerSetting, setPrinterSetting] = useState({ ...JSON.parse(localStorage.getItem(`user-${CurrentUser().id}-printerConfiguration`)) });
     return (
         <>
             <div className="w-100 h-[400px] grid grid-cols-3 gap-10  overflow-auto p-5">
@@ -39,7 +37,7 @@ const Print = () => {
                         <select name="printer" onChange={formHandler} className="p-1 rounded" defaultValue={printerState.printerConfiguration?.printer}>
                             {
                                 printerState.availablePrinters.length > 0 ?
-                                printerState.availablePrinters.map((printer) =><option value={printer}>{printer}</option>) 
+                                printerState.availablePrinters.map((printer) =><option value={printer.name}>{printer.name}</option>) 
                                 :(<option disabled className="text-red-500">{firstCapitalize(t('no_printers'))}</option>)
                             }
                         </select>
@@ -81,11 +79,12 @@ const Print = () => {
                         }}
                         className="rounded bg-gray-500 p-2">{firstCapitalize(t('rescan_printers'))}</button>
                     <button onClick={() => { 
-                        dispatch(printTest({printer:"DeskJet-2300-series"}))
+
+                        dispatch(printTest({printer:printerSetting.printer}))
                         .then((resultAction)=>{
-                             if(printTest.rejected.match(resultAction)) {
-                                    dispatch(showToast({ error: true, message: firstCapitalize(t('printers_server_error')) }));
-                                }
+                              if(printTest.rejected.match(resultAction)) {
+                                     dispatch(showToast({ error: true, message: firstCapitalize(t('printers_server_error')) }));
+                                 }
                             
                             if(printTest.fulfilled.match(resultAction)) {
                                 dispatch(showToast({ success: true, message: firstCapitalize(t('printers_test')).replace("[x]",printerState.printerConfiguration.printer) }));

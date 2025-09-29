@@ -21,7 +21,7 @@ const SearchedItem = ({product,index,setQuery})=>{
                         <Money amount={product.price}/>
                         </p>
                         <p>
-                         {(product.qty - product.output)}
+                         {product.qty}
                         </p>
                         <p>
                          {(product.discount ? product.discount : 0 )}
@@ -34,9 +34,9 @@ const SearchedItem = ({product,index,setQuery})=>{
                                 (el)=>{
                                     setQtyTobuy(el.target.value)
                                 }
-                            } type="number" min={1} max={(product.qty - product.output)} defaultValue={qtyTobuy} />
+                            } type="number" min={1} max={(product.qty)} defaultValue={qtyTobuy} />
                         </div>
-                        { (product.qty - product.output)>= qtyTobuy && qtyTobuy > 0 &&
+                        { (product.qty)>= qtyTobuy && qtyTobuy > 0 &&
                         <button  onClick={()=>{
                             if(qtyTobuy > product.stock){
                                 dispatch(showToast({error:true,message:`${firstCapitalize(t('exist_only'))} ${product.stock} ${t('units')}`}));
@@ -50,7 +50,6 @@ const SearchedItem = ({product,index,setQuery})=>{
                                         stock:product.qty,
                                         discount:product.discount ? product.discount * 1 : 0,
                                         taxes:product.taxes ? product.taxes * 1 : 0,
-                                        output:product.output,
                                         qty:qtyTobuy,
                                         total:totalWithTaxesAndDiscounts(product,qtyTobuy)
                                     }))
@@ -65,7 +64,7 @@ const SearchedItem = ({product,index,setQuery})=>{
                             
                         }}  className={`bg-green-400 text-white font-bold rounded`}>{t('add')}</button>
                     } 
-                    {(product.qty - product.output)==0 &&
+                    {(product.qty)==0 &&
                     <div className="bg-red-300 text-white font-bold text-center p-1 rounded">{t('outofStock')}</div>
                     }
                      

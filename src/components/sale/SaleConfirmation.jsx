@@ -3,9 +3,11 @@ import { order, saleClean, saleNotConfirm, setSaleObject } from "../../slices/sa
 import { closeModal, openInvoiceView, showToast } from "../../slices/appSlice";
 import { ClientType, PaymentType, SaleType } from "../../lib/Enums";
 import { useTranslation } from "react-i18next";
-import { clearSearchedProduct } from "../../slices/productSlice";
+import { clearSearchedProduct, fetchProducts } from "../../slices/productSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { printing } from "../../slices/printerSlice";
+import { A4Invoice } from "../../lib/invoices/A4Invoice";
+import { CurrentUser } from "../../lib/CurrentUser";
 
 const SaleConfirmation = () => {
     const { t } = useTranslation();
@@ -14,7 +16,7 @@ const SaleConfirmation = () => {
     const saleState = useSelector((state) => state.saleState);
     const appState = useSelector((state) => state.appState);
     const { printerConfiguration } = useSelector((state) => state.printerState);
-
+    
     const orderHandler = () => {
         const treatedSaleObject = {
             client: {
@@ -30,7 +32,7 @@ const SaleConfirmation = () => {
                 descount: 0,
                 difference: saleState.paymentType == PaymentType.TPA ? 0 : (saleState.receivedCash * 1 - saleState.total * 1),
                 total: saleState.total,
-                user_id: JSON.parse(localStorage.getItem('currentUser')).id
+                user_id: CurrentUser().id
             },
             items: saleState.items
         }
@@ -50,11 +52,11 @@ const SaleConfirmation = () => {
                         if (printerConfiguration.print_from_browser == "true") {
                             dispatch(openInvoiceView(orderResultState.payload.invoice_pdf));
                         } else {
+                            console.log(A4Invoice(orderResultState.payload.invoice_item));
                             dispatch(printing({ 
                                 copyNumber: parseInt(printerConfiguration.copyNumber),
-                                pdfUrl: orderResultState.payload.invoice_pdf,
+                                invoiceTemplate: A4Invoice(orderResultState.payload.invoice_item),
                                 printer: printerConfiguration.printer,
-                                queueId: `sale_${orderResultState.payload.sale_id}`
                             }))
 
                                 .then((printingResultState) => {
@@ -64,12 +66,14 @@ const SaleConfirmation = () => {
                                 })
                         }
                     }else{
+                        console.log("aqui...");
                          dispatch(showToast({ warning:true, message:firstCapitalize(t('ordered_without_printing'))}));
                     }
                 }
 
                 dispatch(saleClean());
                 dispatch(clearSearchedProduct());
+                dispatch(fetchProducts());
             });
 
         dispatch(closeModal());

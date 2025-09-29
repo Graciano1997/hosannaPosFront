@@ -5,7 +5,7 @@ import Create from "./Create";
 import Title from "../general/Title";
 import ProductDashboard from "./ProductDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { creatingProduct, deleteProduct, expiredProductJob, fetchExpiredProducts, fetchProductConfiguration, fetchProducts, setProducts, stopCreatingOrUpdateingProduct, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";
+import { creatingProduct, deleteProduct, expiredProductJob, fetchAlertProducts, fetchExpiredProducts, fetchProductConfiguration, fetchProducts, loadingMore, setProducts, stopCreatingOrUpdateingProduct, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { creatingCategory, deleteCategory, fetchCategories, setCategories, updateCategory, updatingCategory } from "../../slices/categorySlice";
@@ -14,6 +14,7 @@ import ProductConfiguration from "./ProductConfiguration";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { showToast } from "../../slices/appSlice";
 import ExpiredProducts from "./ExpiredProducts";
+import AlertProducts from "./AlertProducts";
 
 const Product=()=>{
     
@@ -27,6 +28,7 @@ const Product=()=>{
         dispatch(fetchProducts(productState.last_created_at));
         dispatch(fetchExpiredProducts());
         dispatch(fetchProductConfiguration());
+        dispatch(fetchAlertProducts());
     },[dispatch]);
     
 
@@ -69,15 +71,18 @@ const Product=()=>{
         <TabWrapper>
         
         {appState.activeTab=="tab1" && !productState.error && !productState.loading &&
-        <Table addItem={true} filterDetails={filterProductDetails} setCollection={setProducts} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} dispatcher={setProducts} fetcher={fetchProducts} collection={products} fetcherParam={productState.last_created_at}/>
+        <Table addItem={true} filterDetails={filterProductDetails} setCollection={setProducts} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} dispatcher={setProducts} fetcher={fetchProducts} collection={products} loadingMore={loadingMore} fetcherParam={productState.last_created_at}/>
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}
         {appState.activeTab=="tab3" && !productState.error && !productState.loading && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']} setCollection={setCategories} fetcher={fetchCategories} dispatcher={setCategories}  collection={categoryState.categories || []} fetcherParam={categoryState.last_created_at} />}
         {appState.activeTab=="tab4" && !productState.error && !productState.loading && 
+        <AlertProducts/>
+        }
+        {appState.activeTab=="tab5" && !productState.error && !productState.loading && 
         <ExpiredProducts/>
         }
-        {appState.activeTab=="tab5" && !productState.error && !productState.loading && <ProductConfiguration />}
+        {appState.activeTab=="tab6" && !productState.error && !productState.loading && <ProductConfiguration />}
 
         </TabWrapper>
         {(categoryState.isCreating || categoryState.isUpdating) && appState.isOpen && (<CreateCategory/>)}

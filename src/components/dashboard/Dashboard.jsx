@@ -8,7 +8,7 @@ import { fetchAnualSpents, fetchSpents } from "../../slices/spentSlice";
 import { fetchAnualSales, fetchSales } from "../../slices/saleSlice";
 import { LineChart } from "./LineChart";
 import { DoughnutChart } from "./DoughnutChart";
-import { BanknotesIcon, CircleStackIcon, ClockIcon, ShoppingCartIcon, UserIcon } from "@heroicons/react/24/solid";
+import { BanknotesIcon, BellAlertIcon, CircleStackIcon, ClockIcon, ShoppingCartIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import { activeTab } from "../../slices/appSlice";
 import { Profiles } from "../../lib/Enums";
@@ -63,9 +63,19 @@ const Dashboard=()=>{
             <CircleStackIcon className="w-5 y-5 text-[#323232] "/>
             <h4>{firstCapitalize(t('sales'))}</h4>
             </button>
-            <button 
+                        <button 
             onClick={()=>{
                 dispatch(activeTab('tab4'));
+                navegate('/products');
+            }}
+            className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex cursor-pointer">
+            <BellAlertIcon className="w-5 y-5 text-yellow-600 alert"/>
+            <h4>{firstCapitalize(t('alert'))}</h4>
+            </button>
+
+            <button 
+            onClick={()=>{
+                dispatch(activeTab('tab5'));
                 navegate('/products');
             }}
             className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex cursor-pointer">

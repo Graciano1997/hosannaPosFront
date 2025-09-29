@@ -9,7 +9,7 @@ import searchCollection from "../../lib/seach";
 import {  useState } from "react";
 
 
-const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteItem = () => { }, printItem=null , update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { },fetcherParam=null, searchBackEndHandler=null }) => {
+const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteItem = () => { }, printItem=null , update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { },fetcherParam=null, searchBackEndHandler=null, loadingMore=null }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const appState = useSelector((state) => state.appState);
@@ -128,7 +128,11 @@ const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteIt
 
             {!searching && collection.length > 0 && fetcherParam &&            
                 <div className="flex justify-end item-center mt-2">
-                    <button className="bg-black text-white p-2 rounded" onClick={()=>{dispatch(fetcher(fetcherParam))}}>Carregar Mais</button>
+                    <button className="bg-black text-white p-2 rounded" onClick={()=>{  
+                        if(loadingMore){
+                            dispatch(loadingMore());
+                        }
+                        dispatch(fetcher(fetcherParam))}}>Carregar Mais</button>
                 </div>
             }
             </div>
