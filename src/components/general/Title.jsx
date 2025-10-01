@@ -13,6 +13,7 @@ const Title=({title,create,collectionToExport})=>{
     const appState= useSelector((state)=>state.appState);
     const dispatch = useDispatch();
     const {pathname}=useLocation();
+    const productState = useSelector((state)=>state.productState);
 
     return(
         <>
@@ -26,9 +27,8 @@ const Title=({title,create,collectionToExport})=>{
             ref={ref}>
              <div className="flex justify-between mt-4">
                 <h1 className="text-3xl">{firstCapitalize(title)}</h1>
-
                 {
-                (['/products'].includes(pathname) && ['tab1','tab3','tab4'].includes(appState.activeTab) || 
+                (['/products'].includes(pathname) && ['tab1','tab3','tab4','tab5'].includes(appState.activeTab) || 
                 ['/sales','/users','/spents'].includes(pathname) && ['tab1'].includes(appState.activeTab))
                 &&
                 <>
@@ -81,7 +81,7 @@ const Title=({title,create,collectionToExport})=>{
                 <Link to={""}
                 onClick={()=>dispatch(activeTab('tab4'))} 
                 className={`flex items-center gap-2 transition-all duration-300 text-yellow-700 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''} `} >
-                <BellAlertIcon className="w-4 y-4 cursor-pointer hover:shadow alert"/>
+                <BellAlertIcon className={`w-4 y-4 cursor-pointer hover:shadow ${productState.alertProducts.length > 0 ? 'alert':'' } `}/>
                 {firstCapitalize(t('alert'))}
                 </Link>
             </li>

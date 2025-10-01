@@ -12,7 +12,7 @@ import { BanknotesIcon, BellAlertIcon, CircleStackIcon, ClockIcon, ShoppingCartI
 import { useNavigate } from "react-router-dom";
 import { activeTab } from "../../slices/appSlice";
 import { Profiles } from "../../lib/Enums";
-import { fetchAnualExpiredProducts } from "../../slices/productSlice";
+import { fetchAlertProducts, fetchAnualExpiredProducts } from "../../slices/productSlice";
 
 const Dashboard=()=>{
     const {t}=useTranslation();
@@ -24,6 +24,7 @@ const Dashboard=()=>{
         dispatch(fetchAnualSpents());    
         dispatch(fetchAnualSales());    
         dispatch(fetchAnualExpiredProducts());    
+        dispatch(fetchAlertProducts());
     },[]);
 
     const navegate = useNavigate();
@@ -63,6 +64,8 @@ const Dashboard=()=>{
             <CircleStackIcon className="w-5 y-5 text-[#323232] "/>
             <h4>{firstCapitalize(t('sales'))}</h4>
             </button>
+            {productState.alertProducts.length>0 &&
+            
                         <button 
             onClick={()=>{
                 dispatch(activeTab('tab4'));
@@ -72,6 +75,7 @@ const Dashboard=()=>{
             <BellAlertIcon className="w-5 y-5 text-yellow-600 alert"/>
             <h4>{firstCapitalize(t('alert'))}</h4>
             </button>
+            }
 
             <button 
             onClick={()=>{
@@ -87,7 +91,7 @@ const Dashboard=()=>{
         </div>
     </div>
     
-    <div className="flex flex-col mt-[2rem] mb-[0rem] items-center sm:items-start sm:flex-row justify-end gap-4 sm:mt-[3%] w-full">
+    <div className="flex flex-col mt-[3rem] mb-[0rem] items-center sm:items-start sm:flex-row justify-end gap-4 sm:mt-[3%] w-full">
 
 <LastSelling width={350} height={350} info={{title:firstCapitalize(t('last_selling')), description:t('about')}}/>
 <DoughnutChart width={300} height={390} data={[today_balance,today_spents]} info={firstCapitalize(t('today_status'))}/>

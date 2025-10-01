@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { deleteProduct, fetchProducts, productConfiguration, registerProduct, searchProduct, updateProduct } from "./productSlice";
-import { addItem, fetchSales, order, removeItem, updateItem } from "./saleSlice";
+import { fetchSales, updateItem } from "./saleSlice";
 import { createCategory, deleteCategory, fetchCategories, updateCategory } from "./categorySlice";
 import { deleteCompany, registerCompany } from "./companySlice";
 import { Ip } from "../lib/ip";
+import { CurrentUser } from "../lib/CurrentUser";
 
 
 const initialState = {
@@ -22,7 +23,7 @@ const initialState = {
     currentTableCollection:[],
     invoiceView:false,
     urlItem:'',
-    storeId:localStorage.getItem("currentUser")? JSON.parse(localStorage.getItem("currentUser")).storeId:null
+    storeId:localStorage.getItem("currentUser")? CurrentUser().storeId:null
 }
 
  export const authenticate= createAsyncThunk("appState/authenticate",async (user)=>{
@@ -122,6 +123,7 @@ const appSlice=createSlice({
         Exporting:(state,action)=>{
             state.isExporting = true;
             state.exportingModel = action.payload;
+            console.log(action.payload);
         },
         StopExporting:(state)=>{
             state.isExporting = false;

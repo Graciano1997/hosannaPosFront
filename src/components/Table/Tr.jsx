@@ -11,7 +11,7 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 import { getInvoiceItem } from "../../slices/saleSlice";
 import { productFormHandler } from "../product/Create";
 
-const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem, printItem = null }) => {
+const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem, printItem = null, rowStyle }) => {
 
     const { t } = useTranslation();
     const { printerConfiguration } = useSelector((state) => state.printerState);
@@ -27,7 +27,7 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
     return (
         <>
             <tr
-                className={`${index % 2 == 0 ? 'bg-green-100' : ''}  cursor-pointer hover:sm:shadow font-light `}>
+                className={`${index % 2 == 0 ? rowStyle : ''}  cursor-pointer hover:sm:shadow font-light `}>
                 {keys.map((key) =>
                     <td onClick={() => { dispatch(itemDetails(item)) }} className="p-1 text-center">
                         {moneyFields.includes(key) && <Money amount={item[key]} />}
@@ -121,7 +121,7 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                     </div>
                 </td>
             </tr>
-            {itemDetail.id != undefined && <Details filterDetails={filterDetails} cleanItemDetails={cleanItemDetails} />}
+            {itemDetail.id != undefined && <Details filterDetails={filterDetails} rowStyle={rowStyle} cleanItemDetails={cleanItemDetails} />}
         </>
     )
 }

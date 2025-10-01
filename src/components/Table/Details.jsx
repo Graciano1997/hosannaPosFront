@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { UserIcon } from "@heroicons/react/24/solid";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
-const Details = ({cleanItemDetails,filterDetails=[]}) =>{
+const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
 
     const moneyFields = ['price','total', 'amount', 'cost_price','discount','difference','received_cash'];
     const detailsItem = useSelector((state)=>state.appState.itemDetails);
@@ -31,7 +31,7 @@ const Details = ({cleanItemDetails,filterDetails=[]}) =>{
                 <div className="mt-2">
                 {keys.map((item)=>
                 <div className="flex flex-col gap-1 hover:shadow p-2">
-                    <p className=" bg-green-200 p-1">{ firstCapitalize(t(item))}</p>
+                    <p className={`${rowStyle} p-1`}>{ firstCapitalize(t(item))}</p>
                     <p className="font-light">
                     {moneyFields.includes(item) &&  <Money amount={detailsItem[item]} />}
                         {typeof (detailsItem[item]) == "boolean" && stateDisplay(detailsItem[item]) }
@@ -50,7 +50,7 @@ const Details = ({cleanItemDetails,filterDetails=[]}) =>{
                     </div>
 
                     {detailsItem.sale_products.map((item,index)=>
-                    <div className={`${index % 2 == 0 ? 'bg-green-100' : ''} hover:shadow grid grid-cols-7 gap-2 p-2 font-light`}>
+                    <div className={`${index % 2 == 0 ? 'bg-red-200' : ''} hover:shadow grid grid-cols-7 gap-2 p-2 font-light`}>
                         <p>{item.code}</p>
                         <p>{item.name}</p>
                         <p>{item.qty}</p>

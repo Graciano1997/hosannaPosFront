@@ -9,7 +9,7 @@ import searchCollection from "../../lib/seach";
 import {  useState } from "react";
 
 
-const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteItem = () => { }, printItem=null , update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { },fetcherParam=null, searchBackEndHandler=null, loadingMore=null }) => {
+const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteItem = () => { }, printItem=null , update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { },fetcherParam=null, searchBackEndHandler=null, loadingMore=null, rowStyle="bg-green-100" }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const appState = useSelector((state) => state.appState);
@@ -46,7 +46,8 @@ const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteIt
                     </div>
                 }
 
-                <div className="mb-2">
+                {collection.length>0 &&
+                                <div className="mb-2">
                             <input type="search" onKeyDown={(el) => {
                                 if (el.key == "Enter") {
                                     searchHandler();
@@ -69,7 +70,9 @@ const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteIt
                                 <MagnifyingGlassIcon
                                     onClick={(e) => { }} className="w-5 y-5 cursor-pointer" />
                             </button>
-                        </div>
+                </div>                
+                }
+
 
                 {(appState.error != '' && !appState.loading) &&
                     <div className="rounded text-center w-[100%] mt-[5rem]">
@@ -117,7 +120,7 @@ const Table = ({ collection = [], addItem = null, setCollection=()=>{}, deleteIt
                         
                         <table className="rounded shadow-md overflow-auto w-full  table-auto" >
                             <Thead filterRows={filterRows} setCollection={setCollection} items={collection} object={collection[0]} />
-                            <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} printItem={printItem} items={ searchResult.length? searchResult : collection } />
+                            <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} printItem={printItem} items={ searchResult.length? searchResult : collection } rowStyle={rowStyle} />
                         </table>
                     </div>
                 }
