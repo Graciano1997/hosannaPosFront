@@ -75,7 +75,7 @@ const Product=()=>{
         <TabWrapper>
         
         {appState.activeTab=="tab1" &&
-        <Table addItem={true} filterDetails={filterProductDetails} setCollection={setProducts} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} dispatcher={setProducts} fetcher={fetchProducts} collection={products || []} loadingMore={loadingMore} fetcherParam={productState.last_created_at}/>
+            <Table addItem={true} filterDetails={filterProductDetails} setCollection={setProducts} filterRows={(productState.productFilterRows).concat('category_id')} update={updatingProduct} create={creatingProduct} deleteItem={deleteProduct} dispatcher={setProducts} fetcher={fetchProducts} collection={products || []} loadingMore={loadingMore} fetcherParam={productState.last_created_at}/>
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}

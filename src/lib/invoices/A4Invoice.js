@@ -1,5 +1,7 @@
 import { formattedMoney } from "../formatedMoney";
 
+
+
 const invoiceA4Item = (products)=>{
     let items = ''
     products.forEach((item)=>{
@@ -171,3 +173,5 @@ return `
       </html>
 `
 };
+
+

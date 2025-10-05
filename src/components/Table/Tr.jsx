@@ -2,7 +2,7 @@ import { PencilIcon, PlusCircleIcon, PlusIcon, PrinterIcon, TrashIcon, UserIcon 
 import Money from "../general/Money";
 import { useDispatch, useSelector } from "react-redux";
 import { stateDisplay, textDisplay } from "../../lib/activeDisplay";
-import { cleanItemDetails, itemDetails, openInvoiceView, openModal, printing, showToast } from "../../slices/appSlice";
+import { cleanItemDetails, itemDetails, openInvoiceView, openModal, showToast } from "../../slices/appSlice";
 import Details from "./Details";
 import { useState } from "react";
 import { updateProduct } from "../../slices/productSlice";
@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { getInvoiceItem } from "../../slices/saleSlice";
 import { productFormHandler } from "../product/Create";
+import { printing } from "../../slices/printerSlice";
 
 const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem, printItem = null, rowStyle }) => {
 
@@ -32,6 +33,7 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                     <td onClick={() => { dispatch(itemDetails(item)) }} className="p-1 text-center">
                         {moneyFields.includes(key) && <Money amount={item[key]} />}
                         {typeof (item[key]) == "boolean" && (item[key] ? firstCapitalize(t('yes')) : firstCapitalize(t('not')))}
+                        {item[key] == null && ('')}
                         {key == "image" && item[key] != "none" && <div className="flex justify-center"><img src={item[key]} className="w-[40px] h-[40px] rounded-[20px] duration-200 transition-all hover:shadow" /></div>}
                         {key !== "image" && !moneyFields.includes(key) && typeof (item[key]) != "boolean" && textDisplay(item[key])}
                     </td>
@@ -84,21 +86,22 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                             dispatch(getInvoiceItem(item.id))
                             .then((invoiceResultState) => {
                                     if (getInvoiceItem.fulfilled.match(invoiceResultState)) {
-                                            if (printerConfiguration.print_from_browser == "true") {
-                                                dispatch(openInvoiceView(invoiceResultState.payload.invoice_pdf));
-                                            } else {
+                                             
                                                 dispatch(printing({
                                                     copyNumber: parseInt(printerConfiguration.copyNumber),
-                                                    pdfUrl: invoiceResultState.payload.invoice_pdf,
+                                                    template: invoiceResultState.payload.invoice_template,
                                                     printer: printerConfiguration.printer,
-                                                    queueId: `sale_${item.id}`
                                                 }))
                                                 .then((printingResultState) => {
                                                     if (printing.rejected.match(printingResultState)) {
                                                         dispatch(showToast({ warning: true, message: firstCapitalize(t('could_not_reprint')) }));
                                                     }
+        
+                                                     if (printing.fulfilled.match(printingResultState)) {
+                                                        dispatch(showToast({ success: true, message: firstCapitalize(t('reprinting')) }));
+                                                    }
                                                 })
-                                        } 
+                                         
                                         
                                         
                                         

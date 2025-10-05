@@ -7,7 +7,7 @@ export const ClientType = {
 export const PaymentType = {
     CASH:'CASH',
     TPA:'TPA',
-    TRANSFER:'TRANSFER'
+    MIXED:'MIXED',
 }
 
 export const DefaultClientePhone = 911111111;

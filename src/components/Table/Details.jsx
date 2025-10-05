@@ -50,7 +50,7 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                     </div>
 
                     {detailsItem.sale_products.map((item,index)=>
-                    <div className={`${index % 2 == 0 ? 'bg-red-200' : ''} hover:shadow grid grid-cols-7 gap-2 p-2 font-light`}>
+                    <div className={`${index % 2 == 0 ? 'bg-green-200' : ''} hover:shadow grid grid-cols-7 gap-2 p-2 font-light`}>
                         <p>{item.code}</p>
                         <p>{item.name}</p>
                         <p>{item.qty}</p>

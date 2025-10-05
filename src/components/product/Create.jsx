@@ -8,6 +8,10 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 export const  productFormHandler = (product)=>{
     const productForm = new FormData();
     if(product.id){ delete product.image } 
+    
+    delete product.category;
+    delete product.created_at
+    delete product.updated_at
 
     Object.keys(product).map((key)=>{
         productForm.append(`product[${key}]`,product[key]);
@@ -49,6 +53,8 @@ const Create = ({ stopCreating }) => {
         if(image.current.files[0]){
             productForm.append("product[image]",image.current.files[0]);
         }
+
+        console.log(treatedProductObject);
 
          if (treatedProductObject.id) {
              dispatch(updateProduct(productForm));

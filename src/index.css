@@ -7,9 +7,7 @@ html,body{
   margin: 0;
 }
 
-.visible{
-  left: 0;
-}
+.visible{ left: 0; }
 
 .searching{
   height: 130px;

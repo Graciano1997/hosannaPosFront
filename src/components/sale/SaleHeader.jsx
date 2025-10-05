@@ -41,6 +41,7 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
                  className="cursor-pointer text-black p-2 rounded transition-all duration-200 bg-white shadow">
                     <option value={PaymentType.CASH}>{ firstCapitalize(t('money'))}</option>
                     <option value={PaymentType.TPA}>{ firstCapitalize(t('tpa'))}</option>
+                    <option value={PaymentType.MIXED}>{ firstCapitalize(t('mixed'))}</option>
                 </select>
             </div>
             

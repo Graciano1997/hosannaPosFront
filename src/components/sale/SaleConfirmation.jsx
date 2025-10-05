@@ -47,15 +47,15 @@ const SaleConfirmation = () => {
 
                 //THis action ensure to print in the Java print server App
                 if (order.fulfilled.match(orderResultState)) {
+                    console.log(orderResultState.payload);
                     //prints only if the user printerConfiguration is set to finish and print.
                     if (printerConfiguration.finishAndprint == "true") {
                         if (printerConfiguration.print_from_browser == "true") {
                             dispatch(openInvoiceView(orderResultState.payload.invoice_pdf));
                         } else {
-                            console.log(A4Invoice(orderResultState.payload.invoice_item));
                             dispatch(printing({ 
                                 copyNumber: parseInt(printerConfiguration.copyNumber),
-                                invoiceTemplate: A4Invoice(orderResultState.payload.invoice_item),
+                                template: orderResultState.payload.invoice_template? orderResultState.payload.invoice_template : A4Invoice(orderResultState.payload.invoice_item),
                                 printer: printerConfiguration.printer,
                             }))
 

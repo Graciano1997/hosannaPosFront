@@ -18,6 +18,7 @@ const Print = () => {
     };
 
     const printerState = useSelector((state) => state.printerState);
+
     const [printerSetting, setPrinterSetting] = useState({ ...JSON.parse(localStorage.getItem(`user-${CurrentUser().id}-printerConfiguration`)) });
     return (
         <>
@@ -79,8 +80,7 @@ const Print = () => {
                         }}
                         className="rounded bg-gray-500 p-2">{firstCapitalize(t('rescan_printers'))}</button>
                     <button onClick={() => { 
-
-                        dispatch(printTest({printer:printerSetting.printer}))
+                        dispatch(printTest({printer:printerSetting.printer, printerType: printerSetting.printertype}))
                         .then((resultAction)=>{
                               if(printTest.rejected.match(resultAction)) {
                                      dispatch(showToast({ error: true, message: firstCapitalize(t('printers_server_error')) }));
