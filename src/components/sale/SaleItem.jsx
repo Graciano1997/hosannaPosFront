@@ -26,11 +26,11 @@ const SaleItem = ({product,index})=>{
                  className={`${product.qty===1?'bg-red-100':'bg-red-300'}  w-[20px] rounded-[50%] hover:shadow`}
                  >-</button> <p>{product.qty}</p>
                  <button onClick={()=>{
-                    if((product.stock - product.output) >= product.qty){
+                    if((product.stock) >= product.qty){
                         dispatch(increaseOne(product));
                     }
                  }}  
-                 className={`${(product.stock - product.output) === product.qty ? 'bg-green-200':'bg-green-300'}  w-[20px] hover:shadow rounded-[50%]`}>+</button></div>
+                 className={`${(product.stock) === product.qty ? 'bg-green-100':'bg-green-300'}  w-[20px] hover:shadow rounded-[50%]`}>+</button></div>
                 <p><Money amount={product.total }/></p>
                 <div className="flex justify-between items-center gap-6">
                     <PencilIcon onClick={(evt)=>{ dispatch(selectItem(product)); evt.stopPropagation();}} className="w-5 h-5 text-green-500 hover:shadow"/>

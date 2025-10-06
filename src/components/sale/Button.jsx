@@ -12,12 +12,17 @@ const ButtonGroup = ({saleState})=>{
     return(
     <div className="absolute bottom-[-7px]  w-[100%] flex justify-end">
         {
-        (saleState.items.length>0 && saleState.paymentType==PaymentType.CASH &&  saleState.receivedCash*1 >= saleState.total*1 
-        || saleState.items.length>0 &&
-            saleState.paymentType==PaymentType.TPA) 
+        (
+            saleState.items.length>0 
+            && (
+            saleState.paymentType==PaymentType.CASH &&  saleState.receivedCash*1 >= saleState.total*1 
+            || saleState.paymentType==PaymentType.MIXED && ((saleState.receivedCash*1 + saleState.receivedTpa*1) >= saleState.total*1)
+            || saleState.paymentType==PaymentType.TPA
+            )
+        ) 
         &&
          <button type="button"
-        onClick={()=>{
+            onClick={()=>{
             dispatch(saleConfirm());
         }}
          className="bg-green-200 rounded p-2 hover:shadow">{saleState.invoiceType==SaleType.SALE ?  firstCapitalize(t('order')) : firstCapitalize(t('confirm'))}</button>}

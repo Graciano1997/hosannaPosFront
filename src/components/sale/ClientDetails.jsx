@@ -3,16 +3,22 @@ import { ClientType, DefaultClientePhone, PaymentType, SaleType } from "../../li
 import { useDispatch, useSelector } from "react-redux";
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
-import { setClientDetails, setReceivedCash } from "../../slices/saleSlice";
+import { setClientDetails, setReceivedCash, setReceivedTpa } from "../../slices/saleSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const ClientDetails = ()=>{
     const [clientType,setClientType]=useState(ClientType.SINGULAR);
     const sale= useSelector((state)=>state.saleState);
     const [remain,setRemain]=useState(null);
+    
+    const [mixedRemain,setMixedRemain] = useState(null);
+    const [mixedCashToReceive,setMixedCashToReceive]=useState(0);
+
     const [received,setReceived]=useState(null);
+    const [receivedTpaMoney,setReceivedTpaMoney]=useState(null);
+
     const dispatch = useDispatch();
-    const receivedCash = useSelector((state)=>state.saleState.receivedCash);
+    const { receivedCash, receivedTpa } = useSelector((state)=>state.saleState);
 
     const saleDetails = useSelector((state)=>state.saleState);
     const clientDetails = saleDetails.clientDetails;
@@ -26,6 +32,10 @@ const ClientDetails = ()=>{
        useEffect(()=>{
         setReceived(receivedCash);
        },[saleDetails]);
+
+       useEffect(()=>{
+        setReceivedTpa(0);
+       },[saleDetails.paymentType])
 
     return(
         <div className={`h-[100%] bg-white rounded shadow-md p-3 flex flex-col  gap-2`}>
@@ -66,30 +76,49 @@ const ClientDetails = ()=>{
                 <input 
                 type="text" 
                 name="nif" 
-                defaultValue={clientType==ClientType.SINGULAR ? '999999999':''}  
+                defaultValue={clientType==ClientType.SINGULAR ? 99999999 :''}  
                 onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2" />
             </div>
             
             
-            {sale.invoiceType==SaleType.SALE && sale.paymentType==PaymentType.CASH && sale.total > 0 &&
+            {sale.invoiceType==SaleType.SALE && (sale.paymentType==PaymentType.MIXED) && sale.total > 0 &&
             <div className="flex flex-col gap-3">
-                <label for="cashReceived">{firstCapitalize(t('received_cash'))}</label>
-                <input type="number" id="cashReceived" name="received_cash"  value={received ? received :receivedCash }  onChange={(el)=>{
-                    setReceived(el.target.value);
-                    
-                    if(el.target.value*1 > sale.total && sale.total > 0 ){
-                        setRemain(el.target.value*1 - sale.total);
-                    }else{
-                        setRemain(null)
-                    }
-                    
-                    dispatch(setReceivedCash(el.target.value*1));
-                    
+                <label for="tpaReceived">{firstCapitalize(t('received_tpa'))}</label>
+                <input type="number" id="tpaReceived" name="received_tpa"  value={receivedTpaMoney ? receivedTpaMoney :receivedTpa }  onChange={(el)=>{
+                    setReceivedTpaMoney(el.target.value);
+                    setMixedCashToReceive(sale.total - parseInt(el.target.value));
+                    dispatch(setReceivedTpa(el.target.value*1));
                 }} className="bg-green-100 rounded p-2"/>
             </div>
             }
 
-        {sale.invoiceType==SaleType.SALE && sale.paymentType==PaymentType.CASH && sale.total>0 && sale.difference > 0 &&
+            {sale.invoiceType==SaleType.SALE && (sale.paymentType==PaymentType.CASH || sale.paymentType==PaymentType.MIXED) && sale.total > 0 &&
+            <div className="flex flex-col gap-3">
+                <label for="cashReceived">{firstCapitalize(t('received_cash'))}</label>
+                <input type="number" id="cashReceived" name="received_cash"  value={ received ? received :receivedCash }  onChange={(el)=>{
+                    setReceived(el.target.value);
+                    
+                    if(sale.paymentType==PaymentType.CASH){
+                        if(el.target.value*1 > sale.total && sale.total > 0 ){
+                            setRemain(el.target.value*1 - sale.total);
+                        }else{
+                            setRemain(null)
+                        }
+                    }
+
+                    if(sale.paymentType==PaymentType.MIXED){
+                        if(el.target.value*1 > mixedCashToReceive ){
+                            setRemain(el.target.value*1 - mixedCashToReceive);
+                        }else{
+                            setRemain(0)
+                        }
+                    }
+                    dispatch(setReceivedCash(el.target.value*1));   
+                }} className="bg-green-100 rounded p-2"/>
+            </div>
+            }
+
+        {sale.invoiceType==SaleType.SALE && (sale.paymentType==PaymentType.CASH || sale.paymentType==PaymentType.MIXED) && sale.total>0 && sale.difference > 0 &&
             <div className="flex flex-col gap-3">
                 <label for="cashRemain">{firstCapitalize(t('difference'))}</label>
                 <div className="bg-green-100 rounded p-2">

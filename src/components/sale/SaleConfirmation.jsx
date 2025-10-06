@@ -21,16 +21,16 @@ const SaleConfirmation = () => {
         const treatedSaleObject = {
             client: {
                 ...saleState.clientDetails,
-                nif:saleState.clientDetails.client_type??999999999
+                nif:saleState.clientDetails.client_type??9999999
             },
             sale: {
                 invoiceType: saleState.invoiceType * 1,
                 qty: saleState.totalItems,
                 payment_way: saleState.paymentType,
-                received_cash: saleState.paymentType == PaymentType.CASH ? saleState.receivedCash : null,
-                received_tpa: saleState.paymentType == PaymentType.TPA ? saleState.total : 0,
+                received_cash:(saleState.paymentType==PaymentType.CASH || saleState.paymentType == PaymentType.MIXED) ? saleState.receivedCash : 0,
+                received_tpa: saleState.paymentType == PaymentType.TPA ? saleState.total : saleState.receivedTpa,
                 descount: 0,
-                difference: saleState.paymentType == PaymentType.TPA ? 0 : (saleState.receivedCash * 1 - saleState.total * 1),
+                difference: saleState.paymentType == PaymentType.TPA ? 0 : (saleState.difference),
                 total: saleState.total,
                 user_id: CurrentUser().id
             },
@@ -66,7 +66,6 @@ const SaleConfirmation = () => {
                                 })
                         }
                     }else{
-                        console.log("aqui...");
                          dispatch(showToast({ warning:true, message:firstCapitalize(t('ordered_without_printing'))}));
                     }
                 }
