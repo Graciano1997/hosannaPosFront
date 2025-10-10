@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getIpTenant, Ip} from "../lib/ip";
+import { getIpTenant} from "../lib/ip";
 import { removeDuplicate } from "../lib/removeDuplicate";
 
 const initialState = {
@@ -45,7 +45,6 @@ export const categorySlice = createSlice({
             state.isUpdating = true;
             state.categoryToUpdate=action.payload;
         },
-
         setCategories:(state,action)=>{
             state.categories = action.payload;
         },
@@ -54,7 +53,6 @@ export const categorySlice = createSlice({
             state.isUpdating = false;
             state.categoryToUpdate = {};
         },
-
     },
     extraReducers:(builder)=>{
         builder.addCase(fetchCategories.fulfilled,(state,action)=>{

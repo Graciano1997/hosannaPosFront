@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { clearSearchedProduct, fetchProducts } from "../../slices/productSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { printing } from "../../slices/printerSlice";
-import { A4Invoice } from "../../lib/invoices/A4Invoice";
 import { CurrentUser } from "../../lib/CurrentUser";
 
 const SaleConfirmation = () => {
@@ -24,13 +23,13 @@ const SaleConfirmation = () => {
                 nif:saleState.clientDetails.client_type??9999999
             },
             sale: {
-                invoiceType: saleState.invoiceType * 1,
+                invoiceType: parseInt(saleState.invoiceType),
                 qty: saleState.totalItems,
                 payment_way: saleState.paymentType,
-                received_cash:(saleState.paymentType==PaymentType.CASH || saleState.paymentType == PaymentType.MIXED) ? saleState.receivedCash : 0,
-                received_tpa: saleState.paymentType == PaymentType.TPA ? saleState.total : saleState.receivedTpa,
-                descount: 0,
-                difference: saleState.paymentType == PaymentType.TPA ? 0 : (saleState.difference),
+                received_cash:saleState.invoiceType == SaleType.PORFORM ? 0 : (((saleState.paymentType==PaymentType.CASH || saleState.paymentType == PaymentType.MIXED)) ? saleState.receivedCash : 0),
+                received_tpa: saleState.paymentType == SaleType.PORFORM ? 0 : (( PaymentType.TPA == saleState.paymentType? saleState.total : (saleState.paymentType==PaymentType.MIXED ? saleState.receivedTpa:0))),
+                descount: saleState.invoiceType == SaleType.PORFORM ? 0 : 0,
+                difference: saleState.invoiceType == SaleType.PORFORM ? 0 : (saleState.paymentType == PaymentType.TPA ? 0 : (saleState.difference)),
                 total: saleState.total,
                 user_id: CurrentUser().id
             },
@@ -50,21 +49,18 @@ const SaleConfirmation = () => {
                     console.log(orderResultState.payload);
                     //prints only if the user printerConfiguration is set to finish and print.
                     if (printerConfiguration.finishAndprint == "true") {
-                        if (printerConfiguration.print_from_browser == "true") {
-                            dispatch(openInvoiceView(orderResultState.payload.invoice_pdf));
-                        } else {
-                            dispatch(printing({ 
-                                copyNumber: parseInt(printerConfiguration.copyNumber),
-                                template: orderResultState.payload.invoice_template? orderResultState.payload.invoice_template : A4Invoice(orderResultState.payload.invoice_item),
-                                printer: printerConfiguration.printer,
-                            }))
+                        dispatch(printing({ 
+                            copyNumber: parseInt(printerConfiguration.copyNumber),
+                            template: orderResultState.payload.invoice_template,
+                            printer: printerConfiguration.printer,
+                            printerType: printerConfiguration.printertype
+                        }))
 
-                                .then((printingResultState) => {
-                                    if (printing.rejected.match(printingResultState)) {
-                                        dispatch(showToast({ warning: true, message: firstCapitalize(t('ordered_without_printing')) }));
-                                    }
-                                })
-                        }
+                            .then((printingResultState) => {
+                                if (printing.rejected.match(printingResultState)) {
+                                    dispatch(showToast({ warning: true, message: firstCapitalize(t('ordered_without_printing')) }));
+                                }
+                            })
                     }else{
                          dispatch(showToast({ warning:true, message:firstCapitalize(t('ordered_without_printing'))}));
                     }

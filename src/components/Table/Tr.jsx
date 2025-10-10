@@ -91,6 +91,7 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                                                     copyNumber: parseInt(printerConfiguration.copyNumber),
                                                     template: invoiceResultState.payload.invoice_template,
                                                     printer: printerConfiguration.printer,
+                                                    printerType: printerConfiguration.printertype
                                                 }))
                                                 .then((printingResultState) => {
                                                     if (printing.rejected.match(printingResultState)) {

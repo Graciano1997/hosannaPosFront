@@ -1,4 +1,4 @@
-export const A4InvoiceTest = () => `
+export const InvoiceTest = () => `
             <!DOCTYPE html>
             <html>
             <head>
@@ -14,7 +14,7 @@ export const A4InvoiceTest = () => `
             </style>
             </head>
             <body>
-            <h1>HOSANA POS - TESTE DE IMPRESSAOSSSSSS</h1>
+            <h1><strong>HOSANA POS - TESTE DE IMPRESSÃO</strong></h1>
             <div class='info'>
             <table>
             <tr><td class='header'>Status</td><td>FUNCIONANDO</td></tr>

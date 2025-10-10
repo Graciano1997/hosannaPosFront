@@ -12,7 +12,8 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
     const sale = useSelector((state)=>state.saleState);
     const dispatch = useDispatch();
     const {t}= useTranslation();
-
+    // console.log(sale.invoiceType);
+    
     return(
         <div className="mt-[3rem] flex flex-col sm:flex-row gap-5 sm:justify-between sm:items-center  w-[100%] sm:h-[100px] bg-white rounded p-4">  
             <div className="flex gap-3 items-center">
@@ -29,7 +30,7 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
             </div>
            
            <div className="flex gap-4">
-
+            {sale.invoiceType==SaleType.SALE  &&
             <div className="flex gap-3 items-center">
                 <label htmlFor="clienteType" className="sm:text-xl">{firstCapitalize(t('payment_way'))}</label>
                 <select id="clienteType" onChange={(el)=>{
@@ -45,7 +46,7 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
                     <option value={PaymentType.MIXED}>{ firstCapitalize(t('mixed'))}</option>
                 </select>
             </div>
-            
+                }
             <div className="flex gap-3 items-center">   
             {/* {false &&
             <button onClick={()=>{

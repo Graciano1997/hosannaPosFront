@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { fetchPrinters, printTest, setPrinterConfig } from "../../slices/printerSlice";
 import { showToast } from "../../slices/appSlice";
 import { CurrentUser } from "../../lib/CurrentUser";
@@ -51,14 +51,6 @@ const Print = () => {
                             <option value={false}>{firstCapitalize(t('not'))}</option>
                         </select>
                     </div>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <h3 className="font-medium">{firstCapitalize(t('print_from_browser'))}</h3>
-                    <select name="print_from_browser" defaultValue={printerState.printerConfiguration?.print_from_browser} className="p-1 rounded" onChange={formHandler}>
-                        <option value={true}>{firstCapitalize(t('yes'))}</option>
-                        <option value={false}>{firstCapitalize(t('not'))}</option>
-                    </select>
                 </div>
 
                 <div className="flex flex-col gap-1">

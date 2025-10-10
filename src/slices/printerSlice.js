@@ -2,63 +2,24 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Ip, printerIp } from "../lib/ip";
 import { CurrentUser } from "../lib/CurrentUser";
 import { generatePDFInvoice } from "../lib/generatePrinterInvoicer";
-import { A4InvoiceTest } from "../lib/invoices/A4InvoiceTest";
-import { Thermal58InvoiceTest } from "../lib/invoices/Thermal58InvoiceTest";
-import { Thermal80InvoiceTest } from "../lib/invoices/Thermal80InvoiceTest";
+import { InvoiceTest } from "../lib/invoices/InvoiceTest";
 
-const printerHandlerRequest =  async (data)=>{
-      
-      const { printerType } = data;      
-      let apiPoint = '';
-      let invoiceItem = '';
+const printerHandlerRequest = async (data) => {
 
-      let payload = {
-        printer: data.printer,
-        copyNumber: 1
-      }
+  const { printerType } = data;
 
+  let apiPoint = '/print_pdf';
 
-      if (data.printer.toLowerCase().includes("pdf")) {
-        invoiceItem = await generatePDFInvoice(data.template ? data.template : A4InvoiceTest(), printerType);
-        apiPoint = "/print_pdf";
-        payload = { ...payload, pdfBase64: invoiceItem };
-      } else {
+  let payload = {
+    printer: data.printer,
+    copyNumber: data.copyNumber
+  }
 
-        switch (printerType) {
-          case "A4":
-            invoiceItem = await generatePDFInvoice(data.template ? data.template : A4InvoiceTest(), printerType);
-            apiPoint = "/print_pdf";
-            payload = { ...payload, pdfBase64: invoiceItem };
+  let invoiceItem = await generatePDFInvoice(data.template ? data.template : InvoiceTest(), printerType);
 
-            // Validação crítica
-            if (!invoiceItem || typeof invoiceItem !== 'string' || invoiceItem.length === 0) {
-              throw new Error('PDF não foi gerado corretamente');
-            }
-            break
-          case "58mm":
-            invoiceItem = data.template ? data.template  : Thermal58InvoiceTest();
-            payload = { ...payload, invoiceHtml: invoiceItem };
-            apiPoint = "/print_thermal";
-
-            break
-          case "80mm":
-            invoiceItem = data.template ? data.template  : Thermal80InvoiceTest();
-            payload = { ...payload, invoiceHtml: invoiceItem };
-            apiPoint = "/print_thermal";
-            break
-          default:
-            invoiceItem = await generatePDFInvoice(data.template ? data.template : A4InvoiceTest());
-            payload = { ...payload, pdfBase64: invoiceItem };
-            apiPoint = "/print_pdf";
-
-            // Validação crítica
-            if (!invoiceItem || typeof invoiceItem !== 'string' || invoiceItem.length === 0) {
-              throw new Error('PDF não foi gerado corretamente');
-            }
-        }
-      }
-
-      return {apiPoint,payload};
+  payload = { ...payload, pdfBase64: invoiceItem };
+  
+  return { apiPoint, payload };
 }
 
 const initialState = {
@@ -70,10 +31,7 @@ const initialState = {
 
 export const printing = createAsyncThunk("printerState/printing", async (data) => {
 
-  
-  const { apiPoint,payload } = await printerHandlerRequest(data);
-  
-  console.log({apiPoint,payload});
+  const { apiPoint, payload } = await printerHandlerRequest(data);
 
   const response = await fetch(`${printerIp.concat(apiPoint)}`, {
     headers: { "Content-Type": "application/json", Accept: "application/json", },
@@ -117,8 +75,8 @@ export const printTest = createAsyncThunk("printerState/printTest",
   async (data, { rejectWithValue }) => {
 
     try {
-      const { apiPoint,payload } = await printerHandlerRequest(data);
-          
+      const { apiPoint, payload } = await printerHandlerRequest(data);
+
       const response = await fetch(`${printerIp.concat(apiPoint)}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
