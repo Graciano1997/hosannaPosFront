@@ -32,6 +32,7 @@ import { useTranslation } from 'react-i18next'
 import Account from './components/settings/Account'
 import { fetchPrinterConfig } from './slices/printerSlice'
 import { MyStore } from './components/mystore/Mystore'
+import StockMovements from './components/Stock/StockMovements'
 
 function Home() {
 
@@ -99,6 +100,7 @@ function Home() {
       <Route path='/setting' element={<Setting/>} />
       <Route path='/profile' element={<Account/>} />
       <Route path='/mystore' element={<MyStore/>} />
+      <Route path='/stock_movements' element={<StockMovements/>} />
       <Route path='*' element={<_404/>} />
       </Routes>
 

@@ -7,6 +7,8 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useDispatch } from "react-redux";
 import { logoutUser, showToast } from "../../slices/appSlice";
 import { Profiles } from "../../lib/Enums";
+import { CubeTransparentIcon, ServerStackIcon, ShoppingBagIcon, Square3Stack3DIcon } from "@heroicons/react/16/solid";
+import { Square2StackIcon } from "@heroicons/react/20/solid";
 
 const Navegation =({visible,setVisibility})=>{
     const {t} = useTranslation();
@@ -77,6 +79,13 @@ const Navegation =({visible,setVisibility})=>{
                 to={ master ? "/sales": "#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sales'?'rounded bg-green-100':''}`} >
                 <CircleStackIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('sales'))}
+                </Link>
+            </li>
+                       <li>
+                <Link to={"/stock_movements"} 
+                className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/stock_movements'?'rounded bg-green-100':''}`} >
+                <Square3Stack3DIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                {firstCapitalize(t('stock'))}
                 </Link>
             </li>      
             <li>

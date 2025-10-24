@@ -69,6 +69,7 @@ export const registerProduct = createAsyncThunk("productState/registerProduct", 
 });
 
 export const updateProduct = createAsyncThunk("productState/updateProduct",async (productFormData)=>{
+    console.log("the form Data", productFormData);
     const response = await fetch(`${getIpTenant()}products/${productFormData.get("product[id]")}`,
     {method:'PUT', body:productFormData});
     return response.json();

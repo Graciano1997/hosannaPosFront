@@ -45,22 +45,14 @@ export const options = {
 
 export function LineChart({data,width=400,height=300,info}) {
   
- let yearSpents=data.spents;
- let yearSales=data.sales;
- let yearExpireds=data.expireds;
+  let yearSpents=data.spents??[];
+  let yearSales=data.sales??[];
+  let yearExpireds=data.expireds??[];
 
+  if(yearSpents.length>0){ yearSpents=(data.spents).map((spent)=>spent*1);}
+  if(yearSales.length>0){ yearSales=(data.sales).map((sale)=>sale*1);}
+  if(yearExpireds.length>0){ yearExpireds=(data.expireds).map((product)=>product*1); }
 
-  if(yearSpents.length>0){
-   yearSpents=(data.spents).map((spent)=>spent*1);
-  }
-
- if(yearSales.length>0){
-  yearSales=(data.sales).map((sale)=>sale*1);
- }
-
- if(yearExpireds.length>0){
-  yearExpireds=(data.expireds).map((product)=>product*1);
- }
   const {t}=useTranslation();
   const graphContainerRef=useRef(null);
   const dispatch = useDispatch();

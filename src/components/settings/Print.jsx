@@ -27,7 +27,7 @@ const Print = () => {
                 <div className="flex flex-col gap-3">
                     <label for="printertype" className="font-medium"> {firstCapitalize(t('printer_type'))}
                     </label>
-                    <select name="printertype" defaultValue={printerState?.printerConfiguration.printertype} onChange={formHandler} id="printertype" className="p-1 rounded">
+                    <select name="printertype" defaultValue={printerState.printerConfiguration?.printertype} onChange={formHandler} id="printertype" className="p-1 rounded">
                         <option value="A4">{firstCapitalize(t('a4_office'))}</option>
                         <option value="80mm">{firstCapitalize(t('thermal_80mm'))}</option>
                         <option value="58mm">{firstCapitalize(t('thermal_58mm'))}</option>

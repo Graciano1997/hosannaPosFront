@@ -48,12 +48,13 @@ export const fetchSales = createAsyncThunk('saleState/fetchSales', async (last_c
     return response.json();
 });
 
-export const getInvoiceItem = createAsyncThunk("saleState/getInvoiceItem", async (saleId) => {
+export const getInvoiceItem = createAsyncThunk("saleState/getInvoiceItem", async (data) => {
     try {
-        const response = await fetch(`${getIpTenant()}sales/reprint/${saleId}`,
+        const response = await fetch(`${getIpTenant()}sales/reprint/`,
             {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:JSON.stringify(data)
             });
         return response.json();
     } catch (error) {

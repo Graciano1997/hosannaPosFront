@@ -83,7 +83,7 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                         <div className={`flex item-center gap-3 ${item?.image ? 'mt-1':''}`}>
                         {updateItem && <button onClick={() => { dispatch(openModal()); dispatch(updateItem(item)); }}><PencilIcon className="w-6 y-6 p-1 text-green-800 hover:shadow hover:rounded" /></button>}
                         {printItem && <button onClick={() => {
-                            dispatch(getInvoiceItem(item.id))
+                            dispatch(getInvoiceItem({id:item.id,printerType:printerConfiguration.printertype}))
                             .then((invoiceResultState) => {
                                     if (getInvoiceItem.fulfilled.match(invoiceResultState)) {
                                              

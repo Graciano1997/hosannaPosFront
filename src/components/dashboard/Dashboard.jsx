@@ -13,6 +13,9 @@ import { useNavigate } from "react-router-dom";
 import { activeTab } from "../../slices/appSlice";
 import { Profiles } from "../../lib/Enums";
 import { fetchAlertProducts, fetchAnualExpiredProducts } from "../../slices/productSlice";
+import { fetchStockMovements } from "../../slices/stockSlice";
+import { annualMonths } from "../../lib/Months";
+import { GenericLineChart } from "./GenericLineChart";
 
 const Dashboard=()=>{
     const {t}=useTranslation();
@@ -25,6 +28,7 @@ const Dashboard=()=>{
         dispatch(fetchAnualSales());    
         dispatch(fetchAnualExpiredProducts());    
         dispatch(fetchAlertProducts());
+        dispatch(fetchStockMovements());
     },[]);
 
     const navegate = useNavigate();
@@ -40,6 +44,32 @@ const Dashboard=()=>{
    
     const today_balance = totalToDay(sales,new Date());
     const today_spents = totalToDay(spentState.spents,new Date(),"amount");
+
+     const dataLines = {
+    labels: annualMonths.map((month)=>firstCapitalize(t(month))),
+    datasets: [{
+      label: firstCapitalize(t('income')),
+      data: anualSales,
+      fill: false,
+      borderColor: 'rgb(54, 235, 108)',
+      tension: 0.5
+    },
+    {
+      label: firstCapitalize(t('spents')),
+      data: anualSpents,
+      fill: false,
+      borderColor: 'rgb(255, 99, 132)',
+      tension: 0.5
+    },
+    {
+      label: firstCapitalize(t('expired')),
+      data: anualExpired,
+      fill: false,
+      borderColor: 'rgb(255, 205, 86)',
+      tension: 0.5
+    }
+    ],
+  };
 
     return(
         <>
@@ -64,7 +94,7 @@ const Dashboard=()=>{
             <CircleStackIcon className="w-5 y-5 text-[#323232] "/>
             <h4>{firstCapitalize(t('sales'))}</h4>
             </button>
-            {productState.alertProducts.length>0 &&
+            {productState.alertProducts!=undefined && productState.alertProducts.length>0 &&
             
                         <button 
             onClick={()=>{
@@ -95,7 +125,8 @@ const Dashboard=()=>{
 
 <LastSelling width={350} height={350} info={{title:firstCapitalize(t('last_selling')), description:t('about')}}/>
 <DoughnutChart width={300} height={390} data={[today_balance,today_spents]} info={firstCapitalize(t('today_status'))}/>
-<LineChart width={450} height={350} data={{spents: anualSpents,sales:anualSales, expireds:anualExpired}} info={firstCapitalize(t('income_outcome_expiration'))}/>
+{/* <LineChart width={450} height={350} data={{spents: anualSpents,sales:anualSales, expireds:anualExpired}} info={firstCapitalize(t('income_outcome_expiration'))}/> */}
+<GenericLineChart width={450} height={350} dataLines={dataLines} info={firstCapitalize(t('income_outcome_expiration'))}/>
 </div>
     </div>
         </div>

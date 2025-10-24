@@ -29,7 +29,7 @@ const Title=({title,create,collectionToExport})=>{
                 <h1 className="text-3xl">{firstCapitalize(title)}</h1>
                 {
                 (['/products'].includes(pathname) && ['tab1','tab3','tab4','tab5'].includes(appState.activeTab) || 
-                ['/sales','/users','/spents'].includes(pathname) && ['tab1'].includes(appState.activeTab))
+                ['/sales','/users','/spents','/stock_movements'].includes(pathname) && ['tab1'].includes(appState.activeTab))
                 &&
                 <>
                 {showElipse && (<EllipsisHorizontalIcon onClick={()=>{setShowElipse(!showElipse)}} className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>)}
@@ -81,7 +81,10 @@ const Title=({title,create,collectionToExport})=>{
                 <Link to={""}
                 onClick={()=>dispatch(activeTab('tab4'))} 
                 className={`flex items-center gap-2 transition-all duration-300 text-yellow-700 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''} `} >
+                {
+                    productState.alertProducts &&
                 <BellAlertIcon className={`w-4 y-4 cursor-pointer hover:shadow ${productState.alertProducts.length > 0 ? 'alert':'' } `}/>
+                }
                 {firstCapitalize(t('alert'))}
                 </Link>
             </li>

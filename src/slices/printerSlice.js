@@ -12,7 +12,7 @@ const printerHandlerRequest = async (data) => {
 
   let payload = {
     printer: data.printer,
-    copyNumber: data.copyNumber
+    copyNumber: data.copyNumber,
   }
 
   let invoiceItem = await generatePDFInvoice(data.template ? data.template : InvoiceTest(), printerType);

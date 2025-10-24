@@ -216,5 +216,16 @@
     "printers_test":"o teste de impressão foi enviado a impressora [x]",
     "promotion_start":"promoção_inicio",
     "promotion_end":"promoção_fim",
-    "save":"salvar"
+    "save":"salvar",
+    "before_qty":"qtd_antes",
+    "after_qty":"qtd_depois",
+    "notes":"nota",
+    "reference":"referência",
+    "movement_type":"tipo_movimento",
+    "stock_movements":"movimentos_stock",
+    "stock_movements_graph_header": "Entradas, Saídas, Ajustes, Devoluções e Produtos Vencidos",
+    "entry":"Entradas",
+    "return":"Devoluções",
+    "exit":"Saídas",
+    "adjustment":"Ajustes"
 }

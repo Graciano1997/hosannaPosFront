@@ -213,5 +213,16 @@
     "print_from_browser":"print from Browser",
     "preview_before_printing":"preview before printing",
     "printers_test":"the printing test was send to the [x] printer",
-    "save":"save"
+    "save":"save",
+    "before_qty":"before_qty",
+    "after_qty":"after_qty",
+    "notes":"note",
+    "reference":"reference",
+    "movement_type":"movement_type",
+    "stock_movements":"stock_movements",
+    "stock_movements_graph_header": "Entries, Exits, Adjustments, Returns and Expirations",
+    "entry":"Entries",
+    "return":"Returns",
+    "exit":"Exits",
+    "adjustment":"Adjustments"
 }
