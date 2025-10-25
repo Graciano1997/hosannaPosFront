@@ -227,5 +227,10 @@
     "entry":"Entradas",
     "return":"Devoluções",
     "exit":"Saídas",
-    "adjustment":"Ajustes"
+    "adjustment":"Ajustes",
+     "week": "Semana",
+    "label_next": "Próximo mês",
+    "label_previous": "Mês passado",
+    "label_month_dropdown": "Seleciona o mês",
+    "label_year_dropdown": "Seleciona o ano"
 }

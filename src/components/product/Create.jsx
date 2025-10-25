@@ -4,6 +4,7 @@ import { registerProduct,updateProduct } from "../../slices/productSlice";
 import LargeModal from "../general/LargeModal";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import { DatePicker } from "../general/DatePicker";
 
 export const  productFormHandler = (product)=>{
     const productForm = new FormData();
@@ -32,11 +33,18 @@ const Create = ({ stopCreating }) => {
     const categories = useSelector((state) => state.categoryState.categories);
     const productFilterRows = useSelector((state) => state.productState.productFilterRows)
 
-    const formHandler = (el) => {
+    const formHandler = (el,datapicker=false) => {
+        if(datapicker){
+            setProduct({
+            ...product,
+            [el.name]: el.value
+        })
+        }else{
         setProduct({
             ...product,
             [el.target.name]: el.target.value
         })
+        }
     }
 
     const handleFormSubmition = (el) => {
@@ -169,12 +177,12 @@ const Create = ({ stopCreating }) => {
                                                         <label>
                                 {firstCapitalize(t('promotion_start'))} 
                                 <br />
-                                <input type='date' name="promotion_start" onChange={formHandler} value={product.promotion_start} className='p-1 rounded w-[100%] outline-none bg-green-100' />
+                                 <DatePicker mode={"single"} name="promotion_start" value={product.promotion_start} dataSetHandler={formHandler}/>
                             </label>
                             <label>
                                 {firstCapitalize(t('promotion_end'))} 
                                 <br />
-                                <input type='date' name="promotion_end" onChange={formHandler} value={product.promotion_end} className='p-1 rounded w-[100%] outline-none bg-green-100' />
+                                <DatePicker mode={"single"} name="promotion_end" value={product.promotion_end} dataSetHandler={formHandler}/>
                             </label>
                               <label>
                             {firstCapitalize(t('discount'))}
@@ -264,7 +272,7 @@ const Create = ({ stopCreating }) => {
                             <label>
                         {firstCapitalize(t('manufacture_date'))}       
                                 <br />
-                                <input type='date' name="manufacture_date" onChange={formHandler} value={product.manufacture_date} className='p-1 rounded w-[100%] outline-none' />
+                                <DatePicker mode={"single"} name="manufacture_date" value={product.manufacture_date} dataSetHandler={formHandler}/>
                             </label>
                         }
 
@@ -272,8 +280,8 @@ const Create = ({ stopCreating }) => {
                             <label>
                                 {firstCapitalize(t('expire_date'))} 
                                 <br />
-                                <input type='date' name="expire_date" onChange={formHandler} value={product.expire_date} className='p-1 rounded w-[100%] outline-none' />
-                            </label>
+                                <DatePicker mode={"single"} value={product.expire_date} name="expire_date" dataSetHandler={formHandler}/>
+                             </label>
                         }
 
                         {!productFilterRows.includes('location_in_stock') &&

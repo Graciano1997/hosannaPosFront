@@ -18,6 +18,8 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
     const { printerConfiguration } = useSelector((state) => state.printerState);
 
     const moneyFields = ['price', 'total', 'amount', 'cost_price', 'difference', 'received_cash', 'received_tpa'];
+    const movementTypeColor ={entry:"bg-green-500",exit:"bg-red-500",return:"bg-purple-500",adjustment:"bg-blue-500",expired:"bg-yellow-400"}
+    
     const dispatch = useDispatch();
     const [checkNumber, setCheckNumber] = useState(false);
     const [qty, setQty] = useState(0);
@@ -31,11 +33,15 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                 className={`${index % 2 == 0 ? rowStyle : ''}  cursor-pointer hover:sm:shadow font-light `}>
                 {keys.map((key) =>
                     <td onClick={() => { dispatch(itemDetails(item)) }} className="p-1 text-center">
+                        {key=="movement_type" &&  
+                        (<span className="flex items-center gap-2"><span className={`w-3 h-3 rounded ${movementTypeColor[item[key]]}`}></span>{t(item[key])}
+                        </span>)
+                        }
                         {moneyFields.includes(key) && <Money amount={item[key]} />}
                         {typeof (item[key]) == "boolean" && (item[key] ? firstCapitalize(t('yes')) : firstCapitalize(t('not')))}
                         {item[key] == null && ('')}
                         {key == "image" && item[key] != "none" && <div className="flex justify-center"><img src={item[key]} className="w-[40px] h-[40px] rounded-[20px] duration-200 transition-all hover:shadow" /></div>}
-                        {key !== "image" && !moneyFields.includes(key) && typeof (item[key]) != "boolean" && textDisplay(item[key])}
+                        {key !== "image" && !moneyFields.includes(key) && typeof (item[key]) != "boolean" && key!="movement_type"  && textDisplay(item[key])}
                     </td>
                 )
                 }

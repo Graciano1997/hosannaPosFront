@@ -224,5 +224,10 @@
     "entry":"Entries",
     "return":"Returns",
     "exit":"Exits",
-    "adjustment":"Adjustments"
+    "adjustment":"Adjustments",
+     "week": "Week",
+    "label_next": "Next month",
+    "label_previous": "Previous month",
+    "label_month_dropdown": "Select month",
+    "label_year_dropdown": "Select year"
 }

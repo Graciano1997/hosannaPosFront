@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState} from "react";
 import CurrentUser from "./CurrentUser";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CubeIcon, GlobeAltIcon, HomeIcon,ShoppingCartIcon, TruckIcon, UserGroupIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { ArchiveBoxIcon, ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CreditCardIcon, CubeIcon, GlobeAltIcon, HomeIcon,ShoppingCartIcon, TagIcon, TruckIcon, UserGroupIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useDispatch } from "react-redux";
@@ -26,15 +26,15 @@ const Navegation =({visible,setVisibility})=>{
 
     useEffect(()=>{
         const handlerClick=(event)=>{
-            if(!((navegationRef.current).contains(event.target))){ 
+            if(navegationRef.current &&   !navegationRef.current.contains(event.target)){ 
                 setVisibility(false); }
                 event.stopPropagation();
         }
         
-        window.addEventListener("click",handlerClick)
+        document.addEventListener("mousedown",handlerClick)
 
         return()=>{
-            window.removeEventListener("click",handlerClick)
+            document.removeEventListener("mousedown",handlerClick)
         }
 
     },[]);
@@ -69,7 +69,7 @@ const Navegation =({visible,setVisibility})=>{
                 <Link
                 onClick={handleMasterMessage}
                 to={ master ? "/spents":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/spents'?'rounded bg-green-100':''}`} >
-                <ArrowTrendingUpIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                <CreditCardIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('spents'))}
                 </Link>
             </li>           
@@ -77,14 +77,14 @@ const Navegation =({visible,setVisibility})=>{
                 <Link 
                 onClick={handleMasterMessage}
                 to={ master ? "/sales": "#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sales'?'rounded bg-green-100':''}`} >
-                <CircleStackIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                <TagIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('sales'))}
                 </Link>
             </li>
                        <li>
                 <Link to={"/stock_movements"} 
                 className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/stock_movements'?'rounded bg-green-100':''}`} >
-                <Square3Stack3DIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                <ArchiveBoxIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('stock'))}
                 </Link>
             </li>      
