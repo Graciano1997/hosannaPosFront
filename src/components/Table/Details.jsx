@@ -7,12 +7,13 @@ import { UserIcon } from "@heroicons/react/24/solid";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
-
+    filterDetails=['image'];
     const moneyFields = ['price','total', 'amount', 'cost_price','discount','difference','received_cash'];
     const detailsItem = useSelector((state)=>state.appState.itemDetails);
     let keys = Object.keys(detailsItem);
+   
     const hasImage = detailsItem.image ?true:false;
-    keys = keys.filter((item) => !filterDetails.includes(item))
+    keys = keys.filter((item) => !filterDetails.includes(item));
     const {t}= useTranslation();
     
     return(
@@ -66,9 +67,9 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                 </div>
                 </div>
                 </div>
-                {/* <div className="mt-[2rem] flex justify-end">
+                <div className="mt-[2rem] flex justify-end">
                 <button className="bg-green-200 p-2 rounded hover:shadow"> {firstCapitalize(t('export'))}</button>
-                </div> */}
+                </div>
             </div>
             </div>
         </Modal>

@@ -16,15 +16,16 @@ export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}
     const calendarPickerRef = useRef();
 
     useEffect(()=>{
-        // const handlerClickOutSide = (event)=>{
-        //       if (calendarPickerRef.current && !calendarPickerRef.current.contains(event.target)) {
-        //          setVisibility(false);
-        //         }
-        // };
+         const handlerClickOutSide = (event)=>{
+               if (calendarPickerRef.current && !calendarPickerRef.current.contains(event.target)) {
+                 if((selected==null)){setVisibility(false);}
+                 console.log(selected);
+                 }
+         };
 
-        // document.addEventListener("mousedown",handlerClickOutSide);
-        // return ()=>document.removeEventListener("mousedown",handlerClickOutSide);
-    },[]);
+         document.addEventListener("mousedown",handlerClickOutSide);
+         return ()=>document.removeEventListener("mousedown",handlerClickOutSide);
+    },[selected]);
 
 
     let locale;
@@ -60,9 +61,9 @@ export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}
             today:`bg-green-800 text-white rounded`,
             selected: `bg-[#333] rounded shadow text-white`,
             range: "bg-green-300 text-green-900",
-            range_start: "rounded-l-lg bg-green-600 text-white",
-            range_middle:"bg-black text-white",
-            range_end: "rounded-r-lg bg-green-600 text-white",
+            range_start: "rounded-l-lg bg-green-500 text-white",
+            range_middle:"bg-[#333] text-white",
+            range_end: "rounded-r-lg bg-green-500 text-white",
             chevron: `fill-green-500`,
         }}
         
@@ -88,8 +89,8 @@ export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}
                 <>
                 <button  onClick={()=>{
                setVisibility(false)
-            }} className="p-1 rounded bg-green-200" >{t('confirm')} </button>
-                      
+            }} className="p-1 rounded bg-green-200 text-black" >{t('confirm')} </button>
+
                 <button  onClick={()=>{
                     setRangeDate({from:null, to:null});
                 setSelected(null);

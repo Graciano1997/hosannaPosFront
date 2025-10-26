@@ -232,5 +232,6 @@
     "label_year_dropdown": "Select year",
     "date_interval": "Date interval",
     "clear":"clear",
-    "data_interval_example":"Eg.: 2025-10-01 - 2025-10-05"
+    "data_interval_example":"Eg.: 2025-10-01 - 2025-10-05",
+    "select_all_field":"select all"
 }

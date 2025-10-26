@@ -5,6 +5,7 @@ import "react-day-picker/style.css";
 import { format } from "date-fns";
 import { pt,enUS, fr } from "react-day-picker/locale";
 import { useTranslation } from "react-i18next";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 
 export const DatePicker = ({name, value, mode, dataSetHandler=(el)=>{}})=>{
@@ -86,6 +87,22 @@ export const DatePicker = ({name, value, mode, dataSetHandler=(el)=>{}})=>{
             labelMonthDropdown: () => t('label_month_dropdown'),
             labelYearDropdown: () => t('label_year_dropdown'),
         }}
+        footer={
+            <div className="flex gap-3 mt-[5px]">
+      
+            {                
+                selected &&
+                
+                <button  onClick={()=>{
+                setSelected(null);
+                setVisibility(false);
+                inputRef.current.value = null;
+                const datapicker=true;
+                dataSetHandler(inputRef.current,datapicker);
+            }} className="p-1 shadow rounded" ><XMarkIcon className="w-6 h-6 text-red-500" /></button>
+            }
+            </div>
+        }
         />
         </div>       
         }

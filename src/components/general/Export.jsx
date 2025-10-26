@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,8 @@ const Export = ({ stopExporting}) => {
     const {t}=useTranslation();
     const [columnsToExport,setColumnsToExport]=useState([]);
     const filterFilter = ['image','profile_id','sale_products','user_id','client_id','category_id','parent_category_id'];
-    
+    const fieldRef = useRef(null);
+
     const exportingModel = useSelector((state) =>state.appState.exportingModel);
     let exportingModelKeys=[];
 
@@ -44,22 +45,36 @@ const Export = ({ stopExporting}) => {
                     {firstCapitalize(t('fieldsToExport'))}
                     <br /> 
                     </label>
-                <div className="flex flex-wrap gap-3 mt-3">
+                <div className="flex flex-wrap gap-3 mt-3" ref={fieldRef}>
                     {exportingModelKeys.length>0 && exportingModelKeys.map((key, index) => {
                         if(filterFilter.includes(key)){
                             return null;
                         }
                         return (
 
-                            <div key={index} className="flex gap-2 p-2 rounded-[20px] items-center bg-green-100">
-                            <input type="checkbox" onChange={formHandler} name={key} id={key} onClick={(el)=>{el.stopPropagation()}} className="cursor-pointer w-[18px] h-[18px]"  />
+                            <div key={index}  className="flex gap-2 p-2 rounded-[20px] items-center bg-green-100">
+                            <input type="checkbox" onChange={formHandler} name={key} id={key} onClick={(el)=>{el.stopPropagation()}} className="check-input cursor-pointer w-[18px] h-[18px]"/>
                             <label className="cursor-pointer" for={key}>{firstCapitalize(t(key))}</label>
                             </div>
                         );  
                     })}
                 </div>
                 {exportingModelKeys.length>0 &&
-                    <div className="flex justify-end p-2 mt-auto">
+                    <div className="flex justify-end p-2 mt-auto gap-5">
+                        <button type="button" onClick={()=>{
+
+                            const inputs = fieldRef.current.querySelectorAll(".check-input");
+        
+                            const inputNames = [];
+
+                            if(inputs.length>0){
+                                inputs.forEach(element => {
+                                    element.checked=true;
+                                    inputNames.push(element.name);
+                                });
+                                setColumnsToExport(inputNames);
+                            }
+                        }} className="p-2 bg-green-100 rounded">{firstCapitalize(t('select_all_field'))}</button>
                         <ExportButton data={exportingModel.data} columnsToExport={columnsToExport} model={exportingModel.model}/>
                     </div>
                     }
