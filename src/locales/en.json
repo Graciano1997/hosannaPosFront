@@ -229,5 +229,8 @@
     "label_next": "Next month",
     "label_previous": "Previous month",
     "label_month_dropdown": "Select month",
-    "label_year_dropdown": "Select year"
+    "label_year_dropdown": "Select year",
+    "date_interval": "Date interval",
+    "clear":"clear",
+    "data_interval_example":"Eg.: 2025-10-01 - 2025-10-05"
 }

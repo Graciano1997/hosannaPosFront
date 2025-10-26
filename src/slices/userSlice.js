@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getIpTenant, Ip } from "../lib/ip";
 import { removeDuplicate } from "../lib/removeDuplicate";
+import { CurrentUser } from "../lib/CurrentUser";
 
 const initialState = {
     isCreating : false,
@@ -97,34 +98,18 @@ const userSlice = createSlice({
                         const updatedUsers = [...state.users]; 
                         updatedUsers[atIndex] = action.payload.user;
                         state.users = updatedUsers;
+                        let currentUser = CurrentUser();
+                        currentUser={...currentUser,
+                                image:action.payload.user.image 
+                        }
+                        localStorage.setItem("currentUser",JSON.stringify(currentUser));
                         }
                     }            
                 })
 
-        // builder.addCase(updateUser.fulfilled, (state, action) => {
-        //     //  state.isCreating = false;
-        //     //  if (!action.payload.error) {
-        //     //      state.users.push({ ...action.payload.user });
-        //     //  }
-        //     console.log(action.payload);
-        //  });
-
         builder.addCase(deleteUser.fulfilled, (state, action) => {
              state.users = state.users.filter((user) => user.id !== action.payload.id);
          });
-
-        // builder.addCase(updateSpent.fulfilled, (state, action) => {
-        //     state.isUpdating = false;
-        //     state.spentToUpdate = {};
-        //     if (action.payload.success && action.payload.spent) {
-        //         const atIndex = state.spents.findIndex(item => item.id === action.payload.spent.id);
-        //         if (atIndex !== -1) {
-        //             const updatedSpents = [...state.spents]; // Create a new array
-        //             updatedSpents[atIndex] = action.payload.spent; // Update the specific item
-        //             state.spents = updatedSpents; // Assign the new array to state
-        //         }
-        //     }
-        // })
     }
 });
 

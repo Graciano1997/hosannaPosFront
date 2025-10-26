@@ -2,6 +2,7 @@ import { Bars3Icon,BellIcon,InboxIcon, LanguageIcon, MagnifyingGlassIcon, Questi
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Searching } from "../../slices/appSlice";
+import CurrentUser from "./CurrentUser";
 
 const Header=({setVisibility})=>{
     const {i18n,t} = useTranslation();
@@ -10,6 +11,7 @@ const Header=({setVisibility})=>{
     return(
         <header className="flex justify-between">
             <Bars3Icon className="w-7 y-7 cursor-pointer" onClick={(el)=>{ el.stopPropagation(); setVisibility(true)}} />
+            <div className="flex gap-2">
             <div className="flex gap-4">
                 <BellIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 <InboxIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
@@ -26,6 +28,8 @@ const Header=({setVisibility})=>{
                     </select>
                 </div>
             </div>          
+            <CurrentUser/>
+            </div>
         </header>
     );
 };

@@ -213,5 +213,8 @@
     "label_next": "Mois suivant",
     "label_previous": "Mois précédent",
     "label_month_dropdown": "Sélectionner le mois",
-    "label_year_dropdown": "Sélectionner l'année"
+    "label_year_dropdown": "Sélectionner l'année",
+    "date_interval": "Plage de dates",
+    "clear": "Effacer",
+    "data_interval_example": "Ex.: 2025-10-01 - 2025-10-05"
 }

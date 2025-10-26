@@ -6,26 +6,30 @@ import { useTranslation } from "react-i18next";
 import { registerUser, stopCreatingOrUpdateingUser, updateUser } from "../../slices/userSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { showToast } from "../../slices/appSlice";
-import CurrentUser from "../general/CurrentUser";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
+import { CurrentUser } from "../../lib/CurrentUser";
 
 const Account = () => {
 
     const image = useRef();
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("currentUser")));
+    const [currentUser, setCurrentUser] = useState(CurrentUser());
 
     useEffect(() => {
         dispatch(fetchProfiles());
     }, []);
 
+    useEffect(()=>{
+        setCurrentUser(CurrentUser());
+    },[localStorage.getItem("currentUser")]);
+
 
     const userState = useSelector((state) => state.userState);
     const profileState = useSelector((state) => state.profileState);
     const profiles = profileState.profiles;
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem("currentUser")));
+    const [user, setUser] = useState(CurrentUser());
 
     const formHandler = (el) => {
         setUser({
@@ -81,7 +85,7 @@ const Account = () => {
 
                         <input type='email' onChange={formHandler} placeholder={firstCapitalize(t('email'))} name="email" value={user.email} className='p-1 rounded w-[100%] outline-none' />
 
-                        {(user.id == JSON.parse(localStorage.getItem("currentUser")).id || user.id == undefined) &&
+                        {(user.id == CurrentUser().id || user.id == undefined) &&
                         <>
                             <input type='password' onChange={formHandler} name="password" placeholder={firstCapitalize(t('password'))} className='p-1 rounded w-[100%] outline-none' />
                             <input type='password' onChange={formHandler} name="new_password" placeholder={firstCapitalize(t('new_password'))} className='p-1 rounded w-[100%] outline-none' />
