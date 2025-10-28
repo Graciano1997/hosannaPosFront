@@ -9,7 +9,7 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 
-export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}})=>{
+export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}, style, setSearching=()=>{}, setSearchResult=()=>{}})=>{
     const [selected,setSelected]=useState(null);
     const inputRef = useRef(null);
     const {t,i18n}=useTranslation();
@@ -19,7 +19,6 @@ export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}
          const handlerClickOutSide = (event)=>{
                if (calendarPickerRef.current && !calendarPickerRef.current.contains(event.target)) {
                  if((selected==null)){setVisibility(false);}
-                 console.log(selected);
                  }
          };
 
@@ -47,7 +46,7 @@ export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}
     return(
         <>        
         {visibility &&
-        <div style={{zIndex:5000}} ref={calendarPickerRef} className="bg-white p-3 absolute rounded shadow  text-sm max-w-full">
+        <div style={{zIndex:5000}} ref={calendarPickerRef} className={`bg-white p-3 absolute rounded shadow  text-sm ${style}`}>
     <DayPicker
         captionLayout="dropdown"
         animate
@@ -55,7 +54,6 @@ export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}
         selected={selected}
         onSelect={(date)=>{
             setSelected(date);
-            setRangeDate({from:format(date.from,"yyyy-MM-dd"),to:format(date.to,"yyyy-MM-dd")})
          }}     
         classNames={{
             today:`bg-green-800 text-white rounded`,
@@ -88,13 +86,18 @@ export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}
                 selected?.from && selected?.to &&
                 <>
                 <button  onClick={()=>{
-               setVisibility(false)
+                if(selected.from!=undefined && selected.to!=undefined ){
+                setRangeDate({from:format(selected.from,"yyyy-MM-dd"),to:format(selected.to,"yyyy-MM-dd")})
+                }
+               setVisibility(false);
+               setSearching(false);
             }} className="p-1 rounded bg-green-200 text-black" >{t('confirm')} </button>
 
                 <button  onClick={()=>{
                     setRangeDate({from:null, to:null});
                 setSelected(null);
                 setVisibility(false);
+                setSearchResult([]);
             }} className="p-1 shadow rounded" ><XMarkIcon className="w-6 h-6 text-red-500" /></button>
             </>
             }

@@ -132,7 +132,7 @@ const appSlice=createSlice({
         setTableCurrentCollection: (state,action)=>{
             state.currentTableCollection = action.payload;
         },
-
+        
         activeTab:(state,action)=>{
             state.activeTab=action.payload;
         },

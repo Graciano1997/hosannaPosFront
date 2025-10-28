@@ -1,65 +1,73 @@
 import { removeDiacritics } from "./removeDiacritic";
 
-const searchCollection = (collection,key)=>{
+const searchCollection = (collection, key = "", period = null) => {
+  if (!Array.isArray(collection) || collection.length === 0) return [];
+  if (!key.trim() && !period?.from && !period?.to) return collection;
 
-   let item = collection.find(item=>item.id==key);
-   let auxiliar = [];
+  let auxiliar = [];
 
-   //means that it founded the searched id item....
-   if(item!=undefined){
-    auxiliar.push(item);
-       return auxiliar;
+  // 🔍 Filtro por período
+  if (period?.from && period?.to) {
+    auxiliar = collection.filter((item) => {
+      const dateItem = (item.created_at || "").split(" ")[0];
+      return dateItem >= period.from && dateItem <= period.to;
+    });
+  }
+
+  if (period?.from && period?.to && !key.trim()) return removeDuplicate(auxiliar, "id");
+
+  if (key.trim()) {
+    const collectionToSearch = period?.from && period?.to ? auxiliar : collection;
+
+    // 🔎 Busca direta por ID
+    const foundById = collectionToSearch.find((item) => item.id == key);
+    if (foundById) return [foundById];
+
+    const keys = Object.keys(collectionToSearch[0]);
+    const numericFields = [];
+    const textFields = [];
+
+    keys.forEach((field) => {
+      if (isNaN(collectionToSearch[0][field])) textFields.push(field);
+      else numericFields.push(field);
+    });
+
+    // 🔠 Busca textual
+    if (isNaN(key)) {
+      const normalizedKey = removeDiacritics(key.toLowerCase());
+      let textResult = [];
+
+      textFields.forEach((field) => {
+        const result = collectionToSearch.filter(
+          (item) =>
+            item[field] != null &&
+            removeDiacritics(String(item[field]).toLowerCase()).includes(normalizedKey)
+        );
+        textResult = [...textResult, ...result];
+      });
+
+      auxiliar = textResult;
+      return removeDuplicate(auxiliar, "id");
+    } 
+    // 🔢 Busca numérica
+    else {
+      numericFields.forEach((field) => {
+        const result = collectionToSearch.find((item) => item[field] == key);
+        if (result) auxiliar.push(result);
+      });
+      return removeDuplicate(auxiliar, "id");
     }
-    
-   const numericFields = [];
-   const textFields = [];
+  }
 
-   const keys = Object.keys(collection[0]);
-
-     keys.forEach((field) =>{
-         if(isNaN(collection[0][field])){
-            textFields.push(field);
-        }else{
-             numericFields.push(field);
-         }
-     });
-
-
-     if(isNaN(key)){
-         let textResult = [];
-         textFields.forEach((field=>{
-             const result = collection.filter(item=> item[field]!=null && (removeDiacritics(item[field])).includes(removeDiacritics(key)));
-             textResult=[...textResult,
-                ...result
-            ];
-        }));
-        
-        auxiliar = [...textResult]; 
-        return removeDuplicate(auxiliar,'id')
-    }
-     else{
-         numericFields.forEach((field=>{
-             let result = collection.find(item=>item[field]==key);
-             if(result!=undefined){
-                auxiliar.push(result);
-             }
-         }));
-         return removeDuplicate(auxiliar,key);
-     }
+  return collection;
 };
 
-const removeDuplicate = (collection,key)=>{
-    const arr=[];
-
-    if(collection.length!=0){
-        collection.forEach((item)=>{
-            if(arr.find((it)=>it[key]==item[key])==undefined){
-                arr.push(item);
-            }
-        });
-    }
-
-    return arr;
+const removeDuplicate = (collection, key) => {
+  const arr = [];
+  collection.forEach((item) => {
+    if (!arr.find((it) => it[key] == item[key])) arr.push(item);
+  });
+  return arr;
 };
 
 export default searchCollection;

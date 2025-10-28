@@ -233,5 +233,7 @@
     "date_interval": "Date interval",
     "clear":"clear",
     "data_interval_example":"Eg.: 2025-10-01 - 2025-10-05",
-    "select_all_field":"select all"
+    "select_all_field":"select all",
+    "unselect_all_field":"unselect all",
+    "sale_type":"sale type"
 }

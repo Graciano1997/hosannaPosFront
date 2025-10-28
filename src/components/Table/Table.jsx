@@ -6,12 +6,12 @@ import { openModal } from "../../slices/appSlice";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import searchCollection from "../../lib/seach";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DatePickerFilter } from "../general/DatePickerFilter";
 import { useLocation } from "react-router-dom";
 
 
-const Table = ({ collection = [], addItem = null, setCollection = () => { }, deleteItem = () => { }, printItem = null, update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { }, fetcherParam = null, searchBackEndHandler = null, loadingMore = null, rowStyle = "bg-green-100" }) => {
+const Table = ({ collection = [], addItem = null, setCollection = () => { }, deleteItem = () => { }, printItem = null, update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { }, fetcherParam = null, searchBackEndHandler = null, loadingMore = null, rowStyle = "bg-green-100", rangeDataSelection= true }) => {
 
     const exceptionUrl = ['/setting'];
     const { pathname } = useLocation();
@@ -29,23 +29,26 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
     const [visibility, setVisibility] = useState(false);
 
 
-    const searchHandler = async () => {
-        if (query.trim().length > 0) {
+    const searchHandler = () => {
+         if (query.trim().length > 0 || rangeDate?.from && rangeDate?.to ) {
             setSearching(true);
-            const result = searchCollection(collection, query);
-
-            if (result.length == 0) {
-                if (searchBackEndHandler) {
-                    dispatch(searchBackEndHandler())
-                        .then((searchResultAction) => {
-                            console.log(searchResultAction);
-                        })
-                }
-            }
-
+            const result = searchCollection(collection, query,rangeDate);
+            // if (result?.length == 0) {
+            //     if (searchBackEndHandler) {
+            //         dispatch(searchBackEndHandler())
+            //             .then((searchResultAction) => {
+            //                 console.log(searchResultAction);
+            //             })
+            //     }
+            // }
+            console.log(result,"kkkk");
             setSearchResult(result);
-        }
+         }
     }
+
+    useEffect(()=>{
+        searchHandler();
+    },[rangeDate]);
 
     return (
         <>
@@ -58,14 +61,29 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
                     </div>
                 }
 
-                <div className="flex gap-5 items-center">
+                <div className="sm:flex gap-5 items-center">
 
                     {
                         !exceptionUrl.includes(pathname) &&
                         <>
+                            { rangeDataSelection && collection.length > 0 &&
+                                <div>
+                                    <div className="mb-2">
+                                        <input type="search" onKeyDown={(el)=>{
+                                            if(el.key=="Backspace"){
+                                                setRangeDate(null);
+                                                setVisibility(false);
+                                                setSearchResult([]);
+                                            }
+                                        }} value={rangeDate?.from != null && rangeDate?.to != null ? `${rangeDate?.from} - ${rangeDate?.to}` : ''} onClick={() => { setVisibility(true) }}
+                                            className="p-[4px_15px_4px_4px] border-none outline outline-1 outline-green-300 border border-gray-300 rounded px-2 py-1" id="search" placeholder={firstCapitalize(t('data_interval_example'))} />
+                                    </div>          
+                                    <DatePickerFilter setRangeDate={setRangeDate} setSearching={setSearching} setSearchResult={setSearchResult} visibility={visibility} setVisibility={setVisibility} />
+                                </div>
+                            }
 
                             {collection.length > 0 &&
-                                <div className="mb-2">
+                                <div className="mb-2 flex items-center">
                                     <input type="search" onKeyDown={(el) => {
                                         if (el.key == "Enter") {
                                             searchHandler();
@@ -77,38 +95,24 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
                                             } else {
                                                 setQuery('');
                                                 setSearching(false);
-                                                dispatch(setSearchResult([]));
+                                                
+                                                if(rangeDate?.from==null && rangeDate?.to==null){
+                                                     setSearchResult([]);
+                                                 }else{
+                                                    searchHandler();
+                                                 }
                                             }
                                         }}
                                         className="p-[4px_15px_4px_4px] border-none outline outline-1 outline-green-300 border border-gray-300 rounded" id="search" placeholder={firstCapitalize(t('filter'))} />
 
                                     <button
                                         onClick={searchHandler}
-                                        className="bg-black p-[5px_25px] text-white relative top-[5px]">
+                                        className="bg-black p-[5px_25px] text-white">
                                         <MagnifyingGlassIcon
                                             onClick={(e) => { }} className="w-5 y-5 cursor-pointer" />
                                     </button>
                                 </div>
                             }
-
-
-                            <p className="font-bold">{firstCapitalize(t('date_interval'))}:</p>
-
-                            {collection.length > 0 &&
-                                <div>
-                                    <div className="mb-2">
-                                        <input type="search" value={rangeDate.from != null && rangeDate.to != null ? `${rangeDate.from} - ${rangeDate.to}` : ''} onClick={() => { setVisibility(true) }}
-                                            className="p-[4px_15px_4px_4px] border-none outline outline-1 outline-green-300 border border-gray-300 rounded px-2 py-1" id="search" placeholder={firstCapitalize(t('data_interval_example'))} />
-                                        <button
-                                            className="bg-black p-[5px_25px] text-white relative top-[5px]">
-                                            <MagnifyingGlassIcon
-                                                onClick={(e) => { }} className="w-5 y-5 cursor-pointer" />
-                                        </button>
-                                    </div>
-                                    <DatePickerFilter setRangeDate={setRangeDate} visibility={visibility} setVisibility={setVisibility} />
-                                </div>
-                            }
-
                         </>
                     }
 
@@ -150,7 +154,7 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
                     </div>
                 }
 
-                {(searching && searchResult.length == 0 && query != '') ?
+                {(searching && searchResult?.length == 0 && (query != '' || rangeDate?.from !=undefined && rangeDate?.to !=undefined )) ?
                     (<div className="rounded text-center w-[100%] mt-[5rem]">
                         <div className=" mt-[5rem] flex flex-col justify-center">
                             <p className="text-2xl font-light p-1"> {firstCapitalize(t('no_founded_item'))}</p>
@@ -162,7 +166,7 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
 
                                 <table className="rounded shadow-md overflow-auto w-full  table-auto" >
                                     <Thead filterRows={filterRows} setCollection={setCollection} items={collection} object={collection[0]} />
-                                    <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} printItem={printItem} items={searchResult.length ? searchResult : collection} rowStyle={rowStyle} />
+                                    <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} printItem={printItem} items={searchResult?.length ? searchResult : collection} rowStyle={rowStyle} />
                                 </table>
                             </div>
                         }

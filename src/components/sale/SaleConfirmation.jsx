@@ -19,8 +19,7 @@ const SaleConfirmation = () => {
     const orderHandler = () => {
         const treatedSaleObject = {
             client: {
-                ...saleState.clientDetails,
-                nif:saleState.clientDetails.client_type??9999999
+                ...saleState.clientDetails
             },
             sale: {
                 invoiceType: parseInt(saleState.invoiceType),

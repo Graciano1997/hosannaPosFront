@@ -13,11 +13,10 @@ const Sales=()=>{
     const {t}=useTranslation();
     const [showDashboard,setShowDashboard]=useState(false);
     const appState=useSelector((state)=>state.appState);
-    const filterRows = ['client_id','user_id','sale_products'];
+    const filterRows = ['client_id','user_id','sale_products','image',"store_id"];
     
     const saleState= useSelector((state)=>state.saleState);
     const sales= saleState.sales;
-
 
     const dispatch = useDispatch();
     useEffect(()=>{

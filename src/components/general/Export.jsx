@@ -4,12 +4,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import ExportButton from "../ExportButton";
+import { DatePickerFilter } from "./DatePickerFilter";
+import searchCollection from "../../lib/seach";
 
 const Export = ({ stopExporting}) => {
     const {t}=useTranslation();
     const [columnsToExport,setColumnsToExport]=useState([]);
+    const [selectedAll,setSelectedAll] = useState(false);
+    const [visibility,setVisibility]= useState(false);
+    const [rangeDate,setRangeDate]=useState(null);
+    const dispatch = useDispatch();
+    const [updateModelToExport,setUpdatedModelToExport] =useState(null);
+
     const filterFilter = ['image','profile_id','sale_products','user_id','client_id','category_id','parent_category_id'];
     const fieldRef = useRef(null);
+
+    useEffect(()=>{
+        if(rangeDate?.from && rangeDate?.to){
+
+            const result = searchCollection(exportingModel.data,'',rangeDate);
+
+            const filteredModelToExport = {...exportingModel,
+                data:result
+            }
+            setUpdatedModelToExport(filteredModelToExport);
+        }
+    },[rangeDate]);
+
 
     const exportingModel = useSelector((state) =>state.appState.exportingModel);
     let exportingModelKeys=[];
@@ -58,27 +79,49 @@ const Export = ({ stopExporting}) => {
                             </div>
                         );  
                     })}
+
                 </div>
+            <div>
+            <div className="mt-4 flex gap-2 p-2 rounded-[20px] justify-center items-center bg-green-100 w-[25%]">
+                <p>{t('date_interval')}</p>
+                <input type="search"  onKeyDown={(el)=>{
+                    if(el.key=="Backspace"){
+                        setRangeDate(null);
+                        setVisibility(false);
+                    }
+                }} value={rangeDate?.from != null && rangeDate?.to != null ? `${rangeDate?.from} - ${rangeDate?.to}` : ''} onClick={() => { setVisibility(true) }}
+                    className="bg-transparent text-red-600" id="search" placeholder={firstCapitalize(t('data_interval_example'))} />
+            </div>          
+            <DatePickerFilter style={"absolute mt-[-10rem]"} setRangeDate={setRangeDate} visibility={visibility} setVisibility={setVisibility} />
+        </div>
                 {exportingModelKeys.length>0 &&
                     <div className="flex justify-end p-2 mt-auto gap-5">
                         <button type="button" onClick={()=>{
-
                             const inputs = fieldRef.current.querySelectorAll(".check-input");
-        
-                            const inputNames = [];
+                            let inputNames = [];
 
-                            if(inputs.length>0){
+                            if(selectedAll){
+                                inputs.forEach(element => element.checked=false);
+                                inputNames=[];
+                                setColumnsToExport(inputNames);
+                                setSelectedAll(false);
+                            }else{
                                 inputs.forEach(element => {
-                                    element.checked=true;
-                                    inputNames.push(element.name);
+                                element.checked=true;
+                                inputNames.push(element.name);
                                 });
                                 setColumnsToExport(inputNames);
+                                setSelectedAll(true);
                             }
-                        }} className="p-2 bg-green-100 rounded">{firstCapitalize(t('select_all_field'))}</button>
-                        <ExportButton data={exportingModel.data} columnsToExport={columnsToExport} model={exportingModel.model}/>
+
+
+                        }} className="p-2 bg-green-100 rounded">{ selectedAll ? firstCapitalize(t('unselect_all_field')) : firstCapitalize(t('select_all_field'))}</button>
+                        <ExportButton data={ updateModelToExport ? updateModelToExport.data : exportingModel.data} columnsToExport={columnsToExport} model={exportingModel.model}/>
                     </div>
                     }
                 </form>
+
+                                            
             </Modal>
         </>
     );

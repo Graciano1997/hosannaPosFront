@@ -6,9 +6,11 @@ import { useTranslation } from "react-i18next";
 import { UserIcon } from "@heroicons/react/24/solid";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
+const movementTypeColor ={entry:"bg-green-500",exit:"bg-red-500",return:"bg-purple-500",adjustment:"bg-blue-500",expired:"bg-yellow-400"}
+const moneyFields = ['price','total', 'amount', 'cost_price','discount','difference','received_cash'];
+
 const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
-    filterDetails=['image'];
-    const moneyFields = ['price','total', 'amount', 'cost_price','discount','difference','received_cash'];
+    
     const detailsItem = useSelector((state)=>state.appState.itemDetails);
     let keys = Object.keys(detailsItem);
    
@@ -34,9 +36,17 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                 <div className="flex flex-col gap-1 hover:shadow p-2">
                     <p className={`${rowStyle} p-1`}>{ firstCapitalize(t(item))}</p>
                     <p className="font-light">
+
+                    {item=="movement_type" &&  
+                        (<span className="flex items-center gap-2"><span className={`w-3 h-3 rounded ${movementTypeColor[detailsItem[item]]}`}></span>{t(detailsItem[item])}
+                        </span>)
+                    }
+       
+
                     {moneyFields.includes(item) &&  <Money amount={detailsItem[item]} />}
-                        {typeof (detailsItem[item]) == "boolean" && stateDisplay(detailsItem[item]) }
-                        {item!=="image" && !moneyFields.includes(item) && typeof(detailsItem[item]) != "boolean" &&  detailsItem[item]}
+                    {typeof (detailsItem[item]) == "boolean" && stateDisplay(detailsItem[item]) }
+                    
+                    {!moneyFields.includes(item) && typeof(detailsItem[item]) != "boolean" && item!="movement_type" &&  detailsItem[item]}
                     </p>
                 </div>
                 )}

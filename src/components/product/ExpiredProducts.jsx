@@ -12,11 +12,14 @@ const ExpiredProducts=()=>{
     useEffect(()=>{
         dispatch(fetchExpiredProducts());
     },[]);
+
+     const filterExpiredDetails =['image'];
+
     const productState = useSelector((state)=>state.productState);
    
     return(
         <>
-        <Table filterDetails={[]} create={null} update={null} fetcher={fetchAnualExpiredProducts} dispatcher={setExpireds} deleteItem={null} rowStyle="bg-red-100" collection={productState.expireds || []}/>
+        <Table filterDetails={filterExpiredDetails} create={null} update={null} fetcher={fetchAnualExpiredProducts} dispatcher={setExpireds} deleteItem={null} rowStyle="bg-red-100" collection={productState.expireds || []}/>
         {!productState.error && !productState.loading &&
         <div className="flex justify-end p-2 mt-auto"><button type="button" onClick={()=>{
             dispatch(expiredProductJob())

@@ -31,7 +31,7 @@ const Product=()=>{
     
 
     const categoryState = useSelector((state)=>state.categoryState);
-    const filterProductDetails =['id','category_id'];
+    const filterProductDetails =['id','category_id','image'];
     const filterCategoryDetails =['id','parent_category_id'];
     const products = productState.products || [];
     
