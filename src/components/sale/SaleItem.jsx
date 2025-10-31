@@ -11,11 +11,11 @@ const SaleItem = ({product,index})=>{
     const {t}=useTranslation();
 
     return(
-        <div className={`grid grid-cols-[10fr_10fr_10fr_10fr_10fr_25fr_10fr] place-items-center text-md ${index%2==0?'bg-green-50':'bg-green-100'} p-3 cursor-pointer`}>
+        <div className={`grid grid-cols-[20fr_20fr_20fr_20fr_20fr] md:grid-cols-[10fr_10fr_10fr_10fr_10fr_25fr_10fr] place-items-center text-md ${index%2==0?'bg-green-50':'bg-green-100'} p-3 cursor-pointer`}>
                 <p>{product.name}</p>
                 <p><Money amount={product.price}/></p>
-                <p>{product.discount}</p>
-                <p>{product.taxes}</p>
+                <p className="hidden md:block">{product.discount}</p>
+                <p className="hidden md:block">{product.taxes}</p>
                 <div className="flex gap-4 items-center"> 
                 <button
                 onClick={()=>{
@@ -32,7 +32,7 @@ const SaleItem = ({product,index})=>{
                  }}  
                  className={`${(product.stock) === product.qty ? 'bg-green-100':'bg-green-300'}  w-[20px] hover:shadow rounded-[50%]`}>+</button></div>
                 <p><Money amount={product.total }/></p>
-                <div className="flex justify-between items-center gap-6">
+                <div className="flex justify-between items-center gap-4">
                     <PencilIcon onClick={(evt)=>{ dispatch(selectItem(product)); evt.stopPropagation();}} className="w-5 h-5 text-green-500 hover:shadow"/>
                     <XMarkIcon onClick={(evt)=>{ 
                        if(dispatch(removeItem(product))){

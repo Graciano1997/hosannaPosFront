@@ -59,7 +59,7 @@ export const fetchProductsFields = createAsyncThunk("productState/fetchProductsF
 });
 
 export const deleteProduct = createAsyncThunk("productState/deleteProduct", async (id)=>{
-    const response = await fetch(`${getIpTenant()}products/${id}`,{ method:'DELETE', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}products/${parseInt(id)}`,{ method:'DELETE'});
     return response.json();
 });
 
@@ -69,7 +69,6 @@ export const registerProduct = createAsyncThunk("productState/registerProduct", 
 });
 
 export const updateProduct = createAsyncThunk("productState/updateProduct",async (productFormData)=>{
-    console.log("the form Data", productFormData);
     const response = await fetch(`${getIpTenant()}products/${productFormData.get("product[id]")}`,
     {method:'PUT', body:productFormData});
     return response.json();
@@ -216,9 +215,10 @@ const productSlice = createSlice({
     builder.addCase(registerProduct.pending,(state)=>{ state.loading=true;});
 
     builder.addCase(registerProduct.fulfilled,(state,action)=>{
-        state.loading=false;
-        state.isCreating=false;
+        
         if(!action.payload.error){
+            state.loading=false;
+            state.isCreating=false;
             state.products.push({...action.payload.product});
         }
     });
@@ -242,7 +242,8 @@ const productSlice = createSlice({
       });
 
     builder.addCase(registerProduct.rejected,(state,action)=>{
-        state.loading =false;
+        // state.loading =false;
+        // state.isCreating=true; 
     });
 
     builder.addCase(fetchProductsFields.fulfilled,(state,action)=>{
@@ -257,7 +258,7 @@ const productSlice = createSlice({
     })
 
     builder.addCase(updateProduct.fulfilled,(state,action)=>{
-        state.isUpdating = false;
+        
         state.productToUpdate = {};
         if (action.payload.success && action.payload.product) {
             const atIndex = state.products.findIndex(item => item.id === action.payload.product.id);
@@ -266,6 +267,7 @@ const productSlice = createSlice({
                 updatedProducts[atIndex] = action.payload.product; // Update the specific item
                 state.products = updatedProducts; // Assign the new array to state
             }
+            state.isUpdating = false;
             }            
     })
 }

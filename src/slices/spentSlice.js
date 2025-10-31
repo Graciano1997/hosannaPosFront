@@ -86,10 +86,10 @@ const spentSlice = createSlice({
         });
 
         builder.addCase(registerSpent.fulfilled, (state, action) => {
-            state.isCreating = false;
             if (!action.payload.error) {
                 state.spents.push({ ...action.payload.spent });
                 state.total = sum(state.spents,'amount').total;
+                state.isCreating = false;
             }
         });
 
@@ -108,7 +108,6 @@ const spentSlice = createSlice({
         });
 
         builder.addCase(updateSpent.fulfilled, (state, action) => {
-            state.isUpdating = false;
             state.spentToUpdate = {};
             if (action.payload.success && action.payload.spent) {
                 const atIndex = state.spents.findIndex(item => item.id === action.payload.spent.id);
@@ -118,6 +117,7 @@ const spentSlice = createSlice({
                     state.spents = updatedSpents; // Assign the new array to state
                     state.total = sum(updateSpent,'amount').total;
                 }
+                state.isUpdating = false;
             }
         })
     }

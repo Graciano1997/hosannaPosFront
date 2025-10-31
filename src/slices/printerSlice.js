@@ -59,7 +59,6 @@ export const setPrinterConfig = createAsyncThunk("printerState/setPrinterConfig"
     method: 'POST',
     body: JSON.stringify({ user: `user-${CurrentUser().id}-printerConfiguration`, value: printerConfiguration })
   });
-
   return response.json();
 });
 

@@ -235,5 +235,8 @@
     "data_interval_example":"Eg.: 2025-10-01 - 2025-10-05",
     "select_all_field":"select all",
     "unselect_all_field":"unselect all",
-    "sale_type":"sale type"
+    "sale_type":"sale type",
+    "returning":"sale return",
+    "alert_product":"Alerted Product",
+    "min_qty":"min qty"
 }

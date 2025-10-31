@@ -2,23 +2,28 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { firstCapitalize } from '../lib/firstCapitalize';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { showToast } from '../slices/appSlice';
+import { generatePDF, generatePDFInvoice } from '../lib/generatePrinterInvoicer';
+import { ExportReport } from './Report/ExportReport';
 
-const ExportButton = ({ data,columnsToExport,model }) => {
+
+
+const ExportButton = ({ data,columnsToExport,model,exportOption }) => {
   const {t}=useTranslation();
   const dispatch = useDispatch();
-
-  const exportToExcel = () => {
-      const filteredHeader = columnsToExport;
-
-      const headers = filteredHeader.map((key) => firstCapitalize(t(key)));
+  const filteredHeader = columnsToExport;
   
-      const worksheetData = [headers];
+  const {companies} = useSelector((state)=>state.companyState);
 
+  const headers = filteredHeader.map((key) => firstCapitalize(t(key)));
+  
+  const exportToExcel = () => {
+      const worksheetData = [headers];
       const dataRows = data.map((item) =>
         filteredHeader.map((key) => item[key])
       );
+
         worksheetData.push([]);
         worksheetData.push(...dataRows);
   
@@ -51,18 +56,24 @@ const ExportButton = ({ data,columnsToExport,model }) => {
           const today = new Date();
           saveAs(fileData, `Export_${model}_${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}.xlsx`);
   
-
-
-    //To ensure that header will be translated to any language
-
-    // 2. Map your data to match the header order
-   
-    // 1. Convert JSON data to worksheet
-    // const worksheet = XLSX.utils.json_to_sheet(data);
-
-    // 2. Create a workbook and add the worksheet
-    
   };
+  
+  const exportToPDF = async (htmlData)=>{
+    const pdfItem = await generatePDF(htmlData);
+    const byteChars = atob(pdfItem);
+    const byteNumbers = new Array(byteChars.length);
+
+    for(let i =0; i < byteChars.length; i++){
+      byteNumbers[i]=byteChars.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    const fileData = new Blob([byteArray], {type: 'application/pdf'});
+    
+    const today = new Date();
+    saveAs(fileData, `Export_${model}_${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}.pdf`);
+  };
+
 
   return (
     <button 
@@ -71,9 +82,16 @@ const ExportButton = ({ data,columnsToExport,model }) => {
       if(columnsToExport.length == 0){
         dispatch(showToast({warning:true, message:firstCapitalize(t('select_at_least_one_field'))}));
         }else{ 
-          exportToExcel();}
+          const currentCompanyDetails = companies[0];
+          const reportHTMLTemplate = ExportReport(data,columnsToExport,model, headers,currentCompanyDetails);
+          
+          if(exportOption=="excel"){
+            exportToExcel();
+          }else{
+            exportToPDF(reportHTMLTemplate);
+          }
+        }
         }}
-      
      className="p-2 bg-green-100 rounded">
       {firstCapitalize(t('export'))}
     </button>

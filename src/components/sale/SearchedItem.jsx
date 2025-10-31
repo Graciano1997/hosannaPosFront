@@ -13,20 +13,20 @@ const SearchedItem = ({product,index,setQuery})=>{
     const dispatch = useDispatch();
     const {t}=useTranslation();
     return(
-        <div className={`grid grid-cols-7  p-1 ${index%2==0?'bg-green-50':'bg-green-100'}`}>
+        <div className={`grid grid-cols-4 sm:grid-cols-7  p-1 ${index%2==0?'bg-green-50':'bg-green-100'}`}>
                         <p>
                         {product.name}
                         </p>
                         <p>
                         <Money amount={product.price}/>
                         </p>
-                        <p>
+                        <p className="hidden sm:block">
                          {product.qty}
                         </p>
-                        <p>
+                        <p className="hidden sm:block">
                          {(product.discount ? product.discount : 0 )}
                         </p>
-                        <p>
+                        <p className="hidden sm:block">
                          {(product.taxes ? product.taxes : 0 )}
                         </p>
                         <div className="">

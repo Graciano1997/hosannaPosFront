@@ -41,7 +41,7 @@
     "weight":"peso",
     "dimension":"dimensões",
     "location_in_stock":"localização",
-    "taxes":"imposto_Iva(%)",
+    "taxes":"imposto(%)",
     "keyword":"palavra_chave",
     "observation":"observação",
     "promotion":"promoção",
@@ -238,5 +238,8 @@
     "data_interval_example":"Ex.: 2025-10-01 - 2025-10-05",
    "select_all_field": "Selecionar todos",
     "unselect_all_field": "Deselecionar todos",
-    "sale_type":"Tipo_de_venda"
+    "sale_type":"Tipo_de_venda",
+    "returning":"Devolução da venda",
+    "alert_product":"Produtos em Alerta",
+    "min_qty":"Min_qtd"
 }

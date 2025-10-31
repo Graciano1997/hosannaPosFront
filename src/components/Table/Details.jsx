@@ -24,12 +24,14 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
             <div className="w-[100%]">
                 <h4 className="text-3xl font-light text-end">{ firstCapitalize(t('details'))}</h4>
                 <div className={`mt-[2rem] p-1 ${hasImage?'grid gap-[2rem] justify-center':'flex'}`} style={{gridTemplateColumns:`${ hasImage ?'10fr 90fr':'100fr'}`}}>      
+                
                 { hasImage && <div className="h-[100%]">
                 <div className="w-[250px] h-[300px] sm:shadow rounded-[16px]">
                     {detailsItem.image==="none" && <UserIcon className="w-[100%] h-[100%] rounded-[16px]"/> }
                     {detailsItem.image!=="none" &&  <img src={detailsItem.image} className="w-[100%] h-[100%] rounded-[16px]" />}
                 </div>
                 </div>}
+                
                 <div className="flex flex-col w-[100%] h-[300px] p-3 rounded sm:shadow overflow-y-scroll">
                 <div className="mt-2">
                 {keys.map((item)=>
@@ -41,8 +43,6 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                         (<span className="flex items-center gap-2"><span className={`w-3 h-3 rounded ${movementTypeColor[detailsItem[item]]}`}></span>{t(detailsItem[item])}
                         </span>)
                     }
-       
-
                     {moneyFields.includes(item) &&  <Money amount={detailsItem[item]} />}
                     {typeof (detailsItem[item]) == "boolean" && stateDisplay(detailsItem[item]) }
                     
@@ -77,7 +77,8 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                 </div>
                 </div>
                 </div>
-                <div className="mt-[2rem] flex justify-end">
+                <div className="mt-[2rem] gap-3 flex justify-end">
+                <button className="bg-red-300 p-2 rounded hover:shadow"> {firstCapitalize(t('returning'))}</button>
                 <button className="bg-green-200 p-2 rounded hover:shadow"> {firstCapitalize(t('export'))}</button>
                 </div>
             </div>

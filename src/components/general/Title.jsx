@@ -48,7 +48,7 @@ const Title=({title,create,collectionToExport})=>{
              </div>
     
             <nav className="mt-[20px]">
-            <ul className="flex flex gap-5">
+            <ul className="flex flex gap-5 overflow-x-auto">
             <li>
                 <Link to={"#"} onClick={()=>dispatch(activeTab('tab1'))} 
                 className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab1"?'activeTab':''}`} >

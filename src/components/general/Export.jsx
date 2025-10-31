@@ -6,8 +6,10 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 import ExportButton from "../ExportButton";
 import { DatePickerFilter } from "./DatePickerFilter";
 import searchCollection from "../../lib/seach";
+import { useLocation } from "react-router-dom";
 
 const Export = ({ stopExporting}) => {
+ 
     const {t}=useTranslation();
     const [columnsToExport,setColumnsToExport]=useState([]);
     const [selectedAll,setSelectedAll] = useState(false);
@@ -15,31 +17,41 @@ const Export = ({ stopExporting}) => {
     const [rangeDate,setRangeDate]=useState(null);
     const dispatch = useDispatch();
     const [updateModelToExport,setUpdatedModelToExport] =useState(null);
+    const [exportOption,setExportOption]=useState('excel');
+    const [fieldsToShow,setFieldsToShow] = useState([]);
+    const {pathname} = useLocation();
+    const {productConfigurationFields} = useSelector((state)=>state.productState);
+    const exportingModel = useSelector((state) =>state.appState.exportingModel);
+ 
+    console.log(productConfigurationFields);
+    
 
-    const filterFilter = ['image','profile_id','sale_products','user_id','client_id','category_id','parent_category_id'];
+
+    const filterFilter = ['image','profile_id','sale_products','user_id','client_id','category_id','parent_category_id','output'];
     const fieldRef = useRef(null);
+
+    const productUserSelectedFields = productConfigurationFields.filter((item)=>item.active).map((item)=>item.field);
+
+    useEffect(()=>{
+        if(pathname=="/products"){
+            const mandatoryFields = ['name','qty','price','category','code','min_qty'];
+            setFieldsToShow([...mandatoryFields,...productUserSelectedFields]);
+        }else{
+            if(exportingModel.data.length!=0){
+                setFieldsToShow(Object.keys(exportingModel.data[0]));
+            }
+        }
+    },[]);
 
     useEffect(()=>{
         if(rangeDate?.from && rangeDate?.to){
-
             const result = searchCollection(exportingModel.data,'',rangeDate);
-
             const filteredModelToExport = {...exportingModel,
                 data:result
             }
             setUpdatedModelToExport(filteredModelToExport);
         }
     },[rangeDate]);
-
-
-    const exportingModel = useSelector((state) =>state.appState.exportingModel);
-    let exportingModelKeys=[];
-
-    // this will be refractored......
-    if(exportingModel.data.length!=0){
-        exportingModelKeys = Object.keys(exportingModel.data[0]);
-    }
-
     
     const formHandler = (el) => {
         if(columnsToExport.includes(el.target.name)){
@@ -56,9 +68,11 @@ const Export = ({ stopExporting}) => {
                 <label>
                     {firstCapitalize(t('whichformatToExport'))}
                      <br />
-                        <select name="product_type" value={true} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
-                        <option value="" disabled selected>Selecione o tipo de formato </option>
+                        <select name="product_type" value={exportOption} onChange={(el)=>{
+                            setExportOption(el.target.value);
+                        }} className='p-2 rounded w-[100%] outline-none'>
                         <option value="excel">{firstCapitalize(t('excel'))}</option>
+                        <option value="pdf">{firstCapitalize(t('pdf'))}</option>
                         </select>
                 </label>
 
@@ -67,7 +81,7 @@ const Export = ({ stopExporting}) => {
                     <br /> 
                     </label>
                 <div className="flex flex-wrap gap-3 mt-3" ref={fieldRef}>
-                    {exportingModelKeys.length>0 && exportingModelKeys.map((key, index) => {
+                    {fieldsToShow.length>0 && fieldsToShow.map((key, index) => {
                         if(filterFilter.includes(key)){
                             return null;
                         }
@@ -94,7 +108,7 @@ const Export = ({ stopExporting}) => {
             </div>          
             <DatePickerFilter style={"absolute mt-[-10rem]"} setRangeDate={setRangeDate} visibility={visibility} setVisibility={setVisibility} />
         </div>
-                {exportingModelKeys.length>0 &&
+                {fieldsToShow.length>0 &&
                     <div className="flex justify-end p-2 mt-auto gap-5">
                         <button type="button" onClick={()=>{
                             const inputs = fieldRef.current.querySelectorAll(".check-input");
@@ -116,12 +130,10 @@ const Export = ({ stopExporting}) => {
 
 
                         }} className="p-2 bg-green-100 rounded">{ selectedAll ? firstCapitalize(t('unselect_all_field')) : firstCapitalize(t('select_all_field'))}</button>
-                        <ExportButton data={ updateModelToExport ? updateModelToExport.data : exportingModel.data} columnsToExport={columnsToExport} model={exportingModel.model}/>
+                        <ExportButton exportOption={exportOption} data={ updateModelToExport ? updateModelToExport.data : exportingModel.data} columnsToExport={columnsToExport} model={exportingModel.model}/>
                     </div>
                     }
-                </form>
-
-                                            
+                </form>                     
             </Modal>
         </>
     );

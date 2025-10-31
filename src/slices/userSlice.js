@@ -83,26 +83,26 @@ const userSlice = createSlice({
         });
 
         builder.addCase(registerUser.fulfilled, (state, action) => {
-             state.isCreating = false;
-             if (!action.payload.error) {
+            if (!action.payload.error) {
+                 state.isCreating = false;
                  state.users.push({ ...action.payload.user });
              }
          });
 
         builder.addCase(updateUser.fulfilled,(state,action)=>{
-                    state.isUpdating = false;
-                    state.userToUpdate = {};
-                    if (action.payload.success && action.payload.user) {
-                        const atIndex = state.users.findIndex(item => item.id === action.payload.user.id);
-                        if (atIndex !== -1) {
-                        const updatedUsers = [...state.users]; 
+            state.userToUpdate = {};
+            if (action.payload.success && action.payload.user) {
+                const atIndex = state.users.findIndex(item => item.id === action.payload.user.id);
+                if (atIndex !== -1) {
+                    const updatedUsers = [...state.users]; 
                         updatedUsers[atIndex] = action.payload.user;
                         state.users = updatedUsers;
                         let currentUser = CurrentUser();
                         currentUser={...currentUser,
-                                image:action.payload.user.image 
+                            image:action.payload.user.image 
                         }
                         localStorage.setItem("currentUser",JSON.stringify(currentUser));
+                        state.isUpdating = false;
                         }
                     }            
                 })

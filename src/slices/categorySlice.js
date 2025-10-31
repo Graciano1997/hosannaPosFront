@@ -67,14 +67,13 @@ export const categorySlice = createSlice({
         })
 
         builder.addCase(createCategory.fulfilled,(state,action)=>{
-            state.isCreating =false;
             if(action.payload.success){
                 state.categories.push(action.payload.category)
+                state.isCreating =false;
             }
         })
 
         builder.addCase(updateCategory.fulfilled,(state,action)=>{
-            state.isUpdating = false;
             state.categoryToUpdate = {};
             if (action.payload.success && action.payload.category) {
                 const atIndex = state.categories.findIndex(item => item.id === action.payload.category.id);
@@ -83,6 +82,7 @@ export const categorySlice = createSlice({
                   updatedCategories[atIndex] = action.payload.category; // Update the specific item
                   state.categories = updatedCategories; // Assign the new array to state
                 }
+                state.isUpdating = false;
               }            
         })
 

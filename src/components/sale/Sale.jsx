@@ -31,7 +31,7 @@ const Sale=({setToastObject})=>{
         return(
         <>
         <SaleHeader title={t('sales')} setIsReadingQr={setIsReadingQr} setReadValue={setReadValue} />
-        <div className={` xs:grid ${isSelectedProduct?'xs:grid-cols-[20fr_60fr_20fr]':'xs:grid-cols-[20fr_80fr]'}  xs:gap-4 xs:mt-4 p-1 sm:gap-4 `}>
+        <div className={`flex flex-col gap-3 sm:grid sm:grid-cols-[20fr_80fr] p-1`}>
         <ClientDetails/>
         <SaleDetails/>
 

@@ -59,16 +59,16 @@ const SearchedProducts = ()=>{
 
             {searchedProducts.length>0 &&(
             <>
-             <div className="grid grid-cols-7 p-1 text-black font-bold">
+             <div className="grid grid-cols-4 sm:grid-cols-7 p-1 text-black font-bold overflow-x-scroll ">
                     <p>{firstCapitalize(t('name'))}</p>
                     <p>{firstCapitalize(t('price'))}</p>
-                    <p>{firstCapitalize(t('stock'))}</p>
-                    <p>{firstCapitalize(t('discount'))}</p>
-                    <p>{firstCapitalize(t('taxes'))}</p>
+                    <p className="hidden sm:block">{firstCapitalize(t('stock'))}</p>
+                    <p className="hidden sm:block">{firstCapitalize(t('discount'))}</p>
+                    <p className="hidden sm:block" >{firstCapitalize(t('taxes'))}</p>
                     <p>{firstCapitalize(t('quantity'))}</p>
                     <p></p>
             </div>
-            <div className="h-[200px] flex flex-col gap-1" style={{overflowY:'scroll'}}>
+            <div className="h-[200px] flex flex-col gap-1 overflow-y-auto">
             {searchedProducts.map((product,index) => <SearchedItem index={index} setQuery={setQuery} product={product}/>)
             }
             </div>

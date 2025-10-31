@@ -191,9 +191,7 @@ const Create = ({ stopCreating }) => {
                             </label>
                             </>
                             }
-
-
-                                </>
+                        </>
                         }
 
                         {/* {!productFilterRows.includes('discount') &&
@@ -338,7 +336,8 @@ const Create = ({ stopCreating }) => {
                             
                         }
                     </div>
-                    <div className="flex justify-end p-2 mt-auto"><button 
+                    <div className="flex justify-end p-2 mt-auto">
+                    <button 
                     type="button" 
                     onClick={handleFormSubmition}
                     className="p-2 bg-green-100 rounded">{product.id ? firstCapitalize(t('update')) : firstCapitalize(t('create'))}</button></div>
