@@ -4,12 +4,12 @@ import { firstCapitalize } from '../lib/firstCapitalize';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { showToast } from '../slices/appSlice';
-import { generatePDF, generatePDFInvoice } from '../lib/generatePrinterInvoicer';
+import { htmlToPDFGenerator } from '../lib/generatePrinterInvoicer';
 import { ExportReport } from './Report/ExportReport';
 
 
 
-const ExportButton = ({ data,columnsToExport,model,exportOption }) => {
+const ExportButton = ({ data,columnsToExport,model,exportOption,pageSetting }) => {
   const {t}=useTranslation();
   const dispatch = useDispatch();
   const filteredHeader = columnsToExport;
@@ -58,37 +58,23 @@ const ExportButton = ({ data,columnsToExport,model,exportOption }) => {
   
   };
   
-  const exportToPDF = async (htmlData)=>{
-    const pdfItem = await generatePDF(htmlData);
-    const byteChars = atob(pdfItem);
-    const byteNumbers = new Array(byteChars.length);
-
-    for(let i =0; i < byteChars.length; i++){
-      byteNumbers[i]=byteChars.charCodeAt(i);
-    }
-
-    const byteArray = new Uint8Array(byteNumbers);
-    const fileData = new Blob([byteArray], {type: 'application/pdf'});
-    
-    const today = new Date();
-    saveAs(fileData, `Export_${model}_${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}.pdf`);
-  };
-
-
   return (
     <button 
     type="button" 
     onClick={ ()=>{
       if(columnsToExport.length == 0){
         dispatch(showToast({warning:true, message:firstCapitalize(t('select_at_least_one_field'))}));
-        }else{ 
+        }else if(data.length==0){
+           dispatch(showToast({warning:true, message:firstCapitalize(t('no_data_to_export'))}));
+        }
+        else{ 
           const currentCompanyDetails = companies[0];
           const reportHTMLTemplate = ExportReport(data,columnsToExport,model, headers,currentCompanyDetails);
           
           if(exportOption=="excel"){
             exportToExcel();
           }else{
-            exportToPDF(reportHTMLTemplate);
+            htmlToPDFGenerator(reportHTMLTemplate,model,pageSetting);
           }
         }
         }}

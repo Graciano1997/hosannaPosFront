@@ -1,3 +1,8 @@
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import htmlToPdfmake from "html-to-pdfmake";
+// pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -106,4 +111,34 @@ export async function generatePDF(templateHtml) {
     console.error('Erro ao gerar PDF:', error);
     throw error;
   }
+}
+
+
+export function htmlToPDFGenerator(htmlTemplate,model,pageSetting) {
+  
+  const content = htmlToPdfmake(htmlTemplate.body);
+  const head = htmlToPdfmake(htmlTemplate.head);
+  
+  const docDefinition = {
+    pageSize: pageSetting?.size ? pageSetting?.size :"A4",
+    pageOrientation: pageSetting?.orientation ? pageSetting?.orientation : "portrait", 
+    pageMargins: [40, 60, 40, 60],
+
+    header:()=> {
+      return {
+        margin: [40, 6, 40, 0],
+        stack: head
+      }
+    },
+    footer: ((currentPage, pageCount) => {
+      return {
+        text: `Página ${currentPage} de ${pageCount}`,
+        alignment: "center",
+        margin: [0, 10, 0, 0],
+      };
+    }),
+    content,
+  };
+  const today = new Date();
+  pdfMake.createPdf(docDefinition).download(`Export_${model}_${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}.pdf`);
 }

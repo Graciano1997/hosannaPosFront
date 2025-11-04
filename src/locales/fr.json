@@ -214,10 +214,11 @@
     "label_previous": "Mois précédent",
     "label_month_dropdown": "Sélectionner le mois",
     "label_year_dropdown": "Sélectionner l'année",
-    "date_interval": "Plage de dates",
+    "date_interval": "Intervalle",
     "clear": "Effacer",
     "data_interval_example": "Ex.: 2025-10-01 - 2025-10-05",
     "select_all_field": "Sélectionner tout",
-    "unselect_all_field": "Désélectionner tout"
+    "unselect_all_field": "Désélectionner tout",
+    "no_data_to_export":"Aucune donnée à exporter"
 
 }

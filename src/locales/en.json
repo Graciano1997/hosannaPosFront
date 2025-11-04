@@ -230,7 +230,7 @@
     "label_previous": "Previous month",
     "label_month_dropdown": "Select month",
     "label_year_dropdown": "Select year",
-    "date_interval": "Date interval",
+    "date_interval": "Interval",
     "clear":"clear",
     "data_interval_example":"Eg.: 2025-10-01 - 2025-10-05",
     "select_all_field":"select all",
@@ -238,5 +238,6 @@
     "sale_type":"sale type",
     "returning":"sale return",
     "alert_product":"Alerted Product",
-    "min_qty":"min qty"
+    "min_qty":"min qty",
+    "no_data_to_export":"No data to export"
 }

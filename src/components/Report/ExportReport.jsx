@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
 const getSvgIcon = (iconName, className) => {
@@ -73,8 +72,8 @@ const tRow = (item, columns) => {
 const tdata = (data, columns) => {
     let rowData = ``;
 
-    data.forEach((item, index) => {
-        rowData += `<tr class="${index % 2 == 0 ? "bg-green-100" : ''} font-light"> ${tRow(item, columns)}</tr>`;
+    data.forEach((item) => {
+        rowData += `<tr> ${tRow(item, columns)}</tr>`;
     });
 
     return rowData;
@@ -92,45 +91,34 @@ export const ExportReport = (data, columnsToExport, model, headersTranslated, co
     const envelopeIcon = getSvgIcon('envelope', iconClass);
     const identificationIcon = getSvgIcon('identification', iconClass);
 
+    const headTemplate = `
+        <div>
+            <h1 class="">${companyDetails.name}</h1>
+            <p class="">${companyDetails.nif}</p>
+        </div>
+    `
     const template = `
         
-    <div class="p-4 m-3 grid h-[95%]">
+    <div style="margin-top:0.5rem;">
             
-  <div class="flex items-start px-3 py-2">
-
-    <div class="flex flex-col gap-4 mb-[3rem]">
-      <div class="w-[100%] h-[100%]">
-        <img class="w-[100px] h-[100px] rounded" src="${companyDetails.image}" alt="${companyDetails.name}" />
-      </div>
-      <h1 class="text-[30px] font-bold">${companyDetails.name}</h1>
-      <div class="flex flex-col gap-2 mt-2 text-[13pt]">
-      <span class="flex gap-2"><span>${phoneIcon}</span> <p class="mt-[-8px]">${companyDetails.phone} || ${companyDetails.alternative_phone}</p></span>  
-      <span class="flex gap-2"><span>${mapPinIcon}</span> <p class="mt-[-8px]">${companyDetails.address}</p></span> 
-      <span class="flex gap-2"><span>${envelopeIcon}</span> <p class="mt-[-8px]">${companyDetails.email}</p></span>
-      <span class="flex gap-2"><span>${identificationIcon}</span> <p class="mt-[-8px]">${companyDetails.nif}</p></span>
-      </div>
-    </div>
-  </div>
-
-      <p class="text-[20px] mb-[1rem] text-end font-medium">${firstCapitalize(model)}</p>
-            <table className="rounded shadow-md  w-full  table-auto mt-[15rem]">
+      <p style="">${firstCapitalize(model)}</p>
+            <table className="">
                 <thead className="bg-white" >
             <tr class="p-2 shadow h-[45px]">
             ${data.length == 0 ? '' : thead(headersTranslated)}
             </tr>
             </thead>
             <tbody>
-             <tr>
-                ${data.length == 0 ? `<h1 class="mt-[10rem] text-center text-[20pt]">Sem Dados a Apresentar!</h1>` : tdata(data, columnsToExport)}
-            </tr>
+                ${data.length == 0 ? `<tr><h1 class="mt-[10rem] text-center text-[20pt]">Sem Dados a Apresentar!</h1></tr>` : tdata(data, columnsToExport)}
             </tbody>
             </table>
 
             <div class="mt-[2rem]">
-            <p>Documento gerado pelo Software Hosanna POS</p>
-            <p>Data : ${datatempo.getDate()}/${datatempo.getMonth() + 1}/${datatempo.getFullYear()} ${datatempo.getHours()}:${datatempo.getMinutes()}  </p>
+            <span>Documento gerado pelo Software Hosanna POS</span>
+            <br/>
+            <span>Data : ${datatempo.getDate()}/${datatempo.getMonth() + 1}/${datatempo.getFullYear()} ${datatempo.getHours()}:${datatempo.getMinutes()}</span>
             </div>
         </div>
     `
-    return template;
+    return {head:headTemplate, body:template};
 }

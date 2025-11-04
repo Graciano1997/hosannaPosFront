@@ -241,5 +241,6 @@
     "sale_type":"Tipo_de_venda",
     "returning":"Devolução da venda",
     "alert_product":"Produtos em Alerta",
-    "min_qty":"Min_qtd"
+    "min_qty":"Min_qtd",
+    "no_data_to_export":"Sem dados para exportar"
 }
