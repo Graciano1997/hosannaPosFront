@@ -18,7 +18,7 @@ const printerHandlerRequest = async (data) => {
   let invoiceItem = await generatePDFInvoice(data.template ? data.template : InvoiceTest(), printerType);
 
   payload = { ...payload, pdfBase64: invoiceItem };
-  
+
   return { apiPoint, payload };
 }
 

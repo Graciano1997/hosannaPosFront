@@ -94,8 +94,7 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
                                                 setQuery(el.target.value);
                                             } else {
                                                 setQuery('');
-                                                setSearching(false);
-                                                
+                                                setSearching(false);                                        
                                                 if(rangeDate?.from==null && rangeDate?.to==null){
                                                      setSearchResult([]);
                                                  }else{
@@ -115,8 +114,6 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
                             }
                         </>
                     }
-
-
                 </div>
 
 

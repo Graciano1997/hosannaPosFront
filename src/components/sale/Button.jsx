@@ -11,25 +11,17 @@ const ButtonGroup = ({ saleState }) => {
 
     return (
         <div className="absolute bottom-[-7px]  w-[100%] flex justify-end">
-            { saleState.invoiceType*1 == SaleType.PORFORM 
-            && saleState.items.length > 0 
-            && <button type="button" onClick={() => { dispatch(saleConfirm());}} className="bg-green-200 rounded p-2 hover:shadow">{firstCapitalize(t('generate'))}</button>}
-
-            {
-                (
-                    saleState.items.length > 0
-                    && (
-                        saleState.paymentType == PaymentType.CASH && saleState.receivedCash * 1 >= saleState.total * 1
-                        || saleState.paymentType == PaymentType.MIXED && ((saleState.receivedCash * 1 + saleState.receivedTpa * 1) >= saleState.total * 1)
-                        || saleState.paymentType == PaymentType.TPA
-                    )
-                )
-                &&
-                <button type="button"
-                    onClick={() => {
-                        dispatch(saleConfirm());
-                    }}
-                    className="bg-green-200 rounded p-2 hover:shadow">{saleState.invoiceType == SaleType.SALE ? firstCapitalize(t('order')) : firstCapitalize(t('confirm'))}</button>}
+            { 
+            saleState.items.length > 0 && 
+            (
+            saleState.invoiceType == SaleType.PROFORM_PF 
+            ||
+            ( saleState.paymentType == PaymentType.CASH
+            && saleState.receivedCash * 1 >= saleState.total * 1 || saleState.paymentType == PaymentType.MIXED && ((saleState.receivedCash * 1 + saleState.receivedTpa * 1) >= saleState.total * 1) 
+            || saleState.paymentType == PaymentType.TPA)
+            )
+            && 
+            <button type="button" onClick={() => { dispatch(saleConfirm());}} className="bg-green-200 rounded p-2 hover:shadow">{firstCapitalize(t('confirm'))}</button>}
         </div>
     )
 };

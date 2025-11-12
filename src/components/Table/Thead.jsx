@@ -13,8 +13,8 @@ const Thead = ({ object, filterRows, items=[], setCollection }) => {
   const [activeSortOrdDesc,setActiveSortOrdDesc]=useState(false);
   const sortingFieldFilter=['image'];
   const dispatch = useDispatch();
-
   const keys = Object.keys(object).filter((item) => !filterRows.includes(item));
+  
   return (
     <thead className="sticky bg-white top-[-8px]" >
       <tr className="p-2 shadow h-[45px]">

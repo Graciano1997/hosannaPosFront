@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { order, saleClean, saleNotConfirm, setSaleObject } from "../../slices/saleSlice";
 import { closeModal, openInvoiceView, showToast } from "../../slices/appSlice";
-import { ClientType, PaymentType, SaleType } from "../../lib/Enums";
+import { ClientType, PaymentType, SaleType, SaleTypeTranslation } from "../../lib/Enums";
 import { useTranslation } from "react-i18next";
 import { clearSearchedProduct, fetchProducts } from "../../slices/productSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
@@ -22,18 +22,19 @@ const SaleConfirmation = () => {
                 ...saleState.clientDetails
             },
             sale: {
-                invoiceType: parseInt(saleState.invoiceType),
+                invoiceType: saleState.invoiceType,
                 qty: saleState.totalItems,
                 payment_way: saleState.paymentType,
-                received_cash:saleState.invoiceType == SaleType.PORFORM ? 0 : (((saleState.paymentType==PaymentType.CASH || saleState.paymentType == PaymentType.MIXED)) ? saleState.receivedCash : 0),
-                received_tpa: saleState.paymentType == SaleType.PORFORM ? 0 : (( PaymentType.TPA == saleState.paymentType? saleState.total : (saleState.paymentType==PaymentType.MIXED ? saleState.receivedTpa:0))),
-                descount: saleState.invoiceType == SaleType.PORFORM ? 0 : 0,
-                difference: saleState.invoiceType == SaleType.PORFORM ? 0 : (saleState.paymentType == PaymentType.TPA ? 0 : (saleState.difference)),
+                received_cash:saleState.invoiceType == SaleType.PROFORM_PF ? 0 : (((saleState.paymentType==PaymentType.CASH || saleState.paymentType == PaymentType.MIXED)) ? saleState.receivedCash : 0),
+                received_tpa: saleState.paymentType == SaleType.PROFORM_PF ? 0 : (( PaymentType.TPA == saleState.paymentType? saleState.total : (saleState.paymentType==PaymentType.MIXED ? saleState.receivedTpa:0))),
+                descount: saleState.invoiceType == SaleType.PROFORM_PF ? 0 : 0,
+                difference: saleState.invoiceType == SaleType.PROFORM_PF ? 0 : (saleState.paymentType == PaymentType.TPA ? 0 : (saleState.difference)),
                 total: saleState.total,
                 user_id: CurrentUser().id
             },
             items: saleState.items
         }
+
 
         dispatch(order(treatedSaleObject))
             .then((orderResultState) => {
@@ -45,7 +46,6 @@ const SaleConfirmation = () => {
 
                 //THis action ensure to print in the Java print server App
                 if (order.fulfilled.match(orderResultState)) {
-                    console.log(orderResultState.payload);
                     //prints only if the user printerConfiguration is set to finish and print.
                     if (printerConfiguration.finishAndprint == "true") {
                         dispatch(printing({ 
@@ -74,15 +74,9 @@ const SaleConfirmation = () => {
     };
     return (
         <div className="mt-[100px] text-center">
-            {
-                saleState.invoiceType == SaleType.SALE &&
-                <h2 className="text-2xl">{firstCapitalize(t('confirm_sale'))}</h2>
-            }
-
-            {
-                saleState.invoiceType == SaleType.PORFORM &&
-                <h2 className="text-2xl">{firstCapitalize(t('confirm_proform'))}</h2>
-            }
+            
+            <h2 className="text-2xl">{`${firstCapitalize((t('confirm_generation')).replace('[X]',t(SaleTypeTranslation[saleState.invoiceType])))}`}</h2>
+            
             <div className="mt-[2rem]">
                 <button onClick={(el) => {
                     dispatch(saleNotConfirm());

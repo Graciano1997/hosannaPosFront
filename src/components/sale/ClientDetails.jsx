@@ -60,6 +60,9 @@ const ClientDetails = ()=>{
                 <input type="number" name="phone" onChange={formHandler} value={clientDetails.phone} id="clienteContact" defaultValue={DefaultClientePhone} className="bg-green-100 rounded p-2"/>
             </div>
 
+            {sale.invoiceType!=SaleType.SIMPLIFYED_INVOICE_FS
+            &&
+            <>
             <div className="flex flex-col gap-3">
                 <label for="clienteType">{ firstCapitalize(t('client_type'))}</label>
                 <select id="clienteType" value={clientDetails.client_type } defaultValue={ClientType.SINGULAR} name="client_type" className="bg-green-100 rounded p-2" onChange={(el)=>{
@@ -70,7 +73,6 @@ const ClientDetails = ()=>{
                     <option value={ClientType.COMPANY}>{firstCapitalize(t('company'))}</option>
                 </select>
             </div>
-            
             <div className="flex flex-col gap-3">
                 <label for="clienteNif">{firstCapitalize(t('nif'))}</label>
                 <input 
@@ -79,9 +81,10 @@ const ClientDetails = ()=>{
                 defaultValue={clientType==ClientType.SINGULAR ? 99999999 :''}  
                 onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2" />
             </div>
-            
-            
-            {sale.invoiceType==SaleType.SALE && (sale.paymentType==PaymentType.MIXED) && sale.total > 0 &&
+            </> 
+            }
+                    
+            {sale.invoiceType!=SaleType.PROFORM_PF && (sale.paymentType==PaymentType.MIXED) && sale.total > 0 &&
             <div className="flex flex-col gap-3">
                 <label for="tpaReceived">{firstCapitalize(t('received_tpa'))}</label>
                 <input type="number" id="tpaReceived" name="received_tpa"  value={receivedTpaMoney ? receivedTpaMoney :receivedTpa }  onChange={(el)=>{
@@ -92,7 +95,7 @@ const ClientDetails = ()=>{
             </div>
             }
 
-            {sale.invoiceType==SaleType.SALE && (sale.paymentType==PaymentType.CASH || sale.paymentType==PaymentType.MIXED) && sale.total > 0 &&
+            {sale.invoiceType!=SaleType.PROFORM_PF && (sale.paymentType==PaymentType.CASH || sale.paymentType==PaymentType.MIXED) && sale.total > 0 &&
             <div className="flex flex-col gap-3">
                 <label for="cashReceived">{firstCapitalize(t('received_cash'))}</label>
                 <input type="number" id="cashReceived" name="received_cash"  value={ received ? received :receivedCash }  onChange={(el)=>{
@@ -118,7 +121,7 @@ const ClientDetails = ()=>{
             </div>
             }
 
-        {sale.invoiceType==SaleType.SALE && (sale.paymentType==PaymentType.CASH || sale.paymentType==PaymentType.MIXED) && sale.total>0 && sale.difference > 0 &&
+        {sale.invoiceType!=SaleType.PROFORM_PF && (sale.paymentType==PaymentType.CASH || sale.paymentType==PaymentType.MIXED) && sale.total>0 && sale.difference > 0 &&
             <div className="flex flex-col gap-3">
                 <label for="cashRemain">{firstCapitalize(t('difference'))}</label>
                 <div className="bg-green-100 rounded p-2">

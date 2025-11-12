@@ -27,7 +27,7 @@ const Product=()=>{
         dispatch(fetchExpiredProducts());
         dispatch(fetchProductConfiguration());
         dispatch(fetchAlertProducts());
-    },[]);
+    },[productState.products]);
     
 
     const categoryState = useSelector((state)=>state.categoryState);

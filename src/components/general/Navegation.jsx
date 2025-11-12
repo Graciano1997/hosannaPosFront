@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState} from "react";
-import CurrentUser from "./CurrentUser";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArchiveBoxIcon, ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CreditCardIcon, CubeIcon, GlobeAltIcon, HomeIcon,ShoppingCartIcon, TagIcon, TruckIcon, UserGroupIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
@@ -9,13 +8,14 @@ import { logoutUser, showToast } from "../../slices/appSlice";
 import { Profiles } from "../../lib/Enums";
 import { CubeTransparentIcon, ServerStackIcon, ShoppingBagIcon, Square3Stack3DIcon } from "@heroicons/react/16/solid";
 import { Square2StackIcon } from "@heroicons/react/20/solid";
+import { CurrentUser } from "../../lib/CurrentUser";
 
 const Navegation =({visible,setVisibility})=>{
     const {t} = useTranslation();
     const {pathname}=useLocation();
     const dispatch = useDispatch();
     const navegate = useNavigate();
-    const [master,setMaster]=useState(JSON.parse(localStorage.getItem("currentUser")).profileId==Profiles.MASTER);
+    const [master,setMaster]=useState(CurrentUser().profileId==Profiles.MASTER);
     const navegationRef = useRef(null);
     
     const handleMasterMessage = ()=>{

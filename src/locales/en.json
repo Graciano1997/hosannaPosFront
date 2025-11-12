@@ -73,7 +73,7 @@
     "product":"product",
     "invoice":"Invoice",
     "credit":"credit",
-    "proforma":"proforma",
+    "proforma":"Proforma Invoice",
     "order":"order Now",
     "order_sucessfuly":"ordered successfully",
     "descount":"descount",
@@ -239,5 +239,13 @@
     "returning":"sale return",
     "alert_product":"Alerted Product",
     "min_qty":"min qty",
-    "no_data_to_export":"No data to export"
+    "no_data_to_export":"No data to export",
+    "invoice_FR":"Receipt Invoice ",
+    "invoice_FS":"Simplified Invoice",
+    "invoice_RC":"Receipt",
+    "bank_details":"Bank Details",
+    "bank":"Bank",
+    "iban":"Iban",
+    "account_number":"account number",
+    "confirm_generation":"Do you want to generate the [X] ?"
 }

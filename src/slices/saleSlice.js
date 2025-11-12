@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ClientType, DefaultClientePhone, PaymentType, SaleType } from "../lib/Enums";
+import { ClientType, DefaultClientePhone, defaultClientName, PaymentType, SaleType } from "../lib/Enums";
 import { getIpTenant, Ip } from "../lib/ip";
 import { totalWithTaxesAndDiscounts } from "../lib/totalWithTaxes";
 import { removeDuplicate } from "../lib/removeDuplicate";
@@ -12,8 +12,8 @@ const initialState = {
     totalItems: 0,
     selectedItem: undefined,
     paymentType: PaymentType.CASH,
-    clientDetails: { client_type: ClientType.SINGULAR, phone: DefaultClientePhone },
-    invoiceType: SaleType.SALE,
+    clientDetails: { name:defaultClientName ,client_type: ClientType.SINGULAR, phone: DefaultClientePhone },
+    invoiceType: SaleType.INVOICE_RECIBO_FR,
     receivedCash: 0,
     receivedTpa: 0,
     total: 0,
@@ -66,7 +66,6 @@ export const getInvoiceItem = createAsyncThunk("saleState/getInvoiceItem", async
 const saleSlice = createSlice({
     name: 'saleState',
     initialState,
-
     reducers:
     {
         addProduct: (state, action) => {
@@ -120,7 +119,6 @@ const saleSlice = createSlice({
         setSaleObject: (state, action) => {
             state.saleObject = action.payload;
         },
-
         updateItem: (state, action) => {
             const atIndex = state.items.findIndex(item => item.id === action.payload.id);
 
@@ -138,7 +136,6 @@ const saleSlice = createSlice({
             state.totalItems = sum(state.items).totalItems;
             state.selectedItem = undefined;
         },
-
         increaseOne: (state, action) => {
 
             const atIndex = state.items.findIndex(item => item.id == action.payload.id);
@@ -164,7 +161,6 @@ const saleSlice = createSlice({
                 state.difference = 0;
             }
         },
-
         decreaseOne: (state, action) => {
             const atIndex = state.items.findIndex(item => item.id === action.payload.id);
 
@@ -189,7 +185,6 @@ const saleSlice = createSlice({
                 state.difference = 0;
             }
         },
-
         selectItem: (state, action) => {
             state.selectedItem = action.payload;
         },
@@ -200,7 +195,6 @@ const saleSlice = createSlice({
             state.invoiceType = action.payload
         },
         setClientDetails: (state, action) => {
-
             const clientDetailsDraft = {
                 ...state.clientDetails,
                 ...action.payload
@@ -251,10 +245,10 @@ const saleSlice = createSlice({
             state.totalItems = 0;
             state.receivedTpa = 0;
             state.total = 0;
-            state.invoiceType = SaleType.SALE;
+            state.invoiceType = SaleType.INVOICE_RECIBO_FR;
             state.paymentType = PaymentType.CASH;
             state.saleConfirmationIsOpen = false;
-            state.clientDetails = { client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
+            state.clientDetails = { name:defaultClientName, client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
         }
     },
     extraReducers: (builder) => {
@@ -278,7 +272,6 @@ const saleSlice = createSlice({
         builder.addCase(order.fulfilled, (state, action) => {
             state.sales.unshift(action.payload.sale_item);
             state.saleConfirmationIsOpen = false;
-            console.log(action.payload);
         });
 
         builder.addCase(order.rejected, (state, action) => {
@@ -293,7 +286,6 @@ const saleSlice = createSlice({
         });
     }
 });
-
 
 export default saleSlice.reducer;
 export const { saleClean, setReceivedCash, setReceivedTpa, increaseOne, decreaseOne, addItem, updateItem, removeItem, selectItem, addProduct, setPaymentType, setInvoiceType, setClientDetails, saleConfirm, saleNotConfirm, setSales, setSaleObject } = saleSlice.actions;

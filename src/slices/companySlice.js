@@ -82,7 +82,7 @@ const companySlice = createSlice({
             state.loading = false;
             state.error = action.error.message;
             state.companies = [];
-        })
+        });
 
         builder.addCase(deleteCompany.pending, (state) => { state.loading = true; });
 

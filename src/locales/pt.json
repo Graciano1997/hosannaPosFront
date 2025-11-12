@@ -74,7 +74,7 @@
     "product":"produto",
     "invoice":"Fatura",
     "credit":"crédito",
-    "proforma":"proforma",
+    "proforma":"Fatura Proforma",
     "order":"comprar agora",
     "order_sucessfuly":"compra realizada com sucesso",
     "descount":"desconto",
@@ -242,5 +242,13 @@
     "returning":"Devolução da venda",
     "alert_product":"Produtos em Alerta",
     "min_qty":"Min_qtd",
-    "no_data_to_export":"Sem dados para exportar"
+    "no_data_to_export":"Sem dados para exportar",
+    "invoice_FR":"fatura Recibo",
+    "invoice_FS":"fatura Simplificada",
+    "invoice_RC":"Recibo",
+    "bank_details":"Coordenada Bancárias",
+    "bank":"Banco",
+    "iban":"Iban",
+    "account_number":"número da conta",
+    "confirm_generation":"desejas  gerar o(a) [X] ?"
 }

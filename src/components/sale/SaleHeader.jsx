@@ -17,20 +17,20 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
     return(
         <div className="mt-[3rem] flex flex-col sm:flex-row gap-5 sm:justify-between sm:items-center  w-[100%] sm:h-[100px] bg-white rounded p-4">  
             <div className="flex gap-3 items-center">
-            <label className="text-xl">
-            {t('invoice')}
-            </label>
             <select defaultValue={sale.invoiceType} onChange={(el)=>{
                 dispatch(setInvoiceType(el.target.value));
             }} 
             className="cursor-pointer p-2 rounded transition-all duration-200 bg-white shadow">
-                <option value={SaleType.SALE} selected>{firstCapitalize(t('sale'))}</option>
-                <option value={SaleType.PORFORM}>{firstCapitalize(t('proforma'))}</option>
+                <option value={SaleType.NORMAL_INVOICE_FT}>{firstCapitalize(t('invoice'))}</option>
+                <option value={SaleType.PROFORM_PF}>{firstCapitalize(t('proforma'))}</option>
+                <option value={SaleType.INVOICE_RECIBO_FR} selected>{firstCapitalize(t('invoice_FR'))}</option>
+                <option value={SaleType.SIMPLIFYED_INVOICE_FS}>{firstCapitalize(t('invoice_FS'))}</option>
+                <option value={SaleType.RECEIPT_RC}>{firstCapitalize(t('invoice_RC'))}</option>
             </select>
             </div>
            
            <div className="flex gap-4">
-            {sale.invoiceType==SaleType.SALE  &&
+            {sale.invoiceType!=SaleType.PROFORM_PF  &&
             <div className="flex gap-3 items-center">
                 <label htmlFor="clienteType" className="sm:text-xl">{firstCapitalize(t('payment_way'))}</label>
                 <select id="clienteType" onChange={(el)=>{

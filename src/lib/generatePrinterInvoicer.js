@@ -13,7 +13,7 @@ export async function generatePDFInvoice(invoiceHtml, paperSize='A4') {
     tempDiv.innerHTML = invoiceHtml;
     tempDiv.style.position = 'absolute';
     tempDiv.style.left = '-9999px';
-    tempDiv.style.width = paperSize === 'A4' ? '100%' : paperSize === '80mm' ? '80mm' : '58mm';
+    tempDiv.style.width = paperSize === 'A4' ? '270mm' : paperSize === '80mm' ? '80mm' : '58mm';
     document.body.appendChild(tempDiv);
     
     // IMPORTANTE: Aguardar o DOM renderizar

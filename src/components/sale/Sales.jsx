@@ -19,10 +19,11 @@ const Sales=()=>{
     const sales= saleState.sales;
 
     const dispatch = useDispatch();
+
     useEffect(()=>{
         dispatch(activeTab("tab1"));
         dispatch(fetchSales(saleState.last_created_at));
-    },[])
+    },[]);
 
     return(
         <CardWrapper>
