@@ -247,5 +247,12 @@
     "bank":"Bank",
     "iban":"Iban",
     "account_number":"account number",
-    "confirm_generation":"Do you want to generate the [X] ?"
+    "confirm_generation":"Do you want to generate the [X] ?",
+    "example":"eg:",
+    "search_for_invoice_id":"search for the invoice id",
+    "invoice_status":"invoice status",
+    "paid":"paid",
+    "pending":"pending",
+    "partial_paid":"partialy paid",
+    "new_amount_to_receive":"New amount to receive"
 }

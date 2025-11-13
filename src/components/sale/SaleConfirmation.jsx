@@ -30,11 +30,12 @@ const SaleConfirmation = () => {
                 descount: saleState.invoiceType == SaleType.PROFORM_PF ? 0 : 0,
                 difference: saleState.invoiceType == SaleType.PROFORM_PF ? 0 : (saleState.paymentType == PaymentType.TPA ? 0 : (saleState.difference)),
                 total: saleState.total,
-                user_id: CurrentUser().id
+                user_id: CurrentUser().id,
+                reference_sale:saleState.referenceSale,
+                new_amount_to_receive_for_FT_invoice:saleState.newAmountToReceiveForTheFTInvoice
             },
-            items: saleState.items
+            items: saleState.invoiceType == SaleType.RECEIPT_RC ? saleState.invoiceSearchedItems : saleState.items
         }
-
 
         dispatch(order(treatedSaleObject))
             .then((orderResultState) => {

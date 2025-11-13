@@ -19,8 +19,11 @@ const ButtonGroup = ({ saleState }) => {
             ( saleState.paymentType == PaymentType.CASH
             && saleState.receivedCash * 1 >= saleState.total * 1 || saleState.paymentType == PaymentType.MIXED && ((saleState.receivedCash * 1 + saleState.receivedTpa * 1) >= saleState.total * 1) 
             || saleState.paymentType == PaymentType.TPA)
-            )
-            && 
+            ) ||
+            saleState.invoiceType==SaleType.RECEIPT_RC &&
+            saleState.invoiceSearchedItems.length > 0
+            && saleState.newAmountToReceiveForTheFTInvoice == saleState.total
+            &&
             <button type="button" onClick={() => { dispatch(saleConfirm());}} className="bg-green-200 rounded p-2 hover:shadow">{firstCapitalize(t('confirm'))}</button>}
         </div>
     )

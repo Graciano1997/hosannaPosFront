@@ -250,5 +250,12 @@
     "bank":"Banco",
     "iban":"Iban",
     "account_number":"número da conta",
-    "confirm_generation":"desejas  gerar o(a) [X] ?"
+    "confirm_generation":"desejas  gerar o(a) [X] ?",
+    "example":"ex:",
+    "search_for_invoice_id":"busque pelo id da fatura",
+     "invoice_status":"estado da fatura",
+    "paid":"paga",
+    "pending":"pendente",
+    "partial_paid":"parcialmente paga",
+    "new_amount_to_receive":"Nova quantia a receber"
 }

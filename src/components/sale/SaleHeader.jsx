@@ -35,7 +35,7 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
                 <label htmlFor="clienteType" className="sm:text-xl">{firstCapitalize(t('payment_way'))}</label>
                 <select id="clienteType" onChange={(el)=>{
                     dispatch(setPaymentType(el.target.value));
-                    if(el.target.value ==PaymentType.TPA){        
+                    if(sale.invoiceType!=SaleType.RECEIPT_RC && el.target.value==PaymentType.TPA){        
                     dispatch(setReceivedCash(0));
                     dispatch(setReceivedTpa(0))
                     }

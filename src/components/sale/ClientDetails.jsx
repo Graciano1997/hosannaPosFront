@@ -42,22 +42,22 @@ const ClientDetails = ()=>{
             <h1 className="font-bold mt-1 text-end"> * {firstCapitalize(t('client_details'))}</h1>
             <div className="flex flex-col gap-3 mt-1">
                 <label for="clienteNome">{firstCapitalize(t('name'))}</label>
-                <input type="text" name="name" onChange={formHandler} value={clientDetails.name != undefined ? clientDetails.name:''} className="bg-green-100 rounded p-2"/>
+                <input type="text" name="name" onChange={formHandler} value={clientDetails.name != undefined ? clientDetails.name:''} className="bg-green-100 rounded p-2" readOnly={sale.invoiceType==SaleType.RECEIPT_RC}/>
             </div>
 
             <div className="flex flex-col gap-3 mt-1">
                 <label for="clienteEmail">{firstCapitalize(t('email'))}</label>
-                <input type="email" onChange={formHandler} name="email" value={clientDetails.email != undefined ? clientDetails.email:''} id="clienteEmail" className="bg-green-100 rounded p-2"/>
+                <input type="email" onChange={formHandler} name="email" value={clientDetails.email != undefined ? clientDetails.email:''} id="clienteEmail" className="bg-green-100 rounded p-2" readOnly={sale.invoiceType==SaleType.RECEIPT_RC} />
             </div>
 
             <div className="flex flex-col gap-3">
                 <label for="clienteAddress">{firstCapitalize(t('address'))}</label>
-                <input type="text" name="address" onChange={formHandler} value={clientDetails.address != undefined ? clientDetails.address:''} id="clienteAddress"  className="bg-green-100 rounded p-2"/>
+                <input type="text" name="address" onChange={formHandler} value={clientDetails.address != undefined ? clientDetails.address:''} id="clienteAddress"  className="bg-green-100 rounded p-2" readOnly={sale.invoiceType==SaleType.RECEIPT_RC} />
             </div>
 
             <div className="flex flex-col gap-3">
                 <label for="clienteContact">{firstCapitalize(t('phone'))}</label>
-                <input type="number" name="phone" onChange={formHandler} value={clientDetails.phone} id="clienteContact" defaultValue={DefaultClientePhone} className="bg-green-100 rounded p-2"/>
+                <input type="number" name="phone" onChange={formHandler} value={clientDetails.phone} id="clienteContact" defaultValue={DefaultClientePhone} className="bg-green-100 rounded p-2" readOnly={sale.invoiceType==SaleType.RECEIPT_RC} />
             </div>
 
             {sale.invoiceType!=SaleType.SIMPLIFYED_INVOICE_FS
@@ -65,7 +65,7 @@ const ClientDetails = ()=>{
             <>
             <div className="flex flex-col gap-3">
                 <label for="clienteType">{ firstCapitalize(t('client_type'))}</label>
-                <select id="clienteType" value={clientDetails.client_type } defaultValue={ClientType.SINGULAR} name="client_type" className="bg-green-100 rounded p-2" onChange={(el)=>{
+                <select id="clienteType" value={clientDetails.client_type } defaultValue={ClientType.SINGULAR} name="client_type" className="bg-green-100 rounded p-2" disabled={sale.invoiceType==SaleType.RECEIPT_RC} onChange={(el)=>{
                     formHandler(el);
                     setClientType(el.target.value);
                 }}>
@@ -76,7 +76,8 @@ const ClientDetails = ()=>{
             <div className="flex flex-col gap-3">
                 <label for="clienteNif">{firstCapitalize(t('nif'))}</label>
                 <input 
-                type="text" 
+                type="text"
+                readOnly={sale.invoiceType==SaleType.RECEIPT_RC} 
                 name="nif" 
                 defaultValue={clientType==ClientType.SINGULAR ? 99999999 :''}  
                 onChange={formHandler} id="clienteNif" className="bg-green-100 rounded p-2" />
@@ -87,7 +88,9 @@ const ClientDetails = ()=>{
             {sale.invoiceType!=SaleType.PROFORM_PF && (sale.paymentType==PaymentType.MIXED) && sale.total > 0 &&
             <div className="flex flex-col gap-3">
                 <label for="tpaReceived">{firstCapitalize(t('received_tpa'))}</label>
-                <input type="number" id="tpaReceived" name="received_tpa"  value={receivedTpaMoney ? receivedTpaMoney :receivedTpa }  onChange={(el)=>{
+                <input 
+                readOnly={sale.invoiceType==SaleType.RECEIPT_RC}
+                type="number" id="tpaReceived" name="received_tpa"  value={receivedTpaMoney ? receivedTpaMoney :receivedTpa }  onChange={(el)=>{
                     setReceivedTpaMoney(el.target.value);
                     setMixedCashToReceive(sale.total - parseInt(el.target.value));
                     dispatch(setReceivedTpa(el.target.value*1));
@@ -98,7 +101,9 @@ const ClientDetails = ()=>{
             {sale.invoiceType!=SaleType.PROFORM_PF && (sale.paymentType==PaymentType.CASH || sale.paymentType==PaymentType.MIXED) && sale.total > 0 &&
             <div className="flex flex-col gap-3">
                 <label for="cashReceived">{firstCapitalize(t('received_cash'))}</label>
-                <input type="number" id="cashReceived" name="received_cash"  value={ received ? received :receivedCash }  onChange={(el)=>{
+                <input 
+                readOnly={sale.invoiceType==SaleType.RECEIPT_RC}
+                type="number" id="cashReceived" name="received_cash"  value={ received ? received :receivedCash }  onChange={(el)=>{
                     setReceived(el.target.value);
                     
                     if(sale.paymentType==PaymentType.CASH){

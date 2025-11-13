@@ -22,7 +22,10 @@ const initialState = {
     saleConfirmationIsOpen: false,
     saleObject: {},
     anualSales: [],
-    last_created_at: null
+    last_created_at: null,
+    invoiceSearchedItems:[],
+    newAmountToReceiveForTheFTInvoice:0,
+    referenceSale:null
 }
 
 
@@ -35,6 +38,15 @@ export const order = createAsyncThunk('saleState/order', async (sale) => {
     const response = await fetch(`${getIpTenant()}sales/`, {
         method: 'POST',
         body: JSON.stringify(sale),
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return response.json();
+});
+
+export const getSaleInvoiceItem = createAsyncThunk('saleState/getSaleInvoiceItem', async (invoice_number) => {
+    const response = await fetch(`${getIpTenant()}sales/get_sale/`, {
+        method: 'POST',
+        body: JSON.stringify(invoice_number),
         headers: { 'Content-Type': 'application/json' }
     });
     return response.json();
@@ -238,6 +250,9 @@ const saleSlice = createSlice({
             // }
 
         },
+        setNewAmountToReceive:(state,action)=>{
+            state.newAmountToReceiveForTheFTInvoice = action.payload
+        },
         saleClean: (state) => {
             state.items = [];
             state.receivedCash = 0;
@@ -248,6 +263,9 @@ const saleSlice = createSlice({
             state.invoiceType = SaleType.INVOICE_RECIBO_FR;
             state.paymentType = PaymentType.CASH;
             state.saleConfirmationIsOpen = false;
+            state.newAmountToReceiveForTheFTInvoice=0;
+            state.invoiceSearchedItems=[];
+            state.referenceSale=null;
             state.clientDetails = { name:defaultClientName, client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
         }
     },
@@ -274,6 +292,7 @@ const saleSlice = createSlice({
             state.saleConfirmationIsOpen = false;
         });
 
+
         builder.addCase(order.rejected, (state, action) => {
             console.log(action.payload);
         });
@@ -284,8 +303,23 @@ const saleSlice = createSlice({
         builder.addCase(getInvoiceItem.rejected, (state, action) => {
             console.log(action.payload);
         });
+
+        builder.addCase(getSaleInvoiceItem.fulfilled, (state, action) => {
+            if(action.payload.success){
+                const saleInvoiceItem = action.payload.data;
+                state.clientDetails = {...saleInvoiceItem.client}
+                state.receivedCash=saleInvoiceItem.sale.received_cash;
+                state.receivedTpa=saleInvoiceItem.sale.received_tpa;
+                state.difference=saleInvoiceItem.sale.difference;
+                state.totalItems=saleInvoiceItem.sale.qty;
+                state.total=saleInvoiceItem.sale.total;
+                state.invoiceSearchedItems=saleInvoiceItem.items;
+                state.referenceSale =saleInvoiceItem.sale.invoice_number;
+                console.log(saleInvoiceItem);
+            } 
+    });
     }
 });
 
 export default saleSlice.reducer;
-export const { saleClean, setReceivedCash, setReceivedTpa, increaseOne, decreaseOne, addItem, updateItem, removeItem, selectItem, addProduct, setPaymentType, setInvoiceType, setClientDetails, saleConfirm, saleNotConfirm, setSales, setSaleObject } = saleSlice.actions;
+export const { saleClean, setReceivedCash, setReceivedTpa, increaseOne, decreaseOne, addItem, updateItem, removeItem, selectItem, addProduct, setPaymentType, setInvoiceType, setClientDetails, saleConfirm, saleNotConfirm, setSales, setSaleObject, setNewAmountToReceive } = saleSlice.actions;
