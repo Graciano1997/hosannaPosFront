@@ -225,7 +225,7 @@
     "return":"Returns",
     "exit":"Exits",
     "adjustment":"Adjustments",
-     "week": "Week",
+    "week": "Week",
     "label_next": "Next month",
     "label_previous": "Previous month",
     "label_month_dropdown": "Select month",
@@ -243,6 +243,7 @@
     "invoice_FR":"Receipt Invoice ",
     "invoice_FS":"Simplified Invoice",
     "invoice_RC":"Receipt",
+    "credit_note":"Credit Note",
     "bank_details":"Bank Details",
     "bank":"Bank",
     "iban":"Iban",
@@ -254,5 +255,10 @@
     "paid":"paid",
     "pending":"pending",
     "partial_paid":"partialy paid",
-    "new_amount_to_receive":"New amount to receive"
+    "new_amount_to_receive":"New amount to receive",
+    "invoice_found":"The invoice was found",
+    "invoice_not_found":"The invoice was not found",
+    "confirm_devolution":"Confirm devolution",
+    "bough_qty":"bough qty",
+    "return_qty":"return qty"  
 }

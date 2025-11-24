@@ -11,7 +11,7 @@ export const PaymentType = {
 }
 
 export const DefaultClientePhone = 911111111;
-export const defaultClientName = 'Consumidor Final'
+export const defaultClientName = 'Consumidor Final';
 
 export const SaleType = {
     NORMAL_INVOICE_FT:'FT',
@@ -28,7 +28,7 @@ export const SaleType = {
     FR:'invoice_FR',
     PF:'proforma',
     FS:'invoice_FS',
-    NC:'',
+    NC:'credit_note',
     ND:'',
     RC:'invoice_RC'
   }
@@ -44,3 +44,8 @@ export const Profiles = {
     OPERATOR:2
 }
 
+export const InvoiceStatus = {
+    PAID:"paid",
+    PENDING:"pending",
+    PARTIAL:"partial"
+}

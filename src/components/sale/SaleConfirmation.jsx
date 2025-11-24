@@ -23,53 +23,53 @@ const SaleConfirmation = () => {
             },
             sale: {
                 invoiceType: saleState.invoiceType,
-                qty: saleState.totalItems,
+                qty: saleState.invoiceType == SaleType.CREDIT_NOTE_NC ? saleState.totalItemsToReturn : saleState.totalItems,
                 payment_way: saleState.paymentType,
                 received_cash:saleState.invoiceType == SaleType.PROFORM_PF ? 0 : (((saleState.paymentType==PaymentType.CASH || saleState.paymentType == PaymentType.MIXED)) ? saleState.receivedCash : 0),
                 received_tpa: saleState.paymentType == SaleType.PROFORM_PF ? 0 : (( PaymentType.TPA == saleState.paymentType? saleState.total : (saleState.paymentType==PaymentType.MIXED ? saleState.receivedTpa:0))),
                 descount: saleState.invoiceType == SaleType.PROFORM_PF ? 0 : 0,
                 difference: saleState.invoiceType == SaleType.PROFORM_PF ? 0 : (saleState.paymentType == PaymentType.TPA ? 0 : (saleState.difference)),
-                total: saleState.total,
+                total:saleState.invoiceType == SaleType.CREDIT_NOTE_NC ? saleState.totalToReturn :  saleState.total,
                 user_id: CurrentUser().id,
                 reference_sale:saleState.referenceSale,
                 new_amount_to_receive_for_FT_invoice:saleState.newAmountToReceiveForTheFTInvoice
             },
-            items: saleState.invoiceType == SaleType.RECEIPT_RC ? saleState.invoiceSearchedItems : saleState.items
+            items: saleState.invoiceType == SaleType.CREDIT_NOTE_NC ? saleState.itemsToReturn : (saleState.invoiceType == SaleType.RECEIPT_RC ? saleState.invoiceSearchedItems : saleState.items)
         }
 
-        dispatch(order(treatedSaleObject))
-            .then((orderResultState) => {
-                if (saleState.invoiceType == SaleType.SALE) {
-                    dispatch(showToast({ success: true, message: t('order_sucessfuly') }));
-                } else {
-                    dispatch(showToast({ success: true, message: t('success') }));
-                }
+         dispatch(order(treatedSaleObject))
+             .then((orderResultState) => {
+                 if (saleState.invoiceType == SaleType.SALE) {
+                     dispatch(showToast({ success: true, message: t('order_sucessfuly') }));
+                 } else {
+                     dispatch(showToast({ success: true, message: t('success') }));
+                 }
 
-                //THis action ensure to print in the Java print server App
-                if (order.fulfilled.match(orderResultState)) {
-                    //prints only if the user printerConfiguration is set to finish and print.
-                    if (printerConfiguration.finishAndprint == "true") {
-                        dispatch(printing({ 
-                            copyNumber: parseInt(printerConfiguration.copyNumber),
-                            template: orderResultState.payload.invoice_template,
-                            printer: printerConfiguration.printer,
-                            printerType: printerConfiguration.printertype
-                        }))
+                //  THis action ensure to print in the Java print server App
+                 if (order.fulfilled.match(orderResultState)) {
+                    //  prints only if the user printerConfiguration is set to finish and print.
+                     if (printerConfiguration.finishAndprint == "true") {
+                         dispatch(printing({ 
+                             copyNumber: parseInt(printerConfiguration.copyNumber),
+                             template: orderResultState.payload.invoice_template,
+                             printer: printerConfiguration.printer,
+                             printerType: printerConfiguration.printertype
+                         }))
 
-                            .then((printingResultState) => {
-                                if (printing.rejected.match(printingResultState)) {
-                                    dispatch(showToast({ warning: true, message: firstCapitalize(t('ordered_without_printing')) }));
-                                }
-                            })
-                    }else{
-                         dispatch(showToast({ warning:true, message:firstCapitalize(t('ordered_without_printing'))}));
-                    }
-                }
+                             .then((printingResultState) => {
+                                 if (printing.rejected.match(printingResultState)) {
+                                     dispatch(showToast({ warning: true, message: firstCapitalize(t('ordered_without_printing')) }));
+                                 }
+                             })
+                     }else{
+                          dispatch(showToast({ warning:true, message:firstCapitalize(t('ordered_without_printing'))}));
+                     }
+                 }
 
-                dispatch(saleClean());
-                dispatch(clearSearchedProduct());
-                dispatch(fetchProducts());
-            });
+                 dispatch(saleClean());
+                 dispatch(clearSearchedProduct());
+                 dispatch(fetchProducts());
+             });
 
         dispatch(closeModal());
     };

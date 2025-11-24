@@ -246,6 +246,7 @@
     "invoice_FR":"fatura Recibo",
     "invoice_FS":"fatura Simplificada",
     "invoice_RC":"Recibo",
+    "credit_note":"Nota de crédito",
     "bank_details":"Coordenada Bancárias",
     "bank":"Banco",
     "iban":"Iban",
@@ -256,6 +257,11 @@
      "invoice_status":"estado da fatura",
     "paid":"paga",
     "pending":"pendente",
-    "partial_paid":"parcialmente paga",
-    "new_amount_to_receive":"Nova quantia a receber"
+    "partial":"parcialmente paga",
+    "new_amount_to_receive":"Nova quantia a receber",
+    "invoice_found":"Fatura encontrada",
+    "invoice_not_found":"Fatura não encontrada, certifica-te a buscar as faturas FT",
+    "confirm_devolution":"Confirmar devolução",
+    "bough_qty":"qtd comprada",
+    "return_qty":"qtd a devolver"
 }

@@ -44,8 +44,11 @@ const ClientDetails = ()=>{
                 <label for="clienteNome">{firstCapitalize(t('name'))}</label>
                 <input type="text" name="name" onChange={formHandler} value={clientDetails.name != undefined ? clientDetails.name:''} className="bg-green-100 rounded p-2" readOnly={sale.invoiceType==SaleType.RECEIPT_RC}/>
             </div>
-
-            <div className="flex flex-col gap-3 mt-1">
+            
+            {sale.invoiceType!=SaleType.SIMPLIFYED_INVOICE_FS
+            &&
+            <>
+                        <div className="flex flex-col gap-3 mt-1">
                 <label for="clienteEmail">{firstCapitalize(t('email'))}</label>
                 <input type="email" onChange={formHandler} name="email" value={clientDetails.email != undefined ? clientDetails.email:''} id="clienteEmail" className="bg-green-100 rounded p-2" readOnly={sale.invoiceType==SaleType.RECEIPT_RC} />
             </div>
@@ -60,9 +63,6 @@ const ClientDetails = ()=>{
                 <input type="number" name="phone" onChange={formHandler} value={clientDetails.phone} id="clienteContact" defaultValue={DefaultClientePhone} className="bg-green-100 rounded p-2" readOnly={sale.invoiceType==SaleType.RECEIPT_RC} />
             </div>
 
-            {sale.invoiceType!=SaleType.SIMPLIFYED_INVOICE_FS
-            &&
-            <>
             <div className="flex flex-col gap-3">
                 <label for="clienteType">{ firstCapitalize(t('client_type'))}</label>
                 <select id="clienteType" value={clientDetails.client_type } defaultValue={ClientType.SINGULAR} name="client_type" className="bg-green-100 rounded p-2" disabled={sale.invoiceType==SaleType.RECEIPT_RC} onChange={(el)=>{

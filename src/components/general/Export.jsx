@@ -27,7 +27,7 @@ const Export = ({ stopExporting }) => {
 
     const [pageSetting,setPageSetting]=useState({orientation:'portrait',size:'A4'});
 
-    const filterFilter = ['image', 'profile_id', 'sale_products', 'user_id', 'client_id', 'category_id', 'parent_category_id', 'output'];
+    const filterFilter = ['image', 'profile_id', 'sale_products', 'user_id', 'client_id', 'category_id', 'parent_category_id', 'output','store_id'];
     const fieldRef = useRef(null);
 
     const productUserSelectedFields = productConfigurationFields.filter((item) => item.active).map((item) => item.field);
@@ -130,7 +130,7 @@ const Export = ({ stopExporting }) => {
                     </div>
                     <div>
 
-                        <div className="mt-4 flex gap-2 p-2 rounded-[20px] justify-center items-center bg-green-100 w-[25%]">
+                        <div className="mt-4 flex gap-2 p-2 rounded-[20px] justify-center items-center bg-green-100 w-[25%] md:w-[40%]">
                             <p>{t('date_interval')}</p>
                             <input type="search" onKeyDown={(el) => {
                                 if (el.key == "Backspace") {

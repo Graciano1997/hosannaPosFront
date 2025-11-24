@@ -3,7 +3,7 @@ import { BanknotesIcon, Bars4Icon } from "@heroicons/react/24/solid";
 import { EllipsisHorizontalIcon, QrCodeIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { PaymentType, SaleType } from "../../lib/Enums";
-import { setInvoiceType, setPaymentType, setReceivedCash, setReceivedTpa } from "../../slices/saleSlice";
+import { saleClean, setInvoiceType, setPaymentType, setReceivedCash, setReceivedTpa } from "../../slices/saleSlice";
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
@@ -18,6 +18,9 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
         <div className="mt-[3rem] flex flex-col sm:flex-row gap-5 sm:justify-between sm:items-center  w-[100%] sm:h-[100px] bg-white rounded p-4">  
             <div className="flex gap-3 items-center">
             <select defaultValue={sale.invoiceType} onChange={(el)=>{
+                if(sale.invoiceType==SaleType.RECEIPT_RC && el.target.value != SaleType.RECEIPT_RC) 
+                    dispatch(saleClean());
+                
                 dispatch(setInvoiceType(el.target.value));
             }} 
             className="cursor-pointer p-2 rounded transition-all duration-200 bg-white shadow">

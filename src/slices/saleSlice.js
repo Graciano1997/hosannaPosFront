@@ -4,30 +4,34 @@ import { getIpTenant, Ip } from "../lib/ip";
 import { totalWithTaxesAndDiscounts } from "../lib/totalWithTaxes";
 import { removeDuplicate } from "../lib/removeDuplicate";
 import { sum } from "../lib/sumSale";
+import { sum as sumcollection } from "../lib/sumCollection";
 
 const initialState = {
     loading: false,
     error: '',
     items: [],
+    itemsToReturn: [],
     totalItems: 0,
+    totalItemsToReturn: 0,
     selectedItem: undefined,
     paymentType: PaymentType.CASH,
-    clientDetails: { name:defaultClientName ,client_type: ClientType.SINGULAR, phone: DefaultClientePhone },
+    clientDetails: { name: defaultClientName, client_type: ClientType.SINGULAR, phone: DefaultClientePhone },
     invoiceType: SaleType.INVOICE_RECIBO_FR,
     receivedCash: 0,
     receivedTpa: 0,
     total: 0,
+    totalToReturn: 0,
     sales: [],
     difference: 0,
     saleConfirmationIsOpen: false,
     saleObject: {},
     anualSales: [],
     last_created_at: null,
-    invoiceSearchedItems:[],
-    newAmountToReceiveForTheFTInvoice:0,
-    referenceSale:null
+    invoiceSearchedItems: [],
+    newAmountToReceiveForTheFTInvoice: 0,
+    referenceSale: null,
+    invoiceStatus: null
 }
-
 
 export const fetchAnualSales = createAsyncThunk("saleState/fetchAnualSales", async (year = new Date().getFullYear()) => {
     const response = await fetch(`${getIpTenant()}sales/anual_sales/${year}`);
@@ -66,7 +70,7 @@ export const getInvoiceItem = createAsyncThunk("saleState/getInvoiceItem", async
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body:JSON.stringify(data)
+                body: JSON.stringify(data)
             });
         return response.json();
     } catch (error) {
@@ -233,8 +237,8 @@ const saleSlice = createSlice({
                 const receivedCash = action.payload * 1;
                 if (receivedCash > moneyToReceive) {
                     state.difference = receivedCash - moneyToReceive;
-                }else{
-                    state.difference = 0;                    
+                } else {
+                    state.difference = 0;
                 }
             } else {
                 state.difference = 0;
@@ -250,7 +254,7 @@ const saleSlice = createSlice({
             // }
 
         },
-        setNewAmountToReceive:(state,action)=>{
+        setNewAmountToReceive: (state, action) => {
             state.newAmountToReceiveForTheFTInvoice = action.payload
         },
         saleClean: (state) => {
@@ -260,14 +264,39 @@ const saleSlice = createSlice({
             state.totalItems = 0;
             state.receivedTpa = 0;
             state.total = 0;
-            state.invoiceType = SaleType.INVOICE_RECIBO_FR;
+            state.totalItemsToReturn = 0;
+            state.totalToReturn = 0;
+            // state.invoiceType = SaleType.INVOICE_RECIBO_FR;
             state.paymentType = PaymentType.CASH;
             state.saleConfirmationIsOpen = false;
-            state.newAmountToReceiveForTheFTInvoice=0;
-            state.invoiceSearchedItems=[];
-            state.referenceSale=null;
-            state.clientDetails = { name:defaultClientName, client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
+            state.newAmountToReceiveForTheFTInvoice = 0;
+            state.invoiceSearchedItems = [];
+            state.referenceSale = null;
+            state.clientDetails = { name: defaultClientName, client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
+        },
+        setItemToReturn: (state, action) => {
+
+            const index = state.itemsToReturn.findIndex((product) => product.code === action.payload.code);
+
+            if (index != -1) {
+                if (action.payload.qtyToReturn == 0) {
+                    state.itemsToReturn = state.itemsToReturn.filter((product) => product.code != action.payload.code);
+                } else {
+                    state.itemsToReturn[index] = action.payload;
+                }
+            } else {
+                state.itemsToReturn.push(action.payload);
+            }
+
+            const { total, totalItems } = sumcollection(state.itemsToReturn, "subtotalToReturn", "qtyToReturn");
+            state.totalItemsToReturn = totalItems;
+            state.totalToReturn = total;
+
+        },
+        setRefenceSale: (state, action) => {
+            state.referenceSale = action.payload;
         }
+
     },
     extraReducers: (builder) => {
         builder.addCase(fetchSales.fulfilled, (state, action) => {
@@ -288,6 +317,7 @@ const saleSlice = createSlice({
         });
 
         builder.addCase(order.fulfilled, (state, action) => {
+            // console.log(action.payload.sale_item);
             state.sales.unshift(action.payload.sale_item);
             state.saleConfirmationIsOpen = false;
         });
@@ -300,26 +330,28 @@ const saleSlice = createSlice({
         builder.addCase(getInvoiceItem.fulfilled, (state, action) => {
             console.log(action.payload);
         });
+
         builder.addCase(getInvoiceItem.rejected, (state, action) => {
             console.log(action.payload);
         });
 
         builder.addCase(getSaleInvoiceItem.fulfilled, (state, action) => {
-            if(action.payload.success){
+
+            if (action.payload.success) {
                 const saleInvoiceItem = action.payload.data;
-                state.clientDetails = {...saleInvoiceItem.client}
-                state.receivedCash=saleInvoiceItem.sale.received_cash;
-                state.receivedTpa=saleInvoiceItem.sale.received_tpa;
-                state.difference=saleInvoiceItem.sale.difference;
-                state.totalItems=saleInvoiceItem.sale.qty;
-                state.total=saleInvoiceItem.sale.total;
-                state.invoiceSearchedItems=saleInvoiceItem.items;
-                state.referenceSale =saleInvoiceItem.sale.invoice_number;
-                console.log(saleInvoiceItem);
-            } 
-    });
+                state.clientDetails = { ...saleInvoiceItem.client }
+                state.receivedCash = saleInvoiceItem.sale.received_cash;
+                state.receivedTpa = saleInvoiceItem.sale.received_tpa;
+                state.difference = saleInvoiceItem.sale.difference;
+                state.totalItems = saleInvoiceItem.sale.qty;
+                state.total = saleInvoiceItem.sale.total;
+                state.invoiceSearchedItems = saleInvoiceItem.items;
+                state.referenceSale = saleInvoiceItem.sale.invoice_number;
+                state.invoiceStatus = saleInvoiceItem.invoice_status;
+            }
+        });
     }
 });
 
 export default saleSlice.reducer;
-export const { saleClean, setReceivedCash, setReceivedTpa, increaseOne, decreaseOne, addItem, updateItem, removeItem, selectItem, addProduct, setPaymentType, setInvoiceType, setClientDetails, saleConfirm, saleNotConfirm, setSales, setSaleObject, setNewAmountToReceive } = saleSlice.actions;
+export const { saleClean, setReceivedCash, setReceivedTpa, increaseOne, decreaseOne, addItem, updateItem, removeItem, selectItem, addProduct, setPaymentType, setInvoiceType, setClientDetails, saleConfirm, saleNotConfirm, setSales, setSaleObject, setNewAmountToReceive, setItemToReturn, setRefenceSale } = saleSlice.actions;

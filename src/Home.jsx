@@ -33,6 +33,7 @@ import Account from './components/settings/Account'
 import { fetchPrinterConfig } from './slices/printerSlice'
 import { MyStore } from './components/mystore/Mystore'
 import StockMovements from './components/Stock/StockMovements'
+import Devolution from './components/devolution/Devolution'
 
 function Home() {
 
@@ -96,7 +97,8 @@ function Home() {
       <Route path='/products' element={masterProfile ? <Product/> : <_401/>} />
       <Route path='/spents' element={masterProfile ? <Spent/>: <_401/>} />  
       <Route path='/users' element={masterProfile ? <User/>: <_401/>} /> 
-      <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />      
+            <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />      
+      <Route path='/sale/devolution' element={<Devolution setToastObject={setToastObject}/>} />      
       <Route path='/setting' element={<Setting/>} />
       <Route path='/profile' element={<Account/>} />
       <Route path='/mystore' element={<MyStore/>} />

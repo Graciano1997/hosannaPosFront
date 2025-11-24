@@ -1,10 +1,12 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "../general/Modal";
 import Money from "../general/Money";
 import { stateDisplay, textDisplay } from "../../lib/activeDisplay";
 import { useTranslation } from "react-i18next";
 import { UserIcon } from "@heroicons/react/24/solid";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getSaleInvoiceItem, setRefenceSale } from "../../slices/saleSlice";
 
 const movementTypeColor ={entry:"bg-green-500",exit:"bg-red-500",return:"bg-purple-500",adjustment:"bg-blue-500",expired:"bg-yellow-400"}
 const moneyFields = ['price','total', 'amount', 'cost_price','discount','difference','received_cash'];
@@ -13,10 +15,14 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
     
     const detailsItem = useSelector((state)=>state.appState.itemDetails);
     let keys = Object.keys(detailsItem);
+    const {pathname}=useLocation();
+    console.log(detailsItem);
    
     const hasImage = detailsItem.image ?true:false;
     keys = keys.filter((item) => !filterDetails.includes(item));
     const {t}= useTranslation();
+    const navegate = useNavigate();
+    const dispatch = useDispatch();
     
     return(
         <Modal helper={cleanItemDetails}>
@@ -78,7 +84,12 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                 </div>
                 </div>
                 <div className="mt-[2rem] gap-3 flex justify-end">
-                <button className="bg-red-300 p-2 rounded hover:shadow"> {firstCapitalize(t('returning'))}</button>
+                    {pathname=="/sales" && !detailsItem.invoice_number.includes('NC') && <button
+                    onClick={()=>{
+                        dispatch(setRefenceSale(detailsItem.invoice_number));
+                        dispatch(getSaleInvoiceItem({ invoice_number: detailsItem.invoice_number }))
+                        navegate("/sale/devolution")}}
+                    className="bg-red-300 p-2 rounded hover:shadow"> {firstCapitalize(t('returning'))}</button>}
                 <button className="bg-green-200 p-2 rounded hover:shadow"> {firstCapitalize(t('export'))}</button>
                 </div>
             </div>
