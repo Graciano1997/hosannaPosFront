@@ -262,6 +262,6 @@
     "invoice_found":"Fatura encontrada",
     "invoice_not_found":"Fatura não encontrada, certifica-te a buscar as faturas FT",
     "confirm_devolution":"Confirmar devolução",
-    "bough_qty":"qtd comprada",
-    "return_qty":"qtd a devolver"
+    "bough_qty":"qtd",
+    "return_qty":"qtd_devolver"
 }

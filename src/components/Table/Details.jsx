@@ -59,15 +59,19 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
 
                 {
                     detailsItem.payment_way	&&
+                    detailsItem.sale_products.length>0 
+                    && !detailsItem.invoice_number.includes('NC')
+                    &&
                     <>
                     <h2 className="text-end text-xl p-1">{firstCapitalize(t('products'))}</h2>
                  <div className="shadow p-2" >
-                    <div className="grid grid-cols-7 gap-2 p-4">
+                    <div className="grid grid-cols-8 gap-8 p-4">
                     { Object.keys(detailsItem.sale_products[0]).map((item)=><p className="font-bold">{firstCapitalize(t(item))}</p>)}
                     </div>
 
                     {detailsItem.sale_products.map((item,index)=>
-                    <div className={`${index % 2 == 0 ? 'bg-green-200' : ''} hover:shadow grid grid-cols-7 gap-2 p-2 font-light`}>
+                    <div className={`${index % 2 == 0 ? 'bg-green-200' : ''} hover:shadow grid grid-cols-8 gap-8 p-2 font-light`}>
+                        <p>{item.id}</p>
                         <p>{item.code}</p>
                         <p>{item.name}</p>
                         <p>{item.qty}</p>
@@ -84,10 +88,14 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                 </div>
                 </div>
                 <div className="mt-[2rem] gap-3 flex justify-end">
-                    {pathname=="/sales" && !detailsItem.invoice_number.includes('NC') && <button
+                    {
+                    pathname=="/sales" && detailsItem.sale_products.length>0 
+                    && !detailsItem.invoice_number.includes('NC') 
+                    && 
+                    <button
                     onClick={()=>{
                         dispatch(setRefenceSale(detailsItem.invoice_number));
-                        dispatch(getSaleInvoiceItem({ invoice_number: detailsItem.invoice_number }))
+                        dispatch(getSaleInvoiceItem({devolution:true, invoice_number: detailsItem.invoice_number }))
                         navegate("/sale/devolution")}}
                     className="bg-red-300 p-2 rounded hover:shadow"> {firstCapitalize(t('returning'))}</button>}
                 <button className="bg-green-200 p-2 rounded hover:shadow"> {firstCapitalize(t('export'))}</button>

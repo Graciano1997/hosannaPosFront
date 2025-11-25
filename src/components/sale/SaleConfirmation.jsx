@@ -36,7 +36,7 @@ const SaleConfirmation = () => {
             },
             items: saleState.invoiceType == SaleType.CREDIT_NOTE_NC ? saleState.itemsToReturn : (saleState.invoiceType == SaleType.RECEIPT_RC ? saleState.invoiceSearchedItems : saleState.items)
         }
-
+        
          dispatch(order(treatedSaleObject))
              .then((orderResultState) => {
                  if (saleState.invoiceType == SaleType.SALE) {
@@ -70,7 +70,8 @@ const SaleConfirmation = () => {
                  dispatch(clearSearchedProduct());
                  dispatch(fetchProducts());
              });
-
+             
+        
         dispatch(closeModal());
     };
     return (

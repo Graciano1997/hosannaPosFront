@@ -47,10 +47,10 @@ export const order = createAsyncThunk('saleState/order', async (sale) => {
     return response.json();
 });
 
-export const getSaleInvoiceItem = createAsyncThunk('saleState/getSaleInvoiceItem', async (invoice_number) => {
+export const getSaleInvoiceItem = createAsyncThunk('saleState/getSaleInvoiceItem', async (invoice) => {
     const response = await fetch(`${getIpTenant()}sales/get_sale/`, {
         method: 'POST',
-        body: JSON.stringify(invoice_number),
+        body: JSON.stringify(invoice),
         headers: { 'Content-Type': 'application/json' }
     });
     return response.json();
@@ -275,24 +275,46 @@ const saleSlice = createSlice({
             state.clientDetails = { name: defaultClientName, client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
         },
         setItemToReturn: (state, action) => {
+            const newItem = action.payload;
 
-            const index = state.itemsToReturn.findIndex((product) => product.code === action.payload.code);
+            const index = state.itemsToReturn.findIndex(
+                (product) => product.code === newItem.code
+            );
 
-            if (index != -1) {
-                if (action.payload.qtyToReturn == 0) {
-                    state.itemsToReturn = state.itemsToReturn.filter((product) => product.code != action.payload.code);
-                } else {
-                    state.itemsToReturn[index] = action.payload;
+            // Calculamos subtotal con fórmula corregida
+            const updatedNewItem = {
+                ...newItem,
+                subtotalToReturn:
+                    newItem.price * newItem.qtyToReturn +
+                    (newItem.taxes * newItem.price * newItem.qtyToReturn) / 100 -
+                    (newItem.discount * newItem.price * newItem.qtyToReturn) / 100
+            };
+
+            // Eliminar cuando qty = 0
+            if (updatedNewItem.qtyToReturn === 0) {
+                if (index !== -1) {
+                    state.itemsToReturn.splice(index, 1);
                 }
             } else {
-                state.itemsToReturn.push(action.payload);
+                // Si existe reemplazar, si no agregar
+                if (index !== -1) {
+                    state.itemsToReturn[index] = updatedNewItem;
+                } else {
+                    state.itemsToReturn.push(updatedNewItem);
+                }
             }
+            
+            // Actualizar totales
+            const { totalItems,total } = sumcollection(
+                state.itemsToReturn,
+                "subtotalToReturn",
+                "qtyToReturn"
+            );
 
-            const { total, totalItems } = sumcollection(state.itemsToReturn, "subtotalToReturn", "qtyToReturn");
-            state.totalItemsToReturn = totalItems;
             state.totalToReturn = total;
-
-        },
+            state.totalItemsToReturn = totalItems;
+        }
+        ,
         setRefenceSale: (state, action) => {
             state.referenceSale = action.payload;
         }
