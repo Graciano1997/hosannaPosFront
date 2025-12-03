@@ -33,8 +33,25 @@ const Sales=()=>{
             data:sales}}
         />
         <TabWrapper>    
-        {appState.activeTab=="tab1" && (<Table filterRows={filterRows} setCollection={setSales} filterDetails={filterRows} create={null} printItem={true} fetcher={fetchSales} fetcherParam={saleState.last_created_at} dispatcher={setSales} collection={sales} />)}
-        {appState.activeTab=="tab2"  && (<SaleDashboard/>)} 
+        {appState.activeTab=="tab1" && (
+
+        <Table 
+        filterRows={filterRows} 
+        setCollection={setSales} 
+        filterDetails={filterRows} 
+        create={null} 
+        printItem={true} 
+        fetcher={fetchSales} 
+        fetcherParam={saleState.last_created_at} 
+        dispatcher={setSales} 
+        collection={sales} 
+        deleteItem={false}
+        />)}
+
+        {
+        appState.activeTab=="tab2" && 
+        (<SaleDashboard/>)
+        } 
         </TabWrapper>
         </CardWrapper>
     )
