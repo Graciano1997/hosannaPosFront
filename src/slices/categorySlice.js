@@ -56,14 +56,14 @@ export const categorySlice = createSlice({
     },
     extraReducers:(builder)=>{
         builder.addCase(fetchCategories.fulfilled,(state,action)=>{
-                state.last_created_at=action.payload.last_created_at;
-                if(action.payload.last_created_at && (action.payload.data).length){
-                    if((state.categories).length==0){
-                        state.categories = action.payload.data;
-                    }else{
-                        state.categories = removeDuplicate([...state.categories,...action.payload.data],'id');                     
-                    }
-                }
+            state.categories = action.payload.data;
+                // state.last_created_at=action.payload.last_created_at;
+                // if(action.payload.last_created_at && (action.payload.data).length){
+                //     if((state.categories).length==0){
+                //     }else{
+                //         state.categories = removeDuplicate([...state.categories,...action.payload.data],'id');                     
+                //     }
+                // }
         })
 
         builder.addCase(createCategory.fulfilled,(state,action)=>{

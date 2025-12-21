@@ -7,7 +7,7 @@ export const printerIp='http://localhost:5000';
 // export const Ip='https://hosanaposbackendapi.onrender.com';
 export function getTenantPath() {
   const user = CurrentUser();
-  return user?.storeId ? `/stores/${user.storeId}/` : '';
+  return user?.companyId ? `/companies/${user.companyId}/` : '';
 }
 
 export function getIpTenant() {
