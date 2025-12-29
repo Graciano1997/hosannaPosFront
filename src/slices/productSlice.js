@@ -24,9 +24,7 @@ const initialState = {
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async (last_created_at=null)=>{
-    const response = await fetch(`${getIpTenant()}products/${last_created_at?`last/${last_created_at}/`:''}`,{ method:'GET', headers:{'Content-Type':'application/json',
-    Accept: "application/json"
-     }});
+    const response = await fetch(`${getIpTenant()}products`);
     return response.json();
     });
 
@@ -44,7 +42,7 @@ export const expiredProductJob = createAsyncThunk("productState/expiredProductJo
 });
 
 export const fetchExpiredProducts = createAsyncThunk("productState/fetchExpiredProducts", async ()=>{
-    const response = await fetch(`${getIpTenant()}products/expireds`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}expired_products`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
@@ -160,21 +158,23 @@ const productSlice = createSlice({
     builder.addCase(fetchProducts.fulfilled,(state,action)=>{
     state.loading=false;
     state.error='';
-    state.last_created_at=action.payload.last_created_at;
+    state.products = action.payload.data;
+    // console.log(action.payload);
+    // state.last_created_at=action.payload.last_created_at;
     
-    if(action.payload.last_created_at && (action.payload.data).length){    
+    // if(action.payload.last_created_at && (action.payload.data).length){    
 
-        if((state.products).length==0){
-            state.products = action.payload.data;
-         }else{
-            if(state.isLoadingMore){
-                state.products = removeDuplicate([...state.products,...action.payload.data],'id');
-            }else{
-            state.isLoadingMore = false;              
-            state.products = action.payload.data;
-            }
-         }
-    }
+    //     if((state.products).length==0){
+    //         state.products = action.payload.data;
+    //      }else{
+    //         if(state.isLoadingMore){
+    //             state.products = removeDuplicate([...state.products,...action.payload.data],'id');
+    //         }else{
+    //         state.isLoadingMore = false;              
+    //         state.products = action.payload.data;
+    //         }
+    //      }
+    // }
     });
 
 
