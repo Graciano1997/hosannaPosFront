@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getIpTenant, Ip, } from "../lib/ip";
+import { getIpTenant, Ip } from "../lib/ip";
 
 const initialState = {
     companies: [],
@@ -13,12 +13,12 @@ const initialState = {
 };
 
 export const fetchCompanies = createAsyncThunk("companyState/fetchCompanies", async () => {
-    const response = await fetch(`${getIpTenant()}companies/`, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+    const response = await fetch(`${Ip}/companies/`, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
     return response.json();
 });
 
 export const fetchCompaniesFields = createAsyncThunk("companyState/fetchCompaniesFields", async () => {
-    const response = await fetch(`${Ip}/api/companies/company_fields`, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+    const response = await fetch(`${Ip}/companies/company_fields`, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
     return response.json();
 });
 
@@ -28,7 +28,7 @@ export const deleteCompany = createAsyncThunk("companyState/deleteCompany", asyn
 });
 
 export const registerCompany = createAsyncThunk("companyState/registerCompany", async (companyForm) => {
-    const response = await fetch(`${getIpTenant()}companies/`, { method: 'POST', body: companyForm});
+    const response = await fetch(`${getIpTenant()}companies/`, { method: 'POST', body: companyForm });
     return response.json();
 });
 
@@ -116,9 +116,9 @@ const companySlice = createSlice({
             if (action.payload.success && action.payload.company) {
                 const atIndex = state.companies.findIndex(item => item.id === action.payload.company.id);
                 if (atIndex !== -1) {
-                    const updatedCompany = [...state.companies]; // Create a new array
-                    updatedCompany[atIndex] = action.payload.company; // Update the specific item
-                    state.companies = updatedCompany; // Assign the new array to state
+                    const updatedCompany = [...state.companies];
+                    updatedCompany[atIndex] = action.payload.company;
+                    state.companies = updatedCompany;
                 }
             }
         })

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getIpTenant, Ip, } from "../lib/ip";
+import { getIpTenant } from "../lib/ip";
 
 const initialState = {
     bankAccounts:[],
@@ -18,6 +18,7 @@ export const deleteBankAccount = createAsyncThunk("bankAccountState/deleteBankAc
 });
 
 export const registerBankAccount = createAsyncThunk("bankAccountState/registerBankAccount", async (bankForm) => {
+    console.log(`${getIpTenant()}bank_accounts/`)
     const response = await fetch(`${getIpTenant()}bank_accounts/`, 
     { 
       method: 'POST',
@@ -115,9 +116,9 @@ const bankAccountSlice = createSlice({
             if (action.payload.success && action.payload.bank_account) {
                 const atIndex = state.bankAccounts.findIndex(item => item.id === action.payload.bank_account.id);
                 if (atIndex !== -1) {
-                    const updatedBankAccount = [...state.bankAccounts]; // Create a new array
-                    updatedBankAccount[atIndex] = action.payload.bank_account; // Update the specific item
-                    state.bankAccounts = updatedBankAccount; // Assign the new array to state
+                    const updatedBankAccount = [...state.bankAccounts];
+                    updatedBankAccount[atIndex] = action.payload.bank_account;
+                    state.bankAccounts = updatedBankAccount;
                 }
             }
         })

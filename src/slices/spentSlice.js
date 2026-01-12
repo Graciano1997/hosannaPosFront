@@ -10,8 +10,7 @@ const initialState = {
     lastSpents:[],
     anualSpends:[],
     minYear:0,
-    total:0,
-    last_created_at:null
+    total:0
 };
 
 export const fetchSpents = createAsyncThunk("spentState/fetchSpents", async () => {
@@ -86,6 +85,7 @@ const spentSlice = createSlice({
         });
 
         builder.addCase(registerSpent.fulfilled, (state, action) => {
+            console.log(action.payload)
             if (!action.payload.error) {
                 state.spents.push({ ...action.payload.spent });
                 state.total = sum(state.spents,'amount').total;
@@ -115,7 +115,7 @@ const spentSlice = createSlice({
                     const updatedSpents = [...state.spents]; // Create a new array
                     updatedSpents[atIndex] = action.payload.spent; // Update the specific item
                     state.spents = updatedSpents; // Assign the new array to state
-                    state.total = sum(updateSpent,'amount').total;
+                    state.total = sum(updatedSpents,'amount').total;
                 }
                 state.isUpdating = false;
             }

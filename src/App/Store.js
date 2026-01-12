@@ -11,7 +11,6 @@ import printerSlice from "../slices/printerSlice";
 import stockSlice from "../slices/stockSlice";
 import bankAccountSlice from "../slices/bankAccountSlice";
 
-
 const store = configureStore({
     reducer:{
        appState:appSlice,

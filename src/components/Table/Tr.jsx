@@ -30,7 +30,8 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
     return (
         <>
             <tr
-                className={`${index % 2 == 0 ? rowStyle : ''}  cursor-pointer hover:sm:shadow font-light `}>
+               key={item.id + Math.random()}
+               className={`${index % 2 == 0 ? rowStyle : ''}   cursor-pointer hover:sm:shadow font-light `}>
                 {keys.map((key) =>
                     <td onClick={() => { dispatch(itemDetails(item)) }} className="p-1 text-center">
                         {key=="movement_type" &&  

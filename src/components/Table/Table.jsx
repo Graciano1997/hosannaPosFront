@@ -28,7 +28,6 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
 
     const [visibility, setVisibility] = useState(false);
 
-
     const searchHandler = () => {
          if (query.trim().length > 0 || rangeDate?.from && rangeDate?.to ) {
             setSearching(true);
@@ -41,7 +40,6 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
             //             })
             //     }
             // }
-            console.log(result,"kkkk");
             setSearchResult(result);
          }
     }
@@ -62,7 +60,6 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
                 }
 
                 <div className="sm:flex gap-5 items-center">
-
                     {
                         !exceptionUrl.includes(pathname) &&
                         <>

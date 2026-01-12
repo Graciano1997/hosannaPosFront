@@ -6,7 +6,6 @@ import { deleteCompany, registerCompany } from "./companySlice";
 import { Ip } from "../lib/ip";
 import { CurrentUser } from "../lib/CurrentUser";
 
-
 const initialState = {
     isOpen:false,
     isSearching:false,
@@ -23,7 +22,7 @@ const initialState = {
     currentTableCollection:[],
     invoiceView:false,
     urlItem:'',
-    storeId:localStorage.getItem("currentUser")? CurrentUser().storeId:null
+    companyId:localStorage.getItem("currentUser")? CurrentUser().companyId:null
 }
 
  export const authenticate= createAsyncThunk("appState/authenticate",async (user)=>{
@@ -295,7 +294,7 @@ const appSlice=createSlice({
             if(action.payload.error){
                 state.error = action.payload.error;
             }else if(action.payload.user){
-                state.storeId=action.payload.user.storeId;
+                state.companyId=action.payload.user.companyId;
                 localStorage.setItem("isLogged",true);
                 localStorage.setItem("currentUser",JSON.stringify(action.payload.user));
             }

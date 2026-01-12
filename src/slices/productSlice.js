@@ -82,7 +82,6 @@ export const productConfiguration = createAsyncThunk("productState/productConfig
     return response.json();
 });
 
-
 const productSlice = createSlice({
   name:'productState',
   initialState,
@@ -159,7 +158,6 @@ const productSlice = createSlice({
     state.loading=false;
     state.error='';
     state.products = action.payload.data;
-    // console.log(action.payload);
     // state.last_created_at=action.payload.last_created_at;
     
     // if(action.payload.last_created_at && (action.payload.data).length){    

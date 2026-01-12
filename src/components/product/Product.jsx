@@ -15,7 +15,6 @@ import ExpiredProducts from "./ExpiredProducts";
 import AlertProducts from "./AlertProducts";
 
 const Product=()=>{
-    
     const appState=useSelector((state)=>state.appState);
     const {t}=useTranslation();
     const [isShowing,setIsShowing]=useState(false);
@@ -23,12 +22,12 @@ const Product=()=>{
     const productState = useSelector((state)=>state.productState);
 
     useEffect(()=>{
-        dispatch(fetchProducts(productState.last_created_at));
+        dispatch(fetchProducts());
         dispatch(fetchExpiredProducts());
         dispatch(fetchProductConfiguration());
         dispatch(fetchAlertProducts());
-    },[productState.products]);
-    
+    },[]);
+    // productState.products
 
     const categoryState = useSelector((state)=>state.categoryState);
     const filterProductDetails =['id','category_id','image'];
