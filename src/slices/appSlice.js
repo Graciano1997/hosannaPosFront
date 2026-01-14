@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { deleteProduct, fetchProducts, productConfiguration, registerProduct, searchProduct, updateProduct } from "./productSlice";
-import { addItem, fetchSales, order, removeItem, updateItem } from "./saleSlice";
+import { fetchSales, updateItem } from "./saleSlice";
 import { createCategory, deleteCategory, fetchCategories, updateCategory } from "./categorySlice";
 import { deleteCompany, registerCompany } from "./companySlice";
 import { Ip } from "../lib/ip";
-
+import { CurrentUser } from "../lib/CurrentUser";
 
 const initialState = {
     isOpen:false,
@@ -21,12 +21,13 @@ const initialState = {
     isLogged:true,
     currentTableCollection:[],
     invoiceView:false,
-    urlItem:''
+    urlItem:'',
+    companyId:localStorage.getItem("currentUser")? CurrentUser().companyId:null
 }
 
  export const authenticate= createAsyncThunk("appState/authenticate",async (user)=>{
     try{
-        const response = await fetch(`${Ip}/api/authentication/login`,
+        const response = await fetch(`${Ip}/authentication/login`,
             { method:'POST',
               body:JSON.stringify(user),
               headers:{'Content-Type':'application/json'}
@@ -88,9 +89,10 @@ const appSlice=createSlice({
             state.invoiceView = false;
             state.urlItem='';
         },
-        logoutUser: ()=>{
+        logoutUser: (state)=>{
         localStorage.removeItem("isLogged");
         localStorage.removeItem("currentUser");
+        state.storeId=null;
         },
 
         cleanItemDetails: (state)=>{
@@ -120,6 +122,7 @@ const appSlice=createSlice({
         Exporting:(state,action)=>{
             state.isExporting = true;
             state.exportingModel = action.payload;
+            console.log(action.payload);
         },
         StopExporting:(state)=>{
             state.isExporting = false;
@@ -128,7 +131,7 @@ const appSlice=createSlice({
         setTableCurrentCollection: (state,action)=>{
             state.currentTableCollection = action.payload;
         },
-
+        
         activeTab:(state,action)=>{
             state.activeTab=action.payload;
         },
@@ -287,13 +290,15 @@ const appSlice=createSlice({
        })
 
         builder.addCase(authenticate.fulfilled,(state,action)=>{
-            
-            if(action.payload!=undefined && action.payload.error){
+        
+            if(action.payload.error){
                 state.error = action.payload.error;
-            }else if(action.payload!=undefined && action.payload.user){
+            }else if(action.payload.user){
+                state.companyId=action.payload.user.companyId;
                 localStorage.setItem("isLogged",true);
                 localStorage.setItem("currentUser",JSON.stringify(action.payload.user));
             }
+
         });
 
         builder.addCase(authenticate.rejected,(state,action)=>{

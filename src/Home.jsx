@@ -5,7 +5,6 @@ import Header from './components/general/Header'
 import Navegation from './components/general/Navegation'
 import _404 from './components/general/_404'
 import _401 from './components/general/_401'
-import Footer from './components/general/Footer'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Product from './components/product/Product'
 import Search from './components/general/Search'
@@ -32,8 +31,11 @@ import { firstCapitalize } from './lib/firstCapitalize'
 import { useTranslation } from 'react-i18next'
 import Account from './components/settings/Account'
 import { fetchPrinterConfig } from './slices/printerSlice'
+import { MyStore } from './components/mystore/Mystore'
+import StockMovements from './components/Stock/StockMovements'
+import Devolution from './components/devolution/Devolution'
 
-function App() {
+function Home() {
 
   const appState=useSelector((state)=>state.appState);
   const productState=useSelector((state)=>state.productState);
@@ -47,16 +49,18 @@ function App() {
   const {t}=useTranslation();
   const navegate = useNavigate();
   const masterProfile = localStorage.getItem("currentUser") ? JSON.parse(localStorage.getItem("currentUser")).profileId==Profiles.MASTER:null;
-
+  
 
   useEffect(()=>{
-    // dispatch(fetchProducts(productState.last_created_at));
-     dispatch(fetchUsers());
-     dispatch(fetchSpents());
-     dispatch(fetchCategories());
-     dispatch(fetchCompanies());
-     dispatch(fetchPrinterConfig());
-   },[]);
+    if(localStorage.getItem("isLogged")){
+      dispatch(fetchProducts(productState.last_created_at));
+      dispatch(fetchUsers());
+      dispatch(fetchSpents());
+      dispatch(fetchCategories());
+      dispatch(fetchCompanies());
+      dispatch(fetchPrinterConfig());
+    } 
+   },[localStorage.getItem("isLogged")]);
 
    useEffect(()=>{    
      if(isVisible){
@@ -69,13 +73,11 @@ function App() {
 
   const excludePathName =['/','/logout'];
   
-
   return (
     <>    
-     <div className={`h-100 w-100 p-3  ${!appState.isLogged?'flex items-center justify-center':''}`}>   
-      
+     <div className={`h-100 w-100 p-3  ${!appState.isLogged?'flex items-center justify-center':''}`}>        
       {
-      localStorage.getItem("isLogged")=="true" && (
+      localStorage.getItem("isLogged") && (
       <>    
       {(!excludePathName.includes(pathname)) && 
       <>
@@ -95,9 +97,12 @@ function App() {
       <Route path='/products' element={masterProfile ? <Product/> : <_401/>} />
       <Route path='/spents' element={masterProfile ? <Spent/>: <_401/>} />  
       <Route path='/users' element={masterProfile ? <User/>: <_401/>} /> 
-      <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />      
+            <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />      
+      <Route path='/sale/devolution' element={<Devolution setToastObject={setToastObject}/>} />      
       <Route path='/setting' element={<Setting/>} />
       <Route path='/profile' element={<Account/>} />
+      <Route path='/mystore' element={<MyStore/>} />
+      <Route path='/stock_movements' element={<StockMovements/>} />
       <Route path='*' element={<_404/>} />
       </Routes>
 
@@ -107,7 +112,7 @@ function App() {
       }
       
 
-      {appState.isSearching && (<Search/>)}
+      { appState.isSearching && (<Search/>)}
       { appState.showToast && (<ShowToast object={appState.toastObject} />)}
       { appState.isExporting && (<Export stopExporting={StopExporting} />) }
       </>
@@ -118,4 +123,4 @@ function App() {
   )
 }
 
-export default App
+export default Home

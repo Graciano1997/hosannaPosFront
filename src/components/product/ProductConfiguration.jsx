@@ -12,6 +12,7 @@ const ProductConfiguration = ()=>{
 
     const dispatch = useDispatch();
     const productState = useSelector((state)=>state.productState);
+    const appState = useSelector((state)=>state.appState);
 
 
     useEffect(()=>{
@@ -20,7 +21,7 @@ const ProductConfiguration = ()=>{
     },[]);
 
 
-    const filterRows = ['id','name','qty','price','category_id','code','mesure_unit','product_type'];
+    const filterRows = ['id','name','qty','price','category_id','code','mesure_unit','product_type','min_qty','store_id'];
     const [productFields,setProductFields]=useState([]);
 
     const product=useSelector((state)=>state.productState.productAllFields) || [];
@@ -42,9 +43,10 @@ const ProductConfiguration = ()=>{
         })    
     }
 
-
     return(
         <div className="mt-[2rem] h-[100%]">
+            {!productState.error && !productState.loading &&
+            <>
             <h1 className="pl-2 font-light text-3xl text-start">{firstCapitalize(t('product_fields_configuration'))}</h1>
             <form onSubmit={handleFormSubmition} className="w-[100%] mt-[2rem] shadow p-2">
                 <div className="grid grid-cols-2">
@@ -64,6 +66,24 @@ const ProductConfiguration = ()=>{
             </div>
                 <div className="flex justify-end mt-[1rem]"><button className="p-2 bg-green-100 rounded">{'Salvar'}</button></div>
             </form>
+            </>
+            }
+
+                            {(appState.error != '' && !appState.loading) &&
+                    <div className="rounded text-center w-[100%] mt-[5rem]">
+                        <div className="mt-[5rem] flex justify-center">
+                            <p className="text-2xl font-light text-red-500 p-1"> {firstCapitalize(appState.error)}</p>
+                        </div>
+                    </div>
+                }
+
+                {(appState.loading) &&
+                    <div className="rounded text-center w-[100%] mt-[5rem]">
+                        <div className="mt-[5rem] flex justify-center">
+                            <p className="text-2xl font-light text-green-900 p-1"> {firstCapitalize(t('loading'))}</p>
+                        </div>
+                    </div>
+                }
         </div>
     )
 };

@@ -4,6 +4,22 @@ import { registerProduct,updateProduct } from "../../slices/productSlice";
 import LargeModal from "../general/LargeModal";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import { DatePicker } from "../general/DatePicker";
+
+export const  productFormHandler = (product)=>{
+    const productForm = new FormData();
+    if(product.id){ delete product.image } 
+    
+    delete product.category;
+    delete product.created_at
+    delete product.updated_at
+
+    Object.keys(product).map((key)=>{
+        productForm.append(`product[${key}]`,product[key]);
+    });
+
+    return productForm 
+}
 
 const Create = ({ stopCreating }) => {
     const image = useRef(null);
@@ -17,11 +33,18 @@ const Create = ({ stopCreating }) => {
     const categories = useSelector((state) => state.categoryState.categories);
     const productFilterRows = useSelector((state) => state.productState.productFilterRows)
 
-    const formHandler = (el) => {
+    const formHandler = (el,datapicker=false) => {
+        if(datapicker){
+            setProduct({
+            ...product,
+            [el.name]: el.value
+        })
+        }else{
         setProduct({
             ...product,
             [el.target.name]: el.target.value
         })
+        }
     }
 
     const handleFormSubmition = (el) => {
@@ -33,18 +56,13 @@ const Create = ({ stopCreating }) => {
             dimension: JSON.stringify(dimensionVector)
         }
 
-        const productForm = new FormData();
-        
-        //this ensure to delete the image in the treatedProductObject because will be handler by formdate 
-        if(treatedProductObject.id){ delete treatedProductObject.image } 
-
-        Object.keys(treatedProductObject).map((key)=>{
-            productForm.append(`product[${key}]`,treatedProductObject[key]);
-        });
+        let productForm = productFormHandler(treatedProductObject);
         
         if(image.current.files[0]){
             productForm.append("product[image]",image.current.files[0]);
         }
+
+        console.log(treatedProductObject);
 
          if (treatedProductObject.id) {
              dispatch(updateProduct(productForm));
@@ -159,12 +177,12 @@ const Create = ({ stopCreating }) => {
                                                         <label>
                                 {firstCapitalize(t('promotion_start'))} 
                                 <br />
-                                <input type='date' name="promotion_start" onChange={formHandler} value={product.promotion_start} className='p-1 rounded w-[100%] outline-none bg-green-100' />
+                                 <DatePicker mode={"single"} name="promotion_start" value={product.promotion_start} dataSetHandler={formHandler}/>
                             </label>
                             <label>
                                 {firstCapitalize(t('promotion_end'))} 
                                 <br />
-                                <input type='date' name="promotion_end" onChange={formHandler} value={product.promotion_end} className='p-1 rounded w-[100%] outline-none bg-green-100' />
+                                <DatePicker mode={"single"} name="promotion_end" value={product.promotion_end} dataSetHandler={formHandler}/>
                             </label>
                               <label>
                             {firstCapitalize(t('discount'))}
@@ -173,9 +191,7 @@ const Create = ({ stopCreating }) => {
                             </label>
                             </>
                             }
-
-
-                                </>
+                        </>
                         }
 
                         {/* {!productFilterRows.includes('discount') &&
@@ -254,7 +270,7 @@ const Create = ({ stopCreating }) => {
                             <label>
                         {firstCapitalize(t('manufacture_date'))}       
                                 <br />
-                                <input type='date' name="manufacture_date" onChange={formHandler} value={product.manufacture_date} className='p-1 rounded w-[100%] outline-none' />
+                                <DatePicker mode={"single"} name="manufacture_date" value={product.manufacture_date} dataSetHandler={formHandler}/>
                             </label>
                         }
 
@@ -262,8 +278,8 @@ const Create = ({ stopCreating }) => {
                             <label>
                                 {firstCapitalize(t('expire_date'))} 
                                 <br />
-                                <input type='date' name="expire_date" onChange={formHandler} value={product.expire_date} className='p-1 rounded w-[100%] outline-none' />
-                            </label>
+                                <DatePicker mode={"single"} value={product.expire_date} name="expire_date" dataSetHandler={formHandler}/>
+                             </label>
                         }
 
                         {!productFilterRows.includes('location_in_stock') &&
@@ -303,6 +319,12 @@ const Create = ({ stopCreating }) => {
                             </label>
                         }
                         
+                        <label>
+                        {firstCapitalize(t('min_qty'))}
+                            <br />
+                            <input type='number' onChange={formHandler} name="min_qty" value={product.min_qty} className='p-1 rounded w-[100%] outline-none' />
+                        </label>
+                    
                         {!productFilterRows.includes('image') &&
 
                             <label>
@@ -314,7 +336,8 @@ const Create = ({ stopCreating }) => {
                             
                         }
                     </div>
-                    <div className="flex justify-end p-2 mt-auto"><button 
+                    <div className="flex justify-end p-2 mt-auto">
+                    <button 
                     type="button" 
                     onClick={handleFormSubmition}
                     className="p-2 bg-green-100 rounded">{product.id ? firstCapitalize(t('update')) : firstCapitalize(t('create'))}</button></div>

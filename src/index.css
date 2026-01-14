@@ -7,9 +7,7 @@ html,body{
   margin: 0;
 }
 
-.visible{
-  left: 0;
-}
+.visible{ left: 0; }
 
 .searching{
   height: 130px;
@@ -42,6 +40,22 @@ form textarea{
   to {
     transform: translateX(0);
   }
+}
+
+@keyframes alertAppearing {
+  from {
+    transform: rotate(20deg);
+  }
+
+  to {
+    transform: rotate(-20deg);
+  }
+}
+
+
+.alert{
+animation: alertAppearing 2s ease-in-out;
+animation-iteration-count: infinite;
 }
 
 .productDetails {

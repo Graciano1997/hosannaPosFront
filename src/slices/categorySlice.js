@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Ip } from "../lib/ip";
+import { getIpTenant} from "../lib/ip";
 import { removeDuplicate } from "../lib/removeDuplicate";
 
 const initialState = {
@@ -10,19 +10,19 @@ const initialState = {
 };
 
 export const fetchCategories = createAsyncThunk("categoryState/fetchCategories",async (last_created_at=null)=>{
-    const response = await fetch(`${Ip}/api/categories/${last_created_at?`last/${last_created_at}/`:''}`,{method:'GET', headers:{'Content-Type':'application/json'}});
+    const response = await fetch(`${getIpTenant()}categories/${last_created_at?`last/${last_created_at}/`:''}`,{method:'GET', headers:{'Content-Type':'application/json'}});
     return response.json();
 });
 
 export const createCategory = createAsyncThunk("categoryState/createCategory",async (category)=>{
-    const response = await fetch(`${Ip}/api/categories/`,{method:'POST',
+    const response = await fetch(`${getIpTenant()}categories/`,{method:'POST',
         body:JSON.stringify(category),
      headers:{'Content-Type':'application/json'}});
     return response.json();
 });
 
 export const updateCategory = createAsyncThunk("categoryState/updateCategory",async (category)=>{
-    const response = await fetch(`${Ip}/api/categories/${category.id}`,
+    const response = await fetch(`${getIpTenant()}categories/${category.id}`,
     {method:'PUT',
         body:JSON.stringify(category),
      headers:{'Content-Type':'application/json'}});
@@ -30,7 +30,7 @@ export const updateCategory = createAsyncThunk("categoryState/updateCategory",as
 });
 
 export const deleteCategory = createAsyncThunk("categoryState/deleteCategory",async (id)=>{
-    const response = await fetch(`${Ip}/api/categories/${id}`,{ method:'DELETE' });
+    const response = await fetch(`${getIpTenant()}categories/${id}`,{ method:'DELETE' });
     return response.json();
 });
 
@@ -45,7 +45,6 @@ export const categorySlice = createSlice({
             state.isUpdating = true;
             state.categoryToUpdate=action.payload;
         },
-
         setCategories:(state,action)=>{
             state.categories = action.payload;
         },
@@ -54,29 +53,27 @@ export const categorySlice = createSlice({
             state.isUpdating = false;
             state.categoryToUpdate = {};
         },
-
     },
     extraReducers:(builder)=>{
         builder.addCase(fetchCategories.fulfilled,(state,action)=>{
-                state.last_created_at=action.payload.last_created_at;
-                if(action.payload.last_created_at && (action.payload.data).length){
-                    if((state.categories).length==0){
-                        state.categories = action.payload.data;
-                    }else{
-                        state.categories = removeDuplicate([...state.categories,...action.payload.data],'id');                     
-                    }
-                }
+            state.categories = action.payload.data;
+                // state.last_created_at=action.payload.last_created_at;
+                // if(action.payload.last_created_at && (action.payload.data).length){
+                //     if((state.categories).length==0){
+                //     }else{
+                //         state.categories = removeDuplicate([...state.categories,...action.payload.data],'id');                     
+                //     }
+                // }
         })
 
         builder.addCase(createCategory.fulfilled,(state,action)=>{
-            state.isCreating =false;
             if(action.payload.success){
                 state.categories.push(action.payload.category)
+                state.isCreating =false;
             }
         })
 
         builder.addCase(updateCategory.fulfilled,(state,action)=>{
-            state.isUpdating = false;
             state.categoryToUpdate = {};
             if (action.payload.success && action.payload.category) {
                 const atIndex = state.categories.findIndex(item => item.id === action.payload.category.id);
@@ -85,6 +82,7 @@ export const categorySlice = createSlice({
                   updatedCategories[atIndex] = action.payload.category; // Update the specific item
                   state.categories = updatedCategories; // Assign the new array to state
                 }
+                state.isUpdating = false;
               }            
         })
 

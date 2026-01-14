@@ -1,19 +1,21 @@
 import { useEffect, useRef, useState} from "react";
-import CurrentUser from "./CurrentUser";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CubeIcon, HomeIcon,ShoppingCartIcon, TruckIcon, UserGroupIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { ArchiveBoxIcon, ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CreditCardIcon, CubeIcon, GlobeAltIcon, HomeIcon,ShoppingCartIcon, TagIcon, TruckIcon, UserGroupIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useDispatch } from "react-redux";
 import { logoutUser, showToast } from "../../slices/appSlice";
 import { Profiles } from "../../lib/Enums";
+import { CubeTransparentIcon, ServerStackIcon, ShoppingBagIcon, Square3Stack3DIcon } from "@heroicons/react/16/solid";
+import { Square2StackIcon } from "@heroicons/react/20/solid";
+import { CurrentUser } from "../../lib/CurrentUser";
 
 const Navegation =({visible,setVisibility})=>{
     const {t} = useTranslation();
     const {pathname}=useLocation();
     const dispatch = useDispatch();
     const navegate = useNavigate();
-    const [master,setMaster]=useState(JSON.parse(localStorage.getItem("currentUser")).profileId==Profiles.MASTER);
+    const [master,setMaster]=useState(CurrentUser().profileId==Profiles.MASTER);
     const navegationRef = useRef(null);
     
     const handleMasterMessage = ()=>{
@@ -24,15 +26,15 @@ const Navegation =({visible,setVisibility})=>{
 
     useEffect(()=>{
         const handlerClick=(event)=>{
-            if(!((navegationRef.current).contains(event.target))){ 
+            if(navegationRef.current &&   !navegationRef.current.contains(event.target)){ 
                 setVisibility(false); }
                 event.stopPropagation();
         }
         
-        window.addEventListener("click",handlerClick)
+        document.addEventListener("mousedown",handlerClick)
 
         return()=>{
-            window.removeEventListener("click",handlerClick)
+            document.removeEventListener("mousedown",handlerClick)
         }
 
     },[]);
@@ -67,7 +69,7 @@ const Navegation =({visible,setVisibility})=>{
                 <Link
                 onClick={handleMasterMessage}
                 to={ master ? "/spents":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/spents'?'rounded bg-green-100':''}`} >
-                <ArrowTrendingUpIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                <CreditCardIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('spents'))}
                 </Link>
             </li>           
@@ -75,8 +77,15 @@ const Navegation =({visible,setVisibility})=>{
                 <Link 
                 onClick={handleMasterMessage}
                 to={ master ? "/sales": "#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sales'?'rounded bg-green-100':''}`} >
-                <CircleStackIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                <TagIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('sales'))}
+                </Link>
+            </li>
+                       <li>
+                <Link to={"/stock_movements"} 
+                className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/stock_movements'?'rounded bg-green-100':''}`} >
+                <ArchiveBoxIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
+                {firstCapitalize(t('stock'))}
                 </Link>
             </li>      
             <li>
@@ -87,6 +96,15 @@ const Navegation =({visible,setVisibility})=>{
                 { firstCapitalize(t('users'))}
                 </Link>
             </li>
+           {false &&
+            <li>
+                <Link 
+                to={"/mystore"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/mystore'?'rounded bg-green-100':''}`} >
+                <GlobeAltIcon className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow"/>
+                { firstCapitalize(t('My store'))}
+                </Link>
+            </li>
+            } 
             <li>
                 <Link 
 
@@ -108,7 +126,7 @@ const Navegation =({visible,setVisibility})=>{
         </ul>  
         </div>
         
-        <CurrentUser size={{w:40,y:40}}/>
+        {/* <CurrentUser size={{w:40,y:40}}/> */}
         <div><span className="text-[17px] text-light text-red-400">{firstCapitalize(t('slogan'))}</span></div>
         </nav>
     )

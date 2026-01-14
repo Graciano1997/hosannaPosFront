@@ -49,8 +49,13 @@ export function BarChart({data,width=200,height=300,info}) {
     dispatch(fetchMinYearSpents());
   },[]);
 
-  for(let index = spendState.minYear ; index <= (new Date().getFullYear()); index++)
-    years.push(index);
+
+  if(spendState.minYear!=0){
+    for(let index = spendState.minYear ; index <= (new Date().getFullYear()); index++)
+      years.push(index);
+  }else{
+    years.push((new Date()).getFullYear());
+  }
 
   return(
     <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>

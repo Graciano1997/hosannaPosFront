@@ -1,175 +1,169 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { sum } from "../lib/sumSale";
-import { ClientType, DefaultClientePhone, PaymentType, SaleType } from "../lib/Enums";
-import { Ip } from "../lib/ip";
+import { ClientType, DefaultClientePhone, defaultClientName, PaymentType, SaleType } from "../lib/Enums";
+import { getIpTenant, Ip } from "../lib/ip";
 import { totalWithTaxesAndDiscounts } from "../lib/totalWithTaxes";
 import { removeDuplicate } from "../lib/removeDuplicate";
+import { sum } from "../lib/sumSale";
+import { sum as sumcollection } from "../lib/sumCollection";
 
 const initialState = {
-    loading:false,
-    error:'',
-    items:[],
-    totalItems:0,
-    selectedItem:undefined,
-    paymentType:PaymentType.CASH,
-    clientDetails : {client_type:ClientType.SINGULAR, phone:DefaultClientePhone},
-    invoiceType:SaleType.SALE,
-    receivedCash:0,
-    total:0,
-    sales:[],
-    difference:0,
-    saleConfirmationIsOpen:false,
-    saleObject:{},
-    anualSales:[],
-    last_created_at:null
+    loading: false,
+    error: '',
+    items: [],
+    itemsToReturn: [],
+    totalItems: 0,
+    totalItemsToReturn: 0,
+    selectedItem: undefined,
+    paymentType: PaymentType.CASH,
+    clientDetails: { name: defaultClientName, client_type: ClientType.SINGULAR, phone: DefaultClientePhone },
+    invoiceType: SaleType.INVOICE_RECIBO_FR,
+    receivedCash: 0,
+    receivedTpa: 0,
+    total: 0,
+    totalToReturn: 0,
+    sales: [],
+    difference: 0,
+    saleConfirmationIsOpen: false,
+    saleObject: {},
+    anualSales: [],
+    last_created_at: null,
+    invoiceSearchedItems: [],
+    newAmountToReceiveForTheFTInvoice: 0,
+    referenceSale: null,
+    invoiceStatus: null
 }
 
-
-export const fetchAnualSales = createAsyncThunk("saleState/fetchAnualSales", async (year=new Date().getFullYear()) => {
-    const response = await fetch(`${Ip}/api/sales/anual_sales/${year}`);
+export const fetchAnualSales = createAsyncThunk("saleState/fetchAnualSales", async (year = new Date().getFullYear()) => {
+    const response = await fetch(`${getIpTenant()}sales/anual_sales/${year}`);
     return response.json();
 })
 
-export const order=createAsyncThunk('saleState/order',async (sale)=>{
-    const response = await fetch(`${Ip}/api/sales/`,{
-        method:'POST',
-        body:JSON.stringify(sale),
-        headers:{ 'Content-Type':'application/json'}
+export const order = createAsyncThunk('saleState/order', async (sale) => {
+    const response = await fetch(`${getIpTenant()}sales/`, {
+        method: 'POST',
+        body: JSON.stringify(sale),
+        headers: { 'Content-Type': 'application/json' }
     });
     return response.json();
 });
 
-export const fetchSales=createAsyncThunk('saleState/fetchSales',async (last_created_at=null)=>{           
-    const response = await fetch(`${Ip}/api/sales/${last_created_at?`last/${last_created_at}/`:''}`,{
-        method:'GET',
-        headers:{ 'Content-Type':'application/json'}
+export const getSaleInvoiceItem = createAsyncThunk('saleState/getSaleInvoiceItem', async (invoice) => {
+    const response = await fetch(`${getIpTenant()}sales/get_sale/`, {
+        method: 'POST',
+        body: JSON.stringify(invoice),
+        headers: { 'Content-Type': 'application/json' }
     });
     return response.json();
 });
 
-  export const getInvoiceItem= createAsyncThunk("saleState/getInvoiceItem",async (saleId)=>{
-    try{
-        const response = await fetch(`${Ip}/api/sales/reprint/${saleId}`,
-            { method:'GET',
-              headers:{'Content-Type':'application/json'}
+export const fetchSales = createAsyncThunk('saleState/fetchSales', async (last_created_at = null) => {
+    const response = await fetch(`${getIpTenant()}sales/${last_created_at ? `last/${last_created_at}/` : ''}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return response.json();
+});
+
+export const getInvoiceItem = createAsyncThunk("saleState/getInvoiceItem", async (data) => {
+    try {
+        const response = await fetch(`${getIpTenant()}sales/reprint/`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
             });
-            return response.json();
-    }catch(error){
+        return response.json();
+    } catch (error) {
         console.log(error);
     }
- });
+});
 
 
 const saleSlice = createSlice({
-    name:'saleState',
+    name: 'saleState',
     initialState,
-
     reducers:
     {
-        addProduct:(state,action)=>{
-            if(!state.products.includes(item=>item.id===action.payload.id)){
+        addProduct: (state, action) => {
+            if (!state.products.includes(item => item.id === action.payload.id)) {
                 state.products.push(action.payload);
             }
         },
 
-        addItem:(state,action)=>{
-            const itemAtIndex = state.items.findIndex(item=>item.id==action.payload.id);
-          
-            if(itemAtIndex!==-1){
-                state.items[itemAtIndex]={
+        addItem: (state, action) => {
+            const itemAtIndex = state.items.findIndex(item => item.id == action.payload.id);
+            if (itemAtIndex !== -1) {
+                state.items[itemAtIndex] = {
                     ...state.items[itemAtIndex],
-                    qty:(action.payload.qty*1 + state.items[itemAtIndex].qty*1),
-                    total:action.payload.total + state.items[itemAtIndex].total,
+                    qty: (action.payload.qty * 1 + state.items[itemAtIndex].qty * 1),
+                    total: action.payload.total + state.items[itemAtIndex].total,
                 }
-            }else{
+            } else {
                 state.items.push(action.payload);
             }
+            console.log(state.items);
 
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
         },
 
-        saleConfirm:(state)=>{
-            state.saleConfirmationIsOpen=true;
+        saleConfirm: (state) => {
+            state.saleConfirmationIsOpen = true;
         },
-        setSales:(state,action)=>{
+        setSales: (state, action) => {
             state.sales = action.payload;
         }
         ,
-        saleNotConfirm:(state)=>{
-            state.saleConfirmationIsOpen=false;
+        saleNotConfirm: (state) => {
+            state.saleConfirmationIsOpen = false;
         },
-        removeItem:(state,action)=>{
-            state.items=state.items.filter((item)=>item.id!==action.payload.id);
+        removeItem: (state, action) => {
+            state.items = state.items.filter((item) => item.id !== action.payload.id);
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
-            if(state.total == 0){
+            if (state.total == 0) {
                 state.receivedCash = 0;
                 state.difference = 0;
-            }else{
-                if((state.paymentType == PaymentType.CASH) && (state.receivedCash - state.total) >=0 ){
-                    state.difference =  state.receivedCash - state.total;
-                }else{
+            } else {
+                if ((state.paymentType == PaymentType.CASH) && (state.receivedCash - state.total) >= 0) {
+                    state.difference = state.receivedCash - state.total;
+                } else {
                     state.difference = 0;
                 }
             }
         },
-        setSaleObject:(state,action)=>{
-            state.saleObject=action.payload;
+        setSaleObject: (state, action) => {
+            state.saleObject = action.payload;
         },
+        updateItem: (state, action) => {
+            const atIndex = state.items.findIndex(item => item.id === action.payload.id);
 
-        updateItem: (state,action)=>{
-            const atIndex = state.items.findIndex(item=>item.id===action.payload.id);
-            
-            if(atIndex!=-1){
-                if((state.items[atIndex].stock - state.items[atIndex].output) >= (parseInt(action.payload.qty))){
-                state.items[atIndex] = {
-                    ...state.items[atIndex],
-                    qty:action.payload.qty,
-                    total:action.payload.total,
+            if (atIndex != -1) {
+                if ((state.items[atIndex].qty) >= (parseInt(action.payload.qty))) {
+                    state.items[atIndex] = {
+                        ...state.items[atIndex],
+                        qty: action.payload.qty,
+                        total: action.payload.total,
+                    }
                 }
-            }
             }
 
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
             state.selectedItem = undefined;
         },
+        increaseOne: (state, action) => {
 
-        increaseOne: (state,action)=>{
-            const atIndex = state.items.findIndex(item=>item.id===action.payload.id);
+            const atIndex = state.items.findIndex(item => item.id == action.payload.id);
 
-            if(atIndex!=-1){
-            if((state.items[atIndex].stock - state.items[atIndex].output) >= (parseInt(action.payload.qty) + 1)){
-                state.items[atIndex] = {
-                    ...state.items[atIndex],
-                    qty: (parseInt(action.payload.qty) + 1 ),
-                    total: totalWithTaxesAndDiscounts(state.items[atIndex],(parseInt(action.payload.qty) + 1)),
-                }
-            }
-            }
+            if (atIndex != -1) {
 
-            state.total = sum(state.items).total;
-            state.totalItems = sum(state.items).totalItems;
-
-            if((state.paymentType == PaymentType.CASH) && (state.receivedCash - state.total) >=0 ){
-                state.difference =  state.receivedCash - state.total;
-            }else{
-                state.difference = 0;
-            }
-        },
-
-        decreaseOne: (state,action)=>{
-            const atIndex = state.items.findIndex(item=>item.id===action.payload.id);
-
-            if(atIndex!=-1){
-
-                if(state.items[atIndex].qty > 1){
+                if ((state.items[atIndex].stock) >= (parseInt(action.payload.qty) * 1 + 1)) {
 
                     state.items[atIndex] = {
                         ...state.items[atIndex],
-                        qty:action.payload.qty-1,
-                        total: totalWithTaxesAndDiscounts(state.items[atIndex],(action.payload.qty-1)),
+                        qty: (parseInt(action.payload.qty) + 1),
+                        total: totalWithTaxesAndDiscounts(state.items[atIndex], (parseInt(action.payload.qty) + 1)),
                     }
                 }
             }
@@ -177,24 +171,46 @@ const saleSlice = createSlice({
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
 
-            if((state.paymentType == PaymentType.CASH) && (state.receivedCash - state.total) >=0 ){
-                state.difference =  state.receivedCash - state.total;
-            }else{
+            if ((state.paymentType == PaymentType.CASH) && (state.receivedCash - state.total) >= 0) {
+                state.difference = state.receivedCash - state.total;
+            } else {
                 state.difference = 0;
             }
         },
+        decreaseOne: (state, action) => {
+            const atIndex = state.items.findIndex(item => item.id === action.payload.id);
 
-        selectItem: (state,action)=>{
-            state.selectedItem = action.payload;            
+            if (atIndex != -1) {
+
+                if (state.items[atIndex].qty > 1) {
+
+                    state.items[atIndex] = {
+                        ...state.items[atIndex],
+                        qty: action.payload.qty - 1,
+                        total: totalWithTaxesAndDiscounts(state.items[atIndex], (action.payload.qty - 1)),
+                    }
+                }
+            }
+
+            state.total = sum(state.items).total;
+            state.totalItems = sum(state.items).totalItems;
+
+            if ((state.paymentType == PaymentType.CASH) && (state.receivedCash - state.total) >= 0) {
+                state.difference = state.receivedCash - state.total;
+            } else {
+                state.difference = 0;
+            }
         },
-        setPaymentType:(state,action)=>{
+        selectItem: (state, action) => {
+            state.selectedItem = action.payload;
+        },
+        setPaymentType: (state, action) => {
             state.paymentType = action.payload
         },
-        setInvoiceType:(state,action)=>{
+        setInvoiceType: (state, action) => {
             state.invoiceType = action.payload
         },
-        setClientDetails: (state,action)=>{
-            
+        setClientDetails: (state, action) => {
             const clientDetailsDraft = {
                 ...state.clientDetails,
                 ...action.payload
@@ -202,8 +218,8 @@ const saleSlice = createSlice({
 
             state.clientDetails = clientDetailsDraft;
         },
-        setSaleDetails: (state,action)=>{
-            
+        setSaleDetails: (state, action) => {
+
             const saleDetailsDraft = {
                 ...state.saleDetails,
                 ...action.payload
@@ -211,56 +227,153 @@ const saleSlice = createSlice({
 
             state.saleDetails = saleDetailsDraft;
         },
-        setReceivedCash:(state,action)=>{
-            state.receivedCash = action.payload*1;
-            if(state.paymentType == PaymentType.CASH && (action.payload - state.total) > 0 ){
-                state.difference =  state.receivedCash - state.total;
-            }else{
+        setReceivedCash: (state, action) => {
+            state.receivedCash = action.payload * 1;
+
+            if (state.paymentType == PaymentType.CASH && (action.payload - state.total) > 0) {
+                state.difference = state.receivedCash - state.total;
+            } else if (state.paymentType == PaymentType.MIXED) {
+                const moneyToReceive = state.total - state.receivedTpa;
+                const receivedCash = action.payload * 1;
+                if (receivedCash > moneyToReceive) {
+                    state.difference = receivedCash - moneyToReceive;
+                } else {
+                    state.difference = 0;
+                }
+            } else {
                 state.difference = 0;
             }
-            
+
         },
-        saleClean:(state)=>{
+        setReceivedTpa: (state, action) => {
+            state.receivedTpa = action.payload * 1;
+            // if(state.paymentType == PaymentType.CASH && (action.payload - state.total) > 0 ){
+            //     state.difference =  state.receivedCash - state.total;
+            // }else{
+            //     state.difference = 0;
+            // }
+
+        },
+        setNewAmountToReceive: (state, action) => {
+            state.newAmountToReceiveForTheFTInvoice = action.payload
+        },
+        saleClean: (state) => {
             state.items = [];
             state.receivedCash = 0;
             state.difference = 0;
-            state.totalItems = 0,
+            state.totalItems = 0;
+            state.receivedTpa = 0;
             state.total = 0;
-            state.invoiceType= SaleType.SALE;
-            state.paymentType=PaymentType.CASH;
+            state.totalItemsToReturn = 0;
+            state.totalToReturn = 0;
+            // state.invoiceType = SaleType.INVOICE_RECIBO_FR;
+            state.paymentType = PaymentType.CASH;
             state.saleConfirmationIsOpen = false;
-            state.clientDetails = { client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
-        }
-    },
-    extraReducers:(builder)=>{
-        builder.addCase(fetchSales.fulfilled,(state,action)=>{
+            state.newAmountToReceiveForTheFTInvoice = 0;
+            state.invoiceSearchedItems = [];
+            state.referenceSale = null;
+            state.clientDetails = { name: defaultClientName, client_type: ClientType.SINGULAR, phone: DefaultClientePhone };
+        },
+        setItemToReturn: (state, action) => {
+            const newItem = action.payload;
+
+            const index = state.itemsToReturn.findIndex(
+                (product) => product.code === newItem.code
+            );
+
+            // Calculamos subtotal con fórmula corregida
+            const updatedNewItem = {
+                ...newItem,
+                subtotalToReturn:
+                    newItem.price * newItem.qtyToReturn +
+                    (newItem.taxes * newItem.price * newItem.qtyToReturn) / 100 -
+                    (newItem.discount * newItem.price * newItem.qtyToReturn) / 100
+            };
+
+            // Eliminar cuando qty = 0
+            if (updatedNewItem.qtyToReturn === 0) {
+                if (index !== -1) {
+                    state.itemsToReturn.splice(index, 1);
+                }
+            } else {
+                // Si existe reemplazar, si no agregar
+                if (index !== -1) {
+                    state.itemsToReturn[index] = updatedNewItem;
+                } else {
+                    state.itemsToReturn.push(updatedNewItem);
+                }
+            }
             
-            state.last_created_at=action.payload.last_created_at;
-            if(action.payload.last_created_at && (action.payload.data).length){
-                if((state.sales).length==0){
+            // Actualizar totales
+            const { totalItems,total } = sumcollection(
+                state.itemsToReturn,
+                "subtotalToReturn",
+                "qtyToReturn"
+            );
+
+            state.totalToReturn = total;
+            state.totalItemsToReturn = totalItems;
+        }
+        ,
+        setRefenceSale: (state, action) => {
+            state.referenceSale = action.payload;
+        }
+
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchSales.fulfilled, (state, action) => {
+
+            state.last_created_at = action.payload.last_created_at;
+            if (action.payload.last_created_at && (action.payload.data).length) {
+                if ((state.sales).length == 0) {
                     state.sales = action.payload.data;
-                }else{
-                    state.sales = removeDuplicate([...state.sales,...action.payload.data],'id');
+                } else {
+                    state.sales = removeDuplicate([...state.sales, ...action.payload.data], 'id');
                 }
             }
 
         });
 
-        builder.addCase(fetchAnualSales.fulfilled,(state,action)=>{
+        builder.addCase(fetchAnualSales.fulfilled, (state, action) => {
             state.anualSales = action.payload.data;
         });
 
-        builder.addCase(order.fulfilled,(state,action)=>{
+        builder.addCase(order.fulfilled, (state, action) => {
+            // console.log(action.payload.sale_item);
             state.sales.unshift(action.payload.sale_item);
             state.saleConfirmationIsOpen = false;
         });
 
-        builder.addCase(getInvoiceItem.fulfilled,(state,action)=>{
+
+        builder.addCase(order.rejected, (state, action) => {
             console.log(action.payload);
+        });
+
+        builder.addCase(getInvoiceItem.fulfilled, (state, action) => {
+            console.log(action.payload);
+        });
+
+        builder.addCase(getInvoiceItem.rejected, (state, action) => {
+            console.log(action.payload);
+        });
+
+        builder.addCase(getSaleInvoiceItem.fulfilled, (state, action) => {
+
+            if (action.payload.success) {
+                const saleInvoiceItem = action.payload.data;
+                state.clientDetails = { ...saleInvoiceItem.client }
+                state.receivedCash = saleInvoiceItem.sale.received_cash;
+                state.receivedTpa = saleInvoiceItem.sale.received_tpa;
+                state.difference = saleInvoiceItem.sale.difference;
+                state.totalItems = saleInvoiceItem.sale.qty;
+                state.total = saleInvoiceItem.sale.total;
+                state.invoiceSearchedItems = saleInvoiceItem.items;
+                state.referenceSale = saleInvoiceItem.sale.invoice_number;
+                state.invoiceStatus = saleInvoiceItem.invoice_status;
+            }
         });
     }
 });
 
-
 export default saleSlice.reducer;
-export const {saleClean, setReceivedCash,increaseOne,decreaseOne,addItem,updateItem,removeItem,selectItem,addProduct,setPaymentType,setInvoiceType, setClientDetails,saleConfirm,saleNotConfirm, setSales,setSaleObject} = saleSlice.actions;
+export const { saleClean, setReceivedCash, setReceivedTpa, increaseOne, decreaseOne, addItem, updateItem, removeItem, selectItem, addProduct, setPaymentType, setInvoiceType, setClientDetails, saleConfirm, saleNotConfirm, setSales, setSaleObject, setNewAmountToReceive, setItemToReturn, setRefenceSale } = saleSlice.actions;

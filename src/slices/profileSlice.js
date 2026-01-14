@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const fetchProfiles = createAsyncThunk("profileState/fetchProfiles", async () => {
-    const response = await fetch(`${Ip}/api/profiles/`);
+    const response = await fetch(`${Ip}/profiles/`);
     return response.json();
 })
 

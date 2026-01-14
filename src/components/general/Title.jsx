@@ -1,4 +1,4 @@
-import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon, ArrowDownIcon, ArrowDownTrayIcon, ClockIcon } from "@heroicons/react/24/solid";
+import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon, ArrowDownIcon, ArrowDownTrayIcon, ClockIcon, BellAlertIcon } from "@heroicons/react/24/solid";
 import {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
@@ -13,6 +13,7 @@ const Title=({title,create,collectionToExport})=>{
     const appState= useSelector((state)=>state.appState);
     const dispatch = useDispatch();
     const {pathname}=useLocation();
+    const productState = useSelector((state)=>state.productState);
 
     return(
         <>
@@ -26,10 +27,9 @@ const Title=({title,create,collectionToExport})=>{
             ref={ref}>
              <div className="flex justify-between mt-4">
                 <h1 className="text-3xl">{firstCapitalize(title)}</h1>
-
                 {
-                (['/products'].includes(pathname) && ['tab1','tab3','tab4'].includes(appState.activeTab) || 
-                ['/sales','/users','/spents'].includes(pathname) && ['tab1'].includes(appState.activeTab))
+                (['/products'].includes(pathname) && ['tab1','tab3','tab4','tab5'].includes(appState.activeTab) || 
+                ['/sales','/users','/spents','/stock_movements'].includes(pathname) && ['tab1'].includes(appState.activeTab))
                 &&
                 <>
                 {showElipse && (<EllipsisHorizontalIcon onClick={()=>{setShowElipse(!showElipse)}} className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>)}
@@ -48,7 +48,7 @@ const Title=({title,create,collectionToExport})=>{
              </div>
     
             <nav className="mt-[20px]">
-            <ul className="flex flex gap-5">
+            <ul className="flex flex gap-5 overflow-x-auto">
             <li>
                 <Link to={"#"} onClick={()=>dispatch(activeTab('tab1'))} 
                 className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab1"?'activeTab':''}`} >
@@ -77,10 +77,22 @@ const Title=({title,create,collectionToExport})=>{
                 </Link>
             </li>
 
-            <li>
+                       <li>
                 <Link to={""}
                 onClick={()=>dispatch(activeTab('tab4'))} 
-                className={`flex items-center gap-2 transition-all duration-300 text-red-700 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''} `} >
+                className={`flex items-center gap-2 transition-all duration-300 text-yellow-700 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''} `} >
+                {
+                    productState.alertProducts &&
+                <BellAlertIcon className={`w-4 y-4 cursor-pointer hover:shadow ${productState.alertProducts.length > 0 ? 'alert':'' } `}/>
+                }
+                {firstCapitalize(t('alert'))}
+                </Link>
+            </li>
+
+            <li>
+                <Link to={""}
+                onClick={()=>dispatch(activeTab('tab5'))} 
+                className={`flex items-center gap-2 transition-all duration-300 text-red-700 hover:rounded ${appState.activeTab=="tab5"?'activeTab':''} `} >
                 <ClockIcon className="w-4 y-4 cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('expired_product'))}
                 </Link>
@@ -88,8 +100,8 @@ const Title=({title,create,collectionToExport})=>{
 
             <li>
                 <Link to={""}
-                onClick={()=>dispatch(activeTab('tab5'))} 
-                className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab5"?'activeTab':''} `} >
+                onClick={()=>dispatch(activeTab('tab6'))} 
+                className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab6"?'activeTab':''} `} >
                 <WrenchIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('configuration'))}
                 </Link>

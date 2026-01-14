@@ -37,7 +37,7 @@ const ProductConfigurationFormItem = ({ field, index, active,mandatory }) => {
                      { false && 
                         <select 
                         ref={mandatoryRef}
-                        className="bg-green-200 p-1 rounded cursor-pointer"
+                        className="bg-green-50 p-1 rounded cursor-pointer"
                         onChange={(el)=>{
                             productFieldsControl({
                                 field:field,

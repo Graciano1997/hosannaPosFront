@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { sum } from "../lib/sumCollection";
-import { Ip } from "../lib/ip";
+import { getIpTenant, Ip } from "../lib/ip";
 
 const initialState = {
     spents: [],
@@ -10,42 +10,41 @@ const initialState = {
     lastSpents:[],
     anualSpends:[],
     minYear:0,
-    total:0,
-    last_created_at:null
+    total:0
 };
 
 export const fetchSpents = createAsyncThunk("spentState/fetchSpents", async () => {
-    const response = await fetch(`${Ip}/api/spents/`);
+    const response = await fetch(`${getIpTenant()}spents/`);
     return response.json();
 })
 
 export const fetchLastSpents = createAsyncThunk("spentState/lastSpents", async (number=3) => {
-    const response = await fetch(`${Ip}/api/spents/last_spents/${number}/`);
+    const response = await fetch(`${getIpTenant()}spents/last_spents/${number}/`);
     return response.json();
 })
 
 export const fetchAnualSpents = createAsyncThunk("spentState/fetchAnualSpents", async (year=new Date().getFullYear()) => {
-    const response = await fetch(`${Ip}/api/spents/anual_spents/${year}`);
+    const response = await fetch(`${getIpTenant()}spents/anual_spents/${year}`);
     return response.json();
 })
 
 export const fetchMinYearSpents = createAsyncThunk("spentState/fetchMinYearSpents", async (year=new Date().getFullYear()) => {
-    const response = await fetch(`${Ip}/api/spents/min_year_spends`);
+    const response = await fetch(`${getIpTenant()}spents/min_year_spends`);
     return response.json();
 })
 
 export const deleteSpent = createAsyncThunk("spentState/deleteSpent", async (id) => {
-    const response = await fetch(`${Ip}/api/spents/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
+    const response = await fetch(`${getIpTenant()}spents/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });
     return response.json();
 });
 
 export const registerSpent = createAsyncThunk("spentState/registerSpent", async (spent) => {
-    const response = await fetch(`${Ip}/api/spents/`, { method: 'POST', body: JSON.stringify(spent), headers: { 'Content-Type': 'application/json' } });
+    const response = await fetch(`${getIpTenant()}spents/`, { method: 'POST', body: JSON.stringify(spent), headers: { 'Content-Type': 'application/json' } });
     return response.json();
 });
 
 export const updateSpent = createAsyncThunk("spentState/updateSpent", async (spent) => {
-    const response = await fetch(`${Ip}/api/spents/${spent.id}`,
+    const response = await fetch(`${getIpTenant()}spents/${spent.id}`,
         {
             method: 'PUT',
             body: JSON.stringify(spent),
@@ -86,10 +85,11 @@ const spentSlice = createSlice({
         });
 
         builder.addCase(registerSpent.fulfilled, (state, action) => {
-            state.isCreating = false;
+            console.log(action.payload)
             if (!action.payload.error) {
                 state.spents.push({ ...action.payload.spent });
                 state.total = sum(state.spents,'amount').total;
+                state.isCreating = false;
             }
         });
 
@@ -108,7 +108,6 @@ const spentSlice = createSlice({
         });
 
         builder.addCase(updateSpent.fulfilled, (state, action) => {
-            state.isUpdating = false;
             state.spentToUpdate = {};
             if (action.payload.success && action.payload.spent) {
                 const atIndex = state.spents.findIndex(item => item.id === action.payload.spent.id);
@@ -116,8 +115,9 @@ const spentSlice = createSlice({
                     const updatedSpents = [...state.spents]; // Create a new array
                     updatedSpents[atIndex] = action.payload.spent; // Update the specific item
                     state.spents = updatedSpents; // Assign the new array to state
-                    state.total = sum(updateSpent,'amount').total;
+                    state.total = sum(updatedSpents,'amount').total;
                 }
+                state.isUpdating = false;
             }
         })
     }

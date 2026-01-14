@@ -29,14 +29,15 @@ function PdfViewer({url,closeHandler=()=>{}}) {
       <div className="pdf-viewer">
 
         <iframe
-          src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0&download=1&view=FitH`}
           title="PDF Viewer"
           width="100%"
           height="600px"
           className='rounded-[8px]'
-          style={{ border: 'none', background:'transparent' }}
+          // style={{ border: 'none', background:'transparent' }}
           allowFullScreen
-          />
+          >
+            {pdfUrl}
+            </iframe>
       </div>
     </div>
  </LargeModal>

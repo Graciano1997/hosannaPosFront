@@ -14,13 +14,11 @@ const Login = ()=>{
     const navegate = useNavigate();
     const [user,setUser]=useState({});
     
-    useEffect(()=>{        
-     if(pathname=="/logout"){
-         dispatch(logoutUser());
-     }
 
-     if(pathname=="/" && localStorage.getItem("isLogged")){ navegate('/dashboard'); }
-     },[]);
+     useEffect(()=>{        
+        if((pathname=="/" || pathname=="/logout" || pathname=="/login") && localStorage.getItem("isLogged")){ 
+            navegate('/dashboard'); }
+     },[])
 
     const handleInputChange=(el)=>{
         setUser({
@@ -31,11 +29,7 @@ const Login = ()=>{
 
     const formHandler= (el)=>{
         el.preventDefault();
-        dispatch(authenticate(user)).then((resultAction) => {
-             if (authenticate.fulfilled.match(resultAction)) {
-        if (resultAction.payload?.user) {
-           navegate("/dashboard");
-        }}});
+        dispatch(authenticate(user));
     }
 
     return(

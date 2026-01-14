@@ -42,7 +42,7 @@ const LastSelling =({width=200,height=300,info})=>{
                     </li>
                     {lastSales.map((el)=>
                     <li className="h-[40px] bg-green-100 cursor-pointer text-light text-sm justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
-                    <p>{el.client}</p>
+                    <p>{el.client.split(' ')[0]}</p>
                     <p className="text-center">{el.qty}</p>
                     <Money amount={el.total}/>
                     </li>)}

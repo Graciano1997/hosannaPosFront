@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { removeDiacritics } from "../lib/removeDiacritic";
-import { Ip } from "../lib/ip";
+import { getIpTenant, Ip } from "../lib/ip";
 import { removeDuplicate } from "../lib/removeDuplicate";
 
 const initialState = {
     products:[],
+    alertProducts:[],
     loading:false,
     isCreating:false,
     isUpdating:false,
@@ -18,65 +19,68 @@ const initialState = {
     expireds:[],
     anualExpireds:[],
     isSearching:false,
-    last_created_at:null
+    last_created_at:null,
+    isLoadingMore:false
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async (last_created_at=null)=>{
-    const response = await fetch(`${Ip}/api/products/${last_created_at?`last/${last_created_at}/`:''}`,{ method:'GET', headers:{'Content-Type':'application/json',
+    const response = await fetch(`${getIpTenant()}products`);
+    return response.json();
+    });
+
+export const fetchAlertProducts = createAsyncThunk("productState/fetchAlertProducts", async ()=>{
+    const response = await fetch(`${getIpTenant()}products/alert/`,{ method:'GET', 
+        headers:{'Content-Type':'application/json',
     Accept: "application/json"
      }});
     return response.json();
 });
 
 export const expiredProductJob = createAsyncThunk("productState/expiredProductJob", async ()=>{
-    const response = await fetch(`${Ip}/api/products/expired_product_job`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}products/expired_product_job`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const fetchExpiredProducts = createAsyncThunk("productState/fetchExpiredProducts", async ()=>{
-    const response = await fetch(`${Ip}/api/products/expireds`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}expired_products`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const fetchAnualExpiredProducts = createAsyncThunk("productState/fetchAnualExpiredProducts", async (year=new Date().getFullYear())=>{
-    const response = await fetch(`${Ip}/api/products/anual_expireds/${year}`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}products/anual_expireds/${year}`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const fetchProductsFields = createAsyncThunk("productState/fetchProductsFields", async ()=>{
-    const response = await fetch(`${Ip}/api/products/product_fields`,{ method:'GET',
-    headers:{'Content-Type':'application/json' }
-});
+    const response = await fetch(`${Ip}/products/product_fields`);
     return response.json();
 });
 
-
 export const deleteProduct = createAsyncThunk("productState/deleteProduct", async (id)=>{
-    const response = await fetch(`${Ip}/api/products/${id}`,{ method:'DELETE', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}products/${parseInt(id)}`,{ method:'DELETE'});
     return response.json();
 });
 
 export const registerProduct = createAsyncThunk("productState/registerProduct", async (productFormData)=>{
-    const response = await fetch(`${Ip}/api/products/`,{ method:'POST', body:productFormData });
+    const response = await fetch(`${getIpTenant()}products/`,{ method:'POST', body:productFormData });
     return response.json();
 });
 
 export const updateProduct = createAsyncThunk("productState/updateProduct",async (productFormData)=>{
-    const response = await fetch(`${Ip}/api/products/${productFormData.get("product[id]")}`,
+    const response = await fetch(`${getIpTenant()}products/${productFormData.get("product[id]")}`,
     {method:'PUT', body:productFormData});
     return response.json();
 });
 
 export const fetchProductConfiguration = createAsyncThunk("productState/fetchProductConfiguration", async ()=>{
-    const response = await fetch(`${Ip}/api/product_configurations/`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}product_configurations/`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
 export const productConfiguration = createAsyncThunk("productState/productConfiguration", async (products)=>{
-    const response = await fetch(`${Ip}/api/product_configurations/`,{ method:'POST', body:JSON.stringify(products), headers:{'Content-Type':'application/json' }});
+    const response = await fetch(`${getIpTenant()}product_configurations/`,{ method:'POST', body:JSON.stringify(products), headers:{'Content-Type':'application/json' }});
     return response.json();
 });
-
 
 const productSlice = createSlice({
   name:'productState',
@@ -108,14 +112,20 @@ const productSlice = createSlice({
         state.productToUpdate=action.payload;
     },
 
+    loadingMore: (state)=>{
+        state.isLoadingMore = true;
+    },
+
     stopCreatingOrUpdateingProduct : (state)=>{
         state.isCreating = false;
         state.isUpdating = false;
         state.productToUpdate = {};
     },
-
     setProducts: (state,action)=>{
         state.products = action.payload; 
+    },
+    setAlertProducts: (state,action)=>{
+        state.alertProducts = action.payload; 
     },
 
     addProductField:(state,action)=>{
@@ -132,7 +142,7 @@ const productSlice = createSlice({
   },
 
   extraReducers:(builder)=>{
-    builder.addCase(fetchProducts.pending,(state)=>{
+    builder.addCase(fetchProducts.pending,(state,action)=>{
         state.loading=true;
     });
 
@@ -147,18 +157,40 @@ const productSlice = createSlice({
     builder.addCase(fetchProducts.fulfilled,(state,action)=>{
     state.loading=false;
     state.error='';
+    state.products = action.payload.data;
+    // state.last_created_at=action.payload.last_created_at;
     
-    state.last_created_at=action.payload.last_created_at;
-    
-    if(action.payload.last_created_at && (action.payload.data).length){    
+    // if(action.payload.last_created_at && (action.payload.data).length){    
 
-        if((state.products).length==0){
-            state.products = action.payload.data;
-        }else{
-            state.products = removeDuplicate([...state.products,...action.payload.data],'id');                     
-        }
-    }
+    //     if((state.products).length==0){
+    //         state.products = action.payload.data;
+    //      }else{
+    //         if(state.isLoadingMore){
+    //             state.products = removeDuplicate([...state.products,...action.payload.data],'id');
+    //         }else{
+    //         state.isLoadingMore = false;              
+    //         state.products = action.payload.data;
+    //         }
+    //      }
+    // }
     });
+
+
+    builder.addCase(fetchAlertProducts.fulfilled,(state,action)=>{
+    state.loading=false;
+    state.error='';
+    state.alertProducts = action.payload.data;
+    });
+    
+    builder.addCase(fetchAlertProducts.pending,(state,action)=>{
+        state.loading=true;
+    });
+    
+    builder.addCase(fetchAlertProducts.rejected,(state,action)=>{
+        state.loading =false;
+        state.error=action.error.message;
+        state.alertProducts = [];
+    })
 
     builder.addCase(fetchProducts.rejected,(state,action)=>{
         state.loading =false;
@@ -181,9 +213,10 @@ const productSlice = createSlice({
     builder.addCase(registerProduct.pending,(state)=>{ state.loading=true;});
 
     builder.addCase(registerProduct.fulfilled,(state,action)=>{
-        state.loading=false;
-        state.isCreating=false;
+        
         if(!action.payload.error){
+            state.loading=false;
+            state.isCreating=false;
             state.products.push({...action.payload.product});
         }
     });
@@ -193,25 +226,26 @@ const productSlice = createSlice({
     });
 
     builder.addCase(fetchProductConfiguration.fulfilled,(state,action)=>{
-       if(action.payload.data != undefined){
-           state.productConfigurationFields = (action.payload.data);
-           let filterRows = [];           
-           action.payload.data.map((item)=>{
-               if(!item.active){
-                   filterRows.push(item.field);
-                }
-            });
             
-            state.productFilterRows = filterRows;
-        }
-            
+        if(action.payload.data != undefined){
+            state.productConfigurationFields = (action.payload.data);
+            let filterRows = [];           
+            action.payload.data.map((item)=>{
+                if(!item.active){
+                    filterRows.push(item.field);
+                 }
+             });            
+             state.productFilterRows = filterRows;
+         }
       });
 
     builder.addCase(registerProduct.rejected,(state,action)=>{
-        state.loading =false;
+        // state.loading =false;
+        // state.isCreating=true; 
     });
 
     builder.addCase(fetchProductsFields.fulfilled,(state,action)=>{
+        console.log(action.payload);
         if(action.payload !=undefined){
             state.productAllFields = action.payload.data;
         }
@@ -222,7 +256,7 @@ const productSlice = createSlice({
     })
 
     builder.addCase(updateProduct.fulfilled,(state,action)=>{
-        state.isUpdating = false;
+        
         state.productToUpdate = {};
         if (action.payload.success && action.payload.product) {
             const atIndex = state.products.findIndex(item => item.id === action.payload.product.id);
@@ -231,10 +265,11 @@ const productSlice = createSlice({
                 updatedProducts[atIndex] = action.payload.product; // Update the specific item
                 state.products = updatedProducts; // Assign the new array to state
             }
+            state.isUpdating = false;
             }            
     })
 }
 });
 
 export default productSlice.reducer;
-export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct,searchingProduct,stopCreatingOrUpdateingProduct, setProducts,setExpireds} = productSlice.actions;
+export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct,searchingProduct,stopCreatingOrUpdateingProduct, setProducts, setAlertProducts,setExpireds, loadingMore} = productSlice.actions;

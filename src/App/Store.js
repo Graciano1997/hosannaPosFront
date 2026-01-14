@@ -8,6 +8,8 @@ import userSlice from "../slices/userSlice";
 import profileSlice from "../slices/profileSlice";
 import companySlice from "../slices/companySlice";
 import printerSlice from "../slices/printerSlice";
+import stockSlice from "../slices/stockSlice";
+import bankAccountSlice from "../slices/bankAccountSlice";
 
 const store = configureStore({
     reducer:{
@@ -20,6 +22,8 @@ const store = configureStore({
        profileState:profileSlice,
        companyState:companySlice,
        printerState:printerSlice,
+       stockState: stockSlice,
+       bankAccountState: bankAccountSlice 
     }
 });
 

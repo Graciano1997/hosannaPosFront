@@ -13,17 +13,17 @@ const Sales=()=>{
     const {t}=useTranslation();
     const [showDashboard,setShowDashboard]=useState(false);
     const appState=useSelector((state)=>state.appState);
-    const filterRows = ['client_id','user_id','sale_products'];
+    const filterRows = ['client_id','user_id','sale_products','image',"store_id"];
     
     const saleState= useSelector((state)=>state.saleState);
     const sales= saleState.sales;
 
-
     const dispatch = useDispatch();
+
     useEffect(()=>{
         dispatch(activeTab("tab1"));
         dispatch(fetchSales(saleState.last_created_at));
-    },[])
+    },[]);
 
     return(
         <CardWrapper>
@@ -33,8 +33,25 @@ const Sales=()=>{
             data:sales}}
         />
         <TabWrapper>    
-        {appState.activeTab=="tab1" && (<Table filterRows={filterRows} setCollection={setSales} filterDetails={filterRows} create={null} printItem={true} fetcher={fetchSales} fetcherParam={saleState.last_created_at} dispatcher={setSales} collection={sales} />)}
-        {appState.activeTab=="tab2"  && (<SaleDashboard/>)} 
+        {appState.activeTab=="tab1" && (
+
+        <Table 
+        filterRows={filterRows} 
+        setCollection={setSales} 
+        filterDetails={filterRows} 
+        create={null} 
+        printItem={true} 
+        fetcher={fetchSales} 
+        fetcherParam={saleState.last_created_at} 
+        dispatcher={setSales} 
+        collection={sales} 
+        deleteItem={false}
+        />)}
+
+        {
+        appState.activeTab=="tab2" && 
+        (<SaleDashboard/>)
+        } 
         </TabWrapper>
         </CardWrapper>
     )
