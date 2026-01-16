@@ -5,7 +5,7 @@ import Header from './components/general/Header'
 import Navegation from './components/general/Navegation'
 import _404 from './components/general/_404'
 import _401 from './components/general/_401'
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Product from './components/product/Product'
 import Search from './components/general/Search'
 import Request from './components/requests/Request'
@@ -34,6 +34,7 @@ import { fetchPrinterConfig } from './slices/printerSlice'
 import { MyStore } from './components/mystore/Mystore'
 import StockMovements from './components/Stock/StockMovements'
 import Devolution from './components/devolution/Devolution'
+import CreateCompany from './components/Login/CreateCompany'
 
 function Home() {
 
@@ -53,14 +54,14 @@ function Home() {
 
   useEffect(()=>{
     if(localStorage.getItem("isLogged")){
-      dispatch(fetchProducts(productState.last_created_at));
+      dispatch(fetchProducts());
       dispatch(fetchUsers());
       dispatch(fetchSpents());
       dispatch(fetchCategories());
       dispatch(fetchCompanies());
       dispatch(fetchPrinterConfig());
     } 
-   },[localStorage.getItem("isLogged")]);
+   },[]);
 
    useEffect(()=>{    
      if(isVisible){
@@ -71,55 +72,52 @@ function Home() {
 
    },[isVisible]);
 
-  const excludePathName =['/','/logout'];
+  const excludePathName =['/','/logout','/create_company'];
   
   return (
-    <>    
      <div className={`h-100 w-100 p-3  ${!appState.isLogged?'flex items-center justify-center':''}`}>        
       {
-      localStorage.getItem("isLogged") && (
-      <>    
-      {(!excludePathName.includes(pathname)) && 
+      localStorage.getItem("isLogged") && (!excludePathName.includes(pathname)) && 
       <>
       <Header searchHandleClick={setIsSearching} setVisibility={setIsVisible}/>
       <Navegation visible={isVisible} setVisibility={setIsVisible}/>
       </>
       }
 
+      {!localStorage.getItem("isLogged") && pathname !='/create_company' ?  (<Login/>)
+      :
       <Routes>
-      <Route path='/' element={<Login/>} />
-      <Route path='/logout' element={<Login/>} />
-      <Route path='/dashboard' element={<Dashboard/>} />
-      <Route path='/pdf' element={masterProfile ? <PdfViewer/>:<_401/>} />
-      <Route path='/requests' element={masterProfile ? <Request/>:<_401/>} />
-      <Route path='/notifications' element={masterProfile ? <Notification/> : <_401/>} />
-      <Route path='/sales' element={masterProfile ? <Sales/> : <_401/>} />
-      <Route path='/products' element={masterProfile ? <Product/> : <_401/>} />
-      <Route path='/spents' element={masterProfile ? <Spent/>: <_401/>} />  
-      <Route path='/users' element={masterProfile ? <User/>: <_401/>} /> 
-            <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />      
-      <Route path='/sale/devolution' element={<Devolution setToastObject={setToastObject}/>} />      
-      <Route path='/setting' element={<Setting/>} />
-      <Route path='/profile' element={<Account/>} />
-      <Route path='/mystore' element={<MyStore/>} />
-      <Route path='/stock_movements' element={<StockMovements/>} />
-      <Route path='*' element={<_404/>} />
+          <Route path="/" element={<Dashboard/>}/>
+          <Route path='/login' element={<Login/>} />
+          <Route path='/logout' element={<Login/>} />
+          <Route path='/create_company' element={<CreateCompany/>} />
+          <Route path='/dashboard' element={<Dashboard/>} />
+          <Route path='/pdf' element={masterProfile ? <PdfViewer/>:<_401/>} />
+          <Route path='/requests' element={masterProfile ? <Request/>:<_401/>} />
+          <Route path='/notifications' element={masterProfile ? <Notification/> : <_401/>} />
+          <Route path='/sales' element={masterProfile ? <Sales/> : <_401/>} />
+          <Route path='/products' element={masterProfile ? <Product/> : <_401/>} />
+          <Route path='/spents' element={masterProfile ? <Spent/>: <_401/>} />  
+          <Route path='/users' element={masterProfile ? <User/>: <_401/>} /> 
+          <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />      
+          <Route path='/sale/devolution' element={<Devolution setToastObject={setToastObject}/>} />      
+          <Route path='/setting' element={<Setting/>} />
+          <Route path='/profile' element={<Account/>} />
+          <Route path='/mystore' element={<MyStore/>} />
+          <Route path='/stock_movements' element={<StockMovements/>} />
+          <Route path='*' element={<_404/>} />
       </Routes>
-
+    }
+  
       {
         appState.invoiceView && appState.urlItem &&
         <PdfViewer closeHandler={closeInvoiceView} url={appState.urlItem}/>
       }
       
-
       { appState.isSearching && (<Search/>)}
       { appState.showToast && (<ShowToast object={appState.toastObject} />)}
       { appState.isExporting && (<Export stopExporting={StopExporting} />) }
-      </>
-      )}
-      {!localStorage.getItem("isLogged") && (<Login/>)}
      </div>
-    </>
   )
 }
 

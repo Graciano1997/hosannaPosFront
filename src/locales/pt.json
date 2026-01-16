@@ -263,5 +263,6 @@
     "invoice_not_found":"Fatura não encontrada, certifica-te a buscar as faturas FT",
     "confirm_devolution":"Confirmar devolução",
     "bough_qty":"qtd",
-    "return_qty":"qtd_devolver"
+    "return_qty":"qtd_devolver",
+    "create_company": "criar empresa"
 }

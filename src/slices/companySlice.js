@@ -33,7 +33,7 @@ export const registerCompany = createAsyncThunk("companyState/registerCompany", 
 });
 
 export const updateCompany = createAsyncThunk("companyState/updateCompany", async (companyForm) => {
-    const response = await fetch(`${getIpTenant()}companies/${companyForm.get("company[id]")}`,
+    const response = await fetch(`${getIpTenant()}}`,
         {
             method: 'PUT',
             body: companyForm,

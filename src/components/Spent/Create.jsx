@@ -47,7 +47,6 @@ const Create=()=>{
                   })
               }
         }
-
     return(
         <>
         <Modal helper={stopCreatingOrUpdateingSpent}>
@@ -61,9 +60,9 @@ const Create=()=>{
                 <br />
                 <select name="user_id" onChange={formHandler} value={spent.user_id} className='p-1 rounded w-[100%] outline-none'>
                 <option disabled>Selecione um Responsavel</option>
-                    {userState.users.map((user)=>
-                    <option value={user.id}>{user.name}</option>
-                    )}
+                    {userState.users.length==1 ?
+                     (<option value={userState.users[0].id} selected >{userState.users[0].name}</option>) 
+                     :  userState.users.map((user)=><option value={user.id} >{user.name}</option>)}
                 </select>
                 </label>
                 </div>

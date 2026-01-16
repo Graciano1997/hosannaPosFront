@@ -260,5 +260,6 @@
     "invoice_not_found":"The invoice was not found",
     "confirm_devolution":"Confirm devolution",
     "bough_qty":"bough qty",
-    "return_qty":"return qty"  
+    "return_qty":"return qty",
+    "create_company": "create company"
 }
