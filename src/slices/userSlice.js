@@ -69,18 +69,8 @@ const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
-        
-            state.last_created_at=action.payload.last_created_at;
-            
-
-            if(action.payload.last_created_at && (action.payload.data).length){
-                if((state.users).length==0){
-                    state.users = action.payload.data;
-                }else{
-                    state.users = removeDuplicate([...state.users,...action.payload.data],'id');
-                }
-            }
-        });
+            state.users = action.payload.data;
+          });
 
         builder.addCase(registerUser.fulfilled, (state, action) => {
             if (!action.payload.error) {

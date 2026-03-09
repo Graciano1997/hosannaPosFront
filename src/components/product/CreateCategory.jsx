@@ -61,8 +61,8 @@ const CreateCategory=()=>{
                 <br />
                 <select name="parent_category_id" value={category.parent_category_id?category.parent_category_id:""} onChange={formHandler} className='p-2 rounded w-[100%] outline-none'>
                 <option value="" disabled>{firstCapitalize(t('select_parent_category'))}</option>
-                <option value={0}>{firstCapitalize(t('none'))}</option>
-                {categories.map((category)=><option value={category.id*1}>{category.name}</option>)}
+                <option value={null}>{firstCapitalize(t('none'))}</option>
+                {categories.length > 0 && categories.map((category)=><option value={category.id*1}>{category.name}</option>)}
                 </select>
                 </label>
                 </div> 

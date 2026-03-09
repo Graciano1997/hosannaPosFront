@@ -41,8 +41,8 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                         {moneyFields.includes(key) && <Money amount={item[key]} />}
                         {typeof (item[key]) == "boolean" && (item[key] ? firstCapitalize(t('yes')) : firstCapitalize(t('not')))}
                         {item[key] == null && ('')}
-                        {key == "image" && item[key] != "none" && <div className="flex justify-center"><img src={item[key]} className="w-[40px] h-[40px] rounded-[20px] duration-200 transition-all hover:shadow" /></div>}
-                        {key !== "image" && !moneyFields.includes(key) && typeof (item[key]) != "boolean" && key!="movement_type"  && textDisplay(item[key])}
+                        {key == "image_url" && item[key] != "none" && <div className="flex justify-center"><img src={item[key]} className="w-[40px] h-[40px] rounded-[20px] duration-200 transition-all hover:shadow" /></div>}
+                        {key !== "image_url" && !moneyFields.includes(key) && typeof (item[key]) != "boolean" && key!="movement_type"  && textDisplay(item[key])}
                     </td>
                 )
                 }
@@ -87,7 +87,7 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                             </div>
                         }
 
-                        <div className={`flex item-center gap-3 ${item?.image ? 'mt-1':''}`}>
+                        <div className={`flex item-center gap-3 ${item?.image_url ? 'mt-1':''}`}>
                         {updateItem && <button onClick={() => { dispatch(openModal()); dispatch(updateItem(item)); }}><PencilIcon className="w-6 y-6 p-1 text-green-800 hover:shadow hover:rounded" /></button>}
                         {printItem && <button onClick={() => {
                             dispatch(getInvoiceItem({id:item.id,printerType:printerConfiguration.printertype}))

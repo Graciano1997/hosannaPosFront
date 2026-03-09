@@ -18,7 +18,7 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
     const {pathname}=useLocation();
     console.log(detailsItem);
    
-    const hasImage = detailsItem.image ?true:false;
+    const hasImage = detailsItem.image_url ?true:false;
     keys = keys.filter((item) => !filterDetails.includes(item));
     const {t}= useTranslation();
     const navegate = useNavigate();
@@ -34,7 +34,7 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                 { hasImage && <div className="h-[100%]">
                 <div className="w-[250px] h-[300px] sm:shadow rounded-[16px]">
                     {detailsItem.image==="none" && <UserIcon className="w-[100%] h-[100%] rounded-[16px]"/> }
-                    {detailsItem.image!=="none" &&  <img src={detailsItem.image} className="w-[100%] h-[100%] rounded-[16px]" />}
+                    {detailsItem.image!=="none" &&  <img src={detailsItem.image_url} className="w-[100%] h-[100%] rounded-[16px]" />}
                 </div>
                 </div>}
                 

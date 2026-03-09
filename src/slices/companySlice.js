@@ -8,12 +8,12 @@ const initialState = {
     isUpdating: false,
     companyToUpdate: {},
     error: '',
-    companyFilterRows: ['created_at', 'updated_at'],
+    companyFilterRows: ['created_at', 'updated_at', 'store_id'],
     filterRowsOp: [],
 };
 
 export const fetchCompanies = createAsyncThunk("companyState/fetchCompanies", async () => {
-    const response = await fetch(`${Ip}/companies/`, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+    const response = await fetch(`${getIpTenant()}`, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
     return response.json();
 });
 
@@ -31,6 +31,17 @@ export const registerCompany = createAsyncThunk("companyState/registerCompany", 
     const response = await fetch(`${getIpTenant()}companies/`, { method: 'POST', body: companyForm });
     return response.json();
 });
+
+export const registerStore = createAsyncThunk("companyState/registerStore", async (storeForm) => {
+    const response = await fetch(`${Ip}/stores/`,
+        {
+            headers: { 'Content-Type': 'application/json' },    
+            method: 'POST', 
+            body: JSON.stringify(storeForm)
+        });
+    return response.json(); 
+});
+
 
 export const updateCompany = createAsyncThunk("companyState/updateCompany", async (companyForm) => {
     const response = await fetch(`${getIpTenant()}}`,
@@ -71,11 +82,10 @@ const companySlice = createSlice({
         });
 
         builder.addCase(fetchCompanies.fulfilled, (state, action) => {
+            
             state.loading = false;
-            if (action.payload != undefined) {
-                state.companies = action.payload.data;
+                state.companies = [action.payload.data];
                 state.error = '';
-            }
         });
 
         builder.addCase(fetchCompanies.rejected, (state, action) => {

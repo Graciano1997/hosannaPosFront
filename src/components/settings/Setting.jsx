@@ -17,10 +17,15 @@ const Setting=()=>{
     const dispatch = useDispatch();
     
     useEffect(()=>{
-        dispatch(fetchCompanies());
-        dispatch(fetchBankAccounts());
-        dispatch(fetchPrinterConfig());
-        dispatch(fetchPrinters()); 
+        const loadData = async () => {
+          await Promise.all([
+                dispatch(fetchCompanies()),
+                dispatch(fetchBankAccounts()),
+                dispatch(fetchPrinterConfig()),
+                dispatch(fetchPrinters())
+            ]);
+          };
+        loadData();
     },[]);
 
     const appState = useSelector((state)=>state.appState);
@@ -34,12 +39,7 @@ const Setting=()=>{
 
 
         { appState.activeTab=="tab1" && 
-        (
-            companyState.companies?.length>0?
-            <Table filterDetails={[]} setCollection={setCompany}  filterRows={companyState.companyFilterRows} update={updatingCompany} create={null} deleteItem={deleteCompany} collection={companyState.companies}/>
-            :
-            <Table filterDetails={[]} setCollection={setCompany} filterRows={companyState.companyFilterRows} update={updatingCompany} create={creatingCompany} deleteItem={deleteCompany} collection={companyState.companies}/>
-        )
+            <Table filterDetails={[]} setCollection={setCompany}  filterRows={companyState.companyFilterRows} update={updatingCompany} create={companyState.companies?.length>0? null : creatingCompany} deleteItem={deleteCompany} collection={companyState.companies}/>
         }
 
         { appState.activeTab=="tab2" && 

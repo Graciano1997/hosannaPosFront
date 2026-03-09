@@ -5,7 +5,7 @@ import Table from "../Table/Table";
 const AlertProducts=()=>{
     
     const productState = useSelector((state)=>state.productState);
-    const filterAlertDetails =['image'];
+    const filterAlertDetails =['image_url'];
     
     return(
         <>

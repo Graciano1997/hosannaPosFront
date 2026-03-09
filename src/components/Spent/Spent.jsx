@@ -18,9 +18,15 @@ const Spent = () => {
     const filterSpentDetails =['id','user_id','image','updated_at'];
 
     useEffect(()=>{
-        dispatch(fetchSpents());
-        dispatch(fetchAnualSpents());
-        dispatch(activeTab('tab1'));
+        
+        const loadData = async () => {
+            await Promise.all([
+                dispatch(fetchSpents()),
+                dispatch(fetchAnualSpents()),
+                dispatch(activeTab('tab1'))
+            ])
+        }
+        loadData();
     },[]);
 
     const spentState = useSelector((state) => state.spentState);

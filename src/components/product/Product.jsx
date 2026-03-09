@@ -22,11 +22,17 @@ const Product=()=>{
     const productState = useSelector((state)=>state.productState);
 
     useEffect(()=>{
-        dispatch(fetchProducts());
-        dispatch(fetchExpiredProducts());
-        dispatch(fetchProductConfiguration());
-        dispatch(fetchAlertProducts());
-    },[]);
+
+        const loadData = async () => {
+            await Promise.all([
+                dispatch(fetchProducts()),
+                dispatch(fetchExpiredProducts()),
+                dispatch(fetchProductConfiguration()),
+                dispatch(fetchAlertProducts())
+            ])
+        }
+        loadData();
+    },[dispatch]);
     // productState.products
 
     const categoryState = useSelector((state)=>state.categoryState);

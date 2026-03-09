@@ -21,9 +21,14 @@ const Sales=()=>{
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        dispatch(activeTab("tab1"));
-        dispatch(fetchSales(saleState.last_created_at));
-    },[]);
+        const loadData = async () => {
+            await Promise.all([
+                dispatch(fetchSales(saleState.last_created_at)),
+                dispatch(activeTab("tab1"))
+            ])
+        }
+        loadData();
+        },[dispatch]);
 
     return(
         <CardWrapper>

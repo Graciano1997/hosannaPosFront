@@ -16,8 +16,13 @@ const User=()=>{
     const userState = useSelector((state)=>state.userState);
 
     useEffect(()=>{
-        dispatch(fetchUsers(userState.last_created_at));
-        dispatch(activeTab('tab1'))
+        const loadData = async () => {
+            await Promise.all([
+                dispatch(fetchUsers(userState.last_created_at)),
+                dispatch(activeTab('tab1'))
+            ])
+        }
+            loadData(); 
     },[])
 
     const appState=useSelector((state)=>state.appState);

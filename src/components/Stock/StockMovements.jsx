@@ -17,9 +17,13 @@ const StockMovements = () => {
     const filterStockDetails =[];
 
     useEffect(()=>{
-        dispatch(fetchStockMovements());
-        dispatch(fetchStockAnualMovements(2025));  
-        dispatch(activeTab('tab1'));
+        const loadData = async () => {
+        await Promise.all([
+        dispatch(fetchStockMovements()),
+        dispatch(fetchStockAnualMovements()),  
+        dispatch(activeTab('tab1')),]  )
+    }
+        loadData();
     },[]);
 
     const stockState = useSelector((state) => state.stockState);

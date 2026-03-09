@@ -56,8 +56,8 @@ export const getSaleInvoiceItem = createAsyncThunk('saleState/getSaleInvoiceItem
     return response.json();
 });
 
-export const fetchSales = createAsyncThunk('saleState/fetchSales', async (last_created_at = null) => {
-    const response = await fetch(`${getIpTenant()}sales/${last_created_at ? `last/${last_created_at}/` : ''}`, {
+export const fetchSales = createAsyncThunk('saleState/fetchSales', async () => {
+    const response = await fetch(`${getIpTenant()}sales/`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     });
@@ -101,7 +101,6 @@ const saleSlice = createSlice({
             } else {
                 state.items.push(action.payload);
             }
-            console.log(state.items);
 
             state.total = sum(state.items).total;
             state.totalItems = sum(state.items).totalItems;
@@ -322,16 +321,7 @@ const saleSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchSales.fulfilled, (state, action) => {
-
-            state.last_created_at = action.payload.last_created_at;
-            if (action.payload.last_created_at && (action.payload.data).length) {
-                if ((state.sales).length == 0) {
-                    state.sales = action.payload.data;
-                } else {
-                    state.sales = removeDuplicate([...state.sales, ...action.payload.data], 'id');
-                }
-            }
-
+            state.sales = action.payload.data;
         });
 
         builder.addCase(fetchAnualSales.fulfilled, (state, action) => {
@@ -339,7 +329,7 @@ const saleSlice = createSlice({
         });
 
         builder.addCase(order.fulfilled, (state, action) => {
-            // console.log(action.payload.sale_item);
+            console.log("After order",action.payload);
             state.sales.unshift(action.payload.sale_item);
             state.saleConfirmationIsOpen = false;
         });

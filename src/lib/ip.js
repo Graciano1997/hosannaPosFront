@@ -1,6 +1,6 @@
 import { CurrentUser } from "./CurrentUser";
 
-export const Ip='http://localhost:3000/api';
+export const Ip='http://75.119.144.91:3000/api';
 
 export const printerIp='http://localhost:5000';
 
