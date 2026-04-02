@@ -20,12 +20,17 @@ const Create=()=>{
                 [el.target.name]: el.target.value
             })
         }
-    
+
         const handleFormSubmition = (el) => {
             el.preventDefault();
 
-            const companyForm = new FormData();
-            if(company.id ){ console.log(company.image); } 
+            if(company.id){
+                delete company.image_url;
+                delete company.updated_at;
+                console.log("The company", company)
+            }
+
+            const companyForm = new FormData(); 
 
             Object.keys(company).map((key)=>{
                 companyForm.append(`company[${key}]`,company[key]);

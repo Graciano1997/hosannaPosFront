@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { InvoiceStatus, SaleType } from "../../lib/Enums";
 import SaleInvoiceSearchedtem from "./SaleInvoiceSearchedtem";
+import Money from "../general/Money";
 
 
 const SaleDetails = () => {
@@ -105,7 +106,7 @@ const SaleDetails = () => {
                             <div className="flex flex-col gap-2 h-[230px] mt-1" style={{ overflow: 'auto' }}>
                                 {invoiceSearchedItems.map((item, index) => <SaleInvoiceSearchedtem index={index} product={item} key={item.code} />)}
                             </div>
-                            <p className="text-end"><span className="font-bold">{firstCapitalize(t('invoice_status'))}{':'}</span> <span className="text-xl">{firstCapitalize(t(saleState.invoiceStatus))}</span> </p>
+ 
 
                             {
                                 saleState.invoiceStatus != InvoiceStatus.PAID
@@ -115,9 +116,20 @@ const SaleDetails = () => {
                                     <input
                                         type="number" id="newAmountToReceive" name="newAmountToReceive" onChange={(el) => {
                                             dispatch(setNewAmountToReceive(el.target.value * 1));
-                                        }} className="bg-green-100 rounded w-[40%] p-2" />
+                                        }} className="bg-green-100 rounded w-[30%] p-2" />
                                 </div>
                             }
+                        <div className="flex gap-3 justify-end items-center mt-2">
+                            <p className="flex items-center gap-1"><span className="font-bold">{firstCapitalize(t('invoice_status'))}{':'}</span> <span className="text-xl">{firstCapitalize(t(saleState.invoiceStatus))}</span> </p>
+                            ||
+                            <p className="flex items-center gap-1"><span className="font-bold">{firstCapitalize(t('tpa_paid'))}{':'}</span> <span className="text-xl"><Money amount={saleState.receivedTpa}/></span></p>
+                            ||
+                            <p className="flex items-center gap-1"><span className="font-bold">{firstCapitalize(t('cash_paid'))}{':'}</span> <span className="text-xl"><Money amount={saleState.receivedCash}/></span></p>
+                            ||
+                            <p className="flex items-center gap-1"><span className="font-bold">{firstCapitalize(t('remaining_amount'))}{':'}</span> <span className="text-xl text-red-400"><Money amount={saleState.total - (saleState.receivedCash + saleState.receivedTpa)}/></span></p>
+                            ||
+                            <p className="flex items-center gap-1"><span className="font-bold">{firstCapitalize(t('total_paid'))}{':'}</span> <span className="text-xl">  <Money amount={saleState.receivedCash + saleState.receivedTpa}/></span> </p>
+                        </div>
 
                         </>
                     }

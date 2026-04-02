@@ -44,7 +44,10 @@ export const registerStore = createAsyncThunk("companyState/registerStore", asyn
 
 
 export const updateCompany = createAsyncThunk("companyState/updateCompany", async (companyForm) => {
-    const response = await fetch(`${getIpTenant()}}`,
+
+    const url=getIpTenant().slice(0,-1);
+
+    const response = await fetch(url,
         {
             method: 'PUT',
             body: companyForm,

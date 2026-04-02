@@ -13,7 +13,6 @@ const SaleConfirmation = () => {
 
     const dispatch = useDispatch();
     const saleState = useSelector((state) => state.saleState);
-    const appState = useSelector((state) => state.appState);
     const { printerConfiguration } = useSelector((state) => state.printerState);
     
     const orderHandler = () => {
@@ -48,7 +47,7 @@ const SaleConfirmation = () => {
                 //  THis action ensure to print in the Java print server App
                  if (order.fulfilled.match(orderResultState)) {
                     //  prints only if the user printerConfiguration is set to finish and print.
-                     if (printerConfiguration.finishAndprint == "true") {
+                     if (printerConfiguration?.finishAndprint === "true") {
                          dispatch(printing({ 
                              copyNumber: parseInt(printerConfiguration.copyNumber),
                              template: orderResultState.payload.invoice_template,

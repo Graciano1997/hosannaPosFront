@@ -7,7 +7,6 @@ import { pt,enUS, fr } from "react-day-picker/locale";
 import { useTranslation } from "react-i18next";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
-
 export const DatePicker = ({name, value, mode, dataSetHandler=(el)=>{}})=>{
     const [selected,setSelected]=useState(value ? parseISO(value) : null);
     const [visibility,setVisibility]=useState(false);
@@ -25,6 +24,7 @@ export const DatePicker = ({name, value, mode, dataSetHandler=(el)=>{}})=>{
         document.addEventListener("mousedown",handlerClickOutSide);
         return ()=>document.removeEventListener("mousedown",handlerClickOutSide);
     },[]);
+    const currentYear = new Date().getFullYear();
 
 
     let locale;
@@ -55,6 +55,8 @@ export const DatePicker = ({name, value, mode, dataSetHandler=(el)=>{}})=>{
     <DayPicker
         captionLayout="dropdown"
         animate
+        fromYear={currentYear - 10 }
+        toYear={currentYear + 10 }
         mode={mode}
         selected={selected}
         onSelect={(date)=>{

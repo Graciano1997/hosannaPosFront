@@ -12,6 +12,8 @@ import { useLocation } from "react-router-dom";
 
 
 const Table = ({ collection = [], addItem = null, setCollection = () => { }, deleteItem = () => { }, printItem = null, update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { }, fetcherParam = null, searchBackEndHandler = null, loadingMore = null, rowStyle = "bg-green-100", rangeDataSelection= true }) => {
+        //ensure to id the id in the table
+    filterRows=filterRows.concat('id','company_id');
 
     const exceptionUrl = ['/setting'];
     const { pathname } = useLocation();

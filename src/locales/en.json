@@ -261,5 +261,10 @@
     "confirm_devolution":"Confirm devolution",
     "bough_qty":"bough qty",
     "return_qty":"return qty",
-    "create_company": "create company"
+    "create_company": "create company",
+    "cash_paid":"cash_paid",
+    "remaining_amount":"remaining_amount",
+    "total_paid":"total_paid",
+    "tpa_paid":"tpa_paid"
 }
+

@@ -48,7 +48,8 @@ export const order = createAsyncThunk('saleState/order', async (sale) => {
 });
 
 export const getSaleInvoiceItem = createAsyncThunk('saleState/getSaleInvoiceItem', async (invoice) => {
-    const response = await fetch(`${getIpTenant()}sales/get_sale/`, {
+    
+    const response = await fetch(`${getIpTenant()}sales/get_sale_by_invoice_number/`, {
         method: 'POST',
         body: JSON.stringify(invoice),
         headers: { 'Content-Type': 'application/json' }
