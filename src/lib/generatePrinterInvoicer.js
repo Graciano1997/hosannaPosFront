@@ -24,7 +24,7 @@ export async function generatePDFInvoice(invoiceHtml, paperSize='A4') {
       scale: 2,
       useCORS: true,
       logging: false,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#fff'
     });
     
     // REMOVER o elemento ANTES de processar
@@ -81,7 +81,7 @@ export async function generatePDF(templateHtml) {
       scale: 2,
       useCORS: true,
       logging: false,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#fff'
     });
     
     // REMOVER o elemento ANTES de processar

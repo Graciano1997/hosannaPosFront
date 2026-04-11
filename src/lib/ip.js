@@ -1,10 +1,8 @@
 import { CurrentUser } from "./CurrentUser";
 
 export const Ip='http://75.119.144.91:3000/api';
-
 export const printerIp='http://localhost:5000';
 
-// export const Ip='https://hosanaposbackendapi.onrender.com';
 export function getTenantPath() {
   const user = CurrentUser();
   return user?.companyId ?`/companies/${user.companyId}/` : '';

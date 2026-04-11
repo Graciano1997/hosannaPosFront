@@ -67,7 +67,7 @@ export const fetchSales = createAsyncThunk('saleState/fetchSales', async () => {
 
 export const getInvoiceItem = createAsyncThunk("saleState/getInvoiceItem", async (data) => {
     try {
-        const response = await fetch(`${getIpTenant()}sales/reprint/`,
+        const response = await fetch(`${getIpTenant()}sales/reprinting_invoice/`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
