@@ -1,6 +1,6 @@
 import { CurrentUser } from "./CurrentUser";
 
-export const Ip='http://75.119.144.91:3000/api';
+export const Ip='https://hosannex.com/salespointback/api';
 export const printerIp='http://localhost:5000';
 
 export function getTenantPath() {
