@@ -36,6 +36,8 @@ const SaleConfirmation = () => {
             items: saleState.invoiceType == SaleType.CREDIT_NOTE_NC ? saleState.itemsToReturn : (saleState.invoiceType == SaleType.RECEIPT_RC ? saleState.invoiceSearchedItems : saleState.items)
         }
         
+        console.log("the treated object", treatedSaleObject)
+        
          dispatch(order(treatedSaleObject))
              .then((orderResultState) => {
                  if (saleState.invoiceType == SaleType.SALE) {

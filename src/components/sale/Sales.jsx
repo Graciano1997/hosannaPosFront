@@ -39,7 +39,7 @@ const Sales=()=>{
         />
         <TabWrapper>    
         {appState.activeTab=="tab1" && (
-
+            <>
         <Table 
         filterRows={filterRows} 
         setCollection={setSales} 
@@ -51,7 +51,13 @@ const Sales=()=>{
         dispatcher={setSales} 
         collection={sales} 
         deleteItem={false}
-        />)}
+        update={false}
+        />
+        <div classname="mt-2 flex bg-red-200">
+            <h1>Total</h1>
+        </div>
+        </>
+        )}
 
         {
         appState.activeTab=="tab2" && 

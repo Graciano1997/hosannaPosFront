@@ -135,7 +135,6 @@ const SaleDetails = () => {
                     }
 
                 </div>
-
                 <ButtonGroup saleState={saleState} />
             </div>
         </div>

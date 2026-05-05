@@ -16,7 +16,6 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
     const detailsItem = useSelector((state)=>state.appState.itemDetails);
     let keys = Object.keys(detailsItem);
     const {pathname}=useLocation();
-    console.log(detailsItem);
    
     const hasImage = detailsItem.image_url ?true:false;
     keys = keys.filter((item) => !filterDetails.includes(item));
