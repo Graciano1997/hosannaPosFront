@@ -7,6 +7,7 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 import logo from '../../../src/assets/Img/Logo.svg'
 import CompanyLand from "./CompanyLand";
 import { registerStore } from "../../slices/companySlice";
+import {rootpath} from "../../lib/ip";
 
 const CreateCompany = () => {
 
@@ -34,7 +35,7 @@ const CreateCompany = () => {
                 dispatch(showToast({ message: res.error.message, error: true }));
             } else {
                 dispatch(showToast({ message: t('company_created_successfully'), success: true }));
-                navegate('/login');
+                navegate( rootpath + '/login');
             }
         });
     }
@@ -107,7 +108,7 @@ const CreateCompany = () => {
                         <button type="submit"
                         className="p-2 bg-green-900 text-white rounded ">{firstCapitalize(t('create_company'))}</button>
                         <button type="button"
-                        onClick={()=>{navegate('/login')}}
+                        onClick={()=>{navegate(`${rootpath}/login`)}}
                         className="p-2 bg-green-200 rounded self-center w-[80%]">{firstCapitalize(t('sign_in'))}</button>
                     </div>
                 </form>

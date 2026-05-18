@@ -11,3 +11,6 @@ export function getTenantPath() {
 export function getIpTenant() {
   return Ip + getTenantPath();
 }
+
+ export const rootpath = "/salespoint";
+   

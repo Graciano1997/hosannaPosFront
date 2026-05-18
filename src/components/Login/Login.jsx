@@ -5,6 +5,7 @@ import { authenticate, logoutUser, showToast } from "../../slices/appSlice";
 import { useEffect, useState } from "react";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import CompanyLand from "./CompanyLand";
+import {rootpath} from "../../lib/ip";
 
 const Login = () => {
 
@@ -27,7 +28,7 @@ const Login = () => {
         dispatch(authenticate(user)).
         then((loginState)=>{
             if(authenticate.fulfilled.match(loginState) && loginState.payload.user.id){
-                navegate('/dashboard')
+                navegate( rootpath + '/dashboard')
             }
         })
     }
@@ -59,7 +60,7 @@ const Login = () => {
                         <button type="submit" className="p-2 bg-green-200 rounded">{firstCapitalize(t('sign_in'))}</button>
                         <button type="button"
                         onClick={()=>{
-                            navegate('/create_company')
+                            navegate( rootpath + '/create_company')
                         }}
                         className="p-2 bg-green-900 text-white rounded self-center w-[80%]">{firstCapitalize(t('create_company'))}</button>
                     </div>

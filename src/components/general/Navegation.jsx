@@ -9,6 +9,7 @@ import { Profiles } from "../../lib/Enums";
 import { CubeTransparentIcon, ServerStackIcon, ShoppingBagIcon, Square3Stack3DIcon } from "@heroicons/react/16/solid";
 import { Square2StackIcon } from "@heroicons/react/20/solid";
 import { CurrentUser } from "../../lib/CurrentUser";
+import { rootpath } from "../../lib/ip";
 
 const Navegation =({visible,setVisibility})=>{
     const {t} = useTranslation();
@@ -45,14 +46,14 @@ const Navegation =({visible,setVisibility})=>{
         <ul className="flex flex-col gap-3 w-[100%]">
 
             <li>
-                <Link to={"/dashboard"} 
+                <Link to={rootpath + "/dashboard"} 
                 className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/dashboard'?'rounded bg-green-100':''}`} >
                 <HomeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('dashboard'))}
                 </Link>
             </li>
           <li>
-                <Link to={"/sale"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sale'?'rounded bg-green-100':''}`} >
+                <Link to={rootpath + "/sale"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sale'?'rounded bg-green-100':''}`} >
                 <ShoppingCartIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('sale'))}
                 </Link>
@@ -60,7 +61,7 @@ const Navegation =({visible,setVisibility})=>{
             <li>
                 <Link
                 onClick={handleMasterMessage}
-                to={  master ? "/products":'#'} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/products'?'rounded bg-green-100':''}`} >
+                to={  master ? rootpath + "/products":'#'} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/products'?'rounded bg-green-100':''}`} >
                 <CubeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('products'))}
                 </Link>
@@ -68,7 +69,7 @@ const Navegation =({visible,setVisibility})=>{
             <li>
                 <Link
                 onClick={handleMasterMessage}
-                to={ master ? "/spents":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/spents'?'rounded bg-green-100':''}`} >
+                to={ master ? rootpath + "/spents":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/spents'?'rounded bg-green-100':''}`} >
                 <CreditCardIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('spents'))}
                 </Link>
@@ -76,14 +77,14 @@ const Navegation =({visible,setVisibility})=>{
                    <li>
                 <Link 
                 onClick={handleMasterMessage}
-                to={ master ? "/sales": "#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sales'?'rounded bg-green-100':''}`} >
+                to={ master ? rootpath + "/sales": "#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/sales'?'rounded bg-green-100':''}`} >
                 <TagIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('sales'))}
                 </Link>
             </li>
                        <li>
-                <Link to={"/stock_movements"} 
-                className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/stock_movements'?'rounded bg-green-100':''}`} >
+                <Link to={rootpath + "/stock_movements"} 
+                className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/stock_movements'?'rounded bg-green-100':''}`} >
                 <ArchiveBoxIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('stock'))}
                 </Link>
@@ -91,7 +92,7 @@ const Navegation =({visible,setVisibility})=>{
             <li>
                 <Link
                 onClick={handleMasterMessage}
-                to={  master ? "/users":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/users'?'rounded bg-green-100':''}`} >
+                to={  master ? rootpath + "/users":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/users'?'rounded bg-green-100':''}`} >
                 <UserGroupIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('users'))}
                 </Link>
@@ -99,7 +100,7 @@ const Navegation =({visible,setVisibility})=>{
            {false &&
             <li>
                 <Link 
-                to={"/mystore"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/mystore'?'rounded bg-green-100':''}`} >
+                to={rootpath + "/mystore"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/mystore'?'rounded bg-green-100':''}`} >
                 <GlobeAltIcon className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('My store'))}
                 </Link>
@@ -108,7 +109,7 @@ const Navegation =({visible,setVisibility})=>{
             <li>
                 <Link 
 
-                to={"/setting"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/setting'?'rounded bg-green-100':''}`} >
+                to={rootpath + "/setting"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/setting'?'rounded bg-green-100':''}`} >
                 <Cog8ToothIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('settings'))}
                 </Link>
@@ -116,7 +117,7 @@ const Navegation =({visible,setVisibility})=>{
             <li>
                 <button onClick={()=>{
                     dispatch(logoutUser())
-                    navegate('/logout');
+                    navegate(`${rootpath}/logout`);
                     
                 }} className="flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-red-300 hover:text-white" >
                 <ArrowLeftStartOnRectangleIcon className="w-5 y-5  cursor-pointer hover:shadow"/>

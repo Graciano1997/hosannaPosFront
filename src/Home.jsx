@@ -35,6 +35,7 @@ import { MyStore } from './components/mystore/Mystore'
 import StockMovements from './components/Stock/StockMovements'
 import Devolution from './components/devolution/Devolution'
 import CreateCompany from './components/Login/CreateCompany'
+import { rootpath } from "./lib/ip";
 
 function Home() {
 
@@ -72,7 +73,7 @@ function Home() {
 
    },[isVisible]);
 
-  const excludePathName =['/','/logout','/create_company'];
+  const excludePathName =['/',`${rootpath}/logout`,`${rootpath}/create_company`];
   
   return (
      <div className={`h-100 w-100 p-3  ${!appState.isLogged?'flex items-center justify-center':''}`}>        
@@ -84,27 +85,27 @@ function Home() {
       </>
       }
 
-      {!localStorage.getItem("isLogged") && pathname !='/create_company' ?  (<Login/>)
+      {!localStorage.getItem("isLogged") && pathname != `${rootpath}/create_company` ?  (<Login/>)
       :
       <Routes>
-          <Route path="/" element={<Dashboard/>}/>
-          <Route path='/login' element={<Login/>} />
-          <Route path='/logout' element={<Login/>} />
-          <Route path='/create_company' element={<CreateCompany/>} />
-          <Route path='/dashboard' element={<Dashboard/>} />
-          <Route path='/pdf' element={masterProfile ? <PdfViewer/>:<_401/>} />
-          <Route path='/requests' element={masterProfile ? <Request/>:<_401/>} />
-          <Route path='/notifications' element={masterProfile ? <Notification/> : <_401/>} />
-          <Route path='/sales' element={masterProfile ? <Sales/> : <_401/>} />
-          <Route path='/products' element={masterProfile ? <Product/> : <_401/>} />
-          <Route path='/spents' element={masterProfile ? <Spent/>: <_401/>} />  
-          <Route path='/users' element={masterProfile ? <User/>: <_401/>} /> 
-          <Route path='/sale' element={<Sale setToastObject={setToastObject}/>} />      
-          <Route path='/sale/devolution' element={<Devolution setToastObject={setToastObject}/>} />      
-          <Route path='/setting' element={<Setting/>} />
-          <Route path='/profile' element={<Account/>} />
-          <Route path='/mystore' element={<MyStore/>} />
-          <Route path='/stock_movements' element={<StockMovements/>} />
+          <Route path={rootpath} element={<Dashboard/>}/>
+          <Route path={`${rootpath}/login`} element={<Login/>} />
+          <Route path={`${rootpath}/logout`} element={<Login/>} />
+          <Route path={`${rootpath}/create_company`} element={<CreateCompany/>} />
+          <Route path={`${rootpath}/dashboard`} element={<Dashboard/>} />
+          <Route path={`${rootpath}/pdf`} element={masterProfile ? <PdfViewer/>:<_401/>} />
+          <Route path={`${rootpath}/requests`} element={masterProfile ? <Request/>:<_401/>} />
+          <Route path={`${rootpath}/notifications`} element={masterProfile ? <Notification/> : <_401/>} />
+          <Route path={`${rootpath}/sales`} element={masterProfile ? <Sales/> : <_401/>} />
+          <Route path={`${rootpath}/products`} element={masterProfile ? <Product/> : <_401/>} />
+          <Route path={`${rootpath}/spents`} element={masterProfile ? <Spent/>: <_401/>} />  
+          <Route path={`${rootpath}/users`} element={masterProfile ? <User/>: <_401/>} /> 
+          <Route path={`${rootpath}/sale`} element={<Sale setToastObject={setToastObject}/>} />      
+          <Route path={`${rootpath}/sale/devolution`} element={<Devolution setToastObject={setToastObject}/>} />      
+          <Route path={`${rootpath}/setting`} element={<Setting/>} />
+          <Route path={`${rootpath}/profile`} element={<Account/>} />
+          <Route path={`${rootpath}/mystore`} element={<MyStore/>} />
+          <Route path={`${rootpath}/stock_movements`} element={<StockMovements/>} />
           <Route path='*' element={<_404/>} />
       </Routes>
     }

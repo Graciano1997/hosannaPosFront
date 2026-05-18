@@ -11,7 +11,7 @@ const Create=()=>{
     const dispatch = useDispatch();
     const image = useRef(null);
 
-    const [company,setCompany] = useState(companyState.companyToUpdate);
+    const [company, setCompany] = useState(companyState.companyToUpdate || {});
     const {t}=useTranslation();
 
        const formHandler = (el) => {
@@ -24,20 +24,22 @@ const Create=()=>{
         const handleFormSubmition = (el) => {
             el.preventDefault();
 
-            if(company.id){
-                delete company.image_url;
-                delete company.updated_at;
-                console.log("The company", company)
+            let companyData = { ...company };
+
+            if (companyData.id) {
+                delete companyData.image_url;
+                delete companyData.updated_at;
             }
+
 
             const companyForm = new FormData(); 
 
-            Object.keys(company).map((key)=>{
-                companyForm.append(`company[${key}]`,company[key]);
+            Object.keys(companyData).forEach((key) => {
+                companyForm.append(`company[${key}]`, companyData[key]);
             });
 
-            if(image.current.files[0]){
-                companyForm.append("company[image]",image.current.files[0]);
+            if (image.current && image.current.files && image.current.files[0]) {
+                companyForm.append("company[image]", image.current.files[0]);
             }
 
               if (company.id) {
