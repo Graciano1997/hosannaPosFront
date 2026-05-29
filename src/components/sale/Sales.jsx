@@ -53,9 +53,6 @@ const Sales=()=>{
         deleteItem={false}
         update={false}
         />
-        <div classname="mt-2 flex bg-red-200">
-            <h1>Total</h1>
-        </div>
         </>
         )}
 
