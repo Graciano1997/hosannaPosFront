@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Table from "../Table/Table";
 import Create from "./Create";
-import Title from "./Title";
+import Title from "../general/Title";
 import ProductDashboard from "./ProductDashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { creatingProduct, deleteProduct,  fetchAlertProducts, fetchExpiredProducts, fetchProductConfiguration, fetchProducts, loadingMore, setProducts, stopCreatingOrUpdateingProduct, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";

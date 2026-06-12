@@ -66,7 +66,7 @@ const Title=({title,create,collectionToExport})=>{
                 </Link>
             </li>
             {
-                pathname == '/products'
+                pathname == `${rootpath}/products`
                  &&
                 <>
                 <li>
