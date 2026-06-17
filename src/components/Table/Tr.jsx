@@ -30,7 +30,7 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
     return (
         <>
             <tr
-               key={item.id + Math.random()}
+            key={item.id}
                className={`${index % 2 == 0 ? rowStyle : ''}   cursor-pointer hover:sm:shadow font-light `}>
                 {keys.map((key) =>
                     <td onClick={() => { dispatch(itemDetails(item)) }} className="p-1 text-center">
@@ -64,14 +64,19 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                                     }
                                 }} className={`${checkNumber ? 'bg-red-300' : 'bg-red-100'}  w-[20px] rounded-[50%] hover:shadow`}>-</button>
                                 <input type="text"
-                                    onChange={(el) => {
+                                    onChange={
+                                        (el) => {
+                                        
+                                        if(el.target.value != ""){
                                         if (isNaN(parseFloat(el.target.value)) || parseFloat(el.target.value) == 0) {
-                                            setCheckNumber(false);
-                                            setQty(0);
-                                        } else {
-                                            setQty(el.target.value);
-                                            setCheckNumber(true);
-                                        }
+                                             setCheckNumber(false);
+                                             setQty(0);
+                                         } else {
+                                             setQty(el.target.value);
+                                             setCheckNumber(true);
+                                         }
+                                            }
+
                                     }}
                                     className="p-[2px] w-[100px] text-center rounded-[16px]" placeholder="qty" />
                                 <button onClick={() => {
