@@ -8,6 +8,8 @@ import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { fetchSales, setSales } from "../../slices/saleSlice";
 import { activeTab } from "../../slices/appSlice";
+import { firstCapitalize } from "../../lib/firstCapitalize";
+import Money from "../general/Money";
 
 const Sales=()=>{
     const {t}=useTranslation();
@@ -16,7 +18,12 @@ const Sales=()=>{
     const filterRows = ['client_id','user_id','sale_products','image',"store_id"];
     
     const saleState= useSelector((state)=>state.saleState);
+    const userState= useSelector((state)=>state.userState);
+
     const sales= saleState.sales;
+    const users= userState.users;
+
+    console.log("sales",sales);
 
     const dispatch = useDispatch();
 
@@ -52,6 +59,7 @@ const Sales=()=>{
         collection={sales} 
         deleteItem={false}
         update={false}
+        users={users}
         />
         </>
         )}

@@ -9,7 +9,7 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 
-export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}, style, setSearching=()=>{}, setSearchResult=()=>{}})=>{
+export const DatePickerFilter = ({ visibility,setVisibility,query,setQuery=()=>{}, style, setSearching=()=>{}, setSearchResult=()=>{}})=>{
     const [selected,setSelected]=useState(null);
     const inputRef = useRef(null);
     const {t,i18n}=useTranslation();
@@ -25,7 +25,6 @@ export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}
          document.addEventListener("mousedown",handlerClickOutSide);
          return ()=>document.removeEventListener("mousedown",handlerClickOutSide);
     },[selected]);
-
 
     let locale;
 
@@ -87,14 +86,22 @@ export const DatePickerFilter = ({ visibility,setVisibility, setRangeDate=()=>{}
                 <>
                 <button  onClick={()=>{
                 if(selected.from!=undefined && selected.to!=undefined ){
-                setRangeDate({from:format(selected.from,"yyyy-MM-dd"),to:format(selected.to,"yyyy-MM-dd")})
+                  
+
+                    setQuery((prev)=>({ 
+                        ...prev,    
+                        rangeDate:{from:format(selected.from,"yyyy-MM-dd"),to:format(selected.to,"yyyy-MM-dd")},
+                    }))
                 }
                setVisibility(false);
                setSearching(false);
             }} className="p-1 rounded bg-green-200 text-black" >{t('confirm')} </button>
 
                 <button  onClick={()=>{
-                    setRangeDate({from:null, to:null});
+                    setQuery((prev)=>({ 
+                        ...prev,    
+                        rangeDate:{from:null,to:null},
+                    }))
                 setSelected(null);
                 setVisibility(false);
                 setSearchResult([]);

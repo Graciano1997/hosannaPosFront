@@ -265,6 +265,12 @@
     "cash_paid":"cash_paid",
     "remaining_amount":"remaining_amount",
     "total_paid":"total_paid",
-    "tpa_paid":"tpa_paid"
+    "tpa_paid":"tpa_paid",
+    "select_user":"select user",
+    "select_client":"select client",
+    "sales_total": "sales total",
+    "all_users":"all users",
+    "all_clients":"all clients"
+
 }
 

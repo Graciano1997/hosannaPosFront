@@ -268,5 +268,10 @@
     "cash_paid": "valor_pago_em_dinheiro",
     "remaining_amount": "valor_em_falta",
     "total_paid": "total_pago",
-    "tpa_paid": "valor_pago_por_tpa"
+    "tpa_paid": "valor_pago_por_tpa",
+    "select_user":"seleciona um utilizador",
+    "select_client":"seleciona um cliente",
+    "sales_total": "total de vendas",
+    "all_users":"todos os utilizadores",
+    "all_clients":"todos os clientes"
 }
