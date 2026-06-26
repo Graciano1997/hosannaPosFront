@@ -23,8 +23,6 @@ const Sales=()=>{
     const sales= saleState.sales;
     const users= userState.users;
 
-    console.log("sales",sales);
-
     const dispatch = useDispatch();
 
     useEffect(()=>{

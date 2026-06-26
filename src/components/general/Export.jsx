@@ -7,6 +7,7 @@ import ExportButton from "../ExportButton";
 import { DatePickerFilter } from "./DatePickerFilter";
 import searchCollection from "../../lib/seach";
 import { useLocation } from "react-router-dom";
+import { rootpath } from "../../lib/ip";
 
 const productModelDescription = ["products","products","produits"];
 
@@ -16,7 +17,13 @@ const Export = ({ stopExporting }) => {
     const [columnsToExport, setColumnsToExport] = useState([]);
     const [selectedAll, setSelectedAll] = useState(false);
     const [visibility, setVisibility] = useState(false);
-    const [rangeDate, setRangeDate] = useState(null);
+
+    const [query, setQuery] = useState({
+            str:'',
+            rangeDate:{from: null, to: null},
+            user_id:''
+        });
+
     const dispatch = useDispatch();
     const [updateModelToExport, setUpdatedModelToExport] = useState(null);
     const [exportOption, setExportOption] = useState('excel');
@@ -27,13 +34,13 @@ const Export = ({ stopExporting }) => {
 
     const [pageSetting,setPageSetting]=useState({orientation:'portrait',size:'A4'});
 
-    const filterFilter = ['image', 'profile_id', 'sale_products', 'user_id', 'client_id', 'category_id', 'parent_category_id', 'output','store_id'];
+    const filterFilter = ['image', 'profile_id', 'sale_products', 'user_id', 'client_id', 'category_id','company_id', 'parent_category_id', 'output','store_id'];
     const fieldRef = useRef(null);
 
     const productUserSelectedFields = productConfigurationFields.filter((item) => item.active).map((item) => item.field);
 
     useEffect(() => {
-        if (pathname == "/products" && productModelDescription.includes(exportingModel.model)) {
+        if (pathname == rootpath + "/products" && productModelDescription.includes(exportingModel.model)) {
             const mandatoryFields = ['name', 'qty', 'price', 'category', 'code', 'min_qty'];
             setFieldsToShow([...mandatoryFields, ...productUserSelectedFields]);
         } else {
@@ -44,15 +51,15 @@ const Export = ({ stopExporting }) => {
     }, []);
 
     useEffect(() => {
-        if (rangeDate?.from && rangeDate?.to) {
-            const result = searchCollection(exportingModel.data, '', rangeDate);
+        if (query.rangeDate?.from && query.rangeDate?.to) {
+            const result = searchCollection(exportingModel.data, '', query.rangeDate);
             const filteredModelToExport = {
                 ...exportingModel,
                 data: result
             }
             setUpdatedModelToExport(filteredModelToExport);
         }
-    }, [rangeDate]);
+    }, [query.rangeDate]);
 
     const pdfPageHandlerSetting = (el)=>{
         setPageSetting({...pageSetting,
@@ -132,15 +139,15 @@ const Export = ({ stopExporting }) => {
 
                         <div className="mt-4 flex gap-2 p-2 rounded-[20px] justify-center items-center bg-green-100 w-[25%] md:w-[40%]">
                             <p>{t('date_interval')}</p>
-                            <input type="search" onKeyDown={(el) => {
+                            <input type="text" onKeyDown={(el) => {
                                 if (el.key == "Backspace") {
-                                    setRangeDate(null);
+                                    // setRangeDate(null);
                                     setVisibility(false);
                                 }
-                            }} value={rangeDate?.from != null && rangeDate?.to != null ? `${rangeDate?.from} - ${rangeDate?.to}` : ''} onClick={() => { setVisibility(true) }}
+                            }} value={query.rangeDate?.from != null && query.rangeDate?.to != null ? `${query.rangeDate?.from} - ${query.rangeDate?.to}` : ''} onClick={() => { setVisibility(true) }}
                                 className="bg-transparent text-red-600" id="search" placeholder={firstCapitalize(t('data_interval_example'))} />
                         </div>
-                        <DatePickerFilter style={"absolute mt-[-20rem]"} setRangeDate={setRangeDate} visibility={visibility} setVisibility={setVisibility} />
+                        <DatePickerFilter style={"absolute mt-[-20rem]"} query={query} setQuery={setQuery} visibility={visibility} setVisibility={setVisibility} />
                     </div>
                     {fieldsToShow.length > 0 &&
                         <div className="flex justify-end p-2 mt-auto gap-5">

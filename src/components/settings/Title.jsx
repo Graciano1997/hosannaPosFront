@@ -9,6 +9,7 @@ import { ComputerDesktopIcon, ServerIcon } from "@heroicons/react/16/solid";
 import { ArchiveBoxIcon } from "@heroicons/react/20/solid";
 import { HomeIcon } from "@heroicons/react/24/solid";
 import { Profiles } from "../../lib/Enums";
+import { CurrentUser } from "../../lib/CurrentUser";
 
 const Title=({title,create})=>{
     const [showElipse,setShowElipse]=useState(true);
@@ -17,7 +18,7 @@ const Title=({title,create})=>{
     const appState= useSelector((state)=>state.appState);
     const dispatch = useDispatch();
     const {pathname}=useLocation();
-    const [master,setMaster]=useState(JSON.parse(localStorage.getItem("currentUser")).profileId==Profiles.MASTER);
+    const [master,setMaster]=useState(CurrentUser()?.profileId==Profiles.MASTER);
             
             const handleMasterMessage = ()=>{
                 if(!master){
@@ -90,13 +91,11 @@ const Title=({title,create})=>{
                 { firstCapitalize(t('profile'))}
                 </Link>
             </li>
-                        <li>
+            <li>
                 <Link to={"#"} onClick={
                     (el)=>{
                         el.preventDefault();
-                        if(handleMasterMessage()){
                             dispatch(activeTab('tab4'))}
-                        }
                 } 
                 className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''}`} >
                 <PrinterIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>

@@ -96,7 +96,7 @@ function Home() {
           <Route path={`${rootpath}/pdf`} element={masterProfile ? <PdfViewer/>:<_401/>} />
           <Route path={`${rootpath}/requests`} element={masterProfile ? <Request/>:<_401/>} />
           <Route path={`${rootpath}/notifications`} element={masterProfile ? <Notification/> : <_401/>} />
-          <Route path={`${rootpath}/sales`} element={masterProfile ? <Sales/> : <_401/>} />
+          <Route path={`${rootpath}/sales`} element={<Sales/>}/>
           <Route path={`${rootpath}/products`} element={masterProfile ? <Product/> : <_401/>} />
           <Route path={`${rootpath}/spents`} element={masterProfile ? <Spent/>: <_401/>} />  
           <Route path={`${rootpath}/users`} element={masterProfile ? <User/>: <_401/>} /> 

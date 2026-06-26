@@ -11,18 +11,22 @@ import Profile from "./Profile";
 import Print from "./Print";
 import { fetchPrinterConfig, fetchPrinters } from "../../slices/printerSlice";
 import CreateBank from "./CreateBank";
+import { Profiles } from "../../lib/Enums";
+import { CurrentUser } from "../../lib/CurrentUser";
+
 import { creatingBankAccount, deleteBankAccount, fetchBankAccounts, setBankAccount, updateBankAccount, updatingBankAccount } from "../../slices/bankAccountSlice";
 
 const Setting=()=>{
     const dispatch = useDispatch();
+    const [master,setMaster]=useState(CurrentUser()?.profileId==Profiles.MASTER);
     
-    useEffect(()=>{
+    useEffect(()=>{        
         const loadData = async () => {
-          await Promise.all([
+            await Promise.all([
                 dispatch(fetchCompanies()),
                 dispatch(fetchBankAccounts()),
                 dispatch(fetchPrinterConfig()),
-                dispatch(fetchPrinters())
+                dispatch(fetchPrinters()),
             ]);
           };
         loadData();

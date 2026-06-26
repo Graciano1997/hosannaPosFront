@@ -6,6 +6,7 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useDispatch } from "react-redux";
 import { logoutUser, showToast } from "../../slices/appSlice";
 import { Profiles } from "../../lib/Enums";
+import { activeTab } from "../../slices/appSlice";
 import { CubeTransparentIcon, ServerStackIcon, ShoppingBagIcon, Square3Stack3DIcon } from "@heroicons/react/16/solid";
 import { Square2StackIcon } from "@heroicons/react/20/solid";
 import { CurrentUser } from "../../lib/CurrentUser";
@@ -61,7 +62,7 @@ const Navegation =({visible,setVisibility})=>{
             <li>
                 <Link
                 onClick={handleMasterMessage}
-                to={  master ? rootpath + "/products":'#'} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/products'?'rounded bg-green-100':''}`} >
+                to={master ? rootpath + "/products":'#'} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/products'?'rounded bg-green-100':''}`} >
                 <CubeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('products'))}
                 </Link>
@@ -76,14 +77,15 @@ const Navegation =({visible,setVisibility})=>{
             </li>           
                    <li>
                 <Link 
-                onClick={handleMasterMessage}
-                to={ master ? rootpath + "/sales": "#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/sales'?'rounded bg-green-100':''}`} >
+                to={ rootpath + "/sales"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/sales'?'rounded bg-green-100':''}`} >
                 <TagIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('sales'))}
                 </Link>
             </li>
                        <li>
-                <Link to={rootpath + "/stock_movements"} 
+                <Link 
+                onClick={handleMasterMessage}
+                to={ master ? rootpath + "/stock_movements":'#'} 
                 className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/stock_movements'?'rounded bg-green-100':''}`} >
                 <ArchiveBoxIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('stock'))}
@@ -108,7 +110,11 @@ const Navegation =({visible,setVisibility})=>{
             } 
             <li>
                 <Link 
-
+                onClick={()=>{
+                    if(!master){
+                        dispatch(activeTab('tab4'))
+                    }
+                }}
                 to={rootpath + "/setting"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/setting'?'rounded bg-green-100':''}`} >
                 <Cog8ToothIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('settings'))}

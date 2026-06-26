@@ -11,6 +11,7 @@ import { DatePickerFilter } from "../general/DatePickerFilter";
 import { useLocation } from "react-router-dom";
 import Money from "../general/Money";
 import { sum } from "../../lib/sumCollection";
+import { rootpath } from "../../lib/ip";
 
 
 const Table = ({ collection = [], addItem = null, setCollection = () => { }, deleteItem = () => { }, printItem = null, update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { }, fetcherParam = null, searchBackEndHandler = null, loadingMore = null, rowStyle = "bg-green-100", rangeDataSelection= true, users = [] }) => {
@@ -35,15 +36,15 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
 
     const hasFilters = () =>
     !!(
-        query.str.trim() ||
+        query.str.tri() ||
         query.user_id ||
-        query.rangeDate?.from ||
+        query.rangeDate?.from &&
         query.rangeDate?.to
     );
 
     const searchHandler = () => {
         
-        if (query.str.trim().length > 0 || query.rangeDate?.from && query.rangeDate?.to || query.user_id) {
+        if (query.str.trim() || query.rangeDate?.from && query.rangeDate?.to || query.user_id) {
             setSearching(true);     
             const result = searchCollection(collection, query.str, query.rangeDate, query.user_id);
             setSearchResult(result);
@@ -196,11 +197,14 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
                                     <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} printItem={printItem} items={searchResult?.length ? searchResult : collection} rowStyle={rowStyle} />
                                 </table>
                                 
+                               {pathname == rootpath + "/sales" 
+                               &&
                                 <div className="flex justify-center mt-4 items-center gap-2 text-2xl font-bold mb-4 text-green-600">
                                     <h1 >{firstCapitalize(t('sales_total'))} : </h1>
-                                    {/* <p>{<Money amount={sales.reduce((acc, sale) => acc + (+sale.total || 0), 0)} />}</p> */}
                                     <p>{<Money amount={sum(searchResult?.length ? searchResult : collection, 'total').total || 0 } />}</p>
                                 </div>
+                               } 
+
                             </div>
                         }
                     </>
