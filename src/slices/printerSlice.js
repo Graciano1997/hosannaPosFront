@@ -119,7 +119,8 @@ const printerSlice = createSlice({
     builder.addCase(fetchPrinterConfig.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-
+      console.log("fetchPrinterConfig.fulfilled", action.payload);
+      
       if (!localStorage.hasOwnProperty(`user-${CurrentUser.id}-printerConfiguration`) && action.payload.data) {
         localStorage.setItem(action.payload.data.user, JSON.stringify(action.payload.data.value));
         state.printerConfiguration = action.payload.data.value;

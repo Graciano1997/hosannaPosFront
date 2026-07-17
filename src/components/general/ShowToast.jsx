@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import { useDispatch } from "react-redux";
 import { closeToast } from "../../slices/appSlice";
@@ -5,9 +6,14 @@ import { closeToast } from "../../slices/appSlice";
 const ShowToast = ({object})=>{
   const dispatch = useDispatch();
 
-  setTimeout(()=>{
-    dispatch(closeToast())
-  },6000);
+
+useEffect(() => {
+    const timer = setTimeout(() => {
+        dispatch(closeToast());
+    }, 6000);
+
+    return () => clearTimeout(timer);
+}, [dispatch]);
 
     return(
        <div className={`bg-black opacity-90 w-100 w-100  md:w-[400px]

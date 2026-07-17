@@ -31,7 +31,7 @@ const Title=({title,create})=>{
     return(
         <>
         <div
-            className="flex flex-col w-[100%] h-[120px] bg-white rounded p-4" 
+            className="flex flex-col w-[100%] h-[120px] bg-white rounded p-4 pb-3 overflow-y-hidden  relative" 
             onClick={(el)=>{
                 if(ref.current.contains(el.target) && !showElipse ){
                     setShowElipse(!showElipse);

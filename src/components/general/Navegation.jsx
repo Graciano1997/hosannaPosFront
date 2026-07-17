@@ -28,7 +28,7 @@ const Navegation =({visible,setVisibility})=>{
 
     useEffect(()=>{
         const handlerClick=(event)=>{
-            if(navegationRef.current &&   !navegationRef.current.contains(event.target)){ 
+            if(navegationRef.current && !navegationRef.current.contains(event.target)){ 
                 setVisibility(false); }
                 event.stopPropagation();
         }

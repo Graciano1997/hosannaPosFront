@@ -95,7 +95,7 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                     onClick={()=>{
                         dispatch(setRefenceSale(detailsItem.invoice_number));
                         dispatch(getSaleInvoiceItem({devolution:true, invoice_number: detailsItem.invoice_number }))
-                        navegate("/sale/devolution")}}
+                        navegate(rootpath + "sale/devolution")}}
                     className="bg-red-300 p-2 rounded hover:shadow"> {firstCapitalize(t('returning'))}</button>}
                 <button className="bg-green-200 p-2 rounded hover:shadow"> {firstCapitalize(t('export'))}</button>
                 </div>

@@ -268,7 +268,6 @@ const saleSlice = createSlice({
             state.totalToReturn = 0;
             // state.invoiceType = SaleType.INVOICE_RECIBO_FR;
             state.paymentType = PaymentType.CASH;
-            state.saleConfirmationIsOpen = false;
             state.newAmountToReceiveForTheFTInvoice = 0;
             state.invoiceSearchedItems = [];
             state.referenceSale = null;
@@ -330,9 +329,8 @@ const saleSlice = createSlice({
         });
 
         builder.addCase(order.fulfilled, (state, action) => {
-            console.log("After order",action.payload);
             state.sales.unshift(action.payload.sale_item);
-            state.saleConfirmationIsOpen = false;
+            // state.saleConfirmationIsOpen = false; ensure dont close after order, because we need to print the invoice
         });
 
 

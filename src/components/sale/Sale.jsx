@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { PrinterMode } from "../../lib/Enums";
 import SaleHeader from "./SaleHeader";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
@@ -15,11 +16,6 @@ import { saleNotConfirm } from "../../slices/saleSlice";
 const Sale=({setToastObject})=>{
     const dispatch=useDispatch();
     const productState = useSelector((state)=>state.productState);
-    
-      useEffect(()=>{
-          dispatch(fetchProducts(productState.last_created_at));
-      },[]);
-
     const {t}=useTranslation();
     const [isReadingQr,setIsReadingQr]=useState(false);
     const [readValue,setReadValue]= useState(null);    
@@ -27,7 +23,13 @@ const Sale=({setToastObject})=>{
     const isSelectedProduct = useSelector((state)=>state.saleState.selectedItem);
     const {saleConfirmationIsOpen} = useSelector((state)=>state.saleState);
     const {isSearching} = useSelector((state)=>state.productState);
+    const { printerConfiguration } = useSelector((state) => state.printerState);
+    const finishAndPrint = printerConfiguration?.finishAndprint === "true" ? true : false;
     
+      useEffect(()=>{
+          dispatch(fetchProducts(productState.last_created_at));
+      },[]);
+
         return(
         <>
         <SaleHeader title={t('sales')} setIsReadingQr={setIsReadingQr} setReadValue={setReadValue} />
@@ -38,7 +40,12 @@ const Sale=({setToastObject})=>{
         {isSelectedProduct && <ProductDetails/>}
 
         {globalState.isOpen && isSearching && <Modal helper={clearSearchedProduct}><SearchedProducts/></Modal>}  
-        {saleConfirmationIsOpen && <Modal helper={saleNotConfirm}><SaleConfirmation/></Modal> }
+        
+        {saleConfirmationIsOpen && 
+        <Modal helper={saleNotConfirm}>
+        <SaleConfirmation  printerConfiguration={printerConfiguration} finishAndPrint={finishAndPrint}/>
+        </Modal>
+         }
         </div>
         </>
     )

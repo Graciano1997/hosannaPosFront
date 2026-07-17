@@ -28,14 +28,12 @@ const CreateCompany = () => {
     const formHandler = (el) => {
         el.preventDefault();
 
-        console.log(store);
-
         dispatch(registerStore(store)).then((res) => {
             if (res.error) {
                 dispatch(showToast({ message: res.error.message, error: true }));
             } else {
                 dispatch(showToast({ message: t('company_created_successfully'), success: true }));
-                navegate( rootpath + '/login');
+                navegate( rootpath + 'login');
             }
         });
     }
@@ -108,7 +106,7 @@ const CreateCompany = () => {
                         <button type="submit"
                         className="p-2 bg-green-900 text-white rounded ">{firstCapitalize(t('create_company'))}</button>
                         <button type="button"
-                        onClick={()=>{navegate(`${rootpath}/login`)}}
+                        onClick={()=>{navegate(`${rootpath}login`)}}
                         className="p-2 bg-green-200 rounded self-center w-[80%]">{firstCapitalize(t('sign_in'))}</button>
                     </div>
                 </form>

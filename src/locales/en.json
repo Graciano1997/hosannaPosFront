@@ -173,7 +173,7 @@
     "units":"units",
     "added":"added",
     "removed":"removed",
-    "author":"Developed by Graciano Henrique",
+    "author":"Developed by Hosannex",
     "visit_me":"Visit my portfolio",
     "select_category": "Select a category",
     "product_in_promotion": "product on promotion",
@@ -248,7 +248,7 @@
     "bank":"Bank",
     "iban":"Iban",
     "account_number":"account number",
-    "confirm_generation":"Do you want to generate the [X] ?",
+    "confirm_generation": "Are you sure you want to complete this sale?",
     "example":"eg:",
     "search_for_invoice_id":"search for the invoice id",
     "invoice_status":"invoice status",
@@ -270,7 +270,15 @@
     "select_client":"select client",
     "sales_total": "sales total",
     "all_users":"all users",
-    "all_clients":"all clients"
-
+    "all_clients":"all clients",
+    "printer_mode":"printer mode",
+    "printer_automatic":"automatic",
+    "printer_manual":"manual",
+    "printer_ask":"ask",
+    "sale_completed_successfully": "Sale completed successfully!",
+    "confirm_printing": "Do you want to print the invoice ?",
+    "failed_to_fetch":"Failed to fetch, please check your internet connection or if the server is running.",
+    "sale_already_ordered":"Sale already completed, you cannot complete the same sale again.",
+    "print_successful":"Printing completed successfully!",
+    "failed_to_fetch_template":"Failed to fetch the template, please check your internet connection or if the server is running."
 }
-

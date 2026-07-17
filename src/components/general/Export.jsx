@@ -40,7 +40,7 @@ const Export = ({ stopExporting }) => {
     const productUserSelectedFields = productConfigurationFields.filter((item) => item.active).map((item) => item.field);
 
     useEffect(() => {
-        if (pathname == rootpath + "/products" && productModelDescription.includes(exportingModel.model)) {
+        if (pathname == rootpath + "products" && productModelDescription.includes(exportingModel.model)) {
             const mandatoryFields = ['name', 'qty', 'price', 'category', 'code', 'min_qty'];
             setFieldsToShow([...mandatoryFields, ...productUserSelectedFields]);
         } else {

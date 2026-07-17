@@ -29,8 +29,8 @@ const Title=({title,create,collectionToExport})=>{
              <div className="flex justify-between mt-4">
                 <h1 className="text-3xl">{firstCapitalize(title)}</h1>
                 {
-                ([ rootpath + '/products'].includes(pathname) && ['tab1','tab3','tab4','tab5'].includes(appState.activeTab) || 
-                [rootpath + '/sales',rootpath + '/users',rootpath + '/spents',rootpath + '/stock_movements'].includes(pathname) && ['tab1'].includes(appState.activeTab))
+                ([ rootpath + 'products'].includes(pathname) && ['tab1','tab3','tab4','tab5'].includes(appState.activeTab) || 
+                [rootpath+'sales',rootpath+'users',rootpath+'spents', rootpath+'stock_movements'].includes(pathname) && ['tab1'].includes(appState.activeTab))
                 &&
                 <>
                 {showElipse && (<EllipsisHorizontalIcon onClick={()=>{setShowElipse(!showElipse)}} className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>)}
@@ -66,7 +66,7 @@ const Title=({title,create,collectionToExport})=>{
                 </Link>
             </li>
             {
-                pathname == `${rootpath}/products`
+                pathname == `${rootpath}products`
                  &&
                 <>
                 <li>

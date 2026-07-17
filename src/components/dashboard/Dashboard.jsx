@@ -87,7 +87,7 @@ const anualExpired = productState.anualExpireds || [];
                     <div className="flex gap-2 justify-end rounded">
                         <div className="flex p-0 gap-3">
                             <button onClick={() => {
-                                navegate(rootpath + '/sale');
+                                navegate(rootpath + 'sale');
                             }} className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex cursor-pointer">
                                 <ShoppingCartIcon className="w-5 y-5 text-[#323232] " />
                                 <h4>{firstCapitalize(t('sale'))}</h4>
@@ -97,7 +97,7 @@ const anualExpired = productState.anualExpireds || [];
                                 <>
                                     <button
                                         onClick={() => {
-                                            navegate(rootpath + '/sales');
+                                            navegate(rootpath + 'sales');
                                         }}
                                         className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex cursor-pointer">
                                         <TagIcon className="w-5 y-5 text-[#323232] " />
@@ -108,7 +108,7 @@ const anualExpired = productState.anualExpireds || [];
                                         <button
                                             onClick={() => {
                                                 dispatch(activeTab('tab4'));
-                                                navegate(rootpath + '/products');
+                                                navegate(rootpath + 'products');
                                             }}
                                             className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex cursor-pointer">
                                             <BellAlertIcon className="w-5 y-5 text-yellow-600 alert" />
@@ -119,7 +119,7 @@ const anualExpired = productState.anualExpireds || [];
                                     <button
                                         onClick={() => {
                                             dispatch(activeTab('tab5'));
-                                            navegate(rootpath + '/products');
+                                            navegate(rootpath + 'products');
                                         }}
                                         className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex cursor-pointer">
                                         <ClockIcon className="w-5 y-5 text-red-600 " />

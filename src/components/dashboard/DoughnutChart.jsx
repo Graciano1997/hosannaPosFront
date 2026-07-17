@@ -60,8 +60,10 @@ export function DoughnutChart({data = [],width=150,height=150,info}) {
   };;
 
   useEffect(()=>{
-    // dispatch(fetchAnualSpents()); 
-    dispatch(fetchMinYearSpents());
+    Promise.all([
+     dispatch(fetchAnualSpents()),
+     dispatch(fetchMinYearSpents())])
+     
   },[]);
 
   for(let index = spendState.minYear ; index <= (new Date().getFullYear()); index++)

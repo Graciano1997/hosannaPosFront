@@ -18,11 +18,21 @@ const Print = () => {
     };
 
     const printerState = useSelector((state) => state.printerState);
-
     const [printerSetting, setPrinterSetting] = useState({ ...JSON.parse(localStorage.getItem(`user-${CurrentUser().id}-printerConfiguration`)) });
+    
     return (
         <>
-            <div className="w-100 h-[400px] grid grid-cols-3 gap-10  overflow-auto p-5">
+            <div className="flex flex-col  h-[400px] md:w-100 md:grid md:grid-cols-4 gap-10  overflow-auto p-5">
+
+                <div className="flex flex-col gap-3">
+                    <label for="printermode" className="font-medium"> {firstCapitalize(t('printer_mode'))}
+                    </label>
+                    <select name="printermode" defaultValue={printerState.printerConfiguration?.printermode} onChange={formHandler} id="printermode" className="p-1 rounded">
+                        <option value="automatic">{firstCapitalize(t('printer_automatic'))}</option>
+                        <option value="ask">{firstCapitalize(t('printer_ask'))}</option>
+                        <option value="manual">{firstCapitalize(t('printer_manual'))}</option>
+                    </select>
+                </div>
 
                 <div className="flex flex-col gap-3">
                     <label for="printertype" className="font-medium"> {firstCapitalize(t('printer_type'))}
@@ -41,14 +51,6 @@ const Print = () => {
                                 printerState.availablePrinters.map((printer) =><option value={printer.name}>{printer.name}</option>) 
                                 :(<option disabled className="text-red-500">{firstCapitalize(t('no_printers'))}</option>)
                             }
-                        </select>
-                    </div>
-
-                    <div className="flex flex-col gap-3">
-                        <h3 className="font-medium">{firstCapitalize(t('finish_and_print'))}</h3>
-                        <select name="finishAndprint" defaultValue={printerState.printerConfiguration?.finishAndprint} className="p-1 rounded" onChange={formHandler}>
-                            <option value={true}>{firstCapitalize(t('yes'))}</option>
-                            <option value={false}>{firstCapitalize(t('not'))}</option>
                         </select>
                     </div>
                 </div>

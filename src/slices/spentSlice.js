@@ -23,13 +23,14 @@ export const fetchLastSpents = createAsyncThunk("spentState/lastSpents", async (
     return response.json();
 })
 
+
 export const fetchAnualSpents = createAsyncThunk("spentState/fetchAnualSpents", async (year=new Date().getFullYear()) => {
     const response = await fetch(`${getIpTenant()}spents/anual_spents/${year}`);
     return response.json();
 })
 
 export const fetchMinYearSpents = createAsyncThunk("spentState/fetchMinYearSpents", async (year=new Date().getFullYear()) => {
-    const response = await fetch(`${getIpTenant()}spents/min_year_spends`);
+    const response = await fetch(`${getIpTenant()}spents/min_year_date_spents`);
     return response.json();
 })
 

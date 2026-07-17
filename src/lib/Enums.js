@@ -49,3 +49,9 @@ export const InvoiceStatus = {
     PENDING:"pending",
     PARTIAL:"partial"
 }
+
+export const PrinterMode = {
+    AUTOMATIC:"automatic",
+    MANUAL:"manual",
+    ASK:"ask"
+}

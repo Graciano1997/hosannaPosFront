@@ -15,7 +15,7 @@ const CurrentUser=()=>{
     },[localStorage.getItem("currentUser")]);
     
     return(
-                <div className="flex justify-start items-center gap-2 mt-1 w-[100%] cursor-pointer" onClick={()=>{navegate( rootpath + '/profile')}}>
+                <div className="flex justify-start items-center gap-2 mt-1 w-[100%] cursor-pointer" onClick={()=>{navegate( rootpath + 'profile')}}>
                 <div className="w-[40px] h-[40px]">
                     <img src={Current().image} className="w-[100%] h-[100%] rounded-full cursor-pointer shadow-lg"/>
                 </div>

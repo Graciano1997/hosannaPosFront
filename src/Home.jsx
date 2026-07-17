@@ -36,12 +36,12 @@ import StockMovements from './components/Stock/StockMovements'
 import Devolution from './components/devolution/Devolution'
 import CreateCompany from './components/Login/CreateCompany'
 import { rootpath } from "./lib/ip";
+import { CurrentUser } from './lib/CurrentUser'
 
 function Home() {
 
   const appState=useSelector((state)=>state.appState);
   const productState=useSelector((state)=>state.productState);
-
   const [isVisible,setIsVisible]=useState(false);
   const [isSearching,setIsSearching]=useState(false);
   const [showToast,setShowToast]=useState(true);
@@ -50,48 +50,47 @@ function Home() {
   const {pathname}= useLocation();
   const {t}=useTranslation();
   const navegate = useNavigate();
-  const masterProfile = localStorage.getItem("currentUser") ? JSON.parse(localStorage.getItem("currentUser")).profileId==Profiles.MASTER:null;
-  
+  const masterProfile = CurrentUser()?.profileId==Profiles.MASTER;
 
   useEffect(()=>{
-    if(localStorage.getItem("isLogged")){
-      dispatch(fetchProducts());
-      dispatch(fetchUsers());
-      dispatch(fetchSpents());
-      dispatch(fetchCategories());
-      dispatch(fetchCompanies());
-      dispatch(fetchPrinterConfig());
+
+    if(appState.isAuthenticated){
+      Promise.all([
+      dispatch(fetchProducts()),
+      dispatch(fetchUsers()),
+      dispatch(fetchSpents()),
+      dispatch(fetchCategories()),
+      dispatch(fetchCompanies()),
+      dispatch(fetchPrinterConfig())])
     } 
-   },[]);
+   },[appState.isAuthenticated,dispatch]);
 
    useEffect(()=>{    
      if(isVisible){
        setTimeout(() => {
          setIsVisible(false);
-       }, 60000);
+       }, 50000);
      } 
-
    },[isVisible]);
 
-  const excludePathName =['/',`${rootpath}/logout`,`${rootpath}/create_company`];
-  
   return (
-     <div className={`h-100 w-100 p-3  ${!appState.isLogged?'flex items-center justify-center':''}`}>        
-      {
-      localStorage.getItem("isLogged") && (!excludePathName.includes(pathname)) && 
-      <>
-      <Header searchHandleClick={setIsSearching} setVisibility={setIsVisible}/>
-      <Navegation visible={isVisible} setVisibility={setIsVisible}/>
-      </>
-      }
+     <div className={`h-100 w-100 p-3  ${ !localStorage.getItem("isLogged") ? 'flex items-center justify-center':''}`}>   
 
-      {!localStorage.getItem("isLogged") && pathname != `${rootpath}/create_company` ?  (<Login/>)
-      :
+      {
+      !localStorage.getItem("isLogged") ?  
       <Routes>
-          <Route path={rootpath} element={<Dashboard/>}/>
+          <Route path={rootpath} element={<Login/>}/>
           <Route path={`${rootpath}login`} element={<Login/>} />
           <Route path={`${rootpath}logout`} element={<Login/>} />
           <Route path={`${rootpath}create_company`} element={<CreateCompany/>} />
+          <Route path='*' element={<_404/>} />
+      </Routes>
+      :
+      <>
+      <Header searchHandleClick={setIsSearching} setVisibility={setIsVisible}/>
+      <Navegation visible={isVisible} setVisibility={setIsVisible}/>
+      <Routes>
+          <Route path={rootpath} element={<Dashboard/>}/>
           <Route path={`${rootpath}dashboard`} element={<Dashboard/>} />
           <Route path={`${rootpath}pdf`} element={masterProfile ? <PdfViewer/>:<_401/>} />
           <Route path={`${rootpath}requests`} element={masterProfile ? <Request/>:<_401/>} />
@@ -108,12 +107,10 @@ function Home() {
           <Route path={`${rootpath}stock_movements`} element={<StockMovements/>} />
           <Route path='*' element={<_404/>} />
       </Routes>
+      </>
     }
-  
-      {
-        appState.invoiceView && appState.urlItem &&
-        <PdfViewer closeHandler={closeInvoiceView} url={appState.urlItem}/>
-      }
+
+      {appState.invoiceView && appState.urlItem && <PdfViewer closeHandler={closeInvoiceView} url={appState.urlItem}/>}
       
       { appState.isSearching && (<Search/>)}
       { appState.showToast && (<ShowToast object={appState.toastObject} />)}
@@ -122,4 +119,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Home;

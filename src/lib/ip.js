@@ -13,5 +13,5 @@ export function getIpTenant() {
   return Ip + getTenantPath();
 }
 
- export const rootpath = "";
+ export const rootpath = "/";
    

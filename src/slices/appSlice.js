@@ -22,6 +22,7 @@ const initialState = {
     currentTableCollection:[],
     invoiceView:false,
     urlItem:'',
+    isAuthenticated:false,
     companyId:localStorage.getItem("currentUser")? CurrentUser().companyId:null
 }
 
@@ -39,9 +40,6 @@ const initialState = {
  });
 
   export const printing = createAsyncThunk("appState/printing",async (invoiceObject)=>{
-    
-        console.log("INVOICE",invoiceObject);
-
         const response = await fetch(`http://localhost:5000/print`,
             { method:'POST',
               body:JSON.stringify(invoiceObject),
@@ -93,6 +91,9 @@ const appSlice=createSlice({
         localStorage.removeItem("isLogged");
         localStorage.removeItem("currentUser");
         state.storeId=null;
+        state.isLogged=false;
+        state.companyId=null;
+        state.isAuthenticated=false;
         },
 
         cleanItemDetails: (state)=>{
@@ -297,13 +298,14 @@ const appSlice=createSlice({
                 state.companyId=action.payload.user.companyId;
                 localStorage.setItem("isLogged",true);
                 localStorage.setItem("currentUser",JSON.stringify(action.payload.user));
+                state.isAuthenticated=true;
             }
 
         });
 
         builder.addCase(authenticate.rejected,(state,action)=>{
             state.error = action.error.message;
-         console.log(action.error);
+            state.isAuthenticated=false;
         });
 
         builder.addCase(exporting.fulfilled,(state,action)=>{

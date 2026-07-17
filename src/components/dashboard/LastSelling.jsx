@@ -35,13 +35,16 @@ const LastSelling =({width=200,height=300,info})=>{
             <>
                          <div className="p-2">
                 <ul className="h-[100%] flex flex-col justify-around">
-                <li className="h-[40px] bg-white  grid grid-cols-3 items-center justify-center">
+                <li key="lastsalesheader"
+                 className="h-[40px] bg-white  grid grid-cols-3 items-center justify-center">
                     <p>{firstCapitalize(t('client'))}</p>
                     <p className="text-center">{firstCapitalize(t('qty'))}</p>
                     <p>{firstCapitalize(t('total'))}</p>
                     </li>
                     {lastSales.map((el)=>
-                    <li className="h-[40px] bg-green-100 cursor-pointer text-light text-sm justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
+                    <li
+                    key={el.id}
+                     className="h-[40px] bg-green-100 cursor-pointer text-light text-sm justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
                     <p>{el.client.split(' ')[0]}</p>
                     <p className="text-center">{el.qty}</p>
                     <Money amount={el.total}/>
