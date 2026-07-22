@@ -10,9 +10,7 @@ const CompanyLand = () => {
             </div>
             <div className='lg:mt-10'>
                 <p className="hidden lg:flex text-left text-xl md:text-3xl">
-                    O HosannaSales Point ajuda-te a vender melhor
-                    e a gerir o teu negócio
-                    com mais organização e confiança.
+                    {t('hosanna_sales_point_desc')}
                 </p>
             </div>
             <div className="hidden lg:flex flex-col justify-center sm:mt-[2rem] gap-[8px] py-5">

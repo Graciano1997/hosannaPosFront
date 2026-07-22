@@ -18,11 +18,39 @@ const CreateCompany = () => {
     const navegate = useNavigate();
     const [store, setStore] = useState({});
 
+    const [passwordConfirmation, setPasswordConfirmation] = useState({
+        password:'',
+        confirmation:'',
+        passwordMatching:false
+    });
+
     const handleInputChange = (el) => {
         setStore({
             ...store,
             [el.target.name]: el.target.value
         });
+        
+    switch (el.target.name) {
+        case 'password':
+            setPasswordConfirmation(
+                {
+                    ...passwordConfirmation, 
+                    password:el.target.value,
+                    passwordMatching: el.target.value === passwordConfirmation.confirmation
+                }
+            )
+            break;
+
+        case 'password_confirmation':
+            setPasswordConfirmation(
+                {
+                    ...passwordConfirmation, 
+                    confirmation:el.target.value,
+                    passwordMatching: el.target.value === passwordConfirmation.password
+                }
+            )
+            break;
+    }
     }
 
     const formHandler = (el) => {
@@ -30,7 +58,7 @@ const CreateCompany = () => {
 
         dispatch(registerStore(store)).then((res) => {
             if (res.error) {
-                dispatch(showToast({ message: res.error.message, error: true }));
+                dispatch(showToast({ message: t(`${res.error.message}`.toLowerCase().replaceAll(" ","_")), error: true }));
             } else {
                 dispatch(showToast({ message: t('company_created_successfully'), success: true }));
                 navegate( rootpath + 'login');
@@ -46,62 +74,61 @@ const CreateCompany = () => {
                     <label>
                         {firstCapitalize(t('proprietary_name'))}
                         <br />
-                        <input type='text' onChange={handleInputChange} name="ownername" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
+                        <input type='text' onChange={handleInputChange} name="ownername" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none'  required />
                     </label>
-                    <div className="flex justify-between ">
-
+                    <div className="flex md:justify-between gap-1">
                     <label>
                         {firstCapitalize(t('proprietary_address'))}
                         <br />
-                        <input type='text' onChange={handleInputChange} name="owneraddress" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
+                        <input type='text' onChange={handleInputChange} name="owneraddress" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none'required />
                     </label>
                     <label>
                         {firstCapitalize(t('proprietary_phone'))}
                         <br />
-                        <input type='tel' onChange={handleInputChange} name="ownerphone" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
+                        <input type='tel' onChange={handleInputChange} name="ownerphone" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' required />
                     </label>
                     </div>
                     <label>
                         {firstCapitalize(t('company_name'))}
                         <br />
-                        <input type='text' onChange={handleInputChange} name="companyname" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
+                        <input type='text' onChange={handleInputChange} name="companyname" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' required />
                     </label>
-                    <div className="flex justify-between gap-1">
-                                            <label>
+                    <div className="flex md:justify-between gap-1">
+                    <label>
                         {firstCapitalize(t('company_nif'))}
                         <br />
-                        <input type='text' onChange={handleInputChange} name="companynif" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
+                        <input type='text' onChange={handleInputChange} name="companynif" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none'/>
                     </label>
                     <label>
                         {firstCapitalize(t('company_phone'))}
                         <br />
-                        <input type='tel' onChange={handleInputChange} name="companyphone" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
+                        <input type='tel' onChange={handleInputChange} name="companyphone" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' required />
                     </label>
-
                     </div>
 
                     <label>
                         {firstCapitalize(t('email'))}
                         <br />
-                        <input type='email' onChange={handleInputChange} name="email" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
+                        <input type='email' onChange={handleInputChange} name="email" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' required />
                     </label>
                     <label>
                         {firstCapitalize(t('password'))}
                         <br />
-                        <input type='password' onChange={handleInputChange} name="password" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
+                        <input type='password' onChange={handleInputChange} name="password" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' required />
                     </label>
                     <label>
                         {firstCapitalize(t('password_confirmation'))}
                         <br />
-                        <input type='password' onChange={handleInputChange} name="password_confirmation" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
+                        <input type='password' onChange={handleInputChange} name="password_confirmation" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' required />
                     </label>
-                    {appState.error &&
-                        <span className="text-red-500">
-                            {firstCapitalize(t('invalid_email_or_password'))}
-                        </span>
 
-                    }
-
+                    {
+                    passwordConfirmation.password!=='' 
+                    && passwordConfirmation.confirmation!=='' 
+                    && !passwordConfirmation.passwordMatching && (
+                        <p className="text-red-500">{t('password_not_match')}</p>
+                    )}
+               
                     <div className="flex flex-col gap-5 justify-center mt-[0.5rem] p-2">
                         <button type="submit"
                         className="p-2 bg-green-900 text-white rounded ">{firstCapitalize(t('create_company'))}</button>
@@ -109,6 +136,12 @@ const CreateCompany = () => {
                         onClick={()=>{navegate(`${rootpath}login`)}}
                         className="p-2 bg-green-200 rounded self-center w-[80%]">{firstCapitalize(t('sign_in'))}</button>
                     </div>
+                    
+                    {appState.error &&
+                        <span className="text-red-500">
+                            {firstCapitalize(t(`${appState.error}`.toLowerCase().replaceAll(" ","_")))}
+                        </span>
+                    }
                 </form>
 
                 </div>

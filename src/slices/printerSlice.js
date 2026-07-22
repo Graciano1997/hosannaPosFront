@@ -88,7 +88,7 @@ export const printTest = createAsyncThunk("printerState/printTest",
 
         return rejectWithValue({
           status: response.status,
-          message: errorData?.message || "Erro ao imprimir teste",
+          message: errorData?.message || "Error printing test!",
         });
       }
 
@@ -119,15 +119,14 @@ const printerSlice = createSlice({
     builder.addCase(fetchPrinterConfig.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      console.log("fetchPrinterConfig.fulfilled", action.payload);
       
-      if (!localStorage.hasOwnProperty(`user-${CurrentUser.id}-printerConfiguration`) && action.payload.data) {
+      if (!localStorage.hasOwnProperty(`user-${CurrentUser().id}-printerConfiguration`) && action.payload.data) {
         localStorage.setItem(action.payload.data.user, JSON.stringify(action.payload.data.value));
         state.printerConfiguration = action.payload.data.value;
       }
 
-      if (localStorage.hasOwnProperty(`user-${CurrentUser.id}-printerConfiguration`)) {
-        state.printerConfiguration = JSON.parse(localStorage.getItem(`user-${CurrentUser.id}-printerConfiguration`));
+      if (localStorage.hasOwnProperty(`user-${CurrentUser().id}-printerConfiguration`)) {
+        state.printerConfiguration = JSON.parse(localStorage.getItem(`user-${CurrentUser().id}-printerConfiguration`));
       }
     });
 

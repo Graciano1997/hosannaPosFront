@@ -339,7 +339,6 @@ const saleSlice = createSlice({
         });
 
         builder.addCase(getInvoiceItem.fulfilled, (state, action) => {
-            console.log(action.payload);
         });
 
         builder.addCase(getInvoiceItem.rejected, (state, action) => {

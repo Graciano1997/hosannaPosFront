@@ -27,16 +27,16 @@ const initialState = {
 }
 
  export const authenticate= createAsyncThunk("appState/authenticate",async (user)=>{
-    try{
+    //try{
         const response = await fetch(`${Ip}/authentication/login`,
             { method:'POST',
               body:JSON.stringify(user),
               headers:{'Content-Type':'application/json'}
             });
             return response.json();
-    }catch(error){
-        console.log(error);
-    }
+    //}catch(error){
+      //  console.log(error);
+   // }
  });
 
   export const printing = createAsyncThunk("appState/printing",async (invoiceObject)=>{
@@ -292,9 +292,9 @@ const appSlice=createSlice({
 
         builder.addCase(authenticate.fulfilled,(state,action)=>{
         
-            if(action.payload.error){
+            if(action?.payload?.error){
                 state.error = action.payload.error;
-            }else if(action.payload.user){
+            }else if(action.payload?.user){
                 state.companyId=action.payload.user.companyId;
                 localStorage.setItem("isLogged",true);
                 localStorage.setItem("currentUser",JSON.stringify(action.payload.user));
@@ -304,8 +304,15 @@ const appSlice=createSlice({
         });
 
         builder.addCase(authenticate.rejected,(state,action)=>{
-            state.error = action.error.message;
+          state.error = action.error.message;
             state.isAuthenticated=false;
+            state.loading = false;
+        });
+
+        builder.addCase(authenticate.pending,(state,action)=>{
+            state.error = '';
+            state.isAuthenticated=false;
+            state.loading = true;
         });
 
         builder.addCase(exporting.fulfilled,(state,action)=>{
@@ -328,12 +335,10 @@ const appSlice=createSlice({
 
         builder.addCase(printing.fulfilled,(state,action)=>{
             state.printingError=false;
-            console.log(action.payload);
         });
 
         builder.addCase(printing.rejected,(state,action)=>{
             state.printingError=true;
-            console.log(action.payload);
         });
     }
 });

@@ -93,8 +93,8 @@ export const ExportReport = (data, columnsToExport, model, headersTranslated, co
 
     const headTemplate = `
         <div>
-            <h1 class="">${companyDetails.name}</h1>
-            <p class="">${companyDetails.nif}</p>
+            <h1 class="">${companyDetails?.name}</h1>
+            <p class="">${companyDetails?.nif}</p>
         </div>
     `
     const template = `

@@ -5,8 +5,8 @@ export const sum=(sales)=>{
 
     if(sales.length>0){
         sales.forEach(element =>{
-            total+=element.total;
-            totalItems+=element.qty*1;
+            total+=element?.total;
+            totalItems+=element?.qty*1;
         } );
         return {total:total,totalItems:totalItems};
     }

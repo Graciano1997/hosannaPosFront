@@ -1,4 +1,4 @@
-import { PencilIcon, PlusCircleIcon, PlusIcon, PrinterIcon, TrashIcon, UserIcon } from "@heroicons/react/24/solid";
+import { ArrowDownCircleIcon, ArrowDownIcon, ArrowDownTrayIcon, PencilIcon, PlusCircleIcon, PlusIcon, PrinterIcon, TrashIcon, UserIcon } from "@heroicons/react/24/solid";
 import Money from "../general/Money";
 import { useDispatch, useSelector } from "react-redux";
 import { stateDisplay, textDisplay } from "../../lib/activeDisplay";
@@ -11,6 +11,7 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 import { getInvoiceItem } from "../../slices/saleSlice";
 import { productFormHandler } from "../product/Create";
 import { printing } from "../../slices/printerSlice";
+import { generateFromHtmlToPDF } from "../../lib/generatePrinterInvoicer";
 
 const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem, printItem = null, rowStyle }) => {
 
@@ -94,7 +95,9 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
 
                         <div className={`flex item-center gap-3 ${item?.image_url ? 'mt-1':''}`}>
                         {updateItem && <button onClick={() => { dispatch(openModal()); dispatch(updateItem(item)); }}><PencilIcon className="w-6 y-6 p-1 text-green-800 hover:shadow hover:rounded" /></button>}
-                        {printItem && <button onClick={() => {
+                        {printItem &&
+                        <div className="flex items-center jusify-center mt-3 gap-3">
+                        <button onClick={() => {
                             dispatch(getInvoiceItem({id:item.id,printerType:printerConfiguration.printertype}))
                             .then((invoiceResultState) => {
                                     if (getInvoiceItem.fulfilled.match(invoiceResultState)) {
@@ -114,24 +117,25 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                                                         dispatch(showToast({ success: true, message: firstCapitalize(t('reprinting')) }));
                                                     }
                                                 })
-                                         
-                                        
-                                        
-                                        
-                                        //     dispatch(printing(invoiceResultState.payload.invoice_item))
-                                        //     .then((printingStateResult)=>{
-                                            //             dispatch(showToast({success:true,message:firstCapitalize(t('reprinting'))}))
-                                            //           if(printing.rejected.match(printingStateResult)){
-                                                //               dispatch(showToast({error:true,message:firstCapitalize(t('error_reprinting'))}))
-                                                //               }
-                                                //     })
+                                
                                             }
                                             if(getInvoiceItem.rejected.match(invoiceResultState)){
                                                 dispatch(showToast({error:true, message:firstCapitalize(t('could_not_get_the_invoice'))}));
                                     }
                                 })
 
-                            }}><PrinterIcon className="w-6 y-6 p-1 text-black hover:shadow hover:rounded" /></button>}
+                            }}><PrinterIcon className="w-6 y-6 p-1 text-black hover:shadow hover:rounded" /></button>
+                        <button onClick={() => {
+                            dispatch(getInvoiceItem({id:item.id,printerType:printerConfiguration.printertype}))
+                            .then((invoiceResultState) => {
+                                    if(getInvoiceItem.fulfilled.match(invoiceResultState)){
+                                        generateFromHtmlToPDF(invoiceResultState.payload.invoice_template,printerConfiguration,`${t('invoice')} ${item.invoice_number} ${item.created_at}`)
+                                    }
+                                })
+
+                            }}><ArrowDownTrayIcon className="w-6 y-6 p-1 text-black hover:shadow hover:rounded" /></button>
+                        </div>
+}
                         {deleteItem && <button onClick={() => { dispatch(deleteItem(item.id)) }}><TrashIcon className="w-6 y-6 p-1 text-red-300 hover:shadow hover:rounded" /></button>}
                             </div>
                     </div>

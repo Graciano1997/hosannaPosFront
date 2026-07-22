@@ -1,10 +1,9 @@
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import htmlToPdfmake from "html-to-pdfmake";
 // pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 
 export async function generatePDFInvoice(invoiceHtml, paperSize='A4') {
   try {
@@ -86,10 +85,8 @@ export async function generatePDF(templateHtml) {
     
     // REMOVER o elemento ANTES de processar
     document.body.removeChild(tempDiv);
-
     // Converter para PDF
     let pdf = new jsPDF('p', 'mm', 'a4');
-       
     const imgData = canvas.toDataURL('image/png');
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
@@ -98,13 +95,6 @@ export async function generatePDF(templateHtml) {
     
     // Converter para base64
     const pdfBase64 = pdf.output('datauristring').split(',')[1];
-    
-    console.log('✓ PDF gerado:', {
-      tamanho: pdfBase64.length,
-      comecaCerto: pdfBase64.startsWith('JVB'),
-      primeiros10: pdfBase64.substring(0, 10)
-    });
-    
     return pdfBase64;
     
   } catch (error) {
@@ -143,22 +133,18 @@ export function htmlToPDFGenerator(htmlTemplate,model,pageSetting) {
   pdfMake.createPdf(docDefinition).download(`Export_${model}_${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}.pdf`);
 }
 
-
-
-export async function generateFromHtmlToPDF(templateHtml,name='invoice') {
+export async function generateFromHtmlToPDF(templateHtml,printerConfiguration,name='invoice') {
+ 
   try {
     // Criar elemento temporário com o HTML
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = templateHtml;
     tempDiv.style.position = 'absolute';
     tempDiv.style.left = '-9999px';
-    // tempDiv.style.width = paperSize === 'A4' ? '100%' : paperSize === '80mm' ? '80mm' : '58mm';
     document.body.appendChild(tempDiv);
-    
-    // IMPORTANTE: Aguardar o DOM renderizar
+   
     await new Promise(resolve => setTimeout(resolve, 100));
-    
-    // Renderizar HTML para canvas
+
     const canvas = await html2canvas(tempDiv, {
       scale: 2,
       useCORS: true,
@@ -166,22 +152,39 @@ export async function generateFromHtmlToPDF(templateHtml,name='invoice') {
       backgroundColor: '#fff'
     });
     
-    // REMOVER o elemento ANTES de processar
     document.body.removeChild(tempDiv);
 
-    // Converter para PDF
-    let pdf = new jsPDF('p', 'mm', 'a4');
-       
+  const width = printerConfiguration?.printertype == '80mm' ? '80' : '58';
+  const height = (canvas.height * width) / canvas.width;
+  let pdf;
+
+if (printerConfiguration?.printertype === 'A4') {
+
+  pdf = new jsPDF({
+    orientation: 'portrait',
+    unit: 'mm',
+    format: 'a4'
+  });
+
+} else {
+
+  pdf = new jsPDF({
+    orientation: 'portrait',
+    unit: 'mm',
+    format: [
+      width,
+      height
+    ]
+  });
+
+}
+  
     const imgData = canvas.toDataURL('image/png');
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
-    const now = new Date();
-
-    const date = `${String(now.getDate()).padStart(2,'0')}-${String(now.getMonth() + 1).padStart(2,'0')}-${now.getFullYear()}_${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}`;
-
-    return pdf.save(`${name}_${date}.pdf`);
+    return pdf.save(`${name}.pdf`);
   
   } catch (error) {
     console.error('Erro ao gerar PDF:', error);

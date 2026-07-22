@@ -14,8 +14,7 @@ import { MdEmail } from "react-icons/md";
 import { PrinterIcon } from "@heroicons/react/16/solid";
 import { BsPrinter } from "react-icons/bs";
 
-
-const ManualPrinting = ({printerConfiguration, templateToPrint }) => {
+const ManualPrinting = ({printerConfiguration, templateToPrint, item }) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     
@@ -29,11 +28,8 @@ const ManualPrinting = ({printerConfiguration, templateToPrint }) => {
     const message = encodeURIComponent(
     "Olá! Segue a sua fatura: https://meusite.com/faturas/123.pdf"
     );
-
     window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
     */
-
-
     }
 
     const saveHandler = () => {
@@ -41,37 +37,42 @@ const ManualPrinting = ({printerConfiguration, templateToPrint }) => {
             dispatch(showToast({ error: true, message: firstCapitalize(t('failed_to_fetch_template')) }));
             return;
         }
-        generateFromHtmlToPDF(templateToPrint,t('invoice'));
+
+        if (generateFromHtmlToPDF(templateToPrint,printerConfiguration,`${t('invoice')} ${item.invoice_number} ${item.created_at}`))
+            dispatch(saleNotConfirm());
     }
 
     const printingHandler = () => {      
         if(!templateToPrint){
             dispatch(showToast({ error: true, message: firstCapitalize(t('failed_to_fetch_template')) }));
+            dispatch(saleNotConfirm());
+            return;
+        }
+
+        if(!printerConfiguration?.printer) {
+            dispatch(showToast({ error: true, message: firstCapitalize(t('printer_not_configured')) }));
+            dispatch(saleNotConfirm());
             return;
         }
 
         dispatch(printing({ 
-                            copyNumber: parseInt(printerConfiguration.copyNumber),
+                            copyNumber: parseInt(printerConfiguration?.copyNumber) || 1,
                             template: templateToPrint,
-                            printer: printerConfiguration.printer,
-                            printerType: printerConfiguration.printertype
+                            printer: printerConfiguration?.printer,
+                            printerType: printerConfiguration?.printerType || 'A4'
                         }))
                         .then((printingResultState) => {
-                            if(printing.rejected.match(printingResultState)){
-                                dispatch(showToast({ error: true, message: firstCapitalize(t('error_reprinting'))}));
-                            } else {
-                                dispatch(showToast({ success: true, message: firstCapitalize(t('print_successful'))}));
-                            }
-                              dispatch(saleNotConfirm());
+                            if(printing.rejected.match(printingResultState)) dispatch(showToast({ error: true, message: firstCapitalize(t('error_reprinting'))}));                   
+                            if(printing.fulfilled.match(printingResultState)) dispatch(showToast({ success: true, message: firstCapitalize(t('print_successful'))}));
+                            dispatch(saleNotConfirm());
                         })
-    }
+        }
 
     return (
         <div className="mt-[100px] flex flex-col items-center justify-center">
             <h1 className="text-5xl mt-4">{firstCapitalize(t('sale_completed_successfully'))}</h1>  
-                <div className="mt-8 flex justify-center gap-8">
-            {
-                
+            <div className="mt-8 flex justify-center gap-8">
+            {       
             false &&
             <>
             <button onClick={shareToWhatsappHandler}>
@@ -102,11 +103,8 @@ const ManualPrinting = ({printerConfiguration, templateToPrint }) => {
                 }}
                 className="bg-blue-600 text-white rounded-[4px] m-[10px_20px] p-[10px_40px]">{firstCapitalize(t('not'))}</button>
                 <button onClick={printingHandler} className=" bg-[rgba(0,50,0,0.3)] text-white rounded-[4px] m-[10px_20px] p-[10px_40px]"> {firstCapitalize(t('print'))}</button>
-            </div>
-
+                </div>
             }
-
-
         </div>
     );
 };
@@ -119,6 +117,7 @@ const AskForPrintingConfirmation = ({printerConfiguration, templateToPrint }) =>
     const printingHandler = () => {      
         if(!templateToPrint){
             dispatch(showToast({ error: true, message: firstCapitalize(t('failed_to_fetch_template')) }));
+            dispatch(saleNotConfirm());
             return;
         }
 
@@ -166,6 +165,7 @@ const SaleConfirmation = ({printerConfiguration}) => {
     const saleState = useSelector((state) => state.saleState);
     const [sold, setSold] = useState(false);
     const [templateToPrint, setTemplateToPrint] = useState(null);
+    const [soldItem,setSoldItem] = useState(null);
 
     const orderHandler = () => {
         const treatedSaleObject = {
@@ -191,9 +191,10 @@ const SaleConfirmation = ({printerConfiguration}) => {
          if(!sold){
             dispatch(order(treatedSaleObject))
                .then((orderResultState) => {
-
                     if(order.fulfilled.match(orderResultState)) {
                        setSold((prev) => !prev);
+                       setSoldItem(orderResultState?.payload?.sale_item);
+
                        setTemplateToPrint(orderResultState?.payload?.invoice_template);
                      
                        if ([SaleType.INVOICE_RECIBO_FR, SaleType.NORMAL_INVOICE_FT, SaleType.SIMPLIFYED_INVOICE_FS].includes(saleState.invoiceType)) {
@@ -227,13 +228,14 @@ const SaleConfirmation = ({printerConfiguration}) => {
                     }
                     if(order.rejected.match(orderResultState)) {
                         dispatch(showToast({ error: true, message: firstCapitalize(t('sale_failed')) }));
+                        dispatch(saleNotConfirm());
                     }
-
                 });
 
          }else{
             dispatch(showToast({ warning:true, message:firstCapitalize(t('sale_already_ordered'))}));
-         }
+            dispatch(saleNotConfirm());
+        }
     };
     return (
         <div className="mt-[100px] flex flex-col items-center justify-center">
@@ -260,7 +262,9 @@ const SaleConfirmation = ({printerConfiguration}) => {
             {
             sold 
             && printerConfiguration?.printermode === PrinterMode.MANUAL 
-            &&<ManualPrinting printerConfiguration={printerConfiguration} templateToPrint={templateToPrint}/>
+            &&<ManualPrinting printerConfiguration={printerConfiguration} templateToPrint={templateToPrint}
+            item={soldItem}
+            />
             }   
         </div>
     );

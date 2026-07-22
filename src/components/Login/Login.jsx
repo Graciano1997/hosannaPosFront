@@ -16,6 +16,8 @@ const Login = () => {
     const [user, setUser] = useState({});
 
 
+
+
     const handleInputChange = (el) => {
         setUser({
             ...user,
@@ -27,7 +29,7 @@ const Login = () => {
         el.preventDefault();
         dispatch(authenticate(user)).
         then((loginState)=>{
-            if(authenticate.fulfilled.match(loginState) && loginState.payload.user.id){
+            if(authenticate.fulfilled.match(loginState) && loginState.payload?.user?.id){
                 navegate( rootpath + 'dashboard')
             }
         })
@@ -42,18 +44,17 @@ const Login = () => {
                     <label>
                         {firstCapitalize(t('email'))}
                         <br />
-                        <input type='email' onChange={handleInputChange} name="email" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
+                        <input type='email' onChange={handleInputChange} name="email" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} required />
                     </label>
                     <label>
                         {firstCapitalize(t('password'))}
                         <br />
-                        <input type='password' onChange={handleInputChange} name="password" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} />
+                        <input type='password' onChange={handleInputChange} name="password" className='mt-[0.5rem] p-1 rounded w-[100%] outline-none' min={0} required />
                     </label>
                     {appState.error &&
                         <span className="text-red-500">
-                            {firstCapitalize(t('invalid_email_or_password'))}
+                            {firstCapitalize(t(`${appState.error}`.toLowerCase().replaceAll(" ","_")))}
                         </span>
-
                     }
 
                     <div className="flex flex-col gap-5 justify-center mt-[0.5rem] p-2">

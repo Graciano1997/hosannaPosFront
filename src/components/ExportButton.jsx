@@ -30,10 +30,9 @@ const ExportButton = ({ data,columnsToExport,model,exportOption,pageSetting }) =
           // 4. Create worksheet from array of arrays (aoa)
           const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
 
-          // 🔥 Apply styles to the header cells (row 1)
           const headerStyle = {
             font: { bold: true, color: { rgb: "FFFFFF" } },
-            fill: { fgColor: { rgb: "4F81BD" } }, // blue background
+            fill: { fgColor: { rgb: "4F81BD" } },
             alignment: { horizontal: "center", vertical: "center" }
           };
 
