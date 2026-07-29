@@ -1,10 +1,10 @@
+import React, { useState } from "react";
 import { ArrowDownCircleIcon, ArrowDownIcon, ArrowDownTrayIcon, PencilIcon, PlusCircleIcon, PlusIcon, PrinterIcon, TrashIcon, UserIcon } from "@heroicons/react/24/solid";
 import Money from "../general/Money";
 import { useDispatch, useSelector } from "react-redux";
 import { stateDisplay, textDisplay } from "../../lib/activeDisplay";
 import { cleanItemDetails, itemDetails, openInvoiceView, openModal, showToast } from "../../slices/appSlice";
 import Details from "./Details";
-import { useState } from "react";
 import { updateProduct } from "../../slices/productSlice";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
@@ -13,7 +13,7 @@ import { productFormHandler } from "../product/Create";
 import { printing } from "../../slices/printerSlice";
 import { generateFromHtmlToPDF } from "../../lib/generatePrinterInvoicer";
 
-const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem, printItem = null, rowStyle }) => {
+const Tr = React.memo(({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem, printItem = null, rowStyle }) => {
 
     const { t } = useTranslation();
     const { printerConfiguration } = useSelector((state) => state.printerState);
@@ -24,6 +24,7 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
     const dispatch = useDispatch();
     const [checkNumber, setCheckNumber] = useState(false);
     const [qty, setQty] = useState(0);
+    const [showDetails,setShowDetails]=useState(false)
 
     let keys = Object.keys(item);
     keys = keys.filter((item) => !filterRows.includes(item))
@@ -34,7 +35,7 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
             key={item.id}
                className={`${index % 2 == 0 ? rowStyle : ''}   cursor-pointer hover:sm:shadow font-light `}>
                 {keys.map((key) =>
-                    <td onClick={() => { dispatch(itemDetails(item)) }} className="p-1 text-center">
+                    <td onClick={() => { setShowDetails(true)  }} className="p-1 text-center">
                         {key=="movement_type" &&  
                         (<span className="flex items-center gap-2"><span className={`w-3 h-3 rounded ${movementTypeColor[item[key]]}`}></span>{t(item[key])}
                         </span>)
@@ -128,11 +129,10 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                         <button onClick={() => {
                             dispatch(getInvoiceItem({id:item.id,printerType:printerConfiguration.printertype}))
                             .then((invoiceResultState) => {
-                                    if(getInvoiceItem.fulfilled.match(invoiceResultState)){
-                                        generateFromHtmlToPDF(invoiceResultState.payload.invoice_template,printerConfiguration,`${t('invoice')} ${item.invoice_number} ${item.created_at}`)
-                                    }
-                                })
-
+                            if(getInvoiceItem.fulfilled.match(invoiceResultState)){
+                                generateFromHtmlToPDF(invoiceResultState.payload.invoice_template,printerConfiguration,`${t('invoice')} ${item.invoice_number} ${item.created_at}`)
+                            }
+                            })
                             }}><ArrowDownTrayIcon className="w-6 y-6 p-1 text-black hover:shadow hover:rounded" /></button>
                         </div>
 }
@@ -141,9 +141,10 @@ const Tr = ({ item, index, deleteItem, updateItem, filterRows, filterDetails, ad
                     </div>
                 </td>
             </tr>
-            {itemDetail.id != undefined && <Details filterDetails={filterDetails} rowStyle={rowStyle} cleanItemDetails={cleanItemDetails} />}
+            {showDetails && item.id != undefined && <Details filterDetails={filterDetails} rowStyle={rowStyle} closeDetails={()=>{setShowDetails(false)}} itemDetails={item}  />}
         </>
     )
 }
+)
 
 export default Tr;

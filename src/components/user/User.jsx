@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../Table/Table";
 import Create from "./Create";
 import Title from "../general/Title";
@@ -10,7 +10,8 @@ import TabWrapper from "../general/TabWrapper";
 import { creatingUser, deleteUser, fetchUsers, searchUsers, setUser, stopCreatingOrUpdateingUser, updatingUser } from "../../slices/userSlice";
 import { activeTab } from "../../slices/appSlice";
 
-const User=()=>{    
+const User= React.memo(
+    ()=>{    
     const dispatch = useDispatch();
     const [userCollectionKeys,setUserCollectionKeys]=useState([]);
     const userState = useSelector((state)=>state.userState);
@@ -44,6 +45,6 @@ const User=()=>{
         {(userState.isCreating  || userState.isUpdating ) && appState.isOpen && (<Create stopCreating={stopCreatingOrUpdateingUser}/>)}
         </CardWrapper>
     )
-};
+});
 
 export default User;

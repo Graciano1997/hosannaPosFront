@@ -18,7 +18,7 @@ const initialState = {
     printingError:false,
     isExporting:false,
     exportingModel:{},
-    isLogged:true,
+    isLogged:false,
     currentTableCollection:[],
     invoiceView:false,
     urlItem:'',

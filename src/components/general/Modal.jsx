@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import { closeModal, openModal } from "../../slices/appSlice";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
-const Modal = ({children, helper = undefined })=>{
+const Modal =React.memo(
+   ({children, helper = undefined })=>{
   const dispatch = useDispatch();
   
   useEffect(()=>{
@@ -29,7 +30,9 @@ const Modal = ({children, helper = undefined })=>{
         </div>
         </div>
     </>
-    );
-};
+    )
+}
+)
+;
 
 export default Modal;

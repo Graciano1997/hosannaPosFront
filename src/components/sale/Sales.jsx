@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../Table/Table";
 import SaleDashboard from "./SaleDashboard";
 import Title from "../general/Title";
@@ -11,7 +11,8 @@ import { activeTab } from "../../slices/appSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import Money from "../general/Money";
 
-const Sales=()=>{
+const Sales= React.memo(
+     ()=>{
     const {t}=useTranslation();
     const [showDashboard,setShowDashboard]=useState(false);
     const appState=useSelector((state)=>state.appState);
@@ -69,6 +70,8 @@ const Sales=()=>{
         </TabWrapper>
         </CardWrapper>
     )
-};
+}
+)
+;
 
 export default Sales;

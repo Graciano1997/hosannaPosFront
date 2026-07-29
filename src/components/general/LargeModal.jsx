@@ -1,7 +1,9 @@
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../slices/appSlice";
+import React from "react";
 
-const LargeModal = ({children,stopCreating,closeHandler=()=>{},helper = undefined})=>{
+const LargeModal = React.memo(
+   ({children,stopCreating,closeHandler=()=>{},helper = undefined})=>{
   const dispatch = useDispatch();
     return(
         <>
@@ -26,6 +28,7 @@ const LargeModal = ({children,stopCreating,closeHandler=()=>{},helper = undefine
         </div>
     </>
     );
-};
+}
+);
 
 export default LargeModal;

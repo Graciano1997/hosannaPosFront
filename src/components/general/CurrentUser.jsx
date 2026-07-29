@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { CurrentUser as Current } from "../../lib/CurrentUser";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useNavigate } from "react-router-dom";
 import { rootpath } from "../../lib/ip";
 
-const CurrentUser=()=>{
+const CurrentUser= React.memo(
+    ()=>{
     
     const navegate = useNavigate();
     const [currentUser,setCurrentUser] = useState(Current());
@@ -22,6 +23,6 @@ const CurrentUser=()=>{
                 </div>
     );
 
-};
+});
 
 export default CurrentUser;

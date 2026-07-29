@@ -3,11 +3,12 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Searching } from "../../slices/appSlice";
 import CurrentUser from "./CurrentUser";
+import React from "react";
 
-const Header=({setVisibility})=>{
+const Header= React.memo(
+    ({setVisibility})=>{
     const {i18n,t} = useTranslation();
     const dispatch = useDispatch();
-
     return(
         <header className="flex justify-between">
             <Bars3Icon className="w-7 y-7 cursor-pointer" onClick={(el)=>{ el.stopPropagation(); setVisibility(true)}} />
@@ -32,6 +33,7 @@ const Header=({setVisibility})=>{
             </div>
         </header>
     );
-};
+}) 
+;
 
 export default Header;

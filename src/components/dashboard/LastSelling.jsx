@@ -3,11 +3,12 @@ import CardTitle from "../general/CardTitle";
 import Money from "../general/Money";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EyeDropperIcon, EyeIcon } from "@heroicons/react/24/solid";
 
-const LastSelling =({width=200,height=300,info})=>{    
+const LastSelling = React.memo(
+     ({width=200,height=300,info})=>{    
     const {t}=useTranslation();
     const {sales} = useSelector((state)=>state.saleState);
     const [lastSales,setLastSales] = useState([]);
@@ -44,7 +45,7 @@ const LastSelling =({width=200,height=300,info})=>{
                     {lastSales.map((el)=>
                     <li
                     key={el.id}
-                     className="h-[40px] bg-green-100 cursor-pointer text-light text-sm justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
+                     className="h-[40px] bg-primary cursor-pointer text-light text-sm justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
                     <p>{el.client.split(' ')[0]}</p>
                     <p className="text-center">{el.qty}</p>
                     <Money amount={el.total}/>
@@ -55,7 +56,8 @@ const LastSelling =({width=200,height=300,info})=>{
             }
 
         </div>
-    );
-};
+    )
+}
+);
 
 export default LastSelling;

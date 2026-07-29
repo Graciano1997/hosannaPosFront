@@ -2,10 +2,11 @@ import { useTranslation } from "react-i18next";
 import CardWrapper from "./CardWrapper";
 import TabWrapper from "./TabWrapper";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import React from "react";
 
-const _401= ()=>{
+const _401= React.memo(
+    ()=>{
     const {t} = useTranslation();
-
     return(
                 <CardWrapper>
                 <TabWrapper>
@@ -18,6 +19,9 @@ const _401= ()=>{
                 </TabWrapper>
                 </CardWrapper>
     );
-};
+}
+)
+
+;
 
 export default _401;

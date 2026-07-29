@@ -8,6 +8,7 @@ import logo from '../../../src/assets/Img/Logo.svg'
 import CompanyLand from "./CompanyLand";
 import { registerStore } from "../../slices/companySlice";
 import {rootpath} from "../../lib/ip";
+import { Button } from "../general/Button";
 
 const CreateCompany = () => {
 
@@ -130,11 +131,9 @@ const CreateCompany = () => {
                     )}
                
                     <div className="flex flex-col gap-5 justify-center mt-[0.5rem] p-2">
-                        <button type="submit"
-                        className="p-2 bg-green-900 text-white rounded ">{firstCapitalize(t('create_company'))}</button>
-                        <button type="button"
-                        onClick={()=>{navegate(`${rootpath}login`)}}
-                        className="p-2 bg-green-200 rounded self-center w-[80%]">{firstCapitalize(t('sign_in'))}</button>
+                    
+                         <Button type={"submit"} className={"p-2 bg-secondary text-white rounded "} content={firstCapitalize(t('create_company'))} />
+                         <Button onClickHandler={()=>{navegate(`${rootpath}login`)}} className={"p-2 rounded self-center w-[80%]"} content={firstCapitalize(t('sign_in'))} />
                     </div>
                     
                     {appState.error &&

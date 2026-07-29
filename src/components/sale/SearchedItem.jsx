@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../slices/saleSlice";
 import { showToast } from "../../slices/appSlice";
@@ -7,7 +7,8 @@ import { useTranslation } from "react-i18next";
 import { totalWithTaxesAndDiscounts } from "../../lib/totalWithTaxes";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
-const SearchedItem = ({product,index,setQuery})=>{
+const SearchedItem = React.memo(
+     ({product,index,setQuery})=>{
     const [qtyTobuy,setQtyTobuy]=useState(1);
     const [added,setAdded]=useState(false);
     const dispatch = useDispatch();
@@ -70,6 +71,8 @@ const SearchedItem = ({product,index,setQuery})=>{
                      
                     </div>
 );
-};
+}
+)
+;
 
 export default SearchedItem;

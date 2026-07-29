@@ -7,8 +7,10 @@ import { saleClean, setInvoiceType, setPaymentType, setReceivedCash, setReceived
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import React from "react";
 
-const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
+const SaleHeader= React.memo(
+     ({title,setIsReadingQr,setReadValue})=>{
     const sale = useSelector((state)=>state.saleState);
     const dispatch = useDispatch();
     const {t}= useTranslation();
@@ -51,13 +53,9 @@ const SaleHeader=({title,setIsReadingQr,setReadValue})=>{
             <ShoppingCartIcon className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/>
             </div>
             </div>
-
             </div>
-
-
-
         </div>
     )
-};
+});
 
 export default SaleHeader;

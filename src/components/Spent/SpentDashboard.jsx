@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import LastOuts from "../dashboard/LastOuts";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { annualMonths } from "../../lib/Months";
+import React from "react";
 
-const SpentDashboard=()=>{
+const SpentDashboard= React.memo(
+    ()=>{
     const {t}=useTranslation();
     const spentState = useSelector(state=>state.spentState);
 
@@ -31,6 +33,8 @@ const SpentDashboard=()=>{
         </div>
         </>
     )
-};
+}
+)
+;
 
 export default SpentDashboard;

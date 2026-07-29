@@ -3,8 +3,9 @@ import CardTitle from "../general/CardTitle";
 import { BellAlertIcon } from "@heroicons/react/24/solid";
 import Money from "../general/Money";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import React from "react";
 
-const LastExpired =({width=200,height=300,info,data})=>{    
+const LastExpired = React.memo(({width=200,height=300,info,data})=>{    
 
     const {t}=useTranslation();
     
@@ -38,6 +39,7 @@ const LastExpired =({width=200,height=300,info,data})=>{
              </div>
         </div>
     );
-};
+}
+);
 
 export default LastExpired;

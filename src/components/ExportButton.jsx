@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showToast } from '../slices/appSlice';
 import { htmlToPDFGenerator } from '../lib/generatePrinterInvoicer';
 import { ExportReport } from './Report/ExportReport';
+import { Button } from './general/Button';
 
 
 
@@ -58,28 +59,27 @@ const ExportButton = ({ data,columnsToExport,model,exportOption,pageSetting }) =
   };
   
   return (
-    <button 
-    type="button" 
-    onClick={ ()=>{
-      if(columnsToExport.length == 0){
-        dispatch(showToast({warning:true, message:firstCapitalize(t('select_at_least_one_field'))}));
-        }else if(data.length==0){
-           dispatch(showToast({warning:true, message:firstCapitalize(t('no_data_to_export'))}));
-        }
-        else{ 
-          const currentCompanyDetails = companies[0];
-          const reportHTMLTemplate = ExportReport(data,columnsToExport,model, headers,currentCompanyDetails);
-          
-          if(exportOption=="excel"){
-            exportToExcel();
-          }else{
-            htmlToPDFGenerator(reportHTMLTemplate,model,pageSetting);
+      <Button 
+      onClickHandler={
+          ()=>{
+        if(columnsToExport.length == 0){
+          dispatch(showToast({warning:true, message:firstCapitalize(t('select_at_least_one_field'))}));
+          }else if(data.length==0){
+            dispatch(showToast({warning:true, message:firstCapitalize(t('no_data_to_export'))}));
           }
-        }
-        }}
-     className="p-2 bg-green-100 rounded">
-      {firstCapitalize(t('export'))}
-    </button>
+          else{ 
+            const currentCompanyDetails = companies[0];
+            const reportHTMLTemplate = ExportReport(data,columnsToExport,model, headers,currentCompanyDetails);
+            
+            if(exportOption=="excel"){
+              exportToExcel();
+            }else{
+              htmlToPDFGenerator(reportHTMLTemplate,model,pageSetting);
+            }
+          }
+          }
+      }
+      className={"p-2 rounded bg-green-100"} content={firstCapitalize(t('export'))} />
   );
 };
 

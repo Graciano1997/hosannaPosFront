@@ -43,7 +43,7 @@ export const options = {
   },
 };
 
-export function LineChart({data,width=400,height=300,info}) {
+export  const LineChart = React.memo(function LineChart({data,width=400,height=300,info}) {
   
   let yearSpents=data.spents??[];
   let yearSales=data.sales??[];
@@ -114,3 +114,6 @@ export function LineChart({data,width=400,height=300,info}) {
   </div>
   )
 }
+) 
+
+

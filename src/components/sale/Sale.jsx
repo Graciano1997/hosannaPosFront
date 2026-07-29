@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { PrinterMode } from "../../lib/Enums";
 import SaleHeader from "./SaleHeader";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ClientDetails from "./ClientDetails";
 import SaleDetails from "./SaleDetails";
 import ProductDetails from "./ProductDetails";
@@ -13,7 +13,8 @@ import { clearSearchedProduct, fetchProducts } from "../../slices/productSlice";
 import SaleConfirmation from "./SaleConfirmation";
 import { saleNotConfirm } from "../../slices/saleSlice";
 
-const Sale=({setToastObject})=>{
+const Sale= React.memo(
+     ({setToastObject})=>{
     const dispatch=useDispatch();
     const productState = useSelector((state)=>state.productState);
     const {t}=useTranslation();
@@ -48,7 +49,6 @@ const Sale=({setToastObject})=>{
          }
         </div>
         </>
-    )
-};
+    )});
 
 export default Sale;

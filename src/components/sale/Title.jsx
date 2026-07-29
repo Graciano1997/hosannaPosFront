@@ -1,9 +1,10 @@
 import {  EllipsisHorizontalIcon, HomeIcon, PlusCircleIcon, ArrowUpTrayIcon, PlusIcon } from "@heroicons/react/24/solid";
-import {  useRef, useState } from "react";
+import React, {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-const Title=({title,setIsShowing=()=>{}})=>{
+const Title= React.memo (
+    ({title,setIsShowing=()=>{}})=>{
     const [showElipse,setShowElipse]=useState(true);
     const ref = useRef(null);
     const {t} = useTranslation();
@@ -55,6 +56,8 @@ const Title=({title,setIsShowing=()=>{}})=>{
         </div>
             </>
     )
-};
+}
+)
+;
 
 export default Title;

@@ -1,3 +1,4 @@
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../general/Modal";
 import Money from "../general/Money";
@@ -7,24 +8,24 @@ import { UserIcon } from "@heroicons/react/24/solid";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getSaleInvoiceItem, setRefenceSale } from "../../slices/saleSlice";
+import { rootpath } from "../../lib/ip";
 
 const movementTypeColor ={entry:"bg-green-500",exit:"bg-red-500",return:"bg-purple-500",adjustment:"bg-blue-500",expired:"bg-yellow-400"}
 const moneyFields = ['price','total', 'amount', 'cost_price','discount','difference','received_cash'];
 
-const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
-    
-    const detailsItem = useSelector((state)=>state.appState.itemDetails);
-    let keys = Object.keys(detailsItem);
-    const {pathname}=useLocation();
-   
-    const hasImage = detailsItem.image_url ?true:false;
+const Details = React.memo(({closeDetails,filterDetails=[],rowStyle, itemDetails}) =>{
+ 
+    let keys = Object.keys(itemDetails);
+    const {pathname}=useLocation();  
+    const hasImage = itemDetails.image_url ? true : false;
+
     keys = keys.filter((item) => !filterDetails.includes(item));
     const {t}= useTranslation();
     const navegate = useNavigate();
     const dispatch = useDispatch();
     
     return(
-        <Modal helper={cleanItemDetails}>
+        <Modal helper={closeDetails}>
             <div className="flex p-2">
             <div className="w-[100%]">
                 <h4 className="text-3xl font-light text-end">{ firstCapitalize(t('details'))}</h4>
@@ -32,8 +33,8 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                 
                 { hasImage && <div className="h-[100%]">
                 <div className="w-[250px] h-[300px] sm:shadow rounded-[16px]">
-                    {detailsItem.image==="none" && <UserIcon className="w-[100%] h-[100%] rounded-[16px]"/> }
-                    {detailsItem.image!=="none" &&  <img src={detailsItem.image_url} className="w-[100%] h-[100%] rounded-[16px]" />}
+                    {itemDetails.image==="none" && <UserIcon className="w-[100%] h-[100%] rounded-[16px]"/> }
+                    {itemDetails.image!=="none" &&  <img src={itemDetails.image_url} className="w-[100%] h-[100%] rounded-[16px]" />}
                 </div>
                 </div>}
                 
@@ -45,30 +46,30 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                     <p className="font-light">
 
                     {item=="movement_type" &&  
-                        (<span className="flex items-center gap-2"><span className={`w-3 h-3 rounded ${movementTypeColor[detailsItem[item]]}`}></span>{t(detailsItem[item])}
+                        (<span className="flex items-center gap-2"><span className={`w-3 h-3 rounded ${movementTypeColor[itemDetails[item]]}`}></span>{t(itemDetails[item])}
                         </span>)
                     }
-                    {moneyFields.includes(item) &&  <Money amount={detailsItem[item]} />}
-                    {typeof (detailsItem[item]) == "boolean" && stateDisplay(detailsItem[item]) }
+                    {moneyFields.includes(item) &&  <Money amount={itemDetails[item]} />}
+                    {typeof (itemDetails[item]) == "boolean" && stateDisplay(itemDetails[item]) }
                     
-                    {!moneyFields.includes(item) && typeof(detailsItem[item]) != "boolean" && item!="movement_type" &&  detailsItem[item]}
+                    {!moneyFields.includes(item) && typeof(itemDetails[item]) != "boolean" && item!="movement_type" &&  itemDetails[item]}
                     </p>
                 </div>
                 )}
 
                 {
-                    detailsItem.payment_way	&&
-                    detailsItem.sale_products.length>0 
-                    && !detailsItem.invoice_number.includes('NC')
+                    itemDetails.payment_way	&&
+                    itemDetails.sale_products.length>0 
+                    && !itemDetails.invoice_number.includes('NC')
                     &&
                     <>
                     <h2 className="text-end text-xl p-1">{firstCapitalize(t('products'))}</h2>
                  <div className="shadow p-2" >
                     <div className="grid grid-cols-8 gap-8 p-4">
-                    { Object.keys(detailsItem.sale_products[0]).map((item)=><p className="font-bold">{firstCapitalize(t(item))}</p>)}
+                    { Object.keys(itemDetails.sale_products[0]).map((item)=><p className="font-bold">{firstCapitalize(t(item))}</p>)}
                     </div>
 
-                    {detailsItem.sale_products.map((item,index)=>
+                    {itemDetails.sale_products.map((item,index)=>
                     <div className={`${index % 2 == 0 ? 'bg-green-200' : ''} hover:shadow grid grid-cols-8 gap-8 p-2 font-light`}>
                         <p>{item.id}</p>
                         <p>{item.code}</p>
@@ -88,21 +89,22 @@ const Details = ({cleanItemDetails,filterDetails=[],rowStyle}) =>{
                 </div>
                 <div className="mt-[2rem] gap-3 flex justify-end">
                     {
-                    pathname=="/sales" && detailsItem.sale_products.length>0 
-                    && !detailsItem.invoice_number.includes('NC') 
+                    pathname==`${rootpath}sales`  && itemDetails.sale_products.length>0 
+                    && !itemDetails.invoice_number.includes('NC') 
                     && 
                     <button
                     onClick={()=>{
-                        dispatch(setRefenceSale(detailsItem.invoice_number));
-                        dispatch(getSaleInvoiceItem({devolution:true, invoice_number: detailsItem.invoice_number }))
-                        navegate(rootpath + "sale/devolution")}}
+                        dispatch(setRefenceSale(itemDetails.invoice_number));
+                        dispatch(getSaleInvoiceItem({devolution:true, invoice_number: itemDetails.invoice_number }))
+                        navegate(`${rootpath}sale/devolution`)}}
                     className="bg-red-300 p-2 rounded hover:shadow"> {firstCapitalize(t('returning'))}</button>}
-                <button className="bg-green-200 p-2 rounded hover:shadow"> {firstCapitalize(t('export'))}</button>
+                {/* <button className="bg-green-200 p-2 rounded hover:shadow"> {firstCapitalize(t('export'))}</button> */}
                 </div>
             </div>
             </div>
         </Modal>
     )
-};
+}
+);
 
 export default Details;

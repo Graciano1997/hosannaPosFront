@@ -1,12 +1,12 @@
 import { useTranslation } from "react-i18next";
 import CardTitle from "../general/CardTitle";
 import Money from "../general/Money";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLastSpents } from "../../slices/spentSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
-const LastOuts =({width=200,height=300,info})=>{    
+const LastOuts = React.memo(({width=200,height=300,info})=>{    
     const dispatch = useDispatch();
     useEffect(()=>{
         dispatch(fetchLastSpents());
@@ -44,6 +44,8 @@ const LastOuts =({width=200,height=300,info})=>{
              </div>
         </div>
     );
-};
+}
+)
+;
 
 export default LastOuts;

@@ -2,11 +2,12 @@ import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/24/solid";
 import { SortIcon } from "../general/SortIcon";
-import { useState } from "react";
+import React, { useState } from "react";
 import { sortCollection } from "../../lib/sortCollection";
 import { useDispatch } from "react-redux";
 
-const Thead = ({ object, filterRows, items=[], setCollection }) => {
+const Thead = React.memo(
+  ({ object, filterRows, items=[], setCollection }) => {
 
   const { t } = useTranslation();
   const [activeSortCol,setActiveSortCol]=useState('id');
@@ -44,6 +45,8 @@ const Thead = ({ object, filterRows, items=[], setCollection }) => {
       </tr>
     </thead>
   );
-};
+}
+);
+
 
 export default Thead;

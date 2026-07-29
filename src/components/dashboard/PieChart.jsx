@@ -26,7 +26,8 @@ export const options = {
   }
 }
 
-export function PieChart({width=350,height=350,info,data}) {
+export const PieChart= React.memo(
+   function PieChart({width=350,height=350,info,data}) {
   const graphContainerRef=useRef(null);
 
   return(
@@ -40,3 +41,4 @@ export function PieChart({width=350,height=350,info,data}) {
   </div>
   )
 }
+)

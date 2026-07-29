@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
 import CardTitle from "./CardTitle";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import React from "react";
 
-const Card =({width=200,height=300,info})=>{    
-
+const Card = React.memo(
+    ({width=200,height=300,info})=>{    
     const {t}=useTranslation();
-
     return(
          <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
              <CardTitle>
@@ -16,6 +16,6 @@ const Card =({width=200,height=300,info})=>{
              </div>
         </div>
     );
-};
+});
 
 export default Card;

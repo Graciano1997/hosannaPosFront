@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { ArrowPathIcon, MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/solid";
 import Tbody from "./Tbody";
 import Thead from "./Thead";
@@ -6,7 +7,6 @@ import { openModal } from "../../slices/appSlice";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import searchCollection from "../../lib/seach";
-import { useEffect, useState } from "react";
 import { DatePickerFilter } from "../general/DatePickerFilter";
 import { useLocation } from "react-router-dom";
 import Money from "../general/Money";
@@ -14,7 +14,7 @@ import { sum } from "../../lib/sumCollection";
 import { rootpath } from "../../lib/ip";
 
 
-const Table = ({ collection = [], addItem = null, setCollection = () => { }, deleteItem = () => { }, printItem = null, update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { }, fetcherParam = null, searchBackEndHandler = null, loadingMore = null, rowStyle = "bg-green-100", rangeDataSelection= true, users = [] }) => {
+const Table = React.memo(({ collection = [], addItem = null, setCollection = () => { }, deleteItem = () => { }, printItem = null, update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { }, fetcherParam = null, searchBackEndHandler = null, loadingMore = null, rowStyle = "bg-green-50", rangeDataSelection= true, users = [] }) => {
     
     filterRows=filterRows.concat('company_id');
 
@@ -225,6 +225,8 @@ const Table = ({ collection = [], addItem = null, setCollection = () => { }, del
             </div>
         </>
     );
-};
+}
+)
+;
 
 export default Table;

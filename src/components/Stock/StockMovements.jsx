@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import Title from "../general/Title";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../Table/Table";
 import { useDispatch, useSelector } from "react-redux";
 import CardWrapper from "../general/CardWrapper";
@@ -9,7 +9,8 @@ import { activeTab } from "../../slices/appSlice";
 import { fetchStockAnualMovements, fetchStockMovements, setStockMovement } from "../../slices/stockSlice";
 import StockDashboard from "./StockDashboard";
 
-const StockMovements = () => {
+const StockMovements = React.memo(
+     () => {
     const { t } = useTranslation();
     const appState = useSelector((state) => state.appState);
     const [isShowing, setIsShowing] = useState(false);
@@ -41,7 +42,6 @@ const StockMovements = () => {
                 {appState.activeTab == "tab2" && (<StockDashboard />)}
             </TabWrapper>
         </CardWrapper>
-    )
-};
+    )});
 
 export default StockMovements;

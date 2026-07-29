@@ -40,7 +40,8 @@ export const options = {
   },
 };
 
-export function GenericLineChart({width=400,height=300,info, dataLines, dispatcher=()=>{}}) {
+export const GenericLineChart = React.memo(
+  function GenericLineChart({width=400,height=300,info, dataLines, dispatcher=()=>{}}) {
   
   const graphContainerRef=useRef(null);
 
@@ -56,11 +57,11 @@ export function GenericLineChart({width=400,height=300,info, dataLines, dispatch
       </div>
     </CardTitle>
     <div ref={graphContainerRef} style={{padding:2}} className='h-[100%] transition-all duration-500 ease-in-out'>
-    <Line
-  datasetIdKey='lineGraph'
-  data={dataLines}
-/>
+    <Line datasetIdKey='lineGraph' data={dataLines}/>
     </div>
   </div>
   )
 }
+)
+
+

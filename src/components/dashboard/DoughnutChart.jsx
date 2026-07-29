@@ -36,7 +36,8 @@ export const options = {
   },
 };
 
-export function DoughnutChart({data = [],width=150,height=150,info}) {
+export const DoughnutChart = React.memo(
+    function DoughnutChart({data = [],width=150,height=150,info}) {
   const {t}=useTranslation();
   const graphContainerRef=useRef(null);
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ export function DoughnutChart({data = [],width=150,height=150,info}) {
       label: firstCapitalize(t('amount')),
       data: data,
       backgroundColor: [
-        'rgb(34, 197, 94)',
+        '#18CA80',
         'rgb(255, 99, 132)'
       ],
       hoverOffset: 4
@@ -94,3 +95,5 @@ export function DoughnutChart({data = [],width=150,height=150,info}) {
   </div>
   )
 }
+)
+

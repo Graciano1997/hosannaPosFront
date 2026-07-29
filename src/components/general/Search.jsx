@@ -1,9 +1,10 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { StopSearching } from "../../slices/appSlice";
 
-const Search=()=>{
+const Search= React.memo(
+     ()=>{
     const searchRef=useRef(null);
     const dispatch= useDispatch();
 
@@ -45,7 +46,6 @@ const Search=()=>{
         </div>
         </div>
     </>
-    );
-};
+    );});
 
 export default Search;

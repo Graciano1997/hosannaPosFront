@@ -4,7 +4,7 @@ import SaleDetailsHeader from "./SaleDetailsHeader";
 import SaleItem from "./SaleItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getInvoiceItem, getSaleInvoiceItem, selectItem, setNewAmountToReceive, saleClean } from "../../slices/saleSlice";
-import { useState } from "react";
+import React, { useState } from "react";
 import { clearSearchedProduct, searchingProduct, searchProduct } from "../../slices/productSlice";
 import { openModal, showToast } from "../../slices/appSlice";
 import { useTranslation } from "react-i18next";
@@ -14,7 +14,8 @@ import SaleInvoiceSearchedtem from "./SaleInvoiceSearchedtem";
 import Money from "../general/Money";
 
 
-const SaleDetails = () => {
+const SaleDetails = React.memo(() => {
+    
     const dispatch = useDispatch();
     const products = useSelector((state) => state.productState.products);
     const selectedProducts = useSelector((state) => state.saleState.items);
@@ -130,15 +131,15 @@ const SaleDetails = () => {
                             ||
                             <p className="flex items-center gap-1"><span className="font-bold">{firstCapitalize(t('total_paid'))}{':'}</span> <span className="text-xl">  <Money amount={saleState.receivedCash + saleState.receivedTpa}/></span> </p>
                         </div>
-
                         </>
                     }
-
                 </div>
                 <ButtonGroup saleState={saleState} />
             </div>
         </div>
     );
-};
+}
+)
+;
 
 export default SaleDetails;

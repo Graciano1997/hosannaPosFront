@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import CompanyLand from "./CompanyLand";
 import {rootpath} from "../../lib/ip";
+import { Button } from "../general/Button";
 
 const Login = () => {
 
@@ -58,12 +59,13 @@ const Login = () => {
                     }
 
                     <div className="flex flex-col gap-5 justify-center mt-[0.5rem] p-2">
-                        <button type="submit" className="p-2 bg-green-200 rounded">{firstCapitalize(t('sign_in'))}</button>
-                        <button type="button"
-                        onClick={()=>{
-                            navegate( rootpath + 'create_company')
-                        }}
-                        className="p-2 bg-green-900 text-white rounded self-center w-[80%]">{firstCapitalize(t('create_company'))}</button>
+                        <Button type={"submit"} className={"p-2 rounded"} content={firstCapitalize(t('sign_in'))} />
+                        
+                        <Button type={"button"}
+                        onClickHandler={()=>{navegate( rootpath + 'create_company')}} 
+                        className={"p-2 bg-secondary text-white rounded self-center w-[80%]"}
+                         content={firstCapitalize(t('create_company'))}
+                        />
                     </div>
                 </form>
 

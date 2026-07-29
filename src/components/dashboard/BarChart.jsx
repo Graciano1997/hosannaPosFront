@@ -37,7 +37,8 @@ export const options = {
   },
 };
 
-export function BarChart({data,width=200,height=300,info}) {
+export const BarChart =React.memo(
+     function BarChart({data,width=200,height=300,info}) {
   const {t}=useTranslation();
   const graphContainerRef=useRef(null);
   const dispatch = useDispatch();
@@ -87,3 +88,4 @@ export function BarChart({data,width=200,height=300,info}) {
   </div>
   )
 }
+)

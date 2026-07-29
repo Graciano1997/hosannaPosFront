@@ -1,6 +1,8 @@
+import React from "react";
 import { useSelector } from "react-redux";
 
-const Money = ({ amount }) => {
+const Money = React.memo(
+   ({ amount }) => {
   const currencySetting = useSelector((state) => state.appState.currency);
  
   const formattedMoney = new Intl.NumberFormat("pt-AO",{
@@ -13,6 +15,6 @@ const Money = ({ amount }) => {
       {formattedMoney}
     </p>
   );
-};
+});
 
 export default Money;

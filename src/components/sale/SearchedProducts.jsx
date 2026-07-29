@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { searchProduct } from "../../slices/productSlice";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import SearchedItem from "./SearchedItem";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 
-const SearchedProducts = ()=>{    
+const SearchedProducts = React.memo(
+     ()=>{    
     const dispatch = useDispatch();
     const [added,setAdded] = useState(false);
     const [query,setQuery]=useState('');
@@ -78,6 +79,6 @@ const SearchedProducts = ()=>{
             {/* {searchedProducts.length==0 && query!='' && <h4 className="text-md mt-[2rem] font-light">Nenhum Producto foi encontrado</h4>} */}
         </div>
     )
-};
+});
 
 export default SearchedProducts;

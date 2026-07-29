@@ -6,8 +6,10 @@ import currency from "currency.js";
 import { useSelector } from "react-redux";
 import Money from "../general/Money";
 import { totalToDay } from "../../lib/totalToDay";
+import React from "react";
 
-const SaleDashboard=()=>{
+const SaleDashboard= React.memo(
+     ()=>{
     const {t}=useTranslation(); 
     const {sales}=useSelector((state)=>state.saleState);
 
@@ -21,6 +23,8 @@ const SaleDashboard=()=>{
         </div>
         </>
     )
-};
+}
+)
+;
 
 export default SaleDashboard;

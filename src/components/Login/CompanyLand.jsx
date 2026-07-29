@@ -4,7 +4,7 @@ import logo from '../../../src/assets/Img/Logo.svg'
 const CompanyLand = () => {
     const { t } = useTranslation();
     return (
-        <div className="flex flex-col justify-center items-center col-span-4  xl:bg-green-200 text-black p-10">
+        <div className="flex flex-col justify-center items-center col-span-4 text-black p-10">
             <div className="h-[200px] w-[200px] md:h-[300px] md:w-[300px] lg:h-[300px] lg:w-[300px]">
                 <img src={logo} className="h-full w-full" alt="" />
             </div>

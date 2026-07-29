@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { annualMonths } from "../../lib/Months";
 import { GenericLineChart } from "../dashboard/GenericLineChart";
+import React from "react";
 
-const StockDashboard=()=>{
+const StockDashboard= React.memo(
+  ()=>{
     const {t}=useTranslation();
     const dispatch = useDispatch();
 
@@ -59,6 +61,7 @@ const StockDashboard=()=>{
         </div>
         </>
     )
-};
+})
+
 
 export default StockDashboard;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import Dashboard from './components/dashboard/Dashboard'
 import Header from './components/general/Header'
@@ -38,58 +38,28 @@ import CreateCompany from './components/Login/CreateCompany'
 import { rootpath } from "./lib/ip";
 import { CurrentUser } from './lib/CurrentUser'
 
-function Home() {
 
-  const appState=useSelector((state)=>state.appState);
-  const productState=useSelector((state)=>state.productState);
-  const [isVisible,setIsVisible]=useState(false);
-  const [isSearching,setIsSearching]=useState(false);
-  const [showToast,setShowToast]=useState(true);
-  const [toastObject,setToastObject] = useState({});
-  const dispatch = useDispatch();
-  const {pathname}= useLocation();
-  const {t}=useTranslation();
-  const navegate = useNavigate();
+
+const RoutesLoggedOut = React.memo(()=>{
   const masterProfile = CurrentUser()?.profileId==Profiles.MASTER;
 
-  useEffect(()=>{
-
-    if(appState.isAuthenticated){
-      Promise.all([
-      dispatch(fetchProducts()),
-      dispatch(fetchUsers()),
-      dispatch(fetchSpents()),
-      dispatch(fetchCategories()),
-      dispatch(fetchCompanies()),
-      dispatch(fetchPrinterConfig())])
-    } 
-   },[appState.isAuthenticated,dispatch]);
-
-   useEffect(()=>{    
-     if(isVisible){
-       setTimeout(() => {
-         setIsVisible(false);
-       }, 50000);
-     } 
-   },[isVisible]);
-
   return (
-     <div className={`h-100 w-100 p-3  ${ !localStorage.getItem("isLogged") ? 'flex items-center justify-center':''}`}>   
-
-      {
-      !localStorage.getItem("isLogged") ?  
-      <Routes>
+        <Routes>
           <Route path={rootpath} element={<Login/>}/>
           <Route path={`${rootpath}login`} element={<Login/>} />
           <Route path={`${rootpath}logout`} element={<Login/>} />
           <Route path={`${rootpath}create_company`} element={<CreateCompany/>} />
           <Route path='*' element={<_404/>} />
-      </Routes>
-      :
-      <>
-      <Header searchHandleClick={setIsSearching} setVisibility={setIsVisible}/>
-      <Navegation visible={isVisible} setVisibility={setIsVisible}/>
-      <Routes>
+        </Routes>
+        )
+}) 
+
+const RoutesLoggedIn = React.memo(({setToastObject})=>{
+  
+  const masterProfile = CurrentUser()?.profileId==Profiles.MASTER;
+  
+  return(
+          <Routes>
           <Route path={rootpath} element={<Dashboard/>}/>
           <Route path={`${rootpath}dashboard`} element={<Dashboard/>} />
           <Route path={`${rootpath}pdf`} element={masterProfile ? <PdfViewer/>:<_401/>} />
@@ -107,6 +77,54 @@ function Home() {
           <Route path={`${rootpath}stock_movements`} element={<StockMovements/>} />
           <Route path='*' element={<_404/>} />
       </Routes>
+  )
+})
+
+const Home = React.memo( 
+  function Home() {
+  const appState=useSelector((state)=>state.appState);
+  const productState=useSelector((state)=>state.productState);
+  const [isVisible,setIsVisible]=useState(false);
+  const [isSearching,setIsSearching]=useState(false);
+  const [showToast,setShowToast]=useState(true);
+  const [toastObject,setToastObject] = useState({});
+  const dispatch = useDispatch();
+  const {pathname}= useLocation();
+  const {t}=useTranslation();
+  const navegate = useNavigate();
+
+
+  useEffect(()=>{
+    if(appState.isAuthenticated){
+    
+      Promise.all([dispatch(fetchProducts()),
+                  dispatch(fetchUsers()),
+                  dispatch(fetchSpents()),
+                  dispatch(fetchCategories()),
+                  dispatch(fetchCompanies()),
+                  dispatch(fetchPrinterConfig())])
+    }
+
+   },[appState.isAuthenticated,dispatch]);
+
+   useEffect(()=>{    
+     if(isVisible){
+       setTimeout(() => {
+         setIsVisible(false);
+       }, 50000);
+     } 
+   },[isVisible]);
+
+  return (
+     <div className={`h-100 w-100 p-3  ${ !localStorage.getItem("isLogged") ? 'flex items-center justify-center':''}`}>   
+
+      {
+      !localStorage.getItem("isLogged") ? <RoutesLoggedOut/>
+      :
+      <>
+      <Header searchHandleClick={setIsSearching} setVisibility={setIsVisible}/>
+      <Navegation visible={isVisible} setVisibility={setIsVisible}/>
+      <RoutesLoggedIn setToastObject={setToastObject} />
       </>
     }
 
@@ -118,5 +136,6 @@ function Home() {
      </div>
   )
 }
+) 
 
 export default Home;

@@ -1,5 +1,5 @@
 import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon, ArrowDownIcon, ArrowDownTrayIcon, ClockIcon, BellAlertIcon } from "@heroicons/react/24/solid";
-import {  useRef, useState } from "react";
+import React, {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import { activeTab, Exporting } from "../../slices/appSlice";
@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { rootpath } from "../../lib/ip";
 
-const Title=({title,create,collectionToExport})=>{
+const Title=React.memo(
+    ({title,create,collectionToExport})=>{
     const [showElipse,setShowElipse]=useState(true);
     const ref = useRef(null);
     const {t} = useTranslation();
@@ -115,6 +116,6 @@ const Title=({title,create,collectionToExport})=>{
         </div>
             </>
     )
-};
+});
 
 export default Title;

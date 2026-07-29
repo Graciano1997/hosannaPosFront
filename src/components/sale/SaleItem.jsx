@@ -5,8 +5,10 @@ import Money from "../general/Money";
 import { showToast } from "../../slices/appSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useTranslation } from "react-i18next";
+import React from "react";
 
-const SaleItem = ({product,index})=>{
+const SaleItem = React.memo(
+    ({product,index})=>{
     const dispatch = useDispatch();
     const {t}=useTranslation();
 
@@ -42,6 +44,7 @@ const SaleItem = ({product,index})=>{
                 </div>
         </div>
     );
-};
+}
+) ;
 
 export default SaleItem;

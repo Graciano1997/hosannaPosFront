@@ -10,6 +10,20 @@ export default {
         'sm':'575px',
         'xs': '480px',
         '4xl': '1920px' 
+      },
+      colors:{
+        primary:{
+            DEFAULT: "#F5F7FA",
+          light: "#EEF8E2",
+          dark: "#E2F0CB",
+
+        },
+        secondary:{
+                 DEFAULT: "#14532d",
+        },
+       danger: {
+          DEFAULT: "#EF4444",
+        },
       }
     },
   },

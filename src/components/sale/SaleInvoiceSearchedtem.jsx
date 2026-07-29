@@ -1,6 +1,8 @@
+import React from "react";
 import Money from "../general/Money";
 
-const SaleInvoiceSearchedtem = ({product,index})=>{
+const SaleInvoiceSearchedtem = React.memo(
+    ({product,index})=>{
 
     return(
         <div className={`grid grid-cols-[20fr_20fr_20fr_20fr_20fr] md:grid-cols-[10fr_10fr_10fr_10fr_10fr_25fr_10fr] place-items-center text-md ${index%2==0?'bg-green-50':'bg-green-100'} p-3 cursor-pointer`}>
@@ -14,6 +16,7 @@ const SaleInvoiceSearchedtem = ({product,index})=>{
                 <p><Money amount={product.subtotal}/></p>
         </div>
     );
-};
+}
+) ;
 
 export default SaleInvoiceSearchedtem;

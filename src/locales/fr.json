@@ -250,6 +250,26 @@
   "select_client": "Sélectionner un client",
   "sales_total": "Total des ventes",
   "all_users": "Tous les utilisateurs",
-  "all_clients": "Tous les clients"
-
+  "all_clients": "Tous les clients",
+  "printer_mode": "Mode d'impression",
+  "printer_automatic": "Automatique",
+  "printer_manual": "Manuel",
+  "printer_ask": "Demander",
+  "sale_completed_successfully": "Vente effectuée avec succès !",
+  "confirm_printing": "Voulez-vous imprimer la facture ?",
+  "failed_to_fetch": "Veuillez vérifier votre connexion Internet ou si le serveur est en cours d'exécution.",
+  "sale_already_ordered": "Cette vente a déjà été finalisée. Vous ne pouvez pas la valider une seconde fois.",
+  "print_successful": "Impression effectuée avec succès !",
+  "failed_to_fetch_template": "Impossible de charger le modèle. Veuillez vérifier votre connexion Internet ou si le serveur est en cours d'exécution.",
+  "printer_not_configured": "Imprimante non configurée. Veuillez vérifier les paramètres d'impression.",
+  "could_not_reprint": "Impossible de réimprimer. Veuillez vérifier votre connexion Internet ainsi que le service d'impression local.",
+  "proprietary_name": "Nom du propriétaire",
+  "proprietary_address": "Adresse du propriétaire",
+  "proprietary_phone": "Téléphone du propriétaire",
+  "company_name": "Nom de l'entreprise",
+  "company_nif": "Numéro fiscal de l'entreprise",
+  "company_phone": "Téléphone de l'entreprise",
+  "password_confirmation": "Confirmation du mot de passe",
+  "password_not_match": "Le mot de passe et sa confirmation ne correspondent pas.",
+  "hosanna_sales_point_desc": "Hosanna SalesPoint vous aide à vendre plus efficacement et à gérer votre entreprise en toute confiance."
 }

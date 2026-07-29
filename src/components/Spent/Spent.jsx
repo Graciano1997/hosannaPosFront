@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import Title from "../general/Title";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../Table/Table";
 import Create from "./Create";
 import SpendDashboard from "./SpentDashboard";
@@ -10,7 +10,8 @@ import TabWrapper from "../general/TabWrapper";
 import { creatingSpent, deleteSpent, fetchAnualSpents, fetchSpents, setSpents, updatingSpent } from "../../slices/spentSlice";
 import { activeTab } from "../../slices/appSlice";
 
-const Spent = () => {
+const Spent = React.memo(
+     () => {
     const { t } = useTranslation();
     const appState = useSelector((state) => state.appState);
     const [isShowing, setIsShowing] = useState(false);
@@ -46,6 +47,6 @@ const Spent = () => {
             {(spentState.isCreating || spentState.isUpdating) && appState.isOpen &&  (<Create />)}
         </CardWrapper>
     )
-};
+});
 
 export default Spent;
