@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { ArrowDownCircleIcon, ArrowDownIcon, ArrowDownTrayIcon, PencilIcon, PlusCircleIcon, PlusIcon, PrinterIcon, TrashIcon, UserIcon } from "@heroicons/react/24/solid";
 import Money from "../general/Money";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,6 @@ const Tr = React.memo(({ item, index, deleteItem, updateItem, filterRows, filter
 
     const { t } = useTranslation();
     const { printerConfiguration } = useSelector((state) => state.printerState);
-
     const moneyFields = ['price', 'total', 'amount', 'cost_price', 'difference', 'received_cash', 'received_tpa'];
     const movementTypeColor ={entry:"bg-green-500",exit:"bg-red-500",return:"bg-purple-500",adjustment:"bg-blue-500",expired:"bg-yellow-400"}
     
@@ -26,7 +25,7 @@ const Tr = React.memo(({ item, index, deleteItem, updateItem, filterRows, filter
     const [qty, setQty] = useState(0);
     const [showDetails,setShowDetails]=useState(false)
 
-    let keys = Object.keys(item);
+    let keys = useMemo(() => Object.keys(item), [item]);
     keys = keys.filter((item) => !filterRows.includes(item))
     const itemDetail = useSelector((state) => state.appState.itemDetails);
     return (
@@ -99,43 +98,47 @@ const Tr = React.memo(({ item, index, deleteItem, updateItem, filterRows, filter
                         {printItem &&
                         <div className="flex items-center jusify-center mt-3 gap-3">
                         <button onClick={() => {
-                            dispatch(getInvoiceItem({id:item.id,printerType:printerConfiguration.printertype}))
-                            .then((invoiceResultState) => {
-                                    if (getInvoiceItem.fulfilled.match(invoiceResultState)) {
-                                             
-                                                dispatch(printing({
-                                                    copyNumber: parseInt(printerConfiguration.copyNumber),
-                                                    template: invoiceResultState.payload.invoice_template,
-                                                    printer: printerConfiguration.printer,
-                                                    printerType: printerConfiguration.printertype
-                                                }))
-                                                .then((printingResultState) => {
-                                                    if (printing.rejected.match(printingResultState)) {
-                                                        dispatch(showToast({ warning: true, message: firstCapitalize(t('could_not_reprint')) }));
+                            if (item.id != null && printerConfiguration) {
+                                    dispatch(getInvoiceItem({id:item?.id,printerType:printerConfiguration?.printertype}))
+                                    .then((invoiceResultState) => {
+                                            if (getInvoiceItem.fulfilled.match(invoiceResultState)) {
+            
+                                                        dispatch(printing({
+                                                            copyNumber: parseInt(printerConfiguration.copyNumber),
+                                                            template: invoiceResultState.payload.invoice_template,
+                                                            printer: printerConfiguration.printer,
+                                                            printerType: printerConfiguration.printertype
+                                                        }))
+                                                        .then((printingResultState) => {
+                                                            if (printing.rejected.match(printingResultState)) {
+                                                                dispatch(showToast({ warning: true, message: firstCapitalize(t('could_not_reprint')) }));
+                                                            }
+                
+                                                            if (printing.fulfilled.match(printingResultState)) {
+                                                                dispatch(showToast({ success: true, message: firstCapitalize(t('reprinting')) }));
+                                                            }
+                                                        })
+                                        
                                                     }
-        
-                                                     if (printing.fulfilled.match(printingResultState)) {
-                                                        dispatch(showToast({ success: true, message: firstCapitalize(t('reprinting')) }));
-                                                    }
-                                                })
-                                
+                                                    if(getInvoiceItem.rejected.match(invoiceResultState)){
+                                                        dispatch(showToast({error:true, message:firstCapitalize(t('could_not_get_the_invoice'))}));
                                             }
-                                            if(getInvoiceItem.rejected.match(invoiceResultState)){
-                                                dispatch(showToast({error:true, message:firstCapitalize(t('could_not_get_the_invoice'))}));
-                                    }
-                                })
+                                        })
+                            }else{ dispatch(showToast({warning:true, message:firstCapitalize(t('printer_not_configured'))}))}
 
                             }}><PrinterIcon className="w-6 y-6 p-1 text-black hover:shadow hover:rounded" /></button>
                         <button onClick={() => {
-                            dispatch(getInvoiceItem({id:item.id,printerType:printerConfiguration.printertype}))
-                            .then((invoiceResultState) => {
-                            if(getInvoiceItem.fulfilled.match(invoiceResultState)){
-                                generateFromHtmlToPDF(invoiceResultState.payload.invoice_template,printerConfiguration,`${t('invoice')} ${item.invoice_number} ${item.created_at}`)
-                            }
-                            })
+                            if(item.id != null && printerConfiguration) {
+                                dispatch(getInvoiceItem({id:item.id,printerType:printerConfiguration.printertype}))
+                                .then((invoiceResultState) => {
+                                if(getInvoiceItem.fulfilled.match(invoiceResultState)){
+                                    generateFromHtmlToPDF(invoiceResultState.payload.invoice_template,printerConfiguration,`${t('invoice')} ${item.invoice_number} ${item.created_at}`)
+                                }
+                                })
+                            }else{ dispatch(showToast({warning:true, message:firstCapitalize(t('printer_not_loaded'))}))}
                             }}><ArrowDownTrayIcon className="w-6 y-6 p-1 text-black hover:shadow hover:rounded" /></button>
                         </div>
-}
+                        }
                         {deleteItem && <button onClick={() => { dispatch(deleteItem(item.id)) }}><TrashIcon className="w-6 y-6 p-1 text-red-300 hover:shadow hover:rounded" /></button>}
                             </div>
                     </div>

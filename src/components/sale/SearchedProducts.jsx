@@ -24,8 +24,8 @@ const SearchedProducts = React.memo(
     return(
         <div className="flex flex-col gap-3 mt-[2rem] p-3">
         <div className="flex flex-col gap-3">
-                <div className="flex flex-col bg-green-100 rounded">
-                <div className='bg-green-100  flex justify-between items-center rounded p-1 shadow'>
+                <div className="flex flex-col bg-primary rounded">
+                <div className='bg-primary  flex justify-between items-center rounded p-1 shadow'>
                 <input type='text' id="searchProduct"
                 value={query}
                 ref={inputRef}
@@ -42,7 +42,7 @@ const SearchedProducts = React.memo(
                         }
                 }}
                 placeholder={firstCapitalize(t('product_name_or_code'))}
-                className='p-1 rounded outline-none  bg-green-100 w-[100%]'/>
+                className='p-1 rounded outline-none  bg-primary w-[100%]'/>
                 <MagnifyingGlassIcon
                 onClick={()=>{
                     if(query!=''){

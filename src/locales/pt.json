@@ -294,5 +294,14 @@
     "company_phone":"Tel. da empresa",
     "password_confirmation":"confirmação da senha",
     "password_not_match":"senha e a confirmação não são iguais",
-    "hosanna_sales_point_desc":"O HosannaSales Point ajuda-te a vender melhor e a gerir o teu negócio com mais organização e confiança."
+    "hosanna_sales_point_desc":"O HosannaSales Point ajuda-te a vender melhor e a gerir o teu negócio com mais organização e confiança.",
+    "new_password":"nova senha",
+    "date":"data",
+    "sold_products":"produtos vendidos",
+    "product_sales_history": "Histórico de Vendas",
+    "product_stock_movements": "Movimentos de Stock",
+     "day": "dia",
+    "month": "mês",
+    "day_vs_quantity": "Dia vs Quantidade",
+    "printer_not_loaded":"Por favor verifique a configuração de impressão."
 }

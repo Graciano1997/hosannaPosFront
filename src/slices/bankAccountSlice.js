@@ -75,9 +75,6 @@ const bankAccountSlice = createSlice({
 
         builder.addCase(fetchBankAccounts.fulfilled, (state, action) => {
             state.loading = false;
-            
-            console.log(action.payload);
-
             if (action.payload != undefined) {
                 state.bankAccounts = action.payload.data;
                 state.error = '';

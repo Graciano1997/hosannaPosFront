@@ -14,7 +14,7 @@ const ProductConfigurationFormItem = ({ field, index, active,mandatory }) => {
     const activeRef=useRef();
     const mandatoryRef=useRef();
 
-    return ( <div key={index} className={`${index%2==0?'bg-green-100':''} grid grid-cols-2 gap-2 p-1`}>
+    return ( <div key={index} className={`${index%2==0?'bg-primary':''} grid grid-cols-2 gap-2 p-1`}>
                         <p>{t(field)[0].toUpperCase().concat(t(field).slice(1))}</p>                        
                         
                         <select 

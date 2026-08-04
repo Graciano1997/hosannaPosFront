@@ -40,7 +40,7 @@ const CreateBank=()=>{
     return(
         <>
         <Modal helper={stopCreatingOrUpdateingBankAccount}>
-            <form onSubmit={handleFormSubmition} className='flex flex-col mt-[2%] h-[100%] rounded p-3'>
+            <form onSubmit={handleFormSubmition} className='flex flex-col h-[100%] rounded p-3'>
                     <div className="flex flex-col gap-4">
                     <div className="flex gap-3">
                     <div className="w-[50%]">

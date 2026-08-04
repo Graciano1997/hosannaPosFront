@@ -98,18 +98,17 @@ export  const LineChart = React.memo(function LineChart({data,width=400,height=3
   }
 
   return(
-    <div style={{width:width, height:height }} className={`grid grid-rows-[50px_auto] hidden sm:block bg-white rounded shadow-md`}>
+    <div style={{width:width, height:height }} className={`grid grid-rows-[50px_1fr]  sm:block bg-white rounded shadow-md`}>
     <CardTitle>
       <div className='flex justify-between items-center w-[100%] h-[100%]'>
          <h2 className="">{firstCapitalize(info)}</h2>
       </div>
     </CardTitle>
-    <div ref={graphContainerRef} style={{padding:2}} className='h-[100%] transition-all duration-500 ease-in-out'>
-      
-    <Line
-  datasetIdKey='lineGraph'
-  data={dataLines}
-/>
+ 
+   <div  ref={graphContainerRef} className={`flex justify-center w-full h-[${height}px] relative  transition-all duration-500 ease-in-out`}>
+    <Line datasetIdKey='lineGraph'
+    data={dataLines}
+    />
     </div>
   </div>
   )

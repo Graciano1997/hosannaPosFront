@@ -123,7 +123,6 @@ const appSlice=createSlice({
         Exporting:(state,action)=>{
             state.isExporting = true;
             state.exportingModel = action.payload;
-            console.log(action.payload);
         },
         StopExporting:(state)=>{
             state.isExporting = false;

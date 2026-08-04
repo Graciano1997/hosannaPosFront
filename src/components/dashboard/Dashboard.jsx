@@ -20,8 +20,6 @@ import { rootpath } from "../../lib/ip";
 import { CurrentUser } from "../../lib/CurrentUser";
 
 
-
-
 const DashboardNavegateOption = React.memo(({productState, navegate, dispatch}) => {
         const { t } = useTranslation()
         const master = CurrentUser()?.profileId == Profiles?.MASTER;
@@ -74,10 +72,12 @@ const DashboardNavegateOption = React.memo(({productState, navegate, dispatch}) 
             </div>
         )
     })
+    
 const Dashboard = React.memo(
     () => {
         const { t } = useTranslation();
         const dispatch = useDispatch();
+        const master = CurrentUser()?.profileId == Profiles?.MASTER;
 
         useEffect(() => {
             const loadData = async () => {
@@ -132,7 +132,7 @@ const Dashboard = React.memo(
                     tension: 0.5
                 }
             ]
-        }), [anualSales, anualSpents, anualExpired, t]);
+        }), [dispatch,anualSales, anualSpents, anualExpired, t]);
 
         return (
             <>
@@ -141,13 +141,21 @@ const Dashboard = React.memo(
                         <DashboardNavegateOption navegate={navegate}
                          productState={productState}
                          dispatch={dispatch} />
+                        
+                        <div className="grid grid-cols-1 lg:flex lg:flex-wrap  lg:justify-center gap-6 mt-20">
 
-                        <div className="flex flex-col mt-[3rem] mb-[0rem] items-center sm:items-start sm:flex-row justify-end gap-4 sm:mt-[3%] w-full">
+                        <div className="lg:col-span-3">
+                            <LastSelling info={{ title: firstCapitalize(t('last_selling')), description: t('about') }} />
+                        </div>
 
-                            <LastSelling width={350} height={350} info={{ title: firstCapitalize(t('last_selling')), description: t('about') }} />
-                            <DoughnutChart width={300} height={390} data={[today_balance, today_spents]} info={firstCapitalize(t('today_status'))} />
-                            {/* <LineChart width={450} height={350} data={{spents: anualSpents,sales:anualSales, expireds:anualExpired}} info={firstCapitalize(t('income_outcome_expiration'))}/> */}
-                            <GenericLineChart width={450} height={350} dataLines={dataLines} info={firstCapitalize(t('income_outcome_expiration'))} />
+                        <div className="lg:col-span-3">
+                            <DoughnutChart data={[today_balance, today_spents]} info={firstCapitalize(t('today_status'))} />
+                        </div>
+
+                        <div className="lg:col-span-6">
+                            <GenericLineChart dataLines={dataLines} info={firstCapitalize(t('income_outcome_expiration'))}  />
+                        </div>
+
                         </div>
                     </div>
                 </div>

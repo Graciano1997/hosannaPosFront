@@ -37,7 +37,7 @@ export const options = {
 };
 
 export const DoughnutChart = React.memo(
-    function DoughnutChart({data = [],width=150,height=150,info}) {
+    function DoughnutChart({data = [],width=350,height=350,info}) {
   const {t}=useTranslation();
   const graphContainerRef=useRef(null);
   const dispatch = useDispatch();
@@ -71,7 +71,7 @@ export const DoughnutChart = React.memo(
     years.push(index);
 
   return(
-    <div className={`grid grid-rows-[50px_auto] w-[${width}px] h-[${height}px] bg-white rounded shadow-md`}>
+    <div className={`grid grid-rows-[50px_1fr] h-full  bg-white rounded shadow-md`}>
     <CardTitle>
       <div className='flex justify-between items-center w-[100%] h-[100%]'>
          <h2 className="">{firstCapitalize(info)}</h2>
@@ -79,7 +79,7 @@ export const DoughnutChart = React.memo(
     </CardTitle>
     <div ref={graphContainerRef} style={{padding:2}} className='h-[100%]'>
 
-   <div className='w-full h-70 relative'>
+   <div className={`flex justify-center h-[${height}px] relative`}>
     <Doughnut data={dataD}/>
     </div>   
     

@@ -37,7 +37,7 @@ const Thead = React.memo(
           dispatch(setCollection(sortCollection(items,label,activeSortOrdDesc)));
           //this ensure to set the sorted collection....
           }}>
-            <div className="flex justify-center items-center gap-3 ">{firstCapitalize(t(label))}
+            <div className="flex justify-center items-center gap-3 truncate">{firstCapitalize(t(label))}
               {<SortIcon desc={activeSortOrdDesc} show={ sortingFieldFilter.includes(label)? false: label==activeSortCol}/>}
             </div>
           </th>)}

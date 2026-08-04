@@ -197,9 +197,9 @@ const Table = React.memo(({ collection = [], addItem = null, setCollection = () 
                                     <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} printItem={printItem} items={searchResult?.length ? searchResult : collection} rowStyle={rowStyle} />
                                 </table>
                                 
-                               {pathname == rootpath + "/sales" 
+                               {pathname == rootpath + "sales" 
                                &&
-                                <div className="flex justify-center mt-4 items-center gap-2 text-2xl font-bold mb-4 text-green-600">
+                                <div className="flex justify-center mt-4 items-center gap-2 text-2xl font-bold mb-4 text-seconday bg-white p-3 rounded shadow-sm">
                                     <h1 >{firstCapitalize(t('sales_total'))} : </h1>
                                     <p>{<Money amount={sum(searchResult?.length ? searchResult : collection, 'total').total || 0 } />}</p>
                                 </div>

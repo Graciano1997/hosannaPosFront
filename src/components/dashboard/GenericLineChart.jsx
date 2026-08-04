@@ -40,8 +40,8 @@ export const options = {
   },
 };
 
-export const GenericLineChart = React.memo(
-  function GenericLineChart({width=400,height=300,info, dataLines, dispatcher=()=>{}}) {
+export const GenericLineChart = 
+  function GenericLineChart({width=350,height=350,info, dataLines, dispatcher=()=>{}}) {
   
   const graphContainerRef=useRef(null);
 
@@ -50,18 +50,18 @@ export const GenericLineChart = React.memo(
   },[]);
 
   return(
-    <div style={{width:width, height:height }} className={`grid grid-rows-[50px_auto] hidden sm:block bg-white rounded shadow-md`}>
+    <div className={`grid grid-rows-[50px_1fr] bg-white rounded shadow-md`}>
     <CardTitle>
-      <div className='flex justify-between items-center w-[100%] h-[100%]'>
+      <div className='flex justify-between items-center'>
          <h2 className="">{firstCapitalize(info)}</h2>
       </div>
     </CardTitle>
-    <div ref={graphContainerRef} style={{padding:2}} className='h-[100%] transition-all duration-500 ease-in-out'>
+      <div ref={graphContainerRef} className={`transition-all duration-500 ease-in-out flex justify-center w-[${width}] h-[${height}px] relative`}>
     <Line datasetIdKey='lineGraph' data={dataLines}/>
     </div>
   </div>
   )
 }
-)
+
 
 

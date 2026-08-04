@@ -15,7 +15,7 @@ import Money from "../general/Money";
 
 
 const SaleDetails = React.memo(() => {
-    
+
     const dispatch = useDispatch();
     const products = useSelector((state) => state.productState.products);
     const selectedProducts = useSelector((state) => state.saleState.items);
@@ -56,11 +56,11 @@ const SaleDetails = React.memo(() => {
                     &&
                     <div className="flex flex-col gap-3">
                         <label htmlFor="searchProduct">{firstCapitalize(t('search_for_invoice_id'))}</label>
-                        <div className='bg-green-100  flex justify-between items-center rounded p-1 shadow'>
+                        <div className='bg-primary  flex justify-between items-center rounded p-1 shadow'>
 
                             <input type='text' onChange={(el) => { setInvoiceNumber(el.target.value) }} placeholder={`${t('example')} FT-006/2025`}
 
-                                className='p-1 rounded outline-none  bg-green-100 w-[100%]' />
+                                className='p-1 rounded outline-none  bg-primary w-[100%]' />
                             <MagnifyingGlassIcon
                                 onClick={dispatchSearchInvoiceHandler}
                                 className="w-7 y-7 text-[#323232] cursor-pointer" />
@@ -73,10 +73,10 @@ const SaleDetails = React.memo(() => {
                     <div className="flex flex-col gap-3">
                         <label htmlFor="searchProduct">{firstCapitalize(t('search'))}</label>
                         <div className="flex flex-col bg-green-100 rounded">
-                            <div className='bg-green-100  flex justify-between items-center rounded p-1 shadow'>
+                            <div className='bg-primary  flex justify-between items-center rounded p-1 shadow'>
                                 <input type='text' readOnly id="searchProduct" onClick={dispatchSearchHandler}
 
-                                    className='p-1 rounded outline-none  bg-green-100 w-[100%]' />
+                                    className='p-1 rounded outline-none  bg-primary w-[100%]' />
                                 <MagnifyingGlassIcon
                                     onClick={dispatchSearchHandler}
                                     className="w-7 y-7 text-[#323232] cursor-pointer" />
@@ -139,7 +139,6 @@ const SaleDetails = React.memo(() => {
         </div>
     );
 }
-)
-;
+);
 
 export default SaleDetails;

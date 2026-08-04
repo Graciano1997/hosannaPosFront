@@ -39,7 +39,7 @@ const Title=({title,create})=>{
             }}
             ref={ref}>
              <div className="flex justify-between mt-4">
-                <h1 className="text-3xl">{firstCapitalize(title)}</h1>
+                <h1 className="text-3xl truncate">{firstCapitalize(title)}</h1>
              </div>
     
             <nav className="mt-[20px]">
@@ -61,7 +61,7 @@ const Title=({title,create})=>{
                         dispatch(activeTab('tab1'))}
                     }
                 } 
-                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab1"?'activeTab':''}`} >
+                className={`flex items-center gap-2 text-black transition-all duration-100 truncate hover:rounded ${appState.activeTab=="tab1"?'activeTab':''}`} >
                 <HomeIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('company_details'))}
                 </Link>
@@ -73,7 +73,7 @@ const Title=({title,create})=>{
                         dispatch(activeTab('tab2'))}
                     }
                 } 
-                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab2"?'activeTab':''}`} >
+                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded truncate ${appState.activeTab=="tab2"?'activeTab':''}`} >
                 <BanknotesIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('bank_details'))}
                 </Link>
@@ -86,7 +86,7 @@ const Title=({title,create})=>{
                             dispatch(activeTab('tab3'))}
                         }
                 } 
-                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab3"?'activeTab':''}`} >
+                className={`flex items-center gap-2 text-black transition-all duration-100 truncate hover:rounded ${appState.activeTab=="tab3"?'activeTab':''}`} >
                 <UserGroupIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('profile'))}
                 </Link>
@@ -97,7 +97,7 @@ const Title=({title,create})=>{
                         el.preventDefault();
                             dispatch(activeTab('tab4'))}
                 } 
-                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''}`} >
+                className={`flex items-center gap-2 text-black transition-all duration-100 truncate hover:rounded ${appState.activeTab=="tab4"?'activeTab':''}`} >
                 <PrinterIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
                 { firstCapitalize(t('printer'))}
                 </Link>

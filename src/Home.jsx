@@ -3,8 +3,6 @@ import './App.css'
 import Dashboard from './components/dashboard/Dashboard'
 import Header from './components/general/Header'
 import Navegation from './components/general/Navegation'
-import _404 from './components/general/_404'
-import _401 from './components/general/_401'
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Product from './components/product/Product'
 import Search from './components/general/Search'
@@ -37,11 +35,13 @@ import Devolution from './components/devolution/Devolution'
 import CreateCompany from './components/Login/CreateCompany'
 import { rootpath } from "./lib/ip";
 import { CurrentUser } from './lib/CurrentUser'
+import { ErrorPage } from './components/general/_404'
 
 
 
 const RoutesLoggedOut = React.memo(()=>{
   const masterProfile = CurrentUser()?.profileId==Profiles.MASTER;
+  const {t}= useTranslation()
 
   return (
         <Routes>
@@ -49,7 +49,7 @@ const RoutesLoggedOut = React.memo(()=>{
           <Route path={`${rootpath}login`} element={<Login/>} />
           <Route path={`${rootpath}logout`} element={<Login/>} />
           <Route path={`${rootpath}create_company`} element={<CreateCompany/>} />
-          <Route path='*' element={<_404/>} />
+          <Route path='*' element={<ErrorPage errorCode={404} content={firstCapitalize(t('not_found_url'))} />} />
         </Routes>
         )
 }) 
@@ -57,25 +57,26 @@ const RoutesLoggedOut = React.memo(()=>{
 const RoutesLoggedIn = React.memo(({setToastObject})=>{
   
   const masterProfile = CurrentUser()?.profileId==Profiles.MASTER;
+  const {t}= useTranslation()
   
   return(
           <Routes>
           <Route path={rootpath} element={<Dashboard/>}/>
           <Route path={`${rootpath}dashboard`} element={<Dashboard/>} />
-          <Route path={`${rootpath}pdf`} element={masterProfile ? <PdfViewer/>:<_401/>} />
-          <Route path={`${rootpath}requests`} element={masterProfile ? <Request/>:<_401/>} />
-          <Route path={`${rootpath}notifications`} element={masterProfile ? <Notification/> : <_401/>} />
+          <Route path={`${rootpath}pdf`} element={masterProfile ? <PdfViewer/>:<ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} />} />
+          <Route path={`${rootpath}requests`} element={masterProfile ? <Request/>:<ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} />} />
+          <Route path={`${rootpath}notifications`} element={masterProfile ? <Notification/> : <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} />} />
           <Route path={`${rootpath}sales`} element={<Sales/>}/>
-          <Route path={`${rootpath}products`} element={masterProfile ? <Product/> : <_401/>} />
-          <Route path={`${rootpath}spents`} element={masterProfile ? <Spent/>: <_401/>} />  
-          <Route path={`${rootpath}users`} element={masterProfile ? <User/>: <_401/>} /> 
+          <Route path={`${rootpath}products`} element={masterProfile ? <Product/> : <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} />} />
+          <Route path={`${rootpath}spents`} element={masterProfile ? <Spent/>: <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} />} />  
+          <Route path={`${rootpath}users`} element={masterProfile ? <User/>: <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} /> } /> 
           <Route path={`${rootpath}sale`} element={<Sale setToastObject={setToastObject}/>} />      
           <Route path={`${rootpath}sale/devolution`} element={<Devolution setToastObject={setToastObject}/>} />      
           <Route path={`${rootpath}setting`} element={<Setting/>} />
           <Route path={`${rootpath}profile`} element={<Account/>} />
           <Route path={`${rootpath}mystore`} element={<MyStore/>} />
           <Route path={`${rootpath}stock_movements`} element={<StockMovements/>} />
-          <Route path='*' element={<_404/>} />
+          <Route path='*' element={<ErrorPage errorCode={404} content={firstCapitalize(t('not_found_url'))} />} />
       </Routes>
   )
 })

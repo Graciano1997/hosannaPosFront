@@ -137,7 +137,7 @@ const Export = ({ stopExporting }) => {
                     </div>
                     <div>
 
-                        <div className="mt-4 flex gap-2 p-2 rounded-[20px] justify-center items-center bg-green-100 w-[25%] md:w-[40%]">
+                        <div className="mt-4 flex gap-2 p-2 rounded-[20px] justify-center items-center bg-primary w-[25%] md:w-[40%]">
                             <p>{t('date_interval')}</p>
                             <input type="text" onKeyDown={(el) => {
                                 if (el.key == "Backspace") {

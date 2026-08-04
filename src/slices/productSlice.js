@@ -20,7 +20,9 @@ const initialState = {
     anualExpireds:[],
     isSearching:false,
     last_created_at:null,
-    isLoadingMore:false
+    isLoadingMore:false,
+    productSaleHistory:null,
+    productStockHistory:null,
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async (last_created_at=null)=>{
@@ -82,6 +84,26 @@ export const productConfiguration = createAsyncThunk("productState/productConfig
     return response.json();
 });
 
+export const fetchProductSaleHistory = createAsyncThunk("productState/fetchProductSaleHistory", async ({id,from,to})=>{
+    
+    const response = await fetch(`${getIpTenant()}products/${parseInt(id)}/product_sale_history`,{ 
+        method:'POST',
+        headers:{'Content-Type':'application/json' },
+        body:JSON.stringify({from,to})
+    });
+    return response.json();
+    });
+
+    export const fetchProductStockHistory = createAsyncThunk("productState/fetchProductStockHistory", async ({id,from,to})=>{
+    
+    const response = await fetch(`${getIpTenant()}products/${parseInt(id)}/product_stock_history`,{ 
+        method:'POST',
+        headers:{'Content-Type':'application/json' },
+        body:JSON.stringify({from,to})
+    });
+    return response.json();
+    });
+
 const productSlice = createSlice({
   name:'productState',
   initialState,
@@ -92,6 +114,13 @@ const productSlice = createSlice({
     clearSearchedProduct:(state)=>{
         state.productsSearched = [];
         state.isSearching =false;
+    },
+
+    cleanProductHistory:(state)=>{
+        state.productSaleHistory = null;
+    },
+    cleanProductStockHistory:(state)=>{
+        state.productStockHistory = null;
     },
     creatingProduct: (state)=>{
         state.isCreating = true;
@@ -151,6 +180,34 @@ const productSlice = createSlice({
          if(action.payload!=undefined){
              state.expireds = action.payload.data;
              state.error='';
+         }
+    });
+
+    builder.addCase(fetchProductSaleHistory.fulfilled,(state,action)=>{
+        state.loading=false;
+        console.log("the product sale history......",action.payload.data);
+
+                state.productSaleHistory = action.payload.data;
+    });
+
+    builder.addCase(fetchProductSaleHistory.rejected,(state,action)=>{
+        state.loading=false;
+         if(action.payload!=undefined){
+                state.productSaleHistory = null;
+         }
+    });
+
+    builder.addCase(fetchProductStockHistory.fulfilled,(state,action)=>{
+        state.loading=false;
+        console.log("the product stock history......",action.payload.data);
+
+                state.productStockHistory = action.payload.data;
+    });
+
+    builder.addCase(fetchProductStockHistory.rejected,(state,action)=>{
+        state.loading=false;
+         if(action.payload!=undefined){
+                state.productStockHistory = null;
          }
     });
 
@@ -272,4 +329,4 @@ const productSlice = createSlice({
 });
 
 export default productSlice.reducer;
-export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct,searchingProduct,stopCreatingOrUpdateingProduct, setProducts, setAlertProducts,setExpireds, loadingMore} = productSlice.actions;
+export const {searchProduct,clearSearchedProduct, creatingProduct,updatingProduct, addProductField, stopCreatingProduct,searchingProduct,stopCreatingOrUpdateingProduct, setProducts, setAlertProducts,setExpireds, loadingMore, cleanProductStockHistory} = productSlice.actions;

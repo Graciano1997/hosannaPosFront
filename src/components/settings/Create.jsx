@@ -14,14 +14,14 @@ const Create=()=>{
     const [company, setCompany] = useState(companyState.companyToUpdate || {});
     const {t}=useTranslation();
 
-       const formHandler = (el) => {
+    const formHandler = (el) => {
             setCompany({
                 ...company,
                 [el.target.name]: el.target.value
             })
         }
 
-        const handleFormSubmition = (el) => {
+    const handleFormSubmition = (el) => {
             el.preventDefault();
 
             let companyData = { ...company };
@@ -58,13 +58,13 @@ const Create=()=>{
     return(
         <>
         <Modal helper={stopCreatingOrUpdateingCompany}>
-            <form onSubmit={handleFormSubmition} className='flex flex-col mt-[2%] h-[100%] rounded p-3'>
+            <form onSubmit={handleFormSubmition} className='flex flex-col  h-[100%] rounded p-3'>
                     <div className="flex flex-col gap-4">
                     
                     <div className="flex gap-3">
                     <div className="w-[50%]">
                     <label>
-                    { firstCapitalize(t('name'))}
+                    {firstCapitalize(t('name'))}
                     <br />
                     <input type="text" name="name" onChange={formHandler} value={company.name} className='p-1 rounded w-[100%] outline-none'/>
                     </label>
@@ -142,7 +142,6 @@ const Create=()=>{
                     </label>
                     </div>
                     </div> 
-
                     </div>
 
                     <div className="flex justify-end mt-auto p-2"><button className="p-2 bg-green-100 rounded">{company.id ? firstCapitalize(t('update')) : firstCapitalize(t('create'))}</button></div>

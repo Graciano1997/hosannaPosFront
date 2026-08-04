@@ -16,13 +16,14 @@ const LastSelling = React.memo(
     useEffect(()=>{
         if(sales.length>0){
             setLastSales(sales.slice(0,3));
+            console.log(sales)
         }
     },[sales]);
 
     const navegate = useNavigate();
 
     return(
-         <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto_50px] bg-white rounded shadow-md`}>
+         <div  className={`grid grid-rows-[50px_auto_50px] bg-white rounded shadow-md h-full`}>
              <CardTitle>
              {info.title}
             </CardTitle>
@@ -34,27 +35,28 @@ const LastSelling = React.memo(
             }
             {lastSales.length > 0 &&
             <>
-                         <div className="p-2">
-                <ul className="h-[100%] flex flex-col justify-around">
+            <div className="p-2">
+                <ul className="h-[100%] flex flex-col justify-around gap-2">
                 <li key="lastsalesheader"
-                 className="h-[40px] bg-white  grid grid-cols-3 items-center justify-center">
+                 className="h-[40px] bg-white  grid grid-cols-4 items-center justify-center">
                     <p>{firstCapitalize(t('client'))}</p>
                     <p className="text-center">{firstCapitalize(t('qty'))}</p>
                     <p>{firstCapitalize(t('total'))}</p>
-                    </li>
+                    <p className="text-center">{firstCapitalize(t('date'))}</p>
+                </li>
                     {lastSales.map((el)=>
                     <li
                     key={el.id}
-                     className="h-[40px] bg-primary cursor-pointer text-light text-sm justify-center p-1 rounded sm:shadow grid grid-cols-3 items-center">
-                    <p>{el.client.split(' ')[0]}</p>
-                    <p className="text-center">{el.qty}</p>
-                    <Money amount={el.total}/>
+                     className="bg-primary cursor-pointer text-light text-sm justify-center p-1 rounded sm:shadow grid grid-cols-4 h-[50px] items-center">
+                    <p className="truncate">{el?.client}</p>
+                    <p className="text-center">{el?.qty}</p>
+                    <Money amount={el?.total}/>
+                    <p className=" truncate text-center">{el?.created_at}</p>
                     </li>)}
                 </ul>
              </div>
             </>
             }
-
         </div>
     )
 }

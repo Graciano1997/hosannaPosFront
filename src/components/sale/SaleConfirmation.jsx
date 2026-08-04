@@ -86,7 +86,7 @@ const ManualPrinting = ({printerConfiguration, templateToPrint, item }) => {
             }
 
             <button onClick={saveHandler}>
-                <FaSave className="text-6xl text-blue-600 hover:scale-110 transition" />
+                <FaSave className="text-6xl text-gray-600 hover:scale-110 transition" />
             </button>
 
             <button onClick={printingHandler}>
@@ -101,7 +101,7 @@ const ManualPrinting = ({printerConfiguration, templateToPrint, item }) => {
                 <button onClick={(el) => {
                     dispatch(saleNotConfirm());
                 }}
-                className="bg-blue-600 text-white rounded-[4px] m-[10px_20px] p-[10px_40px]">{firstCapitalize(t('not'))}</button>
+                className="bg-danger text-white rounded-[4px] m-[10px_20px] p-[10px_40px]">{firstCapitalize(t('not'))}</button>
                 <button onClick={printingHandler} className=" bg-[rgba(0,50,0,0.3)] text-white rounded-[4px] m-[10px_20px] p-[10px_40px]"> {firstCapitalize(t('print'))}</button>
                 </div>
             }
@@ -147,7 +147,7 @@ const AskForPrintingConfirmation = ({printerConfiguration, templateToPrint }) =>
                 <button onClick={(el) => {
                     dispatch(saleNotConfirm());
                 }}
-                    className="bg-blue-600 text-white rounded-[4px] m-[10px_20px] p-[10px_40px]">{firstCapitalize(t('not'))}</button>
+                    className="bg-danger text-white rounded-[4px] m-[10px_20px] p-[10px_40px]">{firstCapitalize(t('not'))}</button>
                 <button onClick={printingHandler} className=" bg-[rgba(0,50,0,0.3)] text-white rounded-[4px] m-[10px_20px] p-[10px_40px]">
                      <BsPrinter className="text-2xl text-gray-700 hover:scale-110 transition" />
                      </button>
@@ -249,8 +249,8 @@ const SaleConfirmation = ({printerConfiguration}) => {
                     dispatch(closeModal());
                     el.stopPropagation();
                 }}
-                className="bg-blue-600 text-white rounded-[4px] m-[10px_20px] p-[10px_40px]">{firstCapitalize(t('cancel'))}</button>
-                <button onClick={orderHandler} className=" bg-[rgba(0,50,0,0.3)] text-white rounded-[4px] m-[10px_20px] p-[10px_40px]"> {firstCapitalize(t('confirm'))}</button>
+                className="bg-danger text-white rounded-[4px] m-[10px_20px] p-[10px_40px]">{firstCapitalize(t('cancel'))}</button>
+                <button onClick={orderHandler} className="bg-[rgba(0,50,0,0.3)] text-white rounded-[4px] m-[10px_20px] p-[10px_40px]"> {firstCapitalize(t('confirm'))}</button>
             </div>
            </> 
             }

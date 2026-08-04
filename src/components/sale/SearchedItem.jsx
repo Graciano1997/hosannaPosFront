@@ -14,7 +14,7 @@ const SearchedItem = React.memo(
     const dispatch = useDispatch();
     const {t}=useTranslation();
     return(
-        <div className={`grid grid-cols-4 sm:grid-cols-7  p-1 ${index%2==0?'bg-green-50':'bg-green-100'}`}>
+        <div className={`grid grid-cols-4 sm:grid-cols-7  p-1 ${index%2==0?'bg-primary':'bg-green-50'}`}>
                         <p>
                         {product.name}
                         </p>
@@ -63,7 +63,7 @@ const SearchedItem = React.memo(
                             }
 
                             
-                        }}  className={`bg-green-400 text-white font-bold rounded`}>{t('add')}</button>
+                        }}  className={`bg-green-300 text-white font-bold rounded`}>{t('add')}</button>
                     } 
                     {(product.qty)==0 &&
                     <div className="bg-red-300 text-white font-bold text-center p-1 rounded">{t('outofStock')}</div>

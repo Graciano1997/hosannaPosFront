@@ -4,23 +4,15 @@ import TabWrapper from "./TabWrapper";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import React from "react";
 
-const _404= React.memo(
-    ()=>{
-    const {t} = useTranslation();
-
+export const ErrorPage = React.memo(({content,errorCode})=>{
     return(
-                <CardWrapper>
-                <TabWrapper>
-                    <div className="flex items-center justify-center h-[400px]">
+
+                    <div className="flex items-center justify-center h-[400px] mt-5">
                         <div className="flex flex-col items-center">
-                        <h1 className="text-[5rem] text-green-300">{404}</h1>
-                        <h3 className="text-4xl sm:text-[4rem] text-green-400 text-center">{firstCapitalize(t('not_found_url'))}</h3>
+                        <h1 className="text-[5rem]">{errorCode}</h1>
+                        <h3 className="text-4xl sm:text-[4rem] text-primar text-center">{content}</h3>
                         </div>
                     </div>
-                </TabWrapper>
-                </CardWrapper>
     );
-}
-) ;
+})
 
-export default _404;
