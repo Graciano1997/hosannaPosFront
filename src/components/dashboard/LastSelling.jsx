@@ -16,7 +16,6 @@ const LastSelling = React.memo(
     useEffect(()=>{
         if(sales.length>0){
             setLastSales(sales.slice(0,3));
-            console.log(sales)
         }
     },[sales]);
 

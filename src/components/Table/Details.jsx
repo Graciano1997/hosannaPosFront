@@ -398,6 +398,7 @@ const Details = React.memo(({closeDetails,filterDetails=[],rowStyle, itemDetails
     let keys = Object.keys(itemDetails);
     const {pathname}=useLocation();  
     const hasImage = itemDetails.image_url ? true : false;
+    const activeTab = useSelector((state)=>state.appState.activeTab);
 
     keys = keys.filter((item) => !filterDetails.includes(item));
     const {t}= useTranslation();
@@ -484,7 +485,7 @@ const Details = React.memo(({closeDetails,filterDetails=[],rowStyle, itemDetails
             }
 
                 </div>
-                {pathname==`${rootpath}products` && itemDetails.id &&
+                {pathname==`${rootpath}products` && activeTab==`tab1` && itemDetails.id &&
                 <GraphDetails  itemId={itemDetails.id} title={`${itemDetails.name} - ${firstCapitalize(t('product_sales_history'))}`}/>
                 }
                 {/* <GraphDetailsStock  itemId={itemDetails.id} title={`${itemDetails.name} - ${firstCapitalize(t('product_stock_movements'))}`}/> */}
