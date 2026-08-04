@@ -488,8 +488,6 @@ const Details = React.memo(({closeDetails,filterDetails=[],rowStyle, itemDetails
                 {pathname==`${rootpath}products` && activeTab==`tab1` && itemDetails.id &&
                 <GraphDetails  itemId={itemDetails.id} title={`${itemDetails.name} - ${firstCapitalize(t('product_sales_history'))}`}/>
                 }
-                {/* <GraphDetailsStock  itemId={itemDetails.id} title={`${itemDetails.name} - ${firstCapitalize(t('product_stock_movements'))}`}/> */}
-                
                 </div>
                 </div>
 
