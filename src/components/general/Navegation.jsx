@@ -1,6 +1,6 @@
 import React, { Children, useEffect, useRef, useState} from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ArchiveBoxIcon, ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CreditCardIcon, CubeIcon, GlobeAltIcon, HomeIcon,ShoppingCartIcon, TagIcon, TruckIcon, UserGroupIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { ArchiveBoxIcon, ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CreditCardIcon, CubeIcon, GlobeAltIcon, HomeIcon,ShoppingCartIcon, TagIcon, TruckIcon, UserGroupIcon, UserIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useDispatch } from "react-redux";
@@ -114,9 +114,17 @@ const Navegation = React.memo(
             />
 
             <Li
-            path={master ? rootpath + "users" : "#"}
+            path={master ? rootpath + "clients" : "#"}
             onClick={handleMasterMessage}
             icon={<UserGroupIcon className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow" />}
+            content={firstCapitalize(t("clients"))}
+            className={``}
+            />
+
+            <Li
+            path={master ? rootpath + "users" : "#"}
+            onClick={handleMasterMessage}
+            icon={<UserIcon className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow" />}
             content={firstCapitalize(t("users"))}
             className={``}
             />
@@ -234,7 +242,6 @@ const Navegation = React.memo(
     </Ul>
         </div>
         
-        {/* <CurrentUser size={{w:40,y:40}}/> */}
         <div><span className="text-[17px] text-light text-red-400">{firstCapitalize(t('slogan'))}</span></div>
         </nav>
     )});

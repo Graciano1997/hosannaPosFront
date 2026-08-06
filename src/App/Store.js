@@ -5,6 +5,7 @@ import productSlice from "../slices/productSlice";
 import categorySlice from "../slices/categorySlice";
 import spentSlice from "../slices/spentSlice";
 import userSlice from "../slices/userSlice";
+import clientSlice from "../slices/clientSlice";
 import profileSlice from "../slices/profileSlice";
 import companySlice from "../slices/companySlice";
 import printerSlice from "../slices/printerSlice";
@@ -23,7 +24,8 @@ const store = configureStore({
        companyState:companySlice,
        printerState:printerSlice,
        stockState: stockSlice,
-       bankAccountState: bankAccountSlice 
+       bankAccountState: bankAccountSlice,
+       clientState:clientSlice
     }
 });
 

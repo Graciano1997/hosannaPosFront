@@ -303,5 +303,7 @@
      "day": "dia",
     "month": "mês",
     "day_vs_quantity": "Dia vs Quantidade",
-    "printer_not_loaded":"Por favor verifique a configuração de impressão."
+    "printer_not_loaded":"Por favor verifique a configuração de impressão.",
+    "ordering":"realizando a venda...",
+    "search_client":"buscar cliente"
 }

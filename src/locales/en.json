@@ -301,5 +301,6 @@
     "month": "month",
     "day_vs_quantity": "Day vs Quantity",
     "printer_not_loaded":"Please check the printing configuration.",
-    "ordering":"ordering..."
+    "ordering":"ordering...",
+    "search_client":"search client"
 }

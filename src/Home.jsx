@@ -36,6 +36,7 @@ import CreateCompany from './components/Login/CreateCompany'
 import { rootpath } from "./lib/ip";
 import { CurrentUser } from './lib/CurrentUser'
 import { ErrorPage } from './components/general/_404'
+import Client from './components/client/Client'
 
 
 
@@ -70,6 +71,7 @@ const RoutesLoggedIn = React.memo(({setToastObject})=>{
           <Route path={`${rootpath}products`} element={masterProfile ? <Product/> : <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} />} />
           <Route path={`${rootpath}spents`} element={masterProfile ? <Spent/>: <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} />} />  
           <Route path={`${rootpath}users`} element={masterProfile ? <User/>: <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} /> } /> 
+          <Route path={`${rootpath}clients`} element={masterProfile ? <Client/>: <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} /> } /> 
           <Route path={`${rootpath}sale`} element={<Sale setToastObject={setToastObject}/>} />      
           <Route path={`${rootpath}sale/devolution`} element={<Devolution setToastObject={setToastObject}/>} />      
           <Route path={`${rootpath}setting`} element={<Setting/>} />
@@ -99,10 +101,10 @@ const Home = React.memo(
     if(appState.isAuthenticated){
     
       Promise.all([dispatch(fetchProducts()),
+                  dispatch(fetchCompanies()),
                   dispatch(fetchUsers()),
                   dispatch(fetchSpents()),
                   dispatch(fetchCategories()),
-                  dispatch(fetchCompanies()),
                   dispatch(fetchPrinterConfig())])
     }
 

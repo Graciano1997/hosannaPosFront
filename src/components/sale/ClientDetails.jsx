@@ -5,6 +5,9 @@ import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
 import { setClientDetails, setReceivedCash, setReceivedTpa } from "../../slices/saleSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import { HiSearchCircle } from "react-icons/hi";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { Button } from "../general/Button";
 
 const ClientDetails = ()=>{
     const [clientType,setClientType]=useState(ClientType.SINGULAR);
@@ -39,7 +42,22 @@ const ClientDetails = ()=>{
 
     return(
         <div className={`h-[100%] bg-white rounded shadow-md p-3 flex flex-col  gap-2`}>
+            <div className="flex flex-col">
             <h1 className="font-bold mt-1 text-end"> * {firstCapitalize(t('client_details'))}</h1>
+            {
+                false
+                &&
+                <Button
+            content={
+                <>
+                <span>{firstCapitalize(t('search_client'))}</span> 
+                <MagnifyingGlassIcon className="w-5 y-5 text-[#323232] cursor-pointer" />
+                </>
+            }
+            onClickHandler={()=>{}} 
+            className={"mt-2 gap-1 rounded p-2 text-md flex items-center justify-center"} />
+            } 
+            </div>
             <div className="flex flex-col gap-3 mt-1">
                 <label for="clienteNome">{firstCapitalize(t('name'))}</label>
                 <input type="text" name="name" onChange={formHandler} value={clientDetails.name != undefined ? clientDetails.name:''} className="bg-primary rounded p-2" readOnly={sale.invoiceType==SaleType.RECEIPT_RC}/>
