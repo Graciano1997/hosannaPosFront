@@ -185,8 +185,6 @@ const productSlice = createSlice({
 
     builder.addCase(fetchProductSaleHistory.fulfilled,(state,action)=>{
         state.loading=false;
-        console.log("the product sale history......",action.payload.data);
-
                 state.productSaleHistory = action.payload.data;
     });
 
@@ -199,8 +197,6 @@ const productSlice = createSlice({
 
     builder.addCase(fetchProductStockHistory.fulfilled,(state,action)=>{
         state.loading=false;
-        console.log("the product stock history......",action.payload.data);
-
                 state.productStockHistory = action.payload.data;
     });
 
@@ -302,14 +298,13 @@ const productSlice = createSlice({
     });
 
     builder.addCase(fetchProductsFields.fulfilled,(state,action)=>{
-        console.log(action.payload);
         if(action.payload !=undefined){
             state.productAllFields = action.payload.data;
         }
     })
 
     builder.addCase(fetchProductsFields.rejected,(state,action)=>{
-        console.log(action.payload);
+
     })
 
     builder.addCase(updateProduct.fulfilled,(state,action)=>{

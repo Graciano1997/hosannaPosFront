@@ -86,7 +86,6 @@ const spentSlice = createSlice({
         });
 
         builder.addCase(registerSpent.fulfilled, (state, action) => {
-            console.log(action.payload)
             if (!action.payload.error) {
                 state.spents.push({ ...action.payload.spent });
                 state.total = sum(state.spents,'amount').total;

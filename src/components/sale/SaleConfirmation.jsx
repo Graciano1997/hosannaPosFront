@@ -164,6 +164,7 @@ const SaleConfirmation = ({printerConfiguration}) => {
     const dispatch = useDispatch();
     const saleState = useSelector((state) => state.saleState);
     const [sold, setSold] = useState(false);
+    const [ordering, setOrdering] = useState(false);
     const [templateToPrint, setTemplateToPrint] = useState(null);
     const [soldItem,setSoldItem] = useState(null);
 
@@ -189,6 +190,7 @@ const SaleConfirmation = ({printerConfiguration}) => {
         }
         
          if(!sold){
+            setOrdering(true);
             dispatch(order(treatedSaleObject))
                .then((orderResultState) => {
                     if(order.fulfilled.match(orderResultState)) {
@@ -250,7 +252,7 @@ const SaleConfirmation = ({printerConfiguration}) => {
                     el.stopPropagation();
                 }}
                 className="bg-danger text-white rounded-[4px] m-[10px_20px] p-[10px_40px]">{firstCapitalize(t('cancel'))}</button>
-                <button onClick={orderHandler} className="bg-[rgba(0,50,0,0.3)] text-white rounded-[4px] m-[10px_20px] p-[10px_40px]"> {firstCapitalize(t('confirm'))}</button>
+                <button onClick={orderHandler} disabled={ordering} className={`${ordering ? 'bg-[rgba(0,50,0,0.3)]' : 'bg-[rgba(0,128,0,0.3)]'} text-white rounded-[4px] m-[10px_20px] p-[10px_40px]`}> {ordering ? firstCapitalize(t('ordering')) : firstCapitalize(t('confirm'))}</button>
             </div>
            </> 
             }

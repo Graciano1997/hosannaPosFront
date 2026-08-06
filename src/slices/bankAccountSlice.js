@@ -18,7 +18,6 @@ export const deleteBankAccount = createAsyncThunk("bankAccountState/deleteBankAc
 });
 
 export const registerBankAccount = createAsyncThunk("bankAccountState/registerBankAccount", async (bankForm) => {
-    console.log(`${getIpTenant()}bank_accounts/`)
     const response = await fetch(`${getIpTenant()}bank_accounts/`, 
     { 
       method: 'POST',

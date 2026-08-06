@@ -71,7 +71,7 @@ const Account = () => {
             <CardWrapper centralize={true}>
                 <TabWrapper>
                      <h1 className="text-3xl p-2">{firstCapitalize(t('profile'))}{''}</h1>
-                    <form onSubmit={handleFormSubmition} className='p-[0_0.5rem] sm:p-[0_8rem] h-[90%] mt-[1rem] flex flex-col bg-red-200 gap-6'>
+                    <form onSubmit={handleFormSubmition} className='p-[0_0.5rem] sm:p-[0_8rem] h-[90%] mt-[1rem] flex flex-col  gap-6'>
                         <div className="flex justify-center p-[10px]">
                             <div className="text-center">
                             <div className="w-[130px] h-[130px] sm:w-[200px] sm:h-[200px]">
