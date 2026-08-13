@@ -37,20 +37,26 @@ const LastSelling = React.memo(
             <div className="p-2">
                 <ul className="h-[100%] flex flex-col justify-around gap-2">
                 <li key="lastsalesheader"
-                 className="h-[40px] bg-white  grid grid-cols-4 items-center justify-center">
-                    <p>{firstCapitalize(t('client'))}</p>
-                    <p className="text-center">{firstCapitalize(t('qty'))}</p>
-                    <p>{firstCapitalize(t('total'))}</p>
-                    <p className="text-center">{firstCapitalize(t('date'))}</p>
+                 className="h-[40px] bg-white  grid grid-cols-7 items-center justify-center truncate">
+                    <p className="truncate">{firstCapitalize(t('id'))}</p>
+                    <p className="truncate">{firstCapitalize(t('invoice'))}</p>
+                    <p className="truncate">{firstCapitalize(t('client'))}</p>
+                    <p className="text-center truncate">{firstCapitalize(t('qty'))}</p>
+                    <p className="truncate">{firstCapitalize(t('total'))}</p>
+                    <p className="text-center truncate">{firstCapitalize(t('date'))}</p>
+                    <p className="text-center truncate">{firstCapitalize(t('operator'))}</p>
                 </li>
                     {lastSales.map((el)=>
                     <li
-                    key={el.id}
-                     className="bg-primary cursor-pointer text-light text-sm justify-center p-1 rounded sm:shadow grid grid-cols-4 h-[50px] items-center">
+                    key={el?.id}
+                     className="bg-primary cursor-pointer text-light text-sm justify-center p-1 rounded sm:shadow grid grid-cols-7 h-[50px] items-center">
+                    <p className="truncate">{el?.id}</p>
+                    <p className="truncate">{el?.invoice_number}</p>
                     <p className="truncate">{el?.client}</p>
                     <p className="text-center">{el?.qty}</p>
                     <Money amount={el?.total}/>
                     <p className=" truncate text-center">{el?.created_at}</p>
+                    <p className="text-center truncate">{el?.operator}</p>
                     </li>)}
                 </ul>
              </div>

@@ -305,5 +305,14 @@
     "day_vs_quantity": "Dia vs Quantidade",
     "printer_not_loaded":"Por favor verifique a configuração de impressão.",
     "ordering":"realizando a venda...",
-    "search_client":"buscar cliente"
+    "search_client":"buscar cliente",
+    "alert":"alertas",
+    "client_growth": "Crescimento de Clientes",
+    "moviments":"movimentos",
+    "input":"entrada",
+    "payment_method":"forma de pagamento",
+    "monthly_target":"meta mensal",
+    "top_selling":"mais vendidos",
+    "top_selling_products":"produtos mais vendidos",
+    "top_selling_products_count":"nº mais vendidos"
 }

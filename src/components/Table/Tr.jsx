@@ -34,7 +34,7 @@ const Tr = React.memo(({ item, index, deleteItem, updateItem, filterRows, filter
             key={item.id}
                className={`${index % 2 == 0 ? rowStyle : ''}   cursor-pointer hover:sm:shadow font-light `}>
                 {keys.map((key) =>
-                    <td onClick={() => { setShowDetails(true)  }} className="p-1 text-center">
+                    <td onClick={() => { setShowDetails(true)  }} className="p-1 text-center truncate">
                         {key=="movement_type" &&  
                         (<span className="flex items-center gap-2"><span className={`w-3 h-3 rounded ${movementTypeColor[item[key]]}`}></span>{t(item[key])}
                         </span>)
@@ -43,7 +43,7 @@ const Tr = React.memo(({ item, index, deleteItem, updateItem, filterRows, filter
                         {typeof (item[key]) == "boolean" && (item[key] ? firstCapitalize(t('yes')) : firstCapitalize(t('not')))}
                         {item[key] == null && ('')}
                         {key == "image_url" && item[key] != "none" && <div className="flex justify-center"><img src={item[key]} className="w-[40px] h-[40px] rounded-[20px] duration-200 transition-all hover:shadow" /></div>}
-                        {key !== "image_url" && !moneyFields.includes(key) && typeof (item[key]) != "boolean" && key!="movement_type"  && textDisplay(item[key])}
+                        {key !== "image_url" && !moneyFields.includes(key) && typeof (item[key]) != "boolean" && key!="movement_type"  && item[key]}
                     </td>
                 )
                 }

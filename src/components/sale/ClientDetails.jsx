@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ClientType, DefaultClientePhone, PaymentType, SaleType } from "../../lib/Enums";
+import { ClientType, DefaultClientePhone, PaymentType, SaleType, FinalClientDefaultNIF } from "../../lib/Enums";
 import { useDispatch, useSelector } from "react-redux";
 import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
@@ -97,7 +97,7 @@ const ClientDetails = ()=>{
                 type="text"
                 readOnly={sale.invoiceType==SaleType.RECEIPT_RC} 
                 name="nif" 
-                defaultValue={clientType==ClientType.SINGULAR ? 99999999 :''}  
+                defaultValue={FinalClientDefaultNIF}  
                 onChange={formHandler} id="clienteNif" className="bg-primary rounded p-2" />
             </div>
             </> 

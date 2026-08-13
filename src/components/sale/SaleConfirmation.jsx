@@ -188,6 +188,7 @@ const SaleConfirmation = ({printerConfiguration}) => {
             },
             items: saleState.invoiceType == SaleType.CREDIT_NOTE_NC ? saleState.itemsToReturn : (saleState.invoiceType == SaleType.RECEIPT_RC ? saleState.invoiceSearchedItems : saleState.items)
         }
+        // return console.log('treatedSaleObject',treatedSaleObject);
         
          if(!sold){
             setOrdering(true);

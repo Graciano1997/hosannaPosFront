@@ -2,9 +2,15 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getIpTenant } from "../lib/ip";
 
 const initialState = {
+    dashboard: null,
     stockMovements : [],
     anualStockMovement:null
 };
+
+export const fetchStockDashboard = createAsyncThunk("stockState/fetchStockDashboard",async ()=>{
+     const response = await fetch(`${getIpTenant()}stock_movements/dashboard`);
+        return response.json();
+});
 
 export const fetchStockMovements = createAsyncThunk("stockState/fetchStockMovements",async ()=>{
      const response = await fetch(`${getIpTenant()}stock_movements`);
@@ -32,6 +38,10 @@ const stockSlice = createSlice({
             state.stockMovements=action.payload.data
          });
         
+         builder.addCase(fetchStockDashboard.fulfilled,(state,action)=>{
+            state.dashboard=action.payload.data
+         });
+
          builder.addCase(fetchStockAnualMovements.fulfilled,(state,action)=>{
             state.anualStockMovement=action.payload.data
          });

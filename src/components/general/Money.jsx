@@ -11,7 +11,7 @@ const Money = React.memo(
   }).format(amount);
 
   return (
-    <p className="">
+    <p className="truncate">
       {formattedMoney}
     </p>
   );

@@ -11,6 +11,12 @@ export default {
         'xs': '480px',
         '4xl': '1920px' 
       },
+      width:{
+        gra: "700px",
+      },
+      height:{
+        gra: "700px",
+      },
       colors:{
         primary:{
             DEFAULT: "#F5F7FA",

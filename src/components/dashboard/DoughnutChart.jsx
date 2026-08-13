@@ -5,7 +5,8 @@ import {
   LinearScale,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ArcElement,
 } from 'chart.js';
 
 import { Doughnut } from 'react-chartjs-2';
@@ -20,7 +21,8 @@ ChartJS.register(
   LinearScale,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ArcElement
 );
 
 export const options = {
@@ -36,8 +38,95 @@ export const options = {
   },
 };
 
+export const GaugeChart = React.memo(
+  function GaugeChart({
+    value = 50,
+    width = 300,
+    height = 300,
+    info
+  }) {
+
+    const gaugeData = {
+      datasets: [
+        {
+          data: [value, 100 - value],
+          backgroundColor: [
+            '#18CA80',
+            '#E5E7EB'
+          ],
+          borderWidth: 0,
+          circumference: 180,
+          rotation: -90,
+          cutout: '70%',
+        }
+      ]
+    };
+
+    const gaugeOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          enabled: false
+        }
+      }
+    };
+
+    return (      
+    <div className={`grid grid-rows-[50px_1fr] bg-white rounded shadow-md w-full  min-w-0 `}>
+        <CardTitle>
+      <div className='flex justify-between items-center w-[100%] h-[100%]'>
+         <h2 className="">{firstCapitalize(info)}</h2>
+      </div>
+    </CardTitle>
+
+             <div className={`flex justify-center transition-all duration-500 ease-in-out p-2 w-full h-full min-w-0 relative `}
+      style={{ height: `${height}px` }}
+      >   <Doughnut
+            data={gaugeData}
+            options={gaugeOptions}
+          />
+
+          <div className="absolute inset-0 flex items-center justify-center translate-y-6">
+            <span className="text-3xl text-gray-500">
+              {value}%
+            </span>
+          </div>
+        </div>
+
+      </div>
+    );
+  }
+);
+
+
+// export const GaugeChart = React.memo(
+//   function GaugeChart({data,width=300,height=300,info}){
+  
+
+//   const options = {
+//     rotation: -90,
+//     circumference: 180,
+//     plugins: {
+//       legend: {
+//         display: false
+//       }
+//     }
+//   };
+
+  
+//   return(
+//     <DoughnutChart options={options} data={data} width={width} height={height} info={info} /> 
+//   )
+//   }
+// )
+
 export const DoughnutChart = React.memo(
-    function DoughnutChart({data = [],width=350,height=350,info}) {
+    function DoughnutChart({data = [],width=300,height=300,info, options}) {
   const {t}=useTranslation();
   const graphContainerRef=useRef(null);
   const dispatch = useDispatch();
@@ -71,26 +160,19 @@ export const DoughnutChart = React.memo(
     years.push(index);
 
   return(
-    <div className={`grid grid-rows-[50px_1fr] h-full  bg-white rounded shadow-md`}>
+    <div className={`grid grid-rows-[50px_1fr] bg-white rounded shadow-md w-full  min-w-0`}>
     <CardTitle>
       <div className='flex justify-between items-center w-[100%] h-[100%]'>
          <h2 className="">{firstCapitalize(info)}</h2>
       </div>
     </CardTitle>
-    <div ref={graphContainerRef} style={{padding:2}} className='h-[100%]'>
+    <div  style={{padding:2}} className='h-[100%]'>
 
-   <div className={`flex justify-center h-[${height}px] relative`}>
-    <Doughnut data={dataD}/>
+      <div className={`flex justify-center transition-all duration-500 ease-in-out w-full h-full min-w-0 relative `}
+      style={{ height: `${height}px` }}
+      >
+    <Doughnut options={options} data={dataD}/>
     </div>   
-    
-      {/* <Line
-      ref={graphContainerRef} 
-      style={{
-        height:graphContainerRef.innerHeight,
-        width:graphContainerRef.innerWidth
-      }}
-      options={options} data={data} />
-       */}
     </div>
   </div>
   )

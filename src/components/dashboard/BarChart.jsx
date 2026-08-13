@@ -24,26 +24,29 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
-    },
-    title: {
-      display: false,
-      text: '',
-    },
-  },
-};
+
 
 export const BarChart =React.memo(
-     function BarChart({data,width=200,height=300,info}) {
+     function BarChart({data,width=300,height=300,info,indexAxis='x'}) {
   const {t}=useTranslation();
   const graphContainerRef=useRef(null);
   const dispatch = useDispatch();
   const spendState = useSelector((state)=>state.spentState);
   const years = [];
+
+  const options = {
+  responsive: true,
+  indexAxis: indexAxis,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: '',
+    },
+  },
+};
 
   useEffect(()=>{
     dispatch(fetchAnualSpents()); 
@@ -59,7 +62,7 @@ export const BarChart =React.memo(
   }
 
   return(
-    <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
+    <div className={`grid grid-rows-[50px_1fr] bg-white rounded shadow-md w-full  min-w-0`}>
     <CardTitle>
       <div className='flex justify-between items-center w-[100%] h-[100%]'>
          <h2 className="">{firstCapitalize(info)}</h2>
@@ -76,13 +79,10 @@ export const BarChart =React.memo(
          }
       </div>
     </CardTitle>
-    <div ref={graphContainerRef} style={{padding:2}} className='h-[100%]'>
+    <div ref={graphContainerRef} style={{height:`${height}px`}} className={`transition-all duration-500 ease-in-out w-full h-full min-w-0 relative`}>
       <Bar 
-      style={{
-        height:graphContainerRef.innerHeight,
-        width:graphContainerRef.innerWidth
-      }}
-      options={options} data={data} />
+      options={options}
+      data={data} />
       
     </div>
   </div>

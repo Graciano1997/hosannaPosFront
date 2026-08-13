@@ -137,7 +137,7 @@ const Export = ({ stopExporting }) => {
                     </div>
                     <div>
 
-                        <div className="mt-4 flex gap-2 p-2 rounded-[20px] justify-center items-center bg-primary w-[25%] md:w-[40%]">
+                        <div className="mt-4 flex gap-2 p-2 rounded-[20px] justify-center items-center bg-primary  md:w-[50%]">
                             <p>{t('date_interval')}</p>
                             <input type="text" onKeyDown={(el) => {
                                 if (el.key == "Backspace") {
@@ -147,7 +147,7 @@ const Export = ({ stopExporting }) => {
                             }} value={query.rangeDate?.from != null && query.rangeDate?.to != null ? `${query.rangeDate?.from} - ${query.rangeDate?.to}` : ''} onClick={() => { setVisibility(true) }}
                                 className="bg-transparent text-red-600" id="search" placeholder={firstCapitalize(t('data_interval_example'))} />
                         </div>
-                        <DatePickerFilter style={"absolute mt-[-20rem]"} query={query} setQuery={setQuery} visibility={visibility} setVisibility={setVisibility} />
+                        <DatePickerFilter style={"absolute "} query={query} setQuery={setQuery} visibility={visibility} setVisibility={setVisibility} />
                     </div>
                     {fieldsToShow.length > 0 &&
                         <div className="flex justify-end p-2 mt-auto gap-5">

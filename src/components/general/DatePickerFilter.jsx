@@ -45,7 +45,7 @@ export const DatePickerFilter = ({ visibility,setVisibility,query,setQuery=()=>{
     return(
         <>        
         {visibility &&
-        <div style={{zIndex:5000}} ref={calendarPickerRef} className={`bg-white p-3 absolute rounded shadow  text-sm ${style}`}>
+        <div style={{zIndex:5000}} ref={calendarPickerRef} className={`bg-white p-3 absolute rounded shadow w-100 bg-red-800 text-sm ${style}`}>
     <DayPicker
         captionLayout="dropdown"
         animate

@@ -273,5 +273,6 @@
   "password_not_match": "Le mot de passe et sa confirmation ne correspondent pas.",
   "hosanna_sales_point_desc": "Hosanna SalesPoint vous aide à vendre plus efficacement et à gérer votre entreprise en toute confiance.",
   "date":"date",
-  "sold_products": "Produits vendus"
+  "sold_products": "Produits vendus",
+   "client_growth": "Croissance des clients"
 }

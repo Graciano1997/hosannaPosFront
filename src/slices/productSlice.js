@@ -23,6 +23,7 @@ const initialState = {
     isLoadingMore:false,
     productSaleHistory:null,
     productStockHistory:null,
+    topSellingProducts:[]
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async (last_created_at=null)=>{
@@ -94,12 +95,21 @@ export const fetchProductSaleHistory = createAsyncThunk("productState/fetchProdu
     return response.json();
     });
 
-    export const fetchProductStockHistory = createAsyncThunk("productState/fetchProductStockHistory", async ({id,from,to})=>{
-    
+export const fetchProductStockHistory = createAsyncThunk("productState/fetchProductStockHistory", async ({id,from,to})=>{
+ 
     const response = await fetch(`${getIpTenant()}products/${parseInt(id)}/product_stock_history`,{ 
         method:'POST',
         headers:{'Content-Type':'application/json' },
         body:JSON.stringify({from,to})
+    });
+    return response.json();
+    });
+
+export const fetchTopSellingProducts = createAsyncThunk("productState/fetchTopSellingProducts", async ({from='',to='',qty=5})=>{
+    const response = await fetch(`${getIpTenant()}products/top_selling`,{ 
+        method:'POST',
+        headers:{'Content-Type':'application/json' },
+        body:JSON.stringify({from,to,qty})
     });
     return response.json();
     });
@@ -302,6 +312,24 @@ const productSlice = createSlice({
             state.productAllFields = action.payload.data;
         }
     })
+
+    builder.addCase(fetchTopSellingProducts.pending,(state,action)=>{
+        console.log('top selling products getting....');
+        // if(action.payload !=undefined){
+            // state.topSellingProducts = action.payload.data;
+        // }
+    })
+
+    builder.addCase(fetchTopSellingProducts.fulfilled,(state,action)=>{
+        state.loading=false;
+
+         if(action.payload !=undefined){
+            const topSellingProducts = Object.entries(action.payload.data)
+            .map(([name, qty]) => ({ name, qty }));
+            state.topSellingProducts = topSellingProducts;
+         }
+    })
+
 
     builder.addCase(fetchProductsFields.rejected,(state,action)=>{
 

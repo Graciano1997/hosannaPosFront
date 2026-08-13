@@ -7,68 +7,97 @@ import React, { useEffect, useMemo, useState } from "react";
 import { fetchAnualSpents, fetchSpents } from "../../slices/spentSlice";
 import { fetchAnualSales, fetchSales } from "../../slices/saleSlice";
 import { LineChart } from "./LineChart";
-import { DoughnutChart } from "./DoughnutChart";
-import { BanknotesIcon, BellAlertIcon, CircleStackIcon, ClockIcon, ShoppingCartIcon, TagIcon, UserIcon } from "@heroicons/react/24/solid";
+import { DoughnutChart, GaugeChart } from "./DoughnutChart";
+import { BanknotesIcon, BellAlertIcon, BellIcon, CircleStackIcon, ClockIcon, ShoppingCartIcon, TagIcon, UserIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import { activeTab } from "../../slices/appSlice";
-import { Profiles } from "../../lib/Enums";
+import { PaymentType, Profiles } from "../../lib/Enums";
 import { fetchAlertProducts, fetchAnualExpiredProducts } from "../../slices/productSlice";
-import { fetchStockMovements } from "../../slices/stockSlice";
+import { fetchStockDashboard, fetchStockMovements } from "../../slices/stockSlice";
 import { annualMonths } from "../../lib/Months";
 import { GenericLineChart } from "./GenericLineChart";
 import { rootpath } from "../../lib/ip";
 import { CurrentUser } from "../../lib/CurrentUser";
+import { Button } from "../general/Button";
+import { PieChart } from "./PieChart";
+import { extractFieldToArray } from "../../lib/extractFieldToArray";
+import { RandomColor } from "../../lib/randomColor";
+import { BarChart } from "./BarChart";
 
+const NavegateItem = ({number,title,icon, onClickHandler})=>{
+    return(
+              <Button 
+              content={
+                       <div className="flex flex-row-reverse justify-between sm:flex-col ">
+                        <p className="font-bold text-lg">{number}</p>
+                        <div className="gap-1 flex" >
+                        {icon}
+                        <h4>{title}</h4>
+                        </div>
+                       </div>
+                      }
+                    className={"bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex flex-col cursor-pointer "}
+                    onClickHandler={onClickHandler}
+                    />
+    )
+}
 
 const DashboardNavegateOption = React.memo(({productState, navegate, dispatch}) => {
         const { t } = useTranslation()
-        const master = CurrentUser()?.profileId == Profiles?.MASTER;
+        const master = CurrentUser()?.profileId == Profiles?.MASTER
+
 
         return (
-            <div className="flex gap-2 justify-end rounded">
-                <div className="flex p-0 gap-3">
-                    <button onClick={() => {
+            <div className="flex flex-col sm:flex-row  gap-2 sm:gap-4 justify-end rounded">
+               
+                    <Button 
+                    className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex items-center cursor-pointer"
+                    onClickHandler={
+                        () => {
                         navegate(rootpath + 'sale');
-                    }} className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex cursor-pointer">
+                    }
+                    }
+                    content={
+                        <>
                         <ShoppingCartIcon className="w-5 y-5 text-[#323232] " />
                         <h4>{firstCapitalize(t('sale'))}</h4>
+                        </>
+                    } />
 
-                    </button>
+                    <NavegateItem 
+                      number={10} 
+                      icon={<BellIcon className="w-5 y-5 text-[#323232] " />}
+                      title={firstCapitalize(t('notifications'))}
+                      onClickHandler={() => { navegate(rootpath + 'sale')}}
+                     />
+
                     {master &&
                         <>
-                            <button
-                                onClick={() => {
-                                    navegate(rootpath + 'sales');
-                                }}
-                                className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex cursor-pointer">
-                                <TagIcon className="w-5 y-5 text-[#323232] " />
-                                <h4>{firstCapitalize(t('sales'))}</h4>
-                            </button>
-                            {productState.alertProducts != undefined && productState.alertProducts.length > 0 &&
-
-                                <button
-                                    onClick={() => {
-                                        dispatch(activeTab('tab4'));
-                                        navegate(rootpath + 'products');
-                                    }}
-                                    className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex cursor-pointer">
-                                    <BellAlertIcon className="w-5 y-5 text-yellow-600 alert" />
-                                    <h4>{firstCapitalize(t('alert'))}</h4>
-                                </button>
+                        <NavegateItem 
+                            number={5} 
+                            icon={<TagIcon className="w-5 y-5 text-[#323232]"/>}
+                            title={firstCapitalize(t('sales'))}
+                            onClickHandler={() => { navegate(rootpath + 'sales')}}
+                        />
+                            {productState.alertProducts != undefined && productState.alertProducts.length > 0 &&                            
+                            <NavegateItem 
+                                number={10} 
+                                icon={<BellAlertIcon className="w-5 y-5 text-yellow-600 alert" />}
+                                title={firstCapitalize(t('alert'))}
+                                onClickHandler={() => { 
+                                    dispatch(activeTab('tab4'));
+                                    navegate(rootpath + 'products')}}
+                            />
                             }
-
-                            <button
-                                onClick={() => {
+                            <NavegateItem 
+                                number={5} 
+                                icon={<ClockIcon className="w-5 y-5 text-red-600 " />}
+                                title={firstCapitalize(t('expired'))}
+                                onClickHandler={() => { 
                                     dispatch(activeTab('tab5'));
-                                    navegate(rootpath + 'products');
-                                }}
-                                className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex cursor-pointer">
-                                <ClockIcon className="w-5 y-5 text-red-600 " />
-                                <h4>{firstCapitalize(t('expired'))}</h4>
-                            </button>
+                                    navegate(rootpath + 'products')}}
+                            />
                         </>}
-
-                </div>
             </div>
         )
     })
@@ -88,7 +117,9 @@ const Dashboard = React.memo(
                     dispatch(fetchAnualSales()),
                     dispatch(fetchAnualExpiredProducts()),
                     dispatch(fetchAlertProducts()),
-                    dispatch(fetchStockMovements())
+                    dispatch(fetchStockMovements()),
+                    dispatch(fetchStockDashboard()),
+
                 ])
             }
             loadData();
@@ -99,7 +130,8 @@ const Dashboard = React.memo(
         const productState = useSelector((state) => state.productState);
         const sales = saleState.sales;
         const spentState = useSelector(state => state.spentState);
-
+        const stockState = useSelector((state) => state.stockState);
+        
         const anualSpents = spentState.anualSpends || [];
         const anualSales = saleState.anualSales || [];
         const anualExpired = productState.anualExpireds || [];
@@ -107,11 +139,24 @@ const Dashboard = React.memo(
         const today_balance = useMemo(() => { return sales.length > 0 ? totalToDay(sales, new Date()) : 0 }, [sales]);
         const today_spents = useMemo(() => { return spentState.spents && spentState.spents.length > 0 ? totalToDay(spentState.spents, new Date(), "amount") : 0 }, [spentState.spents]);
 
+        const dataLinesClient = useMemo(() => ({
+            labels: annualMonths.map(month => firstCapitalize(t(month))),
+            datasets: [
+                {
+                    label: firstCapitalize(t("clients")),
+                    data: anualSales,
+                    fill: true,
+                    borderColor: "#3B82F6",
+                    tension: 0.5
+                }
+            ]
+        }), [dispatch,anualSales, anualSpents, anualExpired, t]);
+
         const dataLines = useMemo(() => ({
             labels: annualMonths.map(month => firstCapitalize(t(month))),
             datasets: [
                 {
-                    label: firstCapitalize(t("income")),
+                    label: firstCapitalize(t("sales")),
                     data: anualSales,
                     fill: false,
                     borderColor: "#18CA80",
@@ -134,27 +179,133 @@ const Dashboard = React.memo(
             ]
         }), [dispatch,anualSales, anualSpents, anualExpired, t]);
 
+        const stockData=stockState.dashboard;
+        
+        const stockDataCollection=[
+            stockData?.entry,
+            stockData?.exit,
+            stockData?.adjustment,
+            stockData?.expired,
+            stockData?.return ? stockData?.return : 0
+        ]
+
+        const barChartData = {
+            labels:[
+                     `${firstCapitalize(t('entry'))}`,
+                     `${firstCapitalize(t('exit'))}`,
+                     `${firstCapitalize(t('adjustment'))}`,
+                     `${firstCapitalize(t('expired'))}`,
+                     `${firstCapitalize(t('return'))}`
+                    ],
+            datasets: [
+                {
+                label:firstCapitalize(t('moviments')),
+                data:stockDataCollection ,
+                backgroundColor: [
+                                '#18CA80', // Entradas
+                                '#FF6384', // Saídas
+                                '#F59E0B', // Ajustes
+                                '#6B7280', // Vencidos
+                                '#8B5CF6', // Devoluções
+                                ]
+                }
+            ],
+            };
+
+        const datagauge = {
+          datasets: [
+            {
+              data: [90, 10],
+              borderWidth: 0,
+              cutout: '70%',
+            }
+          ]
+        };
+
+        const labels = [firstCapitalize(t('money')),firstCapitalize(t('transfer')),firstCapitalize(t('mixed'))];
+            const dataPie = {
+                labels,
+                datasets: [
+                  {
+                    data:[12,12,20],
+                    backgroundColor: ['#22C55E','#3B82F6','#F59E0B'] ,
+                    borderWidth: 1,
+                  },
+                ],
+              };
         return (
             <>
                 <div className="mt-[3%]">
-                    <div className="p-0 pt-5 ">
+                    <div className="p-0 pt-5 p-5 ">
                         <DashboardNavegateOption navegate={navegate}
                          productState={productState}
                          dispatch={dispatch} />
                         
-                        <div className="grid grid-cols-1 lg:flex lg:flex-wrap  lg:justify-center gap-6 mt-20">
+                        <div className="grid    
+                        grid-cols-1
+                        sm:grid-cols-2
+                        md:grid-cols-2
+                        lg:grid-cols-12
+                        xl:grid-cols-12
+                        justify-center gap-10 mt-5 sm:gap-18 sm:mt-[50px] p-1
+                         ">
 
-                        <div className="lg:col-span-3">
+                        <div className="lg:col-span-4">
+                            <BarChart data={barChartData} indexAxis={'y'}  width={300} height={300} info={firstCapitalize(t('stock_movements'))} />
+                        </div>
+
+                        <div className="
+                                    sm:col-span-1
+                                    md:col-span-1
+                                    lg:col-span-4
+                                    xl:col-span-4
+                                    ">
+                                             <GenericLineChart width={300} height={300} dataLines={dataLinesClient} info={firstCapitalize(t('client_growth'))}  />
+                        </div>
+                        <div className="
+                            sm:col-span-1
+                                    md:col-span-1
+                                    lg:col-span-4
+                                    xl:col-span-4
+                        ">
+                            <DoughnutChart data={[today_balance, today_spents]} info={firstCapitalize(t('today_status'))} />
+                        </div>
+                        <div className="
+                            sm:col-span-1
+                                    md:col-span-1
+                                    lg:col-span-4
+                                    xl:col-span-4
+                        ">
+                            <GenericLineChart width={300} height={300} dataLines={dataLines} info={firstCapitalize(t('income_outcome_expiration'))}  />
+                        </div>
+                        <div className="
+                            sm:col-span-1
+                                    md:col-span-1
+                                    lg:col-span-4
+                                    xl:col-span-4
+                        ">
+                             <PieChart data={dataPie} width={300} height={300} info={firstCapitalize(t('payment_method'))}/>
+                                   
+                        </div>
+                        <div className="lg:col-span-4">
+                            <GaugeChart data={datagauge} width={300} height={300} info={firstCapitalize(t('monthly_target'))} />
+                        </div>
+                        <div className="
+                        sm:col-span-2
+                        md:col-span-2
+                        lg:col-span-12
+                        xl:col-span-12
+                        ">
                             <LastSelling info={{ title: firstCapitalize(t('last_selling')), description: t('about') }} />
                         </div>
 
-                        <div className="lg:col-span-3">
-                            <DoughnutChart data={[today_balance, today_spents]} info={firstCapitalize(t('today_status'))} />
-                        </div>
-
+                        {
+                            false &&
                         <div className="lg:col-span-6">
                             <GenericLineChart dataLines={dataLines} info={firstCapitalize(t('income_outcome_expiration'))}  />
                         </div>
+
+                        }
 
                         </div>
                     </div>

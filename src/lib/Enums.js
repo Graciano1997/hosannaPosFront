@@ -12,6 +12,7 @@ export const PaymentType = {
 
 export const DefaultClientePhone = 911111111;
 export const defaultClientName = 'Consumidor Final';
+export const FinalClientDefaultNIF = '00000000000000';
 
 export const SaleType = {
     NORMAL_INVOICE_FT:'FT',

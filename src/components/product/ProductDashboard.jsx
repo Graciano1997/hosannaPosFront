@@ -62,10 +62,10 @@ const ProductDashboard=()=>{
         <>
          {/* <div className="grid grid-cols-1 lg:flex lg:flex-wrap  lg:justify-center gap-6 mt-20"> */}
 
-        <div className="flex flex-wrap justify-center items-center gap-[20px] mt-[3rem] p-1">
-        <BarChart data={barChartData} width={450} height={350} info={firstCapitalize(t('annual_expireds'))} />
-        <PieChart data={data} width={390} height={390} info={t('products_availability')}/>
-        <Card className="font-black" width={400} height={350} info={{title:t('total_expireds',),output:true,description:<Money amount={sum(productState.expireds,'total').total} />}} />
+        <div className="grid grid-cols-1 lg:grid-cols-3  gap-[20px] mt-[3rem] p-1">
+        <BarChart data={barChartData} width={300} height={300} info={firstCapitalize(t('annual_expireds'))} />
+        <PieChart data={data} width={300} height={300} info={t('products_availability')}/>
+        <Card className="font-black" width={300} height={300} info={{title:t('total_expireds',),output:true,description:<Money amount={sum(productState.expireds,'total').total} />}} />
         </div>
         </>
     )

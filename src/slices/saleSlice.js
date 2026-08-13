@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ClientType, DefaultClientePhone, defaultClientName, PaymentType, SaleType } from "../lib/Enums";
+import { ClientType, DefaultClientePhone, defaultClientName, PaymentType, SaleType, FinalClientDefaultNIF } from "../lib/Enums";
 import { getIpTenant, Ip } from "../lib/ip";
 import { totalWithTaxesAndDiscounts } from "../lib/totalWithTaxes";
 import { removeDuplicate } from "../lib/removeDuplicate";
@@ -15,7 +15,7 @@ const initialState = {
     totalItemsToReturn: 0,
     selectedItem: undefined,
     paymentType: PaymentType.CASH,
-    clientDetails: { name: defaultClientName, client_type: ClientType.SINGULAR, phone: DefaultClientePhone },
+    clientDetails: { name: defaultClientName, client_type: ClientType.SINGULAR,nif: FinalClientDefaultNIF, phone: DefaultClientePhone },
     invoiceType: SaleType.INVOICE_RECIBO_FR,
     receivedCash: 0,
     receivedTpa: 0,
@@ -330,12 +330,13 @@ const saleSlice = createSlice({
 
         builder.addCase(order.fulfilled, (state, action) => {
             state.sales.unshift(action.payload.sale_item);
+            console.log('Succes Order ', action.payload);
             // state.saleConfirmationIsOpen = false; ensure dont close after order, because we need to print the invoice
         });
 
 
         builder.addCase(order.rejected, (state, action) => {
-
+            console.log('rejected ordered', action.payload);
         });
 
         builder.addCase(getInvoiceItem.fulfilled, (state, action) => {

@@ -29,6 +29,7 @@ ChartJS.register(
 
 export const options = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       position: 'top',
@@ -40,8 +41,8 @@ export const options = {
   },
 };
 
-export const GenericLineChart = 
-  function GenericLineChart({width=350,height=350,info, dataLines, dispatcher=()=>{}}) {
+export const GenericLineChart =  React.memo(
+  function GenericLineChart({respo=false, width=350,height=350,info, dataLines, dispatcher=()=>{}}) {
   
   const graphContainerRef=useRef(null);
 
@@ -50,18 +51,19 @@ export const GenericLineChart =
   },[]);
 
   return(
-    <div className={`grid grid-rows-[50px_1fr] bg-white rounded shadow-md`}>
+    <div className={`grid grid-rows-[50px_1fr] bg-white rounded shadow-md w-full h-full  min-w-0`}
+    >
     <CardTitle>
-      <div className='flex justify-between items-center'>
-         <h2 className="">{firstCapitalize(info)}</h2>
-      </div>
+         <h2 className="truncate">{firstCapitalize(info)}</h2>
     </CardTitle>
-      <div ref={graphContainerRef} className={`transition-all duration-500 ease-in-out flex justify-center w-[${width}] h-[${height}px] relative`}>
+    <div className="transition-all duration-500 ease-in-out relative min-h-0 w-full ">
     <Line datasetIdKey='lineGraph' data={dataLines}/>
     </div>
   </div>
   )
 }
+
+)
 
 
 

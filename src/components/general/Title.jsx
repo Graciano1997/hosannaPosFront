@@ -1,4 +1,4 @@
-import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon, ArrowDownIcon, ArrowDownTrayIcon, ClockIcon, BellAlertIcon } from "@heroicons/react/24/solid";
+import {  EllipsisHorizontalIcon,ArrowUpTrayIcon,PresentationChartLineIcon, RectangleGroupIcon, TableCellsIcon, WrenchIcon, ArrowDownIcon, ArrowDownTrayIcon, ClockIcon, BellAlertIcon, ArrowTrendingUpIcon } from "@heroicons/react/24/solid";
 import React, {  useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
@@ -19,8 +19,7 @@ const Title=React.memo(
 
     return(
         <>
-        <div
-            className="flex flex-col w-full h-[120px] bg-white rounded-t p-4 overflow-x-hidden overflow-y-hidden" 
+        <div className="flex flex-col w-full h-[120px] bg-white rounded-t p-4 overflow-x-hidden overflow-y-hidden" 
             onClick={(el)=>{
                 if(ref.current.contains(el.target) && !showElipse ){
                     setShowElipse(!showElipse);
@@ -50,7 +49,7 @@ const Title=React.memo(
              </div>
     
             <nav className="mt-[20px]">
-            <ul className="flex flex gap-5 overflow-x-auto">
+            <ul className="flex flex gap-5 overflow-x-scroll overflow-y-hidden">
             <li>
                 <Link to={"#"} onClick={()=>dispatch(activeTab('tab1'))} 
                 className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded ${appState.activeTab=="tab1"?'activeTab':''}`} >
@@ -79,7 +78,7 @@ const Title=React.memo(
                 </Link>
             </li>
 
-                       <li>
+            <li>
                 <Link to={""}
                 onClick={()=>dispatch(activeTab('tab4'))} 
                 className={`flex items-center gap-2 transition-all duration-300 text-yellow-700 hover:rounded ${appState.activeTab=="tab4"?'activeTab':''} `} >
@@ -97,6 +96,14 @@ const Title=React.memo(
                 className={`flex items-center gap-2 transition-all duration-300 text-red-700 hover:rounded ${appState.activeTab=="tab5"?'activeTab':''} `} >
                 <ClockIcon className="w-4 y-4 cursor-pointer hover:shadow"/>
                 {firstCapitalize(t('expired_product'))}
+                </Link>
+            </li>
+            <li>
+                <Link to={""}
+                onClick={()=>dispatch(activeTab('tab7'))} 
+                className={`flex whitespace-nowrap items-center gap-2 transition-all duration-300 text-green-700 hover:rounded ${appState.activeTab=="tab7"?'activeTab':''} `} >
+                <ArrowTrendingUpIcon className="w-4 y-4 cursor-pointer hover:shadow"/>
+                {firstCapitalize(t('top_selling'))}
                 </Link>
             </li>
 

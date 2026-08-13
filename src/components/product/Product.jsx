@@ -5,7 +5,7 @@ import Create from "./Create";
 import Title from "../general/Title";
 import ProductDashboard from "./ProductDashboard";
 import { useDispatch, useSelector } from "react-redux";
-import { creatingProduct, deleteProduct,  fetchAlertProducts, fetchExpiredProducts, fetchProductConfiguration, fetchProducts, loadingMore, setProducts, stopCreatingOrUpdateingProduct, stopCreatingProduct, updatingProduct } from "../../slices/productSlice";
+import { creatingProduct, deleteProduct,  fetchAlertProducts, fetchExpiredProducts, fetchProductConfiguration, fetchProducts, loadingMore, setProducts, stopCreatingOrUpdateingProduct, stopCreatingProduct, updatingProduct, fetchTopSellingProducts } from "../../slices/productSlice";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { creatingCategory, deleteCategory, fetchCategories, setCategories, updateCategory, updatingCategory } from "../../slices/categorySlice";
@@ -13,6 +13,47 @@ import CreateCategory from "./CreateCategory";
 import ProductConfiguration from "./ProductConfiguration";
 import ExpiredProducts from "./ExpiredProducts";
 import AlertProducts from "./AlertProducts";
+
+const TopSellingProducts = () => {
+    const {t} = useTranslation();
+    const dispatch = useDispatch();
+    const productState = useSelector((state)=>state.productState);
+    const [topNumber,setTopNumber] = useState(5);
+
+    useEffect(()=>{
+        dispatch(fetchTopSellingProducts({from:'',to:'',qty:topNumber}))
+    },[topNumber])
+    
+    return(
+        <>
+        <div className="card-header flex justify-end mb-5 sm:mb-2"><h1> 
+            <input 
+            onChange={(el)=>{
+                if(el.target.value===0)
+                    setTopNumber(5)
+                else
+                    setTopNumber(el.target.value)
+            }}
+            className="border-none outline outline-1 text-center outline-green-300 border border-gray-300 rounded px-2 py-1"
+          type="number" min={3} defaultValue={topNumber} placeholder={t('top_selling_products_count')} />  </h1></div>
+      <Table 
+       addItem={false}
+       filterDetails={[]} 
+       setCollection={null}
+       filterRows={[]}
+       update={null}
+       create={null}
+       deleteItem={null}
+       dispatcher={null}
+       fetcher={null} 
+       rangeDataSelection={false}
+       collection={productState.topSellingProducts || []}
+       loadingMore={null}
+       fetcherParam={null}
+       />
+       </>
+    )
+};
 
 const Product=()=>{
     const appState=useSelector((state)=>state.appState);
@@ -22,18 +63,17 @@ const Product=()=>{
     const productState = useSelector((state)=>state.productState);
 
     useEffect(()=>{
-
         const loadData = async () => {
             await Promise.all([
                 dispatch(fetchProducts()),
                 dispatch(fetchExpiredProducts()),
                 dispatch(fetchProductConfiguration()),
-                dispatch(fetchAlertProducts())
+                dispatch(fetchAlertProducts()),
+                dispatch(fetchTopSellingProducts({from:'',to:'',qty:5}))
             ])
         }
         loadData();
     },[dispatch]);
-    // productState.products
 
     const categoryState = useSelector((state)=>state.categoryState);
     const filterProductDetails =['id','category_id','image'];
@@ -68,7 +108,14 @@ const Product=()=>{
             setColumnsToExport({
             model:t('expired_product'),
             data:productState.expireds              
-    })}
+        })}
+
+        if(appState.activeTab=="tab7"){
+            setColumnsToExport({
+            model:t('top_selling_products'),
+            data:productState.topSellingProducts
+        })}
+
     },[appState.activeTab]);
 
 
@@ -93,6 +140,9 @@ const Product=()=>{
         }
         {appState.activeTab=="tab6"  && <ProductConfiguration />}
 
+        {appState.activeTab=="tab7" &&  
+        <TopSellingProducts />
+        }
         </TabWrapper>
         {(categoryState.isCreating || categoryState.isUpdating) && appState.isOpen && (<CreateCategory/>)}
         {(productState.isCreating  || productState.isUpdating ) && appState.isOpen && (<Create stopCreating={stopCreatingOrUpdateingProduct} setIsShowing={setIsShowing}/>)}

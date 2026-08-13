@@ -31,14 +31,20 @@ export const PieChart= React.memo(
   const graphContainerRef=useRef(null);
 
   return(
-    <div className={` w-[${width}px] h-[${height}px] grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
+     <div className={`grid grid-rows-[50px_1fr] bg-white rounded shadow-md w-full  min-w-0`}>
     <CardTitle>
-      <p className='text-center'>{firstCapitalize(info)}</p>
+      <div className='flex justify-between items-center'>
+         <h2 className="">{firstCapitalize(info)}</h2>
+      </div>
     </CardTitle>
-    <div ref={graphContainerRef} className='cursor-pointer flex items-center p-2 justify-center w-[350px] h-[350px]'>
-      <Pie options={options} data={data} />      
+      <div ref={graphContainerRef} className={`flex justify-center transition-all duration-500 ease-in-out w-full min-w-0 relative `}
+      style={{ height: `${height}px` }}
+      >
+     <Pie options={options} data={data} />  
     </div>
   </div>
+  
+    
   )
 }
 )

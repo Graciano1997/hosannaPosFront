@@ -87,7 +87,7 @@ const Table = React.memo(({ collection = [], addItem = null, setCollection = () 
                                         <input 
                                         type="text" 
                                         value={query.rangeDate?.from != null && query.rangeDate?.to != null ? `${query.rangeDate?.from} - ${query.rangeDate?.to}` : ''} onClick={() => { setVisibility(true) }}
-                                            className=" border-none outline outline-1 outline-green-300 border border-gray-300 rounded px-2 py-1" id="search" placeholder={firstCapitalize(t('data_interval_example'))} />
+                                            className="border-none outline outline-1 outline-green-300 border border-gray-300 rounded px-2 py-1" id="search" placeholder={firstCapitalize(t('data_interval_example'))} />
                                     </div>          
                                     <DatePickerFilter query={query} setQuery={setQuery} setSearching={setSearching} setSearchResult={setSearchResult} visibility={visibility} setVisibility={setVisibility} />
                                 </div>
