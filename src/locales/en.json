@@ -310,5 +310,7 @@
     "payment_method":"payment method",
     "monthly_target":"monthly target",
     "top_selling":"top selling",
-    "top_selling_products_count":"nº top selling"
+    "top_selling_products":"top selling products",
+    "top_selling_products_count":"nº top selling",
+    "building": "Coming soon..."
 }

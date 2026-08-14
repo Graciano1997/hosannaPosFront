@@ -30,11 +30,23 @@ const initialState = {
     invoiceSearchedItems: [],
     newAmountToReceiveForTheFTInvoice: 0,
     referenceSale: null,
-    invoiceStatus: null
+    invoiceStatus: null,
+    salesTypeDashboard:{},
+    todaySalesCount:0
 }
+
+export const fetchTodaySalesNumber = createAsyncThunk("saleState/fetchTodaySalesNumber", async () => {
+    const response = await fetch(`${getIpTenant()}sales/today_sales`);
+    return response.json();
+})
 
 export const fetchAnualSales = createAsyncThunk("saleState/fetchAnualSales", async (year = new Date().getFullYear()) => {
     const response = await fetch(`${getIpTenant()}sales/anual_sales/${year}`);
+    return response.json();
+})
+
+export const fetchSalesTypeDashboard = createAsyncThunk("saleState/fetchSalesTypeDashboard", async () => {
+    const response = await fetch(`${getIpTenant()}sales/sales_type_dashboard`);
     return response.json();
 })
 
@@ -344,6 +356,14 @@ const saleSlice = createSlice({
 
         builder.addCase(getInvoiceItem.rejected, (state, action) => {
     
+        });
+
+        builder.addCase(fetchSalesTypeDashboard.fulfilled, (state, action) => {
+            state.salesTypeDashboard = action.payload.data    
+        });
+
+        builder.addCase(fetchTodaySalesNumber.fulfilled, (state, action) => {
+            state.todaySalesCount = action.payload.data    
         });
 
         builder.addCase(getSaleInvoiceItem.fulfilled, (state, action) => {

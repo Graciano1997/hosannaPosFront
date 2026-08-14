@@ -314,7 +314,6 @@ const productSlice = createSlice({
     })
 
     builder.addCase(fetchTopSellingProducts.pending,(state,action)=>{
-        console.log('top selling products getting....');
         // if(action.payload !=undefined){
             // state.topSellingProducts = action.payload.data;
         // }

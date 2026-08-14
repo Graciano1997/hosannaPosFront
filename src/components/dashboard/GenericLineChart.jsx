@@ -56,7 +56,7 @@ export const GenericLineChart =  React.memo(
     <CardTitle>
          <h2 className="truncate">{firstCapitalize(info)}</h2>
     </CardTitle>
-    <div className="transition-all duration-500 ease-in-out relative min-h-0 w-full ">
+    <div className=" transition-all duration-500 ease-in-out relative min-h-0 w-full  ">
     <Line datasetIdKey='lineGraph' data={dataLines}/>
     </div>
   </div>

@@ -8,9 +8,14 @@ const initialState = {
     isUpdating:false,
     clientToUpdate:{},
     clients: [],
+    clientsDashboard:[],
     last_created_at:null
 };
 
+export const fetchClientDashboard = createAsyncThunk("clientState/fetchClientDashboard",async ()=>{
+     const response = await fetch(`${getIpTenant()}clients/dashboard`);
+        return response.json();
+});
     export const fetchClients = createAsyncThunk("clientState/fetchClients", async (last_created_at=null) => {
         const response = await fetch(`${getIpTenant()}clients/`,
             {
@@ -77,6 +82,10 @@ const clientSlice = createSlice({
                  state.isCreating = false;
                  state.clients.push({ ...action.payload.client });
              }
+         });
+        
+         builder.addCase(fetchClientDashboard.fulfilled, (state, action) => {
+            state.clientsDashboard = action.payload.data;
          });
 
         builder.addCase(updateClient.fulfilled,(state,action)=>{

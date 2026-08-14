@@ -51,7 +51,8 @@ export const GaugeChart = React.memo(
         {
           data: [value, 100 - value],
           backgroundColor: [
-            '#18CA80',
+            // '#18CA80',
+            '#18ca8042',
             '#E5E7EB'
           ],
           borderWidth: 0,
@@ -77,10 +78,10 @@ export const GaugeChart = React.memo(
     };
 
     return (      
-    <div className={`grid grid-rows-[50px_1fr] bg-white rounded shadow-md w-full  min-w-0 `}>
+    <div className={`grid grid-rows-[50px_1fr] bg-white/10 rounded shadow-md w-full  min-w-0 `}>
         <CardTitle>
       <div className='flex justify-between items-center w-[100%] h-[100%]'>
-         <h2 className="">{firstCapitalize(info)}</h2>
+         <h2 className="text-red-200">{firstCapitalize(info)}</h2>
       </div>
     </CardTitle>
 

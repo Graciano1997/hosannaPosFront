@@ -26,10 +26,10 @@ const SpentDashboard= React.memo(
 
     return(
         <>
-        <div className="flex flex-wrap justify-center items-center gap-[20px] mt-4 p-1">
-        <LastOuts width={350} height={300} info={{title: firstCapitalize(t('last_outputs')), description:t('about')}} />
-        <BarChart data={data} width={450} height={400} info={firstCapitalize(t('annual_spends'))} />
-        <Card className="font-black" width={350} height={300} info={{output:true,title: firstCapitalize(t('outputs')),description:<Money amount={spentState.total}/>}} />
+        <div className="grid grid-cols-1 lg:grid-cols-3 place-items-center items-center gap-[10px] mt-4 p-1">
+        <LastOuts width={350} height={350} info={{title: firstCapitalize(t('last_outputs')), description:t('about')}} />
+        <BarChart data={data}  info={firstCapitalize(t('annual_spends'))} />
+        <Card className="font-black" width={350} height={350} info={{output:true,title: firstCapitalize(t('outputs')),description:<Money amount={spentState.total}/>}} />
         </div>
         </>
     )
