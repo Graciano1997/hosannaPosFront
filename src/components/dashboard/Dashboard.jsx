@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { totalToDay } from "../../lib/totalToDay";
 import React, { useEffect, useMemo, useState } from "react";
 import { fetchAnualSpents, fetchSpents } from "../../slices/spentSlice";
-import { fetchAnualSales, fetchSales, fetchSalesTypeDashboard, fetchTodaySalesNumber } from "../../slices/saleSlice";
+import { fetchAnualSales, fetchDashboard, fetchSales } from "../../slices/saleSlice";
 import { LineChart } from "./LineChart";
 import { DoughnutChart, GaugeChart } from "./DoughnutChart";
 import { BanknotesIcon, BellAlertIcon, BellIcon, CircleStackIcon, ClockIcon, ShoppingCartIcon, TagIcon, UserIcon } from "@heroicons/react/24/solid";
@@ -44,23 +44,19 @@ const NavegateItem = ({ number = 0, title, icon, onClickHandler }) => {
     )
 }
 
-const DashboardNavegateOption = React.memo(({ productState, navegate, dispatch, saleState }) => {
+const DashboardNavegateOption = React.memo(({ productState, navegate, dispatch, kpis }) => {
     const { t } = useTranslation()
     const master = CurrentUser()?.profileId == Profiles?.MASTER
-    // const productState = useSelector((state) => state.productState);
     const alertProductsNumber = productState.alertProducts.length;
     const expiredProductsNumber = sum(productState.expireds, 'qty').total;
-    const todaySalesNumber = saleState.todaySalesCount;
+
 
     return (
         <div className="flex flex-col sm:flex-row  gap-2 sm:gap-4 justify-end rounded">
-
             <Button
                 className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex items-center cursor-pointer"
                 onClickHandler={
-                    () => {
-                        navegate(rootpath + 'sale');
-                    }
+                    () => {navegate(rootpath + 'sale');}
                 }
                 content={
                     <>
@@ -70,7 +66,7 @@ const DashboardNavegateOption = React.memo(({ productState, navegate, dispatch, 
                 } />
 
             <NavegateItem
-                number={todaySalesNumber ?? 0}
+                number={kpis.today_sales_count ?? 0}
                 icon={<TagIcon className="w-5 y-5 text-[#323232]" />}
                 title={firstCapitalize(t('sales'))}
                 onClickHandler={() => { navegate(rootpath + 'sales') }}
@@ -132,9 +128,8 @@ const Dashboard = React.memo(
                     dispatch(fetchStockMovements()),
                     dispatch(fetchStockDashboard()),
                     dispatch(fetchClientDashboard()),
-                    dispatch(fetchSalesTypeDashboard()),
-                    dispatch(fetchTodaySalesNumber()),
-                    dispatch(fetchExpiredProducts())
+                    dispatch(fetchExpiredProducts()),
+                    dispatch(fetchDashboard())
                 ])
             }
             loadData();
@@ -153,7 +148,8 @@ const Dashboard = React.memo(
         const anualExpired = productState.anualExpireds || [];
         const anualClients = clientState.clientsDashboard || [];
         const salesPaymentWay = saleState.salesTypeDashboard;
-
+        const kpis = saleState.kpis;
+      
 
         const today_balance = useMemo(() => { return sales.length > 0 ? totalToDay(sales, new Date()) : 0 }, [sales]);
         const today_spents = useMemo(() => { return spentState.spents && spentState.spents.length > 0 ? totalToDay(spentState.spents, new Date(), "amount") : 0 }, [spentState.spents]);
@@ -246,7 +242,7 @@ const Dashboard = React.memo(
             labels,
             datasets: [
                 {
-                    data: [salesPaymentWay.CASH, salesPaymentWay.TPA, salesPaymentWay.MIXED],
+                    data: [kpis?.sales_type?.CASH, kpis?.sales_type?.TPA, kpis?.sales_type?.MIXED],
                     backgroundColor: ['#22C55E', '#3B82F6', '#F59E0B'],
                     borderWidth: 1,
                 },
@@ -257,7 +253,7 @@ const Dashboard = React.memo(
                 <div className="mt-[3%]">
                     <div className="p-0 pt-5 p-5 ">
                         <DashboardNavegateOption
-                            saleState={saleState}
+                            kpis={kpis}
                             productState={productState}
                             navegate={navegate}
                             productState={productState}
@@ -303,7 +299,7 @@ const Dashboard = React.memo(
                                     lg:col-span-4
                                     xl:col-span-4
                         ">
-                                <DoughnutChart data={[today_balance, today_spents]} info={firstCapitalize(t('today_status'))} />
+                                <DoughnutChart data={[kpis.today_sale_total, kpis.today_spents_total]} info={firstCapitalize(t('today_status'))} />
                             </div>
 
                             <div className="

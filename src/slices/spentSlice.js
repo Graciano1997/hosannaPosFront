@@ -29,10 +29,10 @@ export const fetchAnualSpents = createAsyncThunk("spentState/fetchAnualSpents", 
     return response.json();
 })
 
-export const fetchMinYearSpents = createAsyncThunk("spentState/fetchMinYearSpents", async (year=new Date().getFullYear()) => {
-    const response = await fetch(`${getIpTenant()}spents/min_year_date_spents`);
-    return response.json();
-})
+ export const fetchMinYearSpents = createAsyncThunk("spentState/fetchMinYearSpents", async (year=new Date().getFullYear()) => {
+     const response = await fetch(`${getIpTenant()}spents/min_year_date_spents`);
+     return response.json();
+ })
 
 export const deleteSpent = createAsyncThunk("spentState/deleteSpent", async (id) => {
     const response = await fetch(`${getIpTenant()}spents/${id}`, { method: 'DELETE', headers: { 'Content-Type': 'application/json' } });

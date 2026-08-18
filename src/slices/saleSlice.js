@@ -32,21 +32,17 @@ const initialState = {
     referenceSale: null,
     invoiceStatus: null,
     salesTypeDashboard:{},
-    todaySalesCount:0
+    todaySalesCount:0,
+    kpis:{}
 }
 
-export const fetchTodaySalesNumber = createAsyncThunk("saleState/fetchTodaySalesNumber", async () => {
-    const response = await fetch(`${getIpTenant()}sales/today_sales`);
+export const fetchDashboard = createAsyncThunk("saleState/fetchDashboard", async () => {
+    const response = await fetch(`${getIpTenant()}sales/dashboard`);
     return response.json();
 })
 
 export const fetchAnualSales = createAsyncThunk("saleState/fetchAnualSales", async (year = new Date().getFullYear()) => {
     const response = await fetch(`${getIpTenant()}sales/anual_sales/${year}`);
-    return response.json();
-})
-
-export const fetchSalesTypeDashboard = createAsyncThunk("saleState/fetchSalesTypeDashboard", async () => {
-    const response = await fetch(`${getIpTenant()}sales/sales_type_dashboard`);
     return response.json();
 })
 
@@ -358,12 +354,8 @@ const saleSlice = createSlice({
     
         });
 
-        builder.addCase(fetchSalesTypeDashboard.fulfilled, (state, action) => {
-            state.salesTypeDashboard = action.payload.data    
-        });
-
-        builder.addCase(fetchTodaySalesNumber.fulfilled, (state, action) => {
-            state.todaySalesCount = action.payload.data    
+        builder.addCase(fetchDashboard.fulfilled, (state, action) => {
+            state.kpis = action.payload;
         });
 
         builder.addCase(getSaleInvoiceItem.fulfilled, (state, action) => {

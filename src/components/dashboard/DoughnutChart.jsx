@@ -153,7 +153,8 @@ export const DoughnutChart = React.memo(
   useEffect(()=>{
     Promise.all([
      dispatch(fetchAnualSpents()),
-     dispatch(fetchMinYearSpents())])
+    //  dispatch(fetchMinYearSpents())
+    ])
      
   },[]);
 

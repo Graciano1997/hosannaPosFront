@@ -88,15 +88,16 @@ export  const LineChart = React.memo(function LineChart({data,width=400,height=3
 
   useEffect(()=>{
     dispatch(fetchAnualSpents()); 
-    dispatch(fetchMinYearSpents());
+    // dispatch(fetchMinYearSpents());
   },[]);
 
+  /*
   if(spendState.minYear){
     for(let index = spendState.minYear; index <= (new Date().getFullYear()); index++){
       years.push(index);
     }
   }
-
+*/
   return(
     <div style={{width:width, height:height }} className={`grid grid-rows-[50px_1fr]  sm:block bg-white rounded shadow-md`}>
     <CardTitle>

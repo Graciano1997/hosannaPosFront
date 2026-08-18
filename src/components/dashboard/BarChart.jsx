@@ -50,7 +50,7 @@ export const BarChart =React.memo(
 
   useEffect(()=>{
     dispatch(fetchAnualSpents()); 
-    dispatch(fetchMinYearSpents());
+    // dispatch(fetchMinYearSpents());
   },[]);
 
 
