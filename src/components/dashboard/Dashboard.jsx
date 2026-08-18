@@ -44,9 +44,10 @@ const NavegateItem = ({ number = 0, title, icon, onClickHandler }) => {
     )
 }
 
-const DashboardNavegateOption = React.memo(({ productState, navegate, dispatch, kpis }) => {
+const DashboardNavegateOption = React.memo(({ navegate, dispatch, kpis }) => {
     const { t } = useTranslation()
     const master = CurrentUser()?.profileId == Profiles?.MASTER
+    const productState = useSelector((state) => state.productState);
     const alertProductsNumber = productState.alertProducts.length;
     const expiredProductsNumber = sum(productState.expireds, 'qty').total;
 
