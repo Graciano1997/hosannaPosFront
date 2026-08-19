@@ -147,7 +147,7 @@ const Export = ({ stopExporting }) => {
                             }} value={query.rangeDate?.from != null && query.rangeDate?.to != null ? `${query.rangeDate?.from} - ${query.rangeDate?.to}` : ''} onClick={() => { setVisibility(true) }}
                                 className="bg-transparent text-red-600" id="search" placeholder={firstCapitalize(t('data_interval_example'))} />
                         </div>
-                        <DatePickerFilter style={"absolute "} query={query} setQuery={setQuery} visibility={visibility} setVisibility={setVisibility} />
+                        <DatePickerFilter style={"absolute mt-[-20rem]"} query={query} setQuery={setQuery} visibility={visibility} setVisibility={setVisibility} />
                     </div>
                     {fieldsToShow.length > 0 &&
                         <div className="flex justify-end p-2 mt-auto gap-5">
