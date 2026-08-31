@@ -362,5 +362,6 @@
     "in":"entrada",
     "out":"saída",
     "to":"para",
-    "until":"até"
+    "until":"até",
+    "cash_reinforcement_session": "Reforço de caixa"
 }

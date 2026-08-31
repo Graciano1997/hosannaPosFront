@@ -355,5 +355,10 @@
     "withdrawal_cash_session": "Cash withdrawal",
     "withdrawal_amount":"amount",
     "cash_session_reinforced_successfully": "Cash session reinforced successfully",
-     "cash_movements": "Cash movements"
+     "cash_movements": "Cash movements",
+     "in":"in",
+     "out":"out",
+     "to":"to",
+     "until":"until",
+     "cash_reinforcement_session": "Cash replenishment"
 }
