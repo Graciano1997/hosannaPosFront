@@ -17,9 +17,8 @@ import { pt,enUS, fr } from "react-day-picker/locale";
 import { Button } from "../general/Button";
 import { DayPicker } from "react-day-picker";
 import i18n from "../../i18n";
-
-const movementTypeColor ={entry:"bg-green-500",exit:"bg-red-500",return:"bg-purple-500",adjustment:"bg-blue-500",expired:"bg-yellow-400"}
-const moneyFields = ['price','total', 'amount', 'cost_price','discount','difference','received_cash'];
+import { moneyFields,movementTypeColor } from "../../lib/Enums";
+import { CashSessionHistoricMovements } from "../CashRegister/CashSessionHistoricMovements";
 
 /*
 Generic pendent
@@ -406,6 +405,7 @@ const Details = React.memo(({closeDetails,filterDetails=[],rowStyle, itemDetails
     const dispatch = useDispatch();
 
 
+
     return(
         <Modal helper={closeDetails}>
             <div className="flex p-2">
@@ -485,9 +485,16 @@ const Details = React.memo(({closeDetails,filterDetails=[],rowStyle, itemDetails
             }
 
                 </div>
+                
                 {pathname==`${rootpath}products` && activeTab==`tab1` && itemDetails.id &&
                 <GraphDetails  itemId={itemDetails.id} title={`${itemDetails.name} - ${firstCapitalize(t('product_sales_history'))}`}/>
                 }
+                
+                {pathname==`${rootpath}cash_register` && activeTab==`tab2`&&
+                    <CashSessionHistoricMovements cashSession={itemDetails} dispatch={dispatch} t={t}/>
+                }
+
+
                 </div>
                 </div>
 

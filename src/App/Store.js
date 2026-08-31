@@ -11,6 +11,7 @@ import companySlice from "../slices/companySlice";
 import printerSlice from "../slices/printerSlice";
 import stockSlice from "../slices/stockSlice";
 import bankAccountSlice from "../slices/bankAccountSlice";
+import cashRegisterSlice from "../slices/cashRegisterSlice";
 
 const store = configureStore({
     reducer:{
@@ -25,7 +26,8 @@ const store = configureStore({
        printerState:printerSlice,
        stockState: stockSlice,
        bankAccountState: bankAccountSlice,
-       clientState:clientSlice
+       clientState:clientSlice,
+       cashRegisterState:cashRegisterSlice
     }
 });
 

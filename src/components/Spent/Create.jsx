@@ -10,6 +10,8 @@ const Create=()=>{
     
     const spentState = useSelector((state)=> state.spentState );
     const userState = useSelector((state)=> state.userState);
+    const cashRegisterState = useSelector((state) => state.cashRegisterState);
+    const {currentSession} = cashRegisterState;
     const dispatch = useDispatch();
     
     useEffect(()=>{
@@ -31,6 +33,9 @@ const Create=()=>{
     
             let treatedSpentObject = {
                 ...spent,
+                currentSession,
+                cash_register_id: currentSession.cash_register_id,
+                cash_session_id: currentSession.id,
                 user_id: parseInt(spent.user_id),
             }
        

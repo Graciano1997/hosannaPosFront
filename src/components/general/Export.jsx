@@ -78,7 +78,7 @@ const Export = ({ stopExporting }) => {
 
     return (
         <>
-            <Modal helper={stopExporting}>
+            <Modal  helper={stopExporting}>
                 <form className='flex flex-col h-[100%]  mt-[1rem] rounded p-3 overflow-y-auto'>
 
                     <div className="flex flex-col gap-[-2rem]">
@@ -171,7 +171,7 @@ const Export = ({ stopExporting }) => {
 
 
                             }} className="p-2 bg-green-100 rounded">{selectedAll ? firstCapitalize(t('unselect_all_field')) : firstCapitalize(t('select_all_field'))}</button>
-                            <ExportButton pageSetting={pageSetting} exportOption={exportOption} data={updateModelToExport ? updateModelToExport.data : exportingModel.data} columnsToExport={columnsToExport} model={exportingModel.model} />
+                            <ExportButton pageSetting={pageSetting} exportName={exportingModel.exportName} exportOption={exportOption} data={updateModelToExport ? updateModelToExport.data : exportingModel.data} columnsToExport={columnsToExport}  model={exportingModel.model} />
                         </div>
                     }
                 </form>

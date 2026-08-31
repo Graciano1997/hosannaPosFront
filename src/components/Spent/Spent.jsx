@@ -9,6 +9,7 @@ import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
 import { creatingSpent, deleteSpent, fetchAnualSpents, fetchSpents, setSpents, updatingSpent } from "../../slices/spentSlice";
 import { activeTab } from "../../slices/appSlice";
+import { validateCurrentUserCashSession } from "../../slices/cashRegisterSlice";
 
 const Spent = React.memo(
      () => {
@@ -24,6 +25,7 @@ const Spent = React.memo(
             await Promise.all([
                 dispatch(fetchSpents()),
                 dispatch(fetchAnualSpents()),
+                dispatch(validateCurrentUserCashSession()),
                 dispatch(activeTab('tab1'))
             ])
         }
@@ -41,7 +43,7 @@ const Spent = React.memo(
                     data:spents}}
             />
             <TabWrapper>
-                {appState.activeTab == "tab1" && (<Table filterDetails={filterSpentDetails} setCollection={setSpents} filterRows={['user_id','image']} collection={spents} update={updatingSpent} deleteItem={deleteSpent} fetcher={fetchSpents} dispatcher={setSpents}  create={creatingSpent} />)}
+                {appState.activeTab == "tab1" && (<Table filterDetails={filterSpentDetails} setCollection={setSpents} filterRows={['user_id','image','cash_session_id','cash_register_id']} collection={spents} update={updatingSpent} deleteItem={deleteSpent} fetcher={fetchSpents} dispatcher={setSpents}  create={creatingSpent} />)}
                 {appState.activeTab == "tab2" && (<SpendDashboard />)}
             </TabWrapper>
             {(spentState.isCreating || spentState.isUpdating) && appState.isOpen &&  (<Create />)}

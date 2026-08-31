@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saleConfirm, setSaleObject } from "../../slices/saleSlice";
 import { InvoiceStatus, PaymentType, SaleType } from "../../lib/Enums";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import { openModal } from "../../slices/appSlice";
 
 const ButtonGroup = ({ saleState }) => {
     const { t } = useTranslation();
@@ -42,7 +43,7 @@ const ButtonGroup = ({ saleState }) => {
             ))
             )
              &&
-             <button type="button" onClick={() => { dispatch(saleConfirm());}} className="bg-green-200 rounded p-2 hover:shadow">{firstCapitalize(t('confirm'))}</button>
+             <button type="button" onClick={() => { dispatch(openModal()); dispatch(saleConfirm());}} className="bg-green-200 rounded p-2 hover:shadow">{firstCapitalize(t('confirm'))}</button>
             }
         </div>
     )

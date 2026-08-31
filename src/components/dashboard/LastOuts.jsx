@@ -17,17 +17,45 @@ const LastOuts = React.memo(({width=200,height=300,info})=>{
     const lastSpents= useSelector((state)=>state.spentState.lastSpents) || []; 
 
     return(
-         <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md`}>
+         <div style={{height:height,width:width}} className={`grid grid-rows-[50px_auto] bg-white rounded shadow-md `}>
              <CardTitle>
             <h2 className="text-center">{firstCapitalize(info.title)}</h2>
             </CardTitle>
-             <div className="p-2">
+             <div className="p-2 overflow-y-auto">
                 <ul className={`h-[100%] flex flex-col gap-5 p-1 ${lastSpents.length==0?'items-center justify-center':''}`}>
                 {lastSpents.length==0 && <li>
                      <p className="text-center text-red-500 text-2xl p-2"> {firstCapitalize(t('no-spents'))}</p>
                 </li>
                 }
-                    {lastSpents.length > 0 &&
+
+                {
+                    <div className="grid grid-cols-1 gap-2">
+                        <div className="grid grid-cols-2">
+                        <div>
+                        <p>{ firstCapitalize(t('destinatary'))}</p>
+                        </div>
+                        <div>
+                        <p>{firstCapitalize(t('amount'))}</p>
+                        </div>
+                        </div>
+                        {
+                       lastSpents.map((el)=>
+                    <div>
+                    <div className="grid grid-cols-2 bg-red-50 p-2 rounded">
+                    <p>{el.user_name}</p>
+                    <Money amount={el.amount}/>
+                        </div>
+                    </div>
+
+ 
+                    // <li className="h-[40px] cursor-pointer bg-green-200 flex justify-between p-1 rounded sm:shadow items-center">
+                    // </li>
+                    ) 
+
+                        }
+                    </div>
+                }
+                    {/* {lastSpents.length > 0 &&
                     <>
                      <li className="h-[40px] bg-white  flex justify-between">
                         <p>{ firstCapitalize(t('destinatary'))}</p>
@@ -39,7 +67,7 @@ const LastOuts = React.memo(({width=200,height=300,info})=>{
                     <p>{el.user}</p>
                     <Money amount={el.amount}/>
                     </li>)
-                    }
+                    } */}
                 </ul>
              </div>
         </div>

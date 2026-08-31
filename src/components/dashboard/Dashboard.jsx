@@ -2,17 +2,14 @@ import { useTranslation } from "react-i18next";
 import LastSelling from "./LastSelling";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useDispatch, useSelector } from "react-redux";
-import { totalToDay } from "../../lib/totalToDay";
 import React, { useEffect, useMemo, useState } from "react";
 import { fetchAnualSpents, fetchSpents } from "../../slices/spentSlice";
 import { fetchAnualSales, fetchDashboard, fetchSales } from "../../slices/saleSlice";
-import { LineChart } from "./LineChart";
 import { DoughnutChart, GaugeChart } from "./DoughnutChart";
-import { BanknotesIcon, BellAlertIcon, BellIcon, CircleStackIcon, ClockIcon, ShoppingCartIcon, TagIcon, UserIcon } from "@heroicons/react/24/solid";
+import { BellAlertIcon, BellIcon, ClockIcon, ShoppingCartIcon, TagIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
-import { activeTab } from "../../slices/appSlice";
-import { PaymentType, Profiles } from "../../lib/Enums";
-import { fetchAlertProducts, fetchAnualExpiredProducts, fetchExpiredProducts } from "../../slices/productSlice";
+import { activeTab, openModal } from "../../slices/appSlice";
+import { fetchAlertProducts, fetchAnualExpiredProducts, fetchExpiredProductsDashboard } from "../../slices/productSlice";
 import { fetchStockDashboard, fetchStockMovements } from "../../slices/stockSlice";
 import { annualMonths } from "../../lib/Months";
 import { GenericLineChart } from "./GenericLineChart";
@@ -20,12 +17,38 @@ import { rootpath } from "../../lib/ip";
 import { CurrentUser } from "../../lib/CurrentUser";
 import { Button } from "../general/Button";
 import { PieChart } from "./PieChart";
-import { extractFieldToArray } from "../../lib/extractFieldToArray";
-import { RandomColor } from "../../lib/randomColor";
 import { BarChart } from "./BarChart";
 import { fetchClientDashboard } from "../../slices/clientSlice";
-import { sum } from "../../lib/sumCollection";
+import { Profiles } from "../../lib/Enums";
+import { fetchCashRegisters, validateCurrentUserCashSession } from "../../slices/cashRegisterSlice";
+import { OpenCashSession } from "../CashRegister/OpenSession";
 
+export const OpenAndCloseSession = ({t,startingCashSessionHandler=()=>{},closingCashSessionHandler=()=>{} })=>{
+    
+    const cashRegisterState = useSelector((state) => state.cashRegisterState);
+    const {hasCurrentUserStartSession} = cashRegisterState;
+
+    return(
+        <div>
+                {
+                    hasCurrentUserStartSession && !hasCurrentUserStartSession &&
+                    <Button 
+                    content={<p className="truncate">{firstCapitalize(t('open_cash'))}</p>}
+                    className={"bg-white text-green-500 rounded p-3 transition-all duration-200 shadow-sm hover:shadow"}
+                    onClickHandler={()=>startingCashSessionHandler()}
+                    />
+                }    
+                {
+                    hasCurrentUserStartSession &&
+                    <Button 
+                    content={<p className="truncate">{firstCapitalize(t('close_cash'))}</p>}
+                    className={"bg-white text-red-500 rounded p-3 transition-all duration-200 shadow-sm hover:shadow"}
+                    onClickHandler={()=>{closingCashSessionHandler()}}
+                    />
+                }    
+            </div>
+    )
+}
 const NavegateItem = ({ number = 0, title, icon, onClickHandler }) => {
     return (
         <Button
@@ -44,20 +67,20 @@ const NavegateItem = ({ number = 0, title, icon, onClickHandler }) => {
     )
 }
 
-const DashboardNavegateOption = React.memo(({ navegate, dispatch, kpis }) => {
+const DashboardNavegateOption = React.memo(({ navegate, dispatch, kpis, productState, startingCashSessionHandler=()=>{} }) => {
     const { t } = useTranslation()
     const master = CurrentUser()?.profileId == Profiles?.MASTER
-    const productState = useSelector((state) => state.productState);
     const alertProductsNumber = productState.alertProducts.length;
-    const expiredProductsNumber = sum(productState.expireds, 'qty').total;
+    const expiredProductsNumber = productState.expiredsTotal;
 
 
     return (
+     
         <div className="flex flex-col sm:flex-row  gap-2 sm:gap-4 justify-end rounded">
             <Button
                 className="bg-white rounded transition-all duration-200 hover:shadow p-3 gap-1 flex items-center cursor-pointer"
                 onClickHandler={
-                    () => {navegate(rootpath + 'sale');}
+                    () => { navegate(rootpath + 'sale'); }
                 }
                 content={
                     <>
@@ -115,7 +138,7 @@ const Dashboard = React.memo(
     () => {
         const { t } = useTranslation();
         const dispatch = useDispatch();
-        const master = CurrentUser()?.profileId == Profiles?.MASTER;
+        const master = CurrentUser()?.profileId == Profiles.MASTER;
 
         useEffect(() => {
             const loadData = async () => {
@@ -129,8 +152,10 @@ const Dashboard = React.memo(
                     dispatch(fetchStockMovements()),
                     dispatch(fetchStockDashboard()),
                     dispatch(fetchClientDashboard()),
-                    dispatch(fetchExpiredProducts()),
-                    dispatch(fetchDashboard())
+                    dispatch(fetchExpiredProductsDashboard()),
+                    dispatch(fetchDashboard()),
+                    dispatch(fetchCashRegisters()),
+                    dispatch(validateCurrentUserCashSession())
                 ])
             }
             loadData();
@@ -143,17 +168,17 @@ const Dashboard = React.memo(
         const spentState = useSelector(state => state.spentState);
         const stockState = useSelector((state) => state.stockState);
         const clientState = useSelector((state) => state.clientState);
+        const [startingCashSession,setStartingCashSession]=useState(false);
+        const appState = useSelector((state) => state.appState);
+    
+        const cashRegisterState = useSelector((state) => state.cashRegisterState);
+        const {cashregisters} = cashRegisterState;
 
         const anualSpents = spentState.anualSpends || [];
         const anualSales = saleState.anualSales || [];
         const anualExpired = productState.anualExpireds || [];
         const anualClients = clientState.clientsDashboard || [];
-        const salesPaymentWay = saleState.salesTypeDashboard;
         const kpis = saleState.kpis;
-      
-
-        const today_balance = useMemo(() => { return sales.length > 0 ? totalToDay(sales, new Date()) : 0 }, [sales]);
-        const today_spents = useMemo(() => { return spentState.spents && spentState.spents.length > 0 ? totalToDay(spentState.spents, new Date(), "amount") : 0 }, [spentState.spents]);
 
         const dataLinesClient = useMemo(() => ({
             labels: annualMonths.map(month => firstCapitalize(t(month))),
@@ -243,7 +268,8 @@ const Dashboard = React.memo(
             labels,
             datasets: [
                 {
-                    data: [kpis?.sales_type?.CASH, kpis?.sales_type?.TPA, kpis?.sales_type?.MIXED],
+
+                    data: [kpis?.sales_type?.cash, kpis?.sales_type?.tpa, kpis?.sales_type?.mixed],
                     backgroundColor: ['#22C55E', '#3B82F6', '#F59E0B'],
                     borderWidth: 1,
                 },
@@ -254,6 +280,7 @@ const Dashboard = React.memo(
                 <div className="mt-[3%]">
                     <div className="p-0 pt-5 p-5 ">
                         <DashboardNavegateOption
+                            startingCashSessionHandler={()=>{dispatch(openModal()); setStartingCashSession(true)}}
                             kpis={kpis}
                             productState={productState}
                             navegate={navegate}
@@ -314,7 +341,7 @@ const Dashboard = React.memo(
                             </div>
                             <div className="lg:col-span-4 ">
                                 <GaugeChart data={datagauge} width={300} height={300} info={`${firstCapitalize(t('monthly_target'))} - ${firstCapitalize(t('building'))}`} />
-                            
+
                             </div>
                             <div className="
                         sm:col-span-2
@@ -324,10 +351,17 @@ const Dashboard = React.memo(
                         ">
                                 <LastSelling info={{ title: firstCapitalize(t('last_selling')), description: t('about') }} />
                             </div>
-
-
                         </div>
                     </div>
+                    {
+                    startingCashSession && 
+                    appState.isOpen
+                    &&
+                    <OpenCashSession
+                    modalSize={"h-[80%] w-[80%] sm:h-[60%] sm:w-[60%] md:h-[600px] md:w-[600px] "}
+                    cashregisters={cashregisters}
+                    />
+                    }
                 </div>
             </>
         )

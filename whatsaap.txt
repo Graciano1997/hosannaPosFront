@@ -1,0 +1,7 @@
+    /*
+    const phone = "244936472003";
+    const message = encodeURIComponent(
+    "Olá! Segue a sua fatura: https://meusite.com/faturas/123.pdf"
+    );
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+    */

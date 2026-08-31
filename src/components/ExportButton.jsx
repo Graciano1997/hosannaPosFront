@@ -10,7 +10,7 @@ import { Button } from './general/Button';
 
 
 
-const ExportButton = ({ data,columnsToExport,model,exportOption,pageSetting }) => {
+const ExportButton = ({ data,columnsToExport,model,exportOption,pageSetting, exportName=''}) => {
   const {t}=useTranslation();
   const dispatch = useDispatch();
   const filteredHeader = columnsToExport;
@@ -54,7 +54,7 @@ const ExportButton = ({ data,columnsToExport,model,exportOption,pageSetting }) =
           });
       
           const today = new Date();
-          saveAs(fileData, `Export_${model}_${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}.xlsx`);
+          saveAs(fileData,`${exportName==''?`Export_${model}_${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}`:exportName}.xlsx`);
   
   };
   
@@ -74,7 +74,7 @@ const ExportButton = ({ data,columnsToExport,model,exportOption,pageSetting }) =
             if(exportOption=="excel"){
               exportToExcel();
             }else{
-              htmlToPDFGenerator(reportHTMLTemplate,model,pageSetting);
+              htmlToPDFGenerator(reportHTMLTemplate,model,pageSetting, exportName);
             }
           }
           }

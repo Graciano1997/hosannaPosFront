@@ -104,7 +104,7 @@ export async function generatePDF(templateHtml) {
 }
 
 
-export function htmlToPDFGenerator(htmlTemplate,model,pageSetting) {
+export function htmlToPDFGenerator(htmlTemplate,model,pageSetting,exportName='') {
   
   const content = htmlToPdfmake(htmlTemplate.body);
   const head = htmlToPdfmake(htmlTemplate.head);
@@ -130,7 +130,8 @@ export function htmlToPDFGenerator(htmlTemplate,model,pageSetting) {
     content,
   };
   const today = new Date();
-  pdfMake.createPdf(docDefinition).download(`Export_${model}_${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}.pdf`);
+  const fileName = exportName == '' ? `Export_${model}_${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`: exportName;
+  pdfMake.createPdf(docDefinition).download(`${fileName}.pdf`);
 }
 
 export async function generateFromHtmlToPDF(templateHtml,printerConfiguration,name='invoice') {

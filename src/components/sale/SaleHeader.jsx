@@ -8,13 +8,14 @@ import Money from "../general/Money";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import React from "react";
+import { OpenAndCloseSession } from "../dashboard/Dashboard";
+import { openModal } from "../../slices/appSlice";
 
 const SaleHeader= React.memo(
-    ({title,setIsReadingQr,setReadValue})=>{
+    ({title,setIsReadingQr,setReadValue,closingCashHandler=()=>{}})=>{
     const sale = useSelector((state)=>state.saleState);
     const dispatch = useDispatch();
     const {t}= useTranslation();
-    // console.log(sale.invoiceType);
     
     return(
         <div className="mt-[3rem] flex flex-col sm:flex-row gap-5 sm:justify-between sm:items-center  w-[100%] sm:h-[100px] bg-white rounded p-4">  
@@ -22,7 +23,6 @@ const SaleHeader= React.memo(
             <select defaultValue={sale.invoiceType} onChange={(el)=>{
                 if(sale.invoiceType==SaleType.RECEIPT_RC && el.target.value != SaleType.RECEIPT_RC) 
                     dispatch(saleClean());
-                
                 dispatch(setInvoiceType(el.target.value));
             }} 
             className="cursor-pointer p-2 rounded transition-all duration-200 bg-white shadow">
@@ -52,22 +52,10 @@ const SaleHeader= React.memo(
                 </select>
             </div>
                 }
-            <div className="flex gap-3 items-center">   
-            {/* {false &&
-            <button onClick={()=>{
-                setReadValue(null);
-                setIsReadingQr(true);}} 
-            className="flex h-[45px] text-black p-3 rounded transition-all duration-200 hover:shadow">
-            <QrCodeIcon className="w-7 y-7 text-[#323232] rounded cursor-pointer hover:shadow-sm"/> Ler Qr
-            </button>  
-            }          */}
-            {/* <button className="flex gap-[5px] h-[35px] items-center text-black p-1 text-xl rounded transition-all duration-200 hover:shadow">
-            Ler barras
-            <Bars4Icon style={{padding:0,margin:0}} className="w-7 y-7 p-0 text-[#323232] rounded cursor-pointer  rotate"/>
-            <Bars4Icon style={{padding:0,margin:0}} className="barItem w-7 y-7 p-0 text-[#323232] rounded cursor-pointer rotate"/>
-    
-            </button> */}
             </div>
+
+            <div className="flex gap-3 items-center ">   
+                <OpenAndCloseSession closingCashSessionHandler={()=>{ closingCashHandler() }} startingCashSessionHandler={()=>{  }} t={t} />
             </div>
 
             <div className="flex mt-[1rem] sm:mt-0 gap-5 sm:items-center">

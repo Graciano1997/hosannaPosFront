@@ -23,7 +23,8 @@ const initialState = {
     isLoadingMore:false,
     productSaleHistory:null,
     productStockHistory:null,
-    topSellingProducts:[]
+    topSellingProducts:[],
+    expiredsTotal:0
 };
 
 export const fetchProducts = createAsyncThunk("productState/fetchProducts", async (last_created_at=null)=>{
@@ -46,6 +47,11 @@ export const expiredProductJob = createAsyncThunk("productState/expiredProductJo
 
 export const fetchExpiredProducts = createAsyncThunk("productState/fetchExpiredProducts", async ()=>{
     const response = await fetch(`${getIpTenant()}expired_products`,{ method:'GET', headers:{'Content-Type':'application/json' }});
+    return response.json();
+
+});
+export const fetchExpiredProductsDashboard = createAsyncThunk("productState/fetchExpiredProductsDashboard", async ()=>{
+    const response = await fetch(`${getIpTenant()}expired_products/dashboard`,{ method:'GET', headers:{'Content-Type':'application/json' }});
     return response.json();
 });
 
@@ -208,6 +214,11 @@ const productSlice = createSlice({
     builder.addCase(fetchProductStockHistory.fulfilled,(state,action)=>{
         state.loading=false;
                 state.productStockHistory = action.payload.data;
+    });
+
+    builder.addCase(fetchExpiredProductsDashboard.fulfilled,(state,action)=>{
+        state.loading=false;
+                state.expiredsTotal= action.payload.data;
     });
 
     builder.addCase(fetchProductStockHistory.rejected,(state,action)=>{

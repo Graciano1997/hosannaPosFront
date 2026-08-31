@@ -1,6 +1,6 @@
 import React, { Children, useEffect, useRef, useState} from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ArchiveBoxIcon, ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CreditCardIcon, CubeIcon, GlobeAltIcon, HomeIcon,ShoppingCartIcon, TagIcon, TruckIcon, UserGroupIcon, UserIcon, UsersIcon } from "@heroicons/react/24/solid";
+import { ArchiveBoxIcon, ArrowLeftStartOnRectangleIcon, ArrowTrendingUpIcon, ArrowUpIcon, BellAlertIcon, ChartPieIcon, CircleStackIcon, ClipboardDocumentListIcon, Cog8ToothIcon, CreditCardIcon, CubeIcon, GlobeAltIcon, HomeIcon,ShoppingCartIcon, TagIcon, TruckIcon, UserGroupIcon, UserIcon, UsersIcon, WalletIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import { useDispatch } from "react-redux";
@@ -11,6 +11,9 @@ import { CubeTransparentIcon, ServerStackIcon, ShoppingBagIcon, Square3Stack3DIc
 import { Square2StackIcon } from "@heroicons/react/20/solid";
 import { CurrentUser } from "../../lib/CurrentUser";
 import { rootpath } from "../../lib/ip";
+import { GiCheckedShield, GiPortugal, GiTargetArrows } from "react-icons/gi";
+import { CiCircleCheck } from "react-icons/ci";
+import { TbCircleCheck, TbTarget, TbTargetArrow } from "react-icons/tb";
 
 const Li = ({path,content,icon, className=''})=>{
         const {pathname}=useLocation();
@@ -78,7 +81,7 @@ const Navegation = React.memo(
             <Li
             path={rootpath + "sale"}
             icon={<ShoppingCartIcon className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow" />}
-            content={firstCapitalize(t("sale"))}
+            content={firstCapitalize(t("sell"))}
             className={``}
             />
 
@@ -129,13 +132,28 @@ const Navegation = React.memo(
             className={``}
             />
 
-            {false && (
+            {true && (
+            <>
+            {/* <Li
+                path={rootpath + "goals"}
+                icon={<TbTargetArrow className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow" />}
+                content={firstCapitalize(t("goals"))}
+            className={``}
+            /> */}
+
             <Li
+                path={rootpath + "cash_register"}
+                icon={<WalletIcon className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow" />}
+                content={firstCapitalize(t("cash_register"))}
+            className={``}
+            />
+            {/* <Li
                 path={rootpath + "mystore"}
                 icon={<GlobeAltIcon className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow" />}
                 content={firstCapitalize(t("My store"))}
             className={``}
-            />
+            /> */}
+            </>
             )}
 
             <Li
@@ -150,99 +168,21 @@ const Navegation = React.memo(
             className={``}
             />
 
-            <li>
+    </Ul>
+        </div>
+        
+        <div className="w-full">
+
             <button onClick={()=>{
                 dispatch(logoutUser())
                 navegate(`${rootpath}logout`);
                 
-            }} className="flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-red-200 hover:tex-black" >
+            }} className="flex gap-3 w-[100%] h-[45px]  text-light text-black p-3 transition-all duration-200 hover:rounded hover:bg-red-200 hover:tex-black" >
             <ArrowLeftStartOnRectangleIcon className="w-5 y-5  cursor-pointer hover:shadow"/>
             { firstCapitalize(t('logout'))}
             </button>
-            </li>
-
             
-          {/* <li>
-                <Link to={rootpath + "sale"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname=='/sale'?'rounded bg-green-100':''}`} >
-                <ShoppingCartIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {firstCapitalize(t('sale'))}
-                </Link>
-            </li>
-            <li>
-                <Link
-                onClick={handleMasterMessage}
-                to={master ? rootpath + "products":'#'} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/products'?'rounded bg-green-100':''}`} >
-                <CubeIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {firstCapitalize(t('products'))}
-                </Link>
-            </li> 
-            <li>
-                <Link
-                onClick={handleMasterMessage}
-                to={ master ? rootpath + "spents":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/spents'?'rounded bg-green-100':''}`} >
-                <CreditCardIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {firstCapitalize(t('spents'))}
-                </Link>
-            </li>           
-                   <li>
-                <Link 
-                to={ rootpath + "sales"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/sales'?'rounded bg-green-100':''}`} >
-                <TagIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('sales'))}
-                </Link>
-            </li>
-                       <li>
-                <Link 
-                onClick={handleMasterMessage}
-                to={ master ? rootpath + "stock_movements":'#'} 
-                className={`flex gap-2 w-[100%] h-[45px] text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/stock_movements'?'rounded bg-green-100':''}`} >
-                <ArchiveBoxIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                {firstCapitalize(t('stock'))}
-                </Link>
-            </li>      
-            <li>
-                <Link
-                onClick={handleMasterMessage}
-                to={  master ? rootpath + "users":"#"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/users'?'rounded bg-green-100':''}`} >
-                <UserGroupIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('users'))}
-                </Link>
-            </li>
-           {false &&
-            <li>
-                <Link 
-                to={rootpath + "mystore"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/mystore'?'rounded bg-green-100':''}`} >
-                <GlobeAltIcon className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('My store'))}
-                </Link>
-            </li>
-            } 
-            <li>
-                <Link 
-                onClick={()=>{
-                    if(!master){
-                        dispatch(activeTab('tab4'))
-                    }
-                }}
-                to={rootpath + "setting"} className={`flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-green-100 ${pathname==rootpath + '/setting'?'rounded bg-green-100':''}`} >
-                <Cog8ToothIcon className="w-5 y-5 text-[#323232] cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('settings'))}
-                </Link>
-            </li>
-            <li>
-                <button onClick={()=>{
-                    dispatch(logoutUser())
-                    navegate(`${rootpath}logout`);
-                    
-                }} className="flex gap-3 w-[100%] h-[45px]  text-black p-3 transition-all duration-200 hover:rounded hover:bg-red-300 hover:text-white" >
-                <ArrowLeftStartOnRectangleIcon className="w-5 y-5  cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('logout'))}
-                </button>
-            </li> */}
-    </Ul>
-        </div>
-        
-        <div><span className="text-[17px] text-light text-red-400">{firstCapitalize(t('slogan'))}</span></div>
+            </div>
         </nav>
     )});
 

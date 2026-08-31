@@ -14,7 +14,7 @@ import { sum } from "../../lib/sumCollection";
 import { rootpath } from "../../lib/ip";
 
 
-const Table = React.memo(({ collection = [], addItem = null, setCollection = () => { }, deleteItem = () => { }, printItem = null, update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { }, fetcherParam = null, searchBackEndHandler = null, loadingMore = null, rowStyle = "bg-green-50", rangeDataSelection= true, users = [] }) => {
+const Table = React.memo(({ collection = [], addItem = null, setCollection = () => { }, deleteItem = () => { }, printItem = null, update = () => { }, create = () => { }, filterRows = [], filterDetails = [], dispatcher = () => { }, fetcher = () => { }, fetcherParam = null, searchBackEndHandler = null, loadingMore = null, rowStyle = "bg-green-50", rangeDataSelection= true, users = [], disableShowDetails=false }) => {
     
     filterRows=filterRows.concat('company_id');
 
@@ -36,7 +36,7 @@ const Table = React.memo(({ collection = [], addItem = null, setCollection = () 
 
     const hasFilters = () =>
     !!(
-        query.str.tri() ||
+        query.str.trim() ||
         query.user_id ||
         query.rangeDate?.from &&
         query.rangeDate?.to
@@ -194,7 +194,7 @@ const Table = React.memo(({ collection = [], addItem = null, setCollection = () 
 
                                 <table className="rounded shadow-md overflow-auto w-full  table-auto" >
                                     <Thead filterRows={filterRows} setCollection={setCollection} items={collection} object={collection[0]} />
-                                    <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} printItem={printItem} items={searchResult?.length ? searchResult : collection} rowStyle={rowStyle} />
+                                    <Tbody filterDetails={filterDetails} addItem={addItem} filterRows={filterRows} updateItem={update} deleteItem={deleteItem} printItem={printItem} items={searchResult?.length ? searchResult : collection} rowStyle={rowStyle} disableShowDetails={disableShowDetails} />
                                 </table>
                                 
                                {pathname == rootpath + "sales" 
@@ -211,8 +211,8 @@ const Table = React.memo(({ collection = [], addItem = null, setCollection = () 
 
                 }
 
-
-                {!searching && collection.length > 0 && fetcherParam &&
+                {/* Disabled in the moment....... */}
+                {false && !searching && collection.length > 0 && fetcherParam &&
                     <div className="flex justify-end item-center mt-2">
                         <button className="bg-black text-white p-2 rounded" onClick={() => {
                             if (loadingMore) {

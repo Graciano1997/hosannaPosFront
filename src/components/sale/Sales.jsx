@@ -6,7 +6,7 @@ import Title from "../general/Title";
 import { useDispatch, useSelector } from "react-redux";
 import CardWrapper from "../general/CardWrapper";
 import TabWrapper from "../general/TabWrapper";
-import { fetchSales, setSales } from "../../slices/saleSlice";
+import { fetchDashboard, fetchSales, setSales } from "../../slices/saleSlice";
 import { activeTab } from "../../slices/appSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import Money from "../general/Money";
@@ -30,7 +30,8 @@ const Sales= React.memo(
         const loadData = async () => {
             await Promise.all([
                 dispatch(fetchSales(saleState.last_created_at)),
-                dispatch(activeTab("tab1"))
+                dispatch(activeTab("tab1")),
+                dispatch(fetchDashboard()),
             ])
         }
         loadData();

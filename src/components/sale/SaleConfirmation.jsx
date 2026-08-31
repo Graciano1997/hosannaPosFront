@@ -13,6 +13,7 @@ import { FaSave, FaWhatsapp } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { PrinterIcon } from "@heroicons/react/16/solid";
 import { BsPrinter } from "react-icons/bs";
+import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 
 const ManualPrinting = ({printerConfiguration, templateToPrint, item }) => {
     const {t} = useTranslation();
@@ -21,25 +22,27 @@ const ManualPrinting = ({printerConfiguration, templateToPrint, item }) => {
     const shareToWhatsappHandler = () => {
         if(!templateToPrint){
             dispatch(showToast({ error: true, message: firstCapitalize(t('failed_to_fetch_template')) }));
+            dispatch(saleNotConfirm());
             return;
         }
-    /*
-    const phone = "244936472003";
-    const message = encodeURIComponent(
-    "Olá! Segue a sua fatura: https://meusite.com/faturas/123.pdf"
-    );
-    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
-    */
     }
 
     const saveHandler = () => {
         if(!templateToPrint){
             dispatch(showToast({ error: true, message: firstCapitalize(t('failed_to_fetch_template')) }));
+            dispatch(saleNotConfirm());
             return;
         }
 
-        if (generateFromHtmlToPDF(templateToPrint,printerConfiguration,`${t('invoice')} ${item.invoice_number} ${item.created_at}`))
+        if(printerConfiguration=null){
+            dispatch(showToast({ error: true, message: firstCapitalize(t('printer_not_configured')) }));
             dispatch(saleNotConfirm());
+            return;
+        }
+        
+        if (generateFromHtmlToPDF(templateToPrint,printerConfiguration,`${t('invoice')} ${item.invoice_number} ${item.created_at}`)){
+            dispatch(saleNotConfirm());
+        }
     }
 
     const printingHandler = () => {      
@@ -49,17 +52,17 @@ const ManualPrinting = ({printerConfiguration, templateToPrint, item }) => {
             return;
         }
 
-        if(!printerConfiguration?.printer) {
-            dispatch(showToast({ error: true, message: firstCapitalize(t('printer_not_configured')) }));
+        if(!printerConfiguration && !printerConfiguration && !printerConfiguration.copyNumber){
+            dispatch(showToast({ warning: true, message: firstCapitalize(t('printer_not_configured'))}));
             dispatch(saleNotConfirm());
-            return;
+            return
         }
 
         dispatch(printing({ 
-                            copyNumber: parseInt(printerConfiguration?.copyNumber) || 1,
+                            copyNumber: parseInt(printerConfiguration?.copyNumber)??1,
                             template: templateToPrint,
-                            printer: printerConfiguration?.printer,
-                            printerType: printerConfiguration?.printerType || 'A4'
+                            printer: printerConfiguration?.printer?? "PDF",
+                            printerType: printerConfiguration?.printerType?? "A4"
                         }))
                         .then((printingResultState) => {
                             if(printing.rejected.match(printingResultState)) dispatch(showToast({ error: true, message: firstCapitalize(t('error_reprinting'))}));                   
@@ -113,7 +116,7 @@ const ManualPrinting = ({printerConfiguration, templateToPrint, item }) => {
 const AskForPrintingConfirmation = ({printerConfiguration, templateToPrint }) => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    
+    console.log("inside the ask configuration....")
     const printingHandler = () => {      
         if(!templateToPrint){
             dispatch(showToast({ error: true, message: firstCapitalize(t('failed_to_fetch_template')) }));
@@ -121,11 +124,17 @@ const AskForPrintingConfirmation = ({printerConfiguration, templateToPrint }) =>
             return;
         }
 
+        if(!printerConfiguration && !printerConfiguration && !printerConfiguration.copyNumber){
+            dispatch(showToast({ warning: true, message: firstCapitalize(t('printer_not_configured'))}));
+            dispatch(saleNotConfirm());
+            return
+        }
+        
         dispatch(printing({ 
-                            copyNumber: parseInt(printerConfiguration.copyNumber),
+                            copyNumber: parseInt(printerConfiguration?.copyNumber)??1,
                             template: templateToPrint,
-                            printer: printerConfiguration.printer,
-                            printerType: printerConfiguration.printertype
+                            printer: printerConfiguration?.printer?? "PDF",
+                            printerType: printerConfiguration?.printerType?? "A4"
                         }))
                         .then((printingResultState) => {
                             if(printing.rejected.match(printingResultState)){
@@ -206,13 +215,16 @@ const SaleConfirmation = ({printerConfiguration}) => {
                         dispatch(showToast({ success: true, message: t('success') }));
                         }
 
-                        if(!printerConfiguration?.printermode || printerConfiguration?.printermode === PrinterMode.AUTOMATIC) {
+                        if(printerConfiguration?.printermode === PrinterMode.AUTOMATIC) {
                            
+                            if(printerConfiguration===null && printerConfiguration.copyNumber==undefined){
+                                dispatch(showToast({ warning: true, message: firstCapitalize(t('ordered_without_printing'))}));
+                            }else{
                             dispatch(printing({ 
-                                copyNumber: parseInt(printerConfiguration.copyNumber),
-                                template: orderResultState.payload.invoice_template,
-                                printer: printerConfiguration.printer,
-                                printerType: printerConfiguration.printertype
+                                copyNumber: parseInt(printerConfiguration?.copyNumber)??2,
+                                template: templateToPrint,
+                                printer: printerConfiguration?.printer?? "PDF",
+                                printerType: printerConfiguration?.printerType?? "A4"
                             }))
                             .then((printingResultState) => {
                                 if (printing.rejected.match(printingResultState)) {
@@ -223,8 +235,10 @@ const SaleConfirmation = ({printerConfiguration}) => {
                                     dispatch(showToast({ success: true, message: firstCapitalize(t('print_successful'))}));
                                 }
                             })
+                            }
                             dispatch(saleNotConfirm());
                         }
+
                         dispatch(saleClean());
                         dispatch(clearSearchedProduct());
                         dispatch(fetchProducts());
@@ -240,6 +254,7 @@ const SaleConfirmation = ({printerConfiguration}) => {
             dispatch(saleNotConfirm());
         }
     };
+    console.log("the configuration",printerConfiguration)
     return (
         <div className="mt-[100px] flex flex-col items-center justify-center">
             {
@@ -268,6 +283,20 @@ const SaleConfirmation = ({printerConfiguration}) => {
             &&<ManualPrinting printerConfiguration={printerConfiguration} templateToPrint={templateToPrint}
             item={soldItem}
             />
+            } 
+            {
+            sold 
+            && printerConfiguration==null 
+            &&
+            <div className="flex w-full max-w-xl flex-col items-center justify-center rounded-2xl bg-white px-8 py-10 text-center">
+            <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+                <CheckBadgeIcon className="text-xl h-8 w-8 text-green-600"/>
+            </div>
+
+  <h2 className="text-xl font-semibold text-gray-800">
+    {firstCapitalize(t('ordered_without_printing'))}
+  </h2>
+</div>
             }   
         </div>
     );

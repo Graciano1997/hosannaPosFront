@@ -37,6 +37,9 @@ import { rootpath } from "./lib/ip";
 import { CurrentUser } from './lib/CurrentUser'
 import { ErrorPage } from './components/general/_404'
 import Client from './components/client/Client'
+import Goals from './components/goals/Goals'
+import CashRegister from './components/CashRegister/CashRegister'
+import { fetchCashRegisters, validateCurrentUserCashSession } from './slices/cashRegisterSlice'
 
 
 
@@ -74,6 +77,8 @@ const RoutesLoggedIn = React.memo(({setToastObject})=>{
           <Route path={`${rootpath}clients`} element={masterProfile ? <Client/>: <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} /> } /> 
           <Route path={`${rootpath}sale`} element={<Sale setToastObject={setToastObject}/>} />      
           <Route path={`${rootpath}sale/devolution`} element={<Devolution setToastObject={setToastObject}/>} />      
+          <Route path={`${rootpath}cash_register`} element={<CashRegister/>} />
+          <Route path={`${rootpath}goals`} element={<Goals/>} />
           <Route path={`${rootpath}setting`} element={<Setting/>} />
           <Route path={`${rootpath}profile`} element={<Account/>} />
           <Route path={`${rootpath}mystore`} element={<MyStore/>} />
@@ -105,7 +110,11 @@ const Home = React.memo(
                   dispatch(fetchUsers()),
                   dispatch(fetchSpents()),
                   dispatch(fetchCategories()),
-                  dispatch(fetchPrinterConfig())])
+                  dispatch(fetchPrinterConfig()),
+                  dispatch(fetchCashRegisters()),
+                  dispatch(validateCurrentUserCashSession())
+                ],
+                )
     }
 
    },[appState.isAuthenticated,dispatch]);

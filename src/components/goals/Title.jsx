@@ -10,10 +10,9 @@ import { ArchiveBoxIcon } from "@heroicons/react/20/solid";
 import { HomeIcon } from "@heroicons/react/24/solid";
 import { Profiles } from "../../lib/Enums";
 import { CurrentUser } from "../../lib/CurrentUser";
-import { BsCashStack, BsWalletFill } from "react-icons/bs";
+import { BsCashStack } from "react-icons/bs";
 import { FaCashRegister } from "react-icons/fa";
 import { PiCashRegister } from "react-icons/pi";
-import { WalletIcon } from "@heroicons/react/24/solid";
 
 const Title=({title,create})=>{
     const [showElipse,setShowElipse]=useState(true);
@@ -47,17 +46,8 @@ const Title=({title,create})=>{
              </div>
     
             <nav className="mt-[20px]">
-            <ul className="flex gap-5 p-0">
+            <ul className="flex flex gap-5">
          
-            {/* <li>
-                <Link to={""}
-                onClick={()=>dispatch(activeTab('tab2'))} 
-                className={`flex items-center gap-2 text-black transition-all duration-200 hover:rounded ${appState.activeTab=="tab2"?'activeTab':''} `} >
-                <CurrencyDollarIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('currency'))}
-                </Link>
-            </li> */}
-
             <li>
                 <Link to={"#"} onClick={(el)=>{
                      el.preventDefault();
@@ -106,19 +96,6 @@ const Title=({title,create})=>{
                 { firstCapitalize(t('printer'))}
                 </Link>
             </li>
-
-                   {/* <li>
-                <Link to={"#"} onClick={(el)=>{
-                     el.preventDefault();
-                    if(handleMasterMessage()){
-                        dispatch(activeTab('tab5'))}
-                    }
-                } 
-                className={`flex items-center gap-2 text-black transition-all duration-100 hover:rounded truncate ${appState.activeTab=="tab5"?'activeTab':''}`} >
-                <WalletIcon className="w-4 y-4 text-[#323232] cursor-pointer hover:shadow"/>
-                { firstCapitalize(t('cash_register_configuration'))}
-                </Link>
-            </li> */}
         </ul>   
     </nav>
         </div>

@@ -17,7 +17,6 @@ import Money from "../general/Money";
 const SaleDetails = React.memo(() => {
 
     const dispatch = useDispatch();
-    const products = useSelector((state) => state.productState.products);
     const selectedProducts = useSelector((state) => state.saleState.items);
     const saleState = useSelector((state) => state.saleState);
     const { invoiceSearchedItems } = saleState;

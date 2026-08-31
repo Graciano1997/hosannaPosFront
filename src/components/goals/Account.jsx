@@ -1,0 +1,106 @@
+import { useEffect, useRef, useState } from "react";
+import Modal from "../general/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProfiles } from "../../slices/profileSlice";
+import { useTranslation } from "react-i18next";
+import { registerUser, stopCreatingOrUpdateingUser, updateUser } from "../../slices/userSlice";
+import { firstCapitalize } from "../../lib/firstCapitalize";
+import { showToast } from "../../slices/appSlice";
+import CardWrapper from "../general/CardWrapper";
+import TabWrapper from "../general/TabWrapper";
+import { CurrentUser } from "../../lib/CurrentUser";
+
+const Account = () => {
+
+    const image = useRef();
+    const dispatch = useDispatch();
+    const { t } = useTranslation();
+    const [currentUser, setCurrentUser] = useState(CurrentUser());
+
+    useEffect(() => {
+        dispatch(fetchProfiles());
+    }, []);
+
+    useEffect(()=>{
+        setCurrentUser(CurrentUser());
+    },[localStorage.getItem("currentUser")]);
+
+
+    const userState = useSelector((state) => state.userState);
+    const profileState = useSelector((state) => state.profileState);
+    const profiles = profileState.profiles;
+    const [user, setUser] = useState(CurrentUser());
+
+    const formHandler = (el) => {
+        setUser({
+            ...user,
+            [el.target.name]: el.target.value
+        })
+    }
+
+    const handleFormSubmition = async (el) => {
+        el.preventDefault();
+
+        const formData = new FormData();
+
+        formData.append("user[name]", user.name);
+        formData.append(`user[email]`, user.email);
+
+        if (user.password != undefined && user.password.length > 0) {
+            formData.append(`user[password]`, user.password);
+            formData.append(`user[new_password]`, user.new_password);
+        }
+
+        if (image.current.files[0]) {
+            formData.append('user[image]', image.current.files[0]);
+        }
+
+        let treatedUserObject = { ...user }
+
+        if (treatedUserObject.id) {
+            formData.append("user[id]", treatedUserObject.id);
+            dispatch(updateUser(formData))
+                .then(() => {
+                    dispatch(showToast({ success: true, message: firstCapitalize(t('updated_succeed')) }));
+                });
+        }
+    }
+
+    return (
+        <>
+            <CardWrapper centralize={true}>
+                <TabWrapper>
+                     <h1 className="text-3xl p-2">{firstCapitalize(t('profile'))}{''}</h1>
+                    <form onSubmit={handleFormSubmition} className='p-[0_0.5rem] sm:p-[0_8rem] h-[90%] mt-[1rem] flex flex-col  gap-6'>
+                        <div className="flex justify-center p-[10px]">
+                            <div className="text-center">
+                            <div className="w-[130px] h-[130px] sm:w-[200px] sm:h-[200px]">
+                                <img src={ currentUser.image }  className="w-[100%] h-[100%] rounded-[50%] cursor-pointer shadow-lg" />
+                            </div>
+                            <h1 className=" w-100 text-xl sm:text-3xl p-1">{currentUser.name}</h1>
+                            </div>
+                        </div>
+
+                        <input type='text' onChange={formHandler} name="name" placeholder={firstCapitalize(t('name'))} value={user.name} className='p-1 rounded w-[100%] outline-none' />
+
+                        <input type='email' onChange={formHandler} placeholder={firstCapitalize(t('email'))} name="email" value={user.email} className='p-1 rounded w-[100%] outline-none' />
+
+                        {(user.id == CurrentUser().id || user.id == undefined) &&
+                        <>
+                            <input type='password' onChange={formHandler} name="password" placeholder={firstCapitalize(t('password'))} className='p-1 rounded w-[100%] outline-none' />
+                            <input type='password' onChange={formHandler} name="new_password" placeholder={firstCapitalize(t('new_password'))} className='p-1 rounded w-[100%] outline-none' />
+                            <input type='password' onChange={formHandler} name="new_password_confirmation" placeholder={firstCapitalize(t('password_confirmation'))} className='p-1 rounded w-[100%] outline-none' />
+                        </>
+                        }
+
+                        <label for="image" className="text-black/80">{firstCapitalize(t('picture'))}</label>
+                        <input type="file"  id="image" name="image" ref={image} />
+                        <div className="flex justify-center p-2 mt-auto"><button className="p-2 bg-green-100 rounded">{firstCapitalize(t('save'))}</button></div>
+                    </form>
+                </TabWrapper>
+            </CardWrapper>
+        </>
+    );
+};
+
+export default Account;

@@ -1,0 +1,74 @@
+import { useTranslation } from "react-i18next";
+import Title from "./Title";
+import CardWrapper from "../general/CardWrapper";
+import TabWrapper from "../general/TabWrapper";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { creatingCompany, deleteCompany, fetchCompanies, setCompany, updateCompany, updatingCompany } from "../../slices/companySlice";
+import Table from "../Table/Table";
+import Create from "./Create";
+import Profile from "./Profile";
+import Print from "./Print";
+import { fetchPrinterConfig, fetchPrinters } from "../../slices/printerSlice";
+import CreateBank from "./CreateBank";
+import { Profiles } from "../../lib/Enums";
+import { CurrentUser } from "../../lib/CurrentUser";
+
+import { creatingBankAccount, deleteBankAccount, fetchBankAccounts, setBankAccount, updateBankAccount, updatingBankAccount } from "../../slices/bankAccountSlice";
+import BoxConfiguration from "./BoxConfiguration";
+
+const Goals=()=>{
+    const dispatch = useDispatch();
+    const [master,setMaster]=useState(CurrentUser()?.profileId==Profiles.MASTER);
+    
+    useEffect(()=>{        
+        const loadData = async () => {
+            await Promise.all([
+                dispatch(fetchCompanies()),
+                dispatch(fetchBankAccounts()),
+                dispatch(fetchPrinterConfig()),
+                dispatch(fetchPrinters()),
+            ]);
+          };
+        loadData();
+    },[]);
+
+    const appState = useSelector((state)=>state.appState);
+    const companyState = useSelector((state)=>state.companyState);
+    const bankAcountState = useSelector((state)=>state.bankAccountState);
+    const {t}=useTranslation();
+    return(
+        <CardWrapper>
+        <Title title={t('goals')}/>
+        <TabWrapper>
+
+
+        { appState.activeTab=="tab1" && 
+            <Table filterDetails={[]} setCollection={setCompany}  filterRows={companyState.companyFilterRows} update={updatingCompany} create={companyState.companies?.length>0? null : creatingCompany} deleteItem={deleteCompany} collection={companyState.companies}/>
+        }
+
+        { appState.activeTab=="tab2" && 
+            <Table filterDetails={[]} setCollection={setBankAccount}  filterRows={bankAcountState.bankAccountFilterRows} update={updatingBankAccount} create={creatingBankAccount} deleteItem={deleteBankAccount} collection={bankAcountState.bankAccounts}/>
+        }
+        
+        { appState.activeTab=="tab3" && 
+        <Profile/>
+        }
+
+        { appState.activeTab=="tab4" && 
+        <Print/>
+        }
+
+        { appState.activeTab=="tab5" && 
+        <BoxConfiguration/>
+        }
+        
+        </TabWrapper>
+        {(companyState.isCreating || companyState.isUpdating) && appState.isOpen && (<Create/>)}
+        {(bankAcountState.isCreating || bankAcountState.isUpdating) && appState.isOpen && (<CreateBank/>)}
+        </CardWrapper>
+
+    )
+};
+
+export default Goals;

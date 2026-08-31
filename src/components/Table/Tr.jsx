@@ -12,13 +12,13 @@ import { getInvoiceItem } from "../../slices/saleSlice";
 import { productFormHandler } from "../product/Create";
 import { printing } from "../../slices/printerSlice";
 import { generateFromHtmlToPDF } from "../../lib/generatePrinterInvoicer";
+import { moneyFields,movementTypeColor } from "../../lib/Enums";
 
-const Tr = React.memo(({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem, printItem = null, rowStyle }) => {
+
+const Tr = React.memo(({ item, index, deleteItem, updateItem, filterRows, filterDetails, addItem, printItem = null, rowStyle, disableShowDetails }) => {
 
     const { t } = useTranslation();
     const { printerConfiguration } = useSelector((state) => state.printerState);
-    const moneyFields = ['price', 'total', 'amount', 'cost_price', 'difference', 'received_cash', 'received_tpa'];
-    const movementTypeColor ={entry:"bg-green-500",exit:"bg-red-500",return:"bg-purple-500",adjustment:"bg-blue-500",expired:"bg-yellow-400"}
     
     const dispatch = useDispatch();
     const [checkNumber, setCheckNumber] = useState(false);
@@ -35,15 +35,14 @@ const Tr = React.memo(({ item, index, deleteItem, updateItem, filterRows, filter
                className={`${index % 2 == 0 ? rowStyle : ''}   cursor-pointer hover:sm:shadow font-light `}>
                 {keys.map((key) =>
                     <td onClick={() => { setShowDetails(true)  }} className="p-1 text-center truncate">
-                        {key=="movement_type" &&  
-                        (<span className="flex items-center gap-2"><span className={`w-3 h-3 rounded ${movementTypeColor[item[key]]}`}></span>{t(item[key])}
-                        </span>)
-                        }
-                        {moneyFields.includes(key) && <Money amount={item[key]} />}
-                        {typeof (item[key]) == "boolean" && (item[key] ? firstCapitalize(t('yes')) : firstCapitalize(t('not')))}
-                        {item[key] == null && ('')}
-                        {key == "image_url" && item[key] != "none" && <div className="flex justify-center"><img src={item[key]} className="w-[40px] h-[40px] rounded-[20px] duration-200 transition-all hover:shadow" /></div>}
-                        {key !== "image_url" && !moneyFields.includes(key) && typeof (item[key]) != "boolean" && key!="movement_type"  && item[key]}
+                        {(()=>{
+                            if(item[key] == null || item[key] == "null") return('');
+                            if(moneyFields.includes(key)){return <Money amount={item[key]}/> }                            
+                            if(typeof(item[key]) == "boolean") return(item[key] ? firstCapitalize(t('yes')) : firstCapitalize(t('not')))
+                            if(key=="movement_type" || key=="status") return((<span className="flex items-center gap-2"><span className={`w-3 h-3 rounded ${movementTypeColor[item[key]]}`}></span>{t(item[key])}</span>))
+                            if(key == "image_url" && item[key] != "none") return(<div className="flex justify-center"><img src={item[key]} className="w-[40px] h-[40px] rounded-[20px] duration-200 transition-all hover:shadow" /></div>)
+                            return (firstCapitalize(t(item[key])))   
+                        })()}
                     </td>
                 )
                 }
@@ -144,7 +143,7 @@ const Tr = React.memo(({ item, index, deleteItem, updateItem, filterRows, filter
                     </div>
                 </td>
             </tr>
-            {showDetails && item.id != undefined && <Details filterDetails={filterDetails} rowStyle={rowStyle} closeDetails={()=>{setShowDetails(false)}} itemDetails={item}  />}
+            {!disableShowDetails && showDetails && item.id != undefined && <Details filterDetails={filterDetails} rowStyle={rowStyle} closeDetails={()=>{setShowDetails(false)}} itemDetails={item}  />}
         </>
     )
 }

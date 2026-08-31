@@ -66,9 +66,6 @@ const spentSlice = createSlice({
             state.isUpdating = true;
             state.spentToUpdate=action.payload;
         },
-        setSpents:(state,action)=>{
-            state.spents=action.payload;
-        },
         stopCreatingOrUpdateingSpent : (state)=>{
             state.isCreating = false;
             state.isUpdating = false;

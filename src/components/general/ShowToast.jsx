@@ -17,7 +17,7 @@ useEffect(() => {
 
     return(
        <div className={`bg-black opacity-90 w-100 w-100  md:w-[400px]
-        z-[1000]
+        z-[999]
         ${object.success?'text-green-500':''}
         ${object.error?'text-red-500':''}
         ${object.warning?'text-yellow-500':''}

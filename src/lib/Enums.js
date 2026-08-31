@@ -56,3 +56,7 @@ export const PrinterMode = {
     MANUAL:"manual",
     ASK:"ask"
 }
+
+export const moneyFields = ['price', 'total', 'amount', 'cost_price', 'difference', 'received_cash', 'received_tpa','opening_balance','expected_balance','closing_balance'];
+export const movementTypeColor ={entry:"bg-green-500",exit:"bg-red-500",return:"bg-purple-500",adjustment:"bg-blue-500",expired:"bg-yellow-400",open:"bg-green-500",closed:"bg-red-500"}
+ 
