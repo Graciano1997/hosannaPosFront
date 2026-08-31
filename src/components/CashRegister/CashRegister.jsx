@@ -12,6 +12,7 @@ import { CashSessionResume } from "./CashSessionResume";
 import { CloseCashAndWithdrawalSession } from "./CloseCashAndWithdrawalSession";
 import { CashSessionMovements } from "./CashMoviments";
 import { fetchCompanies } from "../../slices/companySlice";
+import Celebration from "../Celebration";
 
 const filterDetails =['id','user_id','company_id','created_at','updated_at'];
 
@@ -25,6 +26,7 @@ const CashRegister = React.memo(
     const [isShowingCashReinforcement, setIsShowingCashReinforcement] = useState(false);
     const dispatch = useDispatch();
     const saleState = useSelector((state) => state.saleState);
+    const [celebrate, setCelebrate] = useState(false);
 
     useEffect(()=>{
         
@@ -37,6 +39,7 @@ const CashRegister = React.memo(
             ])
         }
         loadData();
+        setCelebrate(true)
     },[dispatch]);
     
     const cashRegisterState = useSelector((state) => state.cashRegisterState);
@@ -44,6 +47,8 @@ const CashRegister = React.memo(
     const {cashregisters,cashSessions,currentSession,selectedSession} = cashRegisterState;
 
     return (
+        <>
+        <Celebration trigger={celebrate}/>
         <CardWrapper>
             <Title setIsShowing={setIsShowing} title={t('cash_register')}
                    collectionToExport={{
@@ -110,6 +115,7 @@ const CashRegister = React.memo(
             </TabWrapper>
             {(cashRegisterState.isCreating || cashRegisterState.isUpdating) && appState.isOpen &&  (<Create />)}
         </CardWrapper>
+        </>
     )
 });
 
