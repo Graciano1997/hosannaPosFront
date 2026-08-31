@@ -39,7 +39,7 @@ const CashRegister = React.memo(
             ])
         }
         loadData();
-        setCelebrate(true)
+        setCelebrate(true) //celebrate the new feature
     },[dispatch]);
     
     const cashRegisterState = useSelector((state) => state.cashRegisterState);
