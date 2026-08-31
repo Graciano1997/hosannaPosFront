@@ -284,7 +284,6 @@ const Dashboard = React.memo(
                             kpis={kpis}
                             productState={productState}
                             navegate={navegate}
-                            productState={productState}
                             dispatch={dispatch} />
 
                         <div className="grid    
