@@ -29,7 +29,7 @@ const SaleHeader= React.memo(
                 <option value={SaleType.NORMAL_INVOICE_FT}>{firstCapitalize(t('invoice'))}</option>
                 <option value={SaleType.PROFORM_PF}>{firstCapitalize(t('proforma'))}</option>
                 <option value={SaleType.INVOICE_RECIBO_FR} selected>{firstCapitalize(t('invoice_FR'))}</option>
-                <option value={SaleType.SIMPLIFYED_INVOICE_FS}>{firstCapitalize(t('invoice_FS'))}</option>
+               {false && <option value={SaleType.SIMPLIFYED_INVOICE_FS}>{firstCapitalize(t('invoice_FS'))}</option> } 
                 <option value={SaleType.RECEIPT_RC}>{firstCapitalize(t('invoice_RC'))}</option>
             </select>
             </div>

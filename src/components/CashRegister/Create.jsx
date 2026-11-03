@@ -82,7 +82,7 @@ const Create=()=>{
                 {firstCapitalize(t('status'))}
                 <br />
                 <select name="status" onChange={formHandler} value={cashRegister.status} className='p-1 rounded w-[100%] outline-none'>
-                <option disabled>{firstCapitalize(t('pick_status'))}</option>
+                <option disabled selected>{firstCapitalize(t('pick_status'))}</option>
                      <option value={"active"}>{firstCapitalize(t('active'))}</option>
                      <option value={"inactive"}>{firstCapitalize(t('inactive'))}</option>
                 </select>

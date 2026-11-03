@@ -360,5 +360,7 @@
      "out":"out",
      "to":"to",
      "until":"until",
-     "cash_reinforcement_session": "Cash replenishment"
+     "cash_reinforcement_session": "Cash replenishment",
+     "please__open_cash_session":"Por favor garanta de abrir uma sessão de caixa antes de registrar uma despesa",
+     "select":"select"
 }

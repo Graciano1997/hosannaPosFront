@@ -57,8 +57,6 @@ export const CloseCashAndWithdrawalSession = ({ withdrawalOperation=false,cashre
             ...(cashreinforcement ? {cash_reinforcement_user_id: CurrentUser()?.id} : withdrawalOperation?({withdrawl_user_id: CurrentUser()?.id}):({user_id: CurrentUser()?.id}))
         }
 
-        console.log("222200",treatedCashSessionObject)
-
         if(withdrawalOperation){
             dispatch(WithdrawalCashSession(treatedCashSessionObject))
             .then((respo)=>{;

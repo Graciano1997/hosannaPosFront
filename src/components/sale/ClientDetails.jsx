@@ -8,8 +8,9 @@ import { firstCapitalize } from "../../lib/firstCapitalize";
 import { HiSearchCircle } from "react-icons/hi";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { Button } from "../general/Button";
+import { setSearching } from "../../slices/clientSlice";
 
-const ClientDetails = ()=>{
+const ClientDetails = ({searchingClientHandler=()=>{}})=>{
     const [clientType,setClientType]=useState(ClientType.SINGULAR);
     const sale= useSelector((state)=>state.saleState);
     const [remain,setRemain]=useState(null);
@@ -42,7 +43,10 @@ const ClientDetails = ()=>{
 
     return(
         <div className={`h-[100%] bg-white rounded shadow-md p-3 flex flex-col  gap-2`}>
-            <div className="flex flex-col">
+            <div className="flex justify-between  items-center">
+            <Button on content={<div className="flex items-center justify-center gap-2">{ firstCapitalize(t('search_client'))} <MagnifyingGlassIcon className="w-5 y-5 text-white cursor-pointer"  /> </div>} className="p-1 rounded-md text-white bg-black"  onClickHandler={()=>{
+                dispatch(setSearching(true))
+            }} />
             <h1 className="font-bold mt-1 text-end"> * {firstCapitalize(t('client_details'))}</h1>
             {
                 false

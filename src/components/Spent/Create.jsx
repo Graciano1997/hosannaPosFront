@@ -5,10 +5,11 @@ import { useTranslation } from "react-i18next";
 import { fetchSpents, registerSpent, stopCreatingOrUpdateingSpent, updateSpent } from "../../slices/spentSlice";
 import { fetchUsers } from "../../slices/userSlice";
 import { firstCapitalize } from "../../lib/firstCapitalize";
+import { showToast } from "../../slices/appSlice";
 
 const Create=()=>{
     
-    const spentState = useSelector((state)=> state.spentState );
+    const spentState = useSelector((state)=> state.spentState);
     const userState = useSelector((state)=> state.userState);
     const cashRegisterState = useSelector((state) => state.cashRegisterState);
     const {currentSession} = cashRegisterState;
@@ -18,7 +19,9 @@ const Create=()=>{
         dispatch(fetchUsers());
     },[])
     
-    const [spent,setSpent] = useState(spentState.spentToUpdate);
+    const [spent,setSpent] = useState(spentState.spentToUpdate ||
+        { user_id: userState.users.length === 1 ? userState.users[0].id : ""}
+    );
     const {t}=useTranslation();
 
        const formHandler = (el) => {
@@ -30,7 +33,10 @@ const Create=()=>{
     
         const handleFormSubmition = (el) => {
             el.preventDefault();
-    
+            
+            if(!currentSession){
+                dispatch(showToast({error:true,message:firstCapitalize(t('please__open_cash_session'))}))
+            }else{
             let treatedSpentObject = {
                 ...spent,
                 currentSession,
@@ -51,6 +57,7 @@ const Create=()=>{
                     dispatch(fetchSpents())
                   })
               }
+            }
         }
     return(
         <>
@@ -63,11 +70,13 @@ const Create=()=>{
                 <label>
                 {firstCapitalize(t('responsable'))}
                 <br />
-                <select name="user_id" onChange={formHandler} value={spent.user_id} className='p-1 rounded w-[100%] outline-none'>
-                <option disabled>Selecione um Responsavel</option>
-                    {userState.users.length==1 ?
-                     (<option value={userState.users[0].id} selected >{userState.users[0].name}</option>) 
-                     :  userState.users.map((user)=><option value={user.id} >{user.name}</option>)}
+                <select
+                name="user_id"
+                onChange={formHandler}
+                value={spent.user_id}
+                className='p-1 rounded w-[100%] outline-none'>
+                <option disabled>{firstCapitalize(t('select_the_responsabele'))}</option>
+                    {userState.users.map((user)=><option value={user.id} >{user.name}</option>)}
                 </select>
                 </label>
                 </div>

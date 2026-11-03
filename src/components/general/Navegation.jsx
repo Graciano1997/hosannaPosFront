@@ -28,7 +28,6 @@ return(
 )
 } 
 
-
 export const Ul= React.memo(({children})=>
          <ul className="flex flex-col gap-3 w-[100%]">
             {children}
@@ -94,7 +93,7 @@ const Navegation = React.memo(
             />
 
             <Li
-            path={master ? rootpath + "spents" : "#"}
+            path={rootpath + "spents" }
             onClick={handleMasterMessage}
             icon={<CreditCardIcon className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow" />}
             content={firstCapitalize(t("spents"))}
@@ -117,7 +116,7 @@ const Navegation = React.memo(
             />
 
             <Li
-            path={master ? rootpath + "clients" : "#"}
+            path={rootpath + "clients"}
             onClick={handleMasterMessage}
             icon={<UserGroupIcon className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow" />}
             content={firstCapitalize(t("clients"))}
@@ -134,12 +133,12 @@ const Navegation = React.memo(
 
             {true && (
             <>
-            {/* <Li
+            <Li
                 path={rootpath + "goals"}
                 icon={<TbTargetArrow className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow" />}
                 content={firstCapitalize(t("goals"))}
             className={``}
-            /> */}
+            />
 
             <Li
                 path={rootpath + "cash_register"}

@@ -72,5 +72,10 @@ animation-iteration-count: infinite;
   background-size: 32%;
   background-position: right;
   background-repeat: no-repeat;
+}
 
+.headerReporting{
+  display: flex;
+  flex-direction: flex;
+  justify-content: space-between;
 }

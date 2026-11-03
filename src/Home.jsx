@@ -40,6 +40,7 @@ import Client from './components/client/Client'
 import Goals from './components/goals/Goals'
 import CashRegister from './components/CashRegister/CashRegister'
 import { fetchCashRegisters, validateCurrentUserCashSession } from './slices/cashRegisterSlice'
+import { fetchClients } from './slices/clientSlice'
 
 
 
@@ -72,9 +73,9 @@ const RoutesLoggedIn = React.memo(({setToastObject})=>{
           <Route path={`${rootpath}notifications`} element={masterProfile ? <Notification/> : <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} />} />
           <Route path={`${rootpath}sales`} element={<Sales/>}/>
           <Route path={`${rootpath}products`} element={masterProfile ? <Product/> : <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} />} />
-          <Route path={`${rootpath}spents`} element={masterProfile ? <Spent/>: <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} />} />  
+          <Route path={`${rootpath}spents`} element={ <Spent/>}/>  
           <Route path={`${rootpath}users`} element={masterProfile ? <User/>: <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} /> } /> 
-          <Route path={`${rootpath}clients`} element={masterProfile ? <Client/>: <ErrorPage errorCode={401} content={firstCapitalize(t('forbiden'))} /> } /> 
+          <Route path={`${rootpath}clients`} element={<Client/>} /> 
           <Route path={`${rootpath}sale`} element={<Sale setToastObject={setToastObject}/>} />      
           <Route path={`${rootpath}sale/devolution`} element={<Devolution setToastObject={setToastObject}/>} />      
           <Route path={`${rootpath}cash_register`} element={<CashRegister/>} />
@@ -112,7 +113,8 @@ const Home = React.memo(
                   dispatch(fetchCategories()),
                   dispatch(fetchPrinterConfig()),
                   dispatch(fetchCashRegisters()),
-                  dispatch(validateCurrentUserCashSession())
+                  dispatch(validateCurrentUserCashSession()),
+                  dispatch(fetchClients())
                 ],
                 )
     }

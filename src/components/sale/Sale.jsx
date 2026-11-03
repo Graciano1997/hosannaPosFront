@@ -14,6 +14,8 @@ import { fetchCashRegisters, setSelectedCashSession, validateCurrentUserCashSess
 import { OpenCashSession } from "../CashRegister/OpenSession";
 import { closeModal, openModal } from "../../slices/appSlice";
 import { CloseCashAndWithdrawalSession } from "../CashRegister/CloseCashAndWithdrawalSession";
+import SearchingClient from "./SearchingClient";
+import { setSearching } from "../../slices/clientSlice";
 
 const Sale= React.memo(
      ({setToastObject})=>{
@@ -31,6 +33,9 @@ const Sale= React.memo(
     const {cashregisters,hasCurrentUserStartSession,currentSession} = cashRegisterState;
     const appState = useSelector((state) => state.appState);
     const [closingCashSession,setClosingCashSession] = useState(false);
+    const [searchingClient,setSearchingClient]=useState(false)
+    const isSearchingClient = useSelector((state)=>state.clientState.isSearching);
+
 
       useEffect(()=>{
         dispatch(fetchProducts());
@@ -53,7 +58,7 @@ const Sale= React.memo(
         />
         
         <div className={`flex flex-col gap-3 sm:grid sm:grid-cols-[20fr_80fr] p-1`}>
-        <ClientDetails/>
+        <ClientDetails searchingClientHandler={setSearchingClient}/>
         <SaleDetails/>
 
         {isSelectedProduct && <ProductDetails/>}
@@ -61,11 +66,12 @@ const Sale= React.memo(
         {globalState.isOpen && isSearching && <Modal helper={clearSearchedProduct}><SearchedProducts/></Modal>}  
         
         {saleConfirmationIsOpen && appState.isOpen && <Modal helper={saleNotConfirm}><SaleConfirmation printerConfiguration={printerConfiguration} finishAndPrint={finishAndPrint}/></Modal> }
- 
+        
+        {isSearchingClient && <Modal helper={()=>{dispatch(setSearching(false))}  }> <SearchingClient/> </Modal>}  
+        
         {
         !hasCurrentUserStartSession && appState.isOpen
-        &&
-            <OpenCashSession cashregisters={cashregisters}/>
+        && <OpenCashSession cashregisters={cashregisters}/>
          }
 
          {closingCashSession

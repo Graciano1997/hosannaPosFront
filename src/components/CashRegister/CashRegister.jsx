@@ -29,7 +29,6 @@ const CashRegister = React.memo(
     const [celebrate, setCelebrate] = useState(false);
 
     useEffect(()=>{
-        
         const loadData = async () => {
             await Promise.all([
                 dispatch(validateCurrentUserCashSession()),

@@ -62,13 +62,12 @@ const SearchedItem = React.memo(
                                 }
                             }
 
-                            
                         }}  className={`bg-green-300 text-white font-bold rounded`}>{t('add')}</button>
                     } 
                     {(product.qty)==0 &&
                     <div className="bg-red-300 text-white font-bold text-center p-1 rounded">{t('outofStock')}</div>
                     }
-                     
+
                     </div>
 );
 }

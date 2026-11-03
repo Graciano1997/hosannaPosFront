@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getIpTenant, Ip } from "../lib/ip";
 import { removeDuplicate } from "../lib/removeDuplicate";
 import { CurrentUser } from "../lib/CurrentUser";
+import { removeDiacritics } from "../lib/removeDiacritic";
 
 const initialState = {
     isCreating : false,
@@ -9,7 +10,9 @@ const initialState = {
     clientToUpdate:{},
     clients: [],
     clientsDashboard:[],
-    last_created_at:null
+    searchedClients:[],
+    last_created_at:null,
+    isSearching:false
 };
 
 export const fetchClientDashboard = createAsyncThunk("clientState/fetchClientDashboard",async ()=>{
@@ -70,6 +73,25 @@ const clientSlice = createSlice({
         updatingClient: (state,action)=>{
             state.isUpdating = true;
             state.clientToUpdate=action.payload;
+        },
+        searchClient:(state,action)=>{
+            console.log(state.clients)
+            state.searchedClients = state.clients.filter((client)=>(
+            (removeDiacritics(client.name)).includes(removeDiacritics(action.payload)) 
+            || client.email? (client.email).includes(action.payload):false 
+            || client.nif?(client.nif).includes(action.payload) : false
+            || client.phone? (client.phone).includes(action.payload):false 
+            || client.address? (client.address).includes(action.payload):false));
+            
+        },
+        clearSearchedClient:(state)=>{
+            state.searchedClients = [];
+        },
+        setSearching:(state,action)=>{
+            state.isSearching = action.payload;
+            if(action.payload){
+                state.searchedClients=state.clients
+            }
         }
     },
     extraReducers: (builder) => {
@@ -113,4 +135,4 @@ const clientSlice = createSlice({
 });
 
 export default clientSlice.reducer;
-export const { creatingClient, stopCreatingOrUpdateingClient, updatingClient,setClient } = clientSlice.actions;
+export const { creatingClient, stopCreatingOrUpdateingClient, updatingClient,setClient,searchClient,clearSearchedClient,setSearching} = clientSlice.actions;

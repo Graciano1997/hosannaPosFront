@@ -65,6 +65,7 @@ const Product=()=>{
     useEffect(()=>{
         const loadData = async () => {
             await Promise.all([
+                dispatch(fetchCategories()),
                 dispatch(fetchProducts()),
                 dispatch(fetchExpiredProducts()),
                 dispatch(fetchProductConfiguration()),
@@ -131,7 +132,7 @@ const Product=()=>{
         }
         
         {appState.activeTab=="tab2"  && (<ProductDashboard/>)}
-        {appState.activeTab=="tab3"  && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']} setCollection={setCategories} fetcher={fetchCategories} dispatcher={setCategories}  collection={categoryState.categories || []} fetcherParam={categoryState.last_created_at} />}
+        {appState.activeTab=="tab3"  && <Table filterDetails={filterCategoryDetails} update={updatingCategory} create={creatingCategory} deleteItem={deleteCategory}  filterRows={['parent_category_id','created_at','updated_at']} setCollection={setCategories} fetcher={fetchCategories} dispatcher={setCategories}  collection={categoryState.categories || []}  />}
         {appState.activeTab=="tab4"  && 
         <AlertProducts/>
         }

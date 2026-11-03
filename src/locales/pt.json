@@ -363,5 +363,7 @@
     "out":"saída",
     "to":"para",
     "until":"até",
-    "cash_reinforcement_session": "Reforço de caixa"
+    "cash_reinforcement_session": "Reforço de caixa",
+    "please__open_cash_session":"Por favor garanta de abrir uma sessão de caixa antes de registrar uma despesa",
+     "select":"selecionar"
 }
