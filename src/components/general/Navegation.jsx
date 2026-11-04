@@ -131,14 +131,21 @@ const Navegation = React.memo(
             className={``}
             />
 
-            {false && (
+            {true && (
             <>
-            <Li
+
+            {
+                false &&
+                (
+                <Li
                 path={rootpath + "goals"}
                 icon={<TbTargetArrow className="w-5 h-5 text-[#323232] cursor-pointer hover:shadow" />}
                 content={firstCapitalize(t("goals"))}
-            className={``}
-            />
+                className={``}
+                />
+                )
+            }
+
 
             <Li
                 path={rootpath + "cash_register"}
