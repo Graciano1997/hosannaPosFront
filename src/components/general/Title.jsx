@@ -39,7 +39,19 @@ const Title=React.memo(
                 (        
                 <ul   className="flex flex-col gap-3 w-[150px] h-[35px] right-[20px] justify-center bg-white shadow rounded absolute z-2000" id="elipseMenu">
                 <li onClick={()=>{
-                    dispatch(Exporting(collectionToExport)); 
+
+                      const searchedItemsResult=appState.searchedItemsToExport;
+
+                      //Ensure to export the searched result items....
+
+                    if(searchedItemsResult.length>0){
+                        dispatch(Exporting({
+                            ...collectionToExport,
+                            data:searchedItemsResult
+                        })); 
+                    }else{
+                        dispatch(Exporting(collectionToExport)); 
+                    }
                 }} className="m-0.5 flex gap-3 items-center justify-center hover:cursor-pointer"><span className="">{firstCapitalize(t('export'))}</span><ArrowUpTrayIcon className="w-4 h-4"/>
                 </li>
                 </ul>

@@ -3,7 +3,7 @@ import { ArrowPathIcon, MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/2
 import Tbody from "./Tbody";
 import Thead from "./Thead";
 import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "../../slices/appSlice";
+import { cleanSearchedItemsToExport, openModal, setSearchedItemsToExport } from "../../slices/appSlice";
 import { useTranslation } from "react-i18next";
 import { firstCapitalize } from "../../lib/firstCapitalize";
 import searchCollection from "../../lib/seach";
@@ -48,6 +48,12 @@ const Table = React.memo(({ collection = [], addItem = null, setCollection = () 
             setSearching(true);     
             const result = searchCollection(collection, query.str, query.rangeDate, query.user_id);
             setSearchResult(result);
+            if(result.length>0){
+                //setting the searched result to export....
+                dispatch(setSearchedItemsToExport(result))
+            }else{
+                dispatch(cleanSearchedItemsToExport())
+            }
          }
     }
 

@@ -15,7 +15,7 @@ import { OpenCashSession } from "../CashRegister/OpenSession";
 import { closeModal, openModal } from "../../slices/appSlice";
 import { CloseCashAndWithdrawalSession } from "../CashRegister/CloseCashAndWithdrawalSession";
 import SearchingClient from "./SearchingClient";
-import { setSearching } from "../../slices/clientSlice";
+import { fetchClients, setSearching } from "../../slices/clientSlice";
 
 const Sale= React.memo(
      ({setToastObject})=>{
@@ -40,6 +40,8 @@ const Sale= React.memo(
       useEffect(()=>{
         dispatch(fetchProducts());
         dispatch(fetchCashRegisters());
+        dispatch(fetchClients());
+        
         dispatch(validateCurrentUserCashSession()).then((response)=>{
             if(!response.payload.data){
                 dispatch(openModal());

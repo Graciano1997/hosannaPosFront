@@ -131,7 +131,7 @@ const Navegation = React.memo(
             className={``}
             />
 
-            {true && (
+            {false && (
             <>
             <Li
                 path={rootpath + "goals"}

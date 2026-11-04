@@ -23,7 +23,8 @@ const initialState = {
     invoiceView:false,
     urlItem:'',
     isAuthenticated:false,
-    companyId:localStorage.getItem("currentUser")? CurrentUser().companyId:null
+    companyId:localStorage.getItem("currentUser")? CurrentUser().companyId:null,
+    searchedItemsToExport:[]
 }
 
  export const authenticate= createAsyncThunk("appState/authenticate",async (user)=>{
@@ -135,7 +136,14 @@ const appSlice=createSlice({
         activeTab:(state,action)=>{
             state.activeTab=action.payload;
         },
-        setLogged:(state)=>{state.isLogged=true;}
+        setLogged:(state)=>{state.isLogged=true;},
+        
+        cleanSearchedItemsToExport: (state)=>{
+            state.searchedItemsToExport = [];
+        },
+    setSearchedItemsToExport: (state,action)=>{
+        state.searchedItemsToExport = action.payload;
+    },
     },
     extraReducers: (builder)=>{
         builder.addCase(searchProduct,(state)=>{
@@ -343,4 +351,4 @@ const appSlice=createSlice({
 });
 
 export default appSlice.reducer;
-export const {itemDetails, cleanItemDetails, showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged,Exporting,StopExporting,logoutUser,setTableCurrentCollection,openInvoiceView,closeInvoiceView} = appSlice.actions;
+export const {itemDetails, cleanItemDetails, showToast,closeToast,openModal,closeModal,Searching,StopSearching,activeTab,setLogged,Exporting,StopExporting,logoutUser,setTableCurrentCollection,openInvoiceView,closeInvoiceView,cleanSearchedItemsToExport,setSearchedItemsToExport} = appSlice.actions;
